@@ -1,0 +1,24 @@
+language: python
+python:
+  - "3.6"
+
+os:
+- linux
+dist: focal
+
+before_install:
+  - apt-get update
+  - apt-get -y install python python-pip graphviz
+  - pip install sphinx==1.8.1 docutils==0.14 sphinx-rtd-theme==0.4.2 sphinxcontrib-websupport==1.1.0
+  - touch documentation/build/html/.nojekyll
+
+script:
+  - make -C documentation
+
+deploy:
+  - provider: pages                            # Deployment config.
+    verbose: true                              # Verbose output.
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN                # GitHub token.
+    local_dir: ./documentation/build/html/     # Location of build docs.
+    keep_history: true                         # Create incremental commit.
