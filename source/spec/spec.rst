@@ -246,7 +246,7 @@ Overview
    The intent for this specification is to provide interoperability
    between spec compliant bootloaders and spec compliant payloads.
 
-   .. image:: /images/design.PNG
+   .. image:: /images/design.png
 
 Opens: Do we need a wrapper table on existing FV, PE/COFF, ELF?
 
