@@ -1,0 +1,2380 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Unified interface between bootloader and payload &#8212; Universal Payload  documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Specifications" href="index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="unified-interface-between-bootloader-and-payload">
+<h1>Unified interface between bootloader and payload<a class="headerlink" href="#unified-interface-between-bootloader-and-payload" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><div class="line-block">
+<div class="line">Version 0.7 Draft</div>
+<div class="line">8/13/2020</div>
+</div>
+</div></blockquote>
+<p>THIS SPECIFICATION IS PROVIDED “AS IS” WITH NO WARRANTIES WHATSOEVER,
+INCLUDING ANY</p>
+<p>WARRANTY OF MERCHANTABILITY, NONINFRINGEMENT, FITNESS FOR ANY PARTICULAR
+PURPOSE, OR</p>
+<p>ANY WARRANTY OTHERWISE ARISING OUT OF ANY PROPOSAL, SPECIFICATION OR
+SAMPLE. Intel products are not intended for use in medical, life saving,
+or life sustaining applications.</p>
+<p>Intel may make changes to specifications and product descriptions at any
+time, without notice.</p>
+<p>Designers must not rely on the absence or characteristics of any
+features or instructions marked “reserved” or “undefined.” Intel
+reserves these for future definition and shall have no responsibility
+whatsoever for conflicts or incompatibilities arising from future
+changes to them.</p>
+<p>A license is hereby granted to copy and reproduce this specification for
+internal use only.</p>
+<p>No other license, express or implied, by estoppel or otherwise, to any
+other intellectual property rights is granted herein.</p>
+<p>Intel disclaims all liability, including liability for infringement of
+any proprietary rights, relating to use of information in this
+specification. No license, express or implied, by estoppel or otherwise,
+to any intellectual property rights is granted herein.</p>
+<p>This specification is an intermediate draft for comment only and is
+subject to change without notice. Readers should not design products
+based on this document.</p>
+<p>*Other names and brands may be claimed as the property of others.</p>
+<p>Copyright © 2020 Intel Corporation. All rights reserved.</p>
+<p><strong>Contents</strong></p>
+<p><a class="reference external" href="#unified-interface-between-bootloader-and-payload">Unified interface between bootloader and payload
+1</a></p>
+<p><a class="reference external" href="#introduction">1 Introduction 4</a></p>
+<p><a class="reference external" href="#purpose">1.1 Purpose 4</a></p>
+<p><a class="reference external" href="#intended-audience">1.2 Intended Audience 4</a></p>
+<p><a class="reference external" href="#related-documents">1.3 Related Documents 4</a></p>
+<p><a class="reference external" href="#overview">2 Overview 5</a></p>
+<p><a class="reference external" href="#bootloaders">2.1 Bootloaders 6</a></p>
+<p><a class="reference external" href="#payloads">2.2 Payloads 7</a></p>
+<p><a class="reference external" href="#current-bootloader-and-payload-interfaces">2.3 Current Bootloader and Payload interfaces
+8</a></p>
+<p><a class="reference external" href="#os-interfaces">2.4 OS interfaces 10</a></p>
+<p><a class="reference external" href="#os-boot-protocols">2.4.1 OS Boot protocols 10</a></p>
+<p><a class="reference external" href="#data-interface">2.4.2 Data interface 10</a></p>
+<p><a class="reference external" href="#payload-principle">2.5 Payload principle 11</a></p>
+<p><a class="reference external" href="#security">2.6 Security 12</a></p>
+<p><a class="reference external" href="#payload-image-format">3 Payload Image Format 12</a></p>
+<p><a class="reference external" href="#payload-image-standard-header">3.1 Payload Image Standard Header
+13</a></p>
+<p><a class="reference external" href="#payload-image-relocation-table">3.2 Payload Image Relocation Table
+15</a></p>
+<p><a class="reference external" href="#payload-image-authentication-table">3.3 Payload Image Authentication Table
+16</a></p>
+<p><a class="reference external" href="#hand-off-state">4 Hand-off state 18</a></p>
+<p><a class="reference external" href="#ia-32-and-x64-platforms">4.1 IA-32 and x64 Platforms 18</a></p>
+<p><a class="reference external" href="#state-of-silicon">4.1.1 State of silicon 18</a></p>
+<p><a class="reference external" href="#instruction-execution-environment">4.1.2 Instruction execution environment
+18</a></p>
+<p><a class="reference external" href="#arm-platforms">4.2 ARM Platforms 19</a></p>
+<p><a class="reference external" href="#risc-v-platforms">4.3 RISC-V Platforms 19</a></p>
+<p><a class="reference external" href="#payload-interfaces">5 Payload Interfaces 19</a></p>
+<p><a class="reference external" href="#acpi-tables">5.1 ACPI tables 20</a></p>
+<p><a class="reference external" href="#hob-list">5.2 HOB List 20</a></p>
+<p><a class="reference external" href="#resource-descriptor-hob">5.2.1 Resource Descriptor HOB 21</a></p>
+<p><a class="reference external" href="#acpi-table-hob">5.2.2 System Table info HOB 21</a></p>
+<p><a class="reference external" href="#graphics-information-hob">5.2.3 Graphics information HOB 22</a></p>
+<p><a class="reference external" href="#_Toc49419802">5.2.4 Serial Debug Information HOB 22</a></p>
+<p><a class="reference external" href="#cpu-info-hob">5.2.5 CPU INFO HOB 24</a></p>
+<p><a class="reference external" href="#optional-hobs">5.2.6 Optional HOBs 25</a></p>
+<p><a class="reference external" href="#appendix-a-hob-data-structures">6 Appendix A – HOB Data Structures
+26</a></p>
+<p><a class="reference external" href="#base-data-type">6.1 Base Data Type 26</a></p>
+<p><a class="reference external" href="#efi-hob-type">6.2 EFI HOB TYPE 26</a></p>
+<p><a class="reference external" href="#efi_hob_generic_header">6.3 EFI_HOB_GENERIC_HEADER 26</a></p>
+<p><a class="reference external" href="#hob-list-header">6.4 HOB List Header 27</a></p>
+<p><a class="reference external" href="#efi_hob_handoff_info_table">6.4.1 EFI_HOB_HANDOFF_INFO_TABLE 27</a></p>
+<p><a class="reference external" href="#efi_hob_handoff_table_version">6.4.2 EFI_HOB_HANDOFF_TABLE_VERSION
+28</a></p>
+<p><a class="reference external" href="#efi_boot_mode">6.4.3 EFI_BOOT_MODE 28</a></p>
+<p><a class="reference external" href="#efi_hob_guid_type">6.5 EFI_HOB_GUID_TYPE 29</a></p>
+<p><a class="reference external" href="#efi_pei_graphics_info_hob">6.6 EFI_PEI_GRAPHICS_INFO_HOB 29</a></p>
+<p><a class="reference external" href="#efi_pei_graphics_device_info_hob">6.7 EFI_PEI_GRAPHICS_DEVICE_INFO_HOB
+32</a></p>
+<p><a class="reference external" href="#efi_hob_resource_descriptor">6.8 EFI_HOB_RESOURCE_DESCRIPTOR 32</a></p>
+<p><a class="reference external" href="#efi_resource_type">6.8.1 EFI_RESOURCE_TYPE 32</a></p>
+<p><a class="reference external" href="#efi_resource_attribute_type">6.8.2 EFI_RESOURCE_ATTRIBUTE_TYPE 32</a></p>
+<p><a class="reference external" href="#efi_hob_resource_descriptor-1">6.8.3 EFI_HOB_RESOURCE_DESCRIPTOR
+34</a></p>
+<p><a class="reference external" href="#efi_hob_memory_allocation">6.9 EFI_HOB_MEMORY_ALLOCATION 35</a></p>
+<p><a class="reference external" href="#efi_memory_type">6.9.1 EFI_MEMORY_TYPE 35</a></p>
+</div>
+<div class="section" id="introduction">
+<h1><em>Introduction</em><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="purpose">
+<h2>&nbsp;&nbsp;Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>The purpose of this document is to describe the&nbsp;architecture and
+interfaces&nbsp;between the bootloader and the payload.&nbsp;Bootloader&nbsp;or
+payload&nbsp;implementation&nbsp;specific details are outside the scope of this
+document.</div></blockquote>
+</div>
+<div class="section" id="intended-audience">
+<h2>&nbsp;&nbsp;Intended Audience<a class="headerlink" href="#intended-audience" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>This document is targeted at all platform and system developers
+who&nbsp;need the&nbsp;bootloader&nbsp;or the payload&nbsp;supports the
+unified&nbsp;bootloader and&nbsp;payload&nbsp;interface.&nbsp;This includes,&nbsp;but is not
+limited to:&nbsp;BIOS developers,&nbsp;bootloader developers, system
+integrators, as well as end users.</div></blockquote>
+</div>
+<div class="section" id="related-documents">
+<h2>&nbsp;Related Documents<a class="headerlink" href="#related-documents" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Unified Extensible Firmware Interface (UEFI) Specification</p>
+<p><a class="reference external" href="http://www.uefi.org/specifications">http://www.uefi.org/specifications</a></p>
+</li>
+<li><p class="first">Platform Initialization (PI) Specification v1.7
+<a class="reference external" href="https://uefi.org/sites/default/files/resources/PI_Spec_1_7_final_Jan_2019.pdf">https://uefi.org/sites/default/files/resources/PI_Spec_1_7_final_Jan_2019.pdf</a></p>
+</li>
+<li><p class="first">Portable Executable (PE) and Common Object File Format (COFF)</p>
+<p><a class="reference external" href="https://docs.microsoft.com/en-us/windows/win32/debug/pe-format">https://docs.microsoft.com/en-us/windows/win32/debug/pe-format</a></p>
+</li>
+<li><p class="first">PE authentication</p>
+<p><a class="reference external" href="https://download.microsoft.com/download/9/c/5/9c5b2167-8017-4bae-9fde-d599bac8184a/Authenticode_PE.docx">https://download.microsoft.com/download/9/c/5/9c5b2167-8017-4bae-9fde-d599bac8184a/Authenticode_PE.docx</a></p>
+</li>
+<li><p class="first">ACPI DBG2 table</p>
+<p><a class="reference external" href="http://download.microsoft.com/download/9/4/5/945703CA-EF1F-496F-ADCF-3332CE5594FD/microsoft-debug-port-table-2-CP.docx">http://download.microsoft.com/download/9/4/5/945703CA-EF1F-496F-ADCF-3332CE5594FD/microsoft-debug-port-table-2-CP.docx</a></p>
+</li>
+<li><p class="first">ACPI specification 6.3</p>
+<p><a class="reference external" href="https://uefi.org/sites/default/files/resources/ACPI_6_3_final_Jan30.pdf">https://uefi.org/sites/default/files/resources/ACPI_6_3_final_Jan30.pdf</a></p>
+</li>
+<li><p class="first">Device tree specification</p>
+<p><a class="reference external" href="https://buildmedia.readthedocs.org/media/pdf/devicetree-specification/latest/devicetree-specification.pdf">https://buildmedia.readthedocs.org/media/pdf/devicetree-specification/latest/devicetree-specification.pdf</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>Most modern platforms rely on system Firmware to initialize the
+hardware and launch an Operating System (OS). The system firmware is
+responsible for initializing the platform hardware including CPU and
+other silicon functional blocks, detecting and initializing the
+memory subsystem, boot media initialization and setting up hardware
+abstractions for use by the operating systems.</p>
+<p>While newer architectural enhancements (e.g. - PCI, PCIe, USB, etc.)
+are developed at an industrial scale, there are vendor specific
+micro-architectural enhancements that happens at a much faster pace.
+Silicon vendors differentiate through these microarchitectural
+enhancements and these features are often considered intellectual
+property and rely on system specific firmware initialization. The
+system firmware thus provides the necessary abstraction and allows a
+generic operating system to run on different platform configurations
+and technologies without needing any changes to the operating system
+itself.</p>
+<p>A design methodology of viewing system firmware functionality as made
+up of <strong>two distinct phases</strong> – <strong>initialization</strong> and <strong>OS boot
+logic</strong> is gaining traction resulting in new implementations of
+system firmware. This approach calls for modular phases with an
+initialization phase (bootloader) which completes the system
+initialization and gets the hardware to a usable state and then a
+payload phase. The payload can provide/implement many different
+functionalities including media and file system drivers, operating
+system boot, diagnostics, etc.</p>
+<p>While certain system firmware implementations implement both the
+initialization and OS boot logic in a single code base, the
+distinction lies in the functionality provided.</p>
+<p>This specification is used to describe the interface between the
+bootloader phase that initializes the system hardware and the payload
+phase. It includes how to pass parameters to payload and parameter
+format, payload image format, payload boot mode and stack usage, etc.
+The intent for this specification is to provide interoperability
+between spec compliant bootloaders and spec compliant payloads.</p>
+</div></blockquote>
+<p>Opens: Do we need a wrapper table on existing FV, PE/COFF, ELF?</p>
+<p>Yes.</p>
+<p>Should we put the wrapper inside the existing payload?</p>
+<p>Open.</p>
+<div class="section" id="bootloaders">
+<h2>Bootloaders<a class="headerlink" href="#bootloaders" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Bootloaders are primarily responsible for initializing the system
+hardware including, but not limited to CPU initialization, memory
+detection and initialization, initialization of silicon functional
+units (IO controllers), bus topology configuration, etc. In addition
+to the initialization itself, bootloader is responsible for providing
+the system configuration information to the subsequent stages in the
+boot process. In addition to proprietary options, there are many open
+sourced bootloaders available.</p>
+<p><strong>EDKII</strong></p>
+<p>EDK II is a modern, feature-rich, cross-platform firmware development
+environment for the UEFI and UEFI Platform Initialization (PI)
+specifications. EDKII performs both first stage (hardware
+initialization) and second stage booting.</p>
+<p>Reference implementations for many platforms are also available in
+open source under BSD + Patents license.</p>
+<p><a class="reference external" href="https://www.tianocore.org/">https://www.tianocore.org/</a></p>
+<p><strong>Slim Bootloader</strong></p>
+<p>Slim Bootloader is an open source system firmware implementation that
+adopts the modular initialization followed by payload launch approach
+of system firmware design. Slim Bootloader project provides both the
+initialization phases as well as the OsLoader payload, but it also
+supports launching of different payloads. Open source Slim Bootloader
+uses BSD + Patents License.</p>
+<p><a class="reference external" href="https://slimbootloader.github.io/">https://slimbootloader.github.io/</a></p>
+<p><strong>coreboot</strong></p>
+<p>coreboot is a project to develop open source boot firmware for
+various architectures. It follows the design philosophy of minimum
+necessary initialization followed by payload. coreboot is released
+under GNU’s General Public License (GPL).</p>
+<p><a class="reference external" href="https://www.coreboot.org/">https://www.coreboot.org/</a></p>
+<p><strong>U-Boot</strong></p>
+<p>U-Boot is an open-source, primary boot loader used in embedded
+devices. U-Boot performs both first stage (hardware initialization)
+and second stage booting. U-boot is released under GNU’s General
+Public License (GPL)</p>
+<p><a class="reference external" href="https://www.denx.de/wiki/U-Boot/WebHome">https://www.denx.de/wiki/U-Boot/WebHome</a></p>
+</div></blockquote>
+</div>
+<div class="section" id="payloads">
+<h2>Payloads<a class="headerlink" href="#payloads" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>After initializing the system hardware, bootloaders launch the
+payload modules. Payloads ideally are modular and platform
+independent. Payloads depend on the abstract interfaces (scope of
+this document) to be platform independent.</p>
+<p>While OS boot protocol is one of the main functionalities provided by
+payloads, there could be other functionalities (e.g - diagnostics)
+that can be enabled by payloads.</p>
+<p>From a design point of view, a payload is different from a boot image
+based on its relationship with the system firmware. Payloads are
+considered part of system firmware and is typically in the flash
+while boot images are not considered part of system firmware (not
+within the trusted firmware boundary) and is often in a boot media.</p>
+<p>Also, as mentioned earlier, while certain system firmware
+implementations implement both the initialization and OS boot logic
+in a single code base, the distinction lies in the functionality
+provided. This leads to use cases where some system firmware
+implementations can act as a payload providing OS boot capability
+while relying on an underlying bootloader layer for system hardware
+initialization. Examples of such payloads include EDKII and Uboot.
+Both EDKII and uboot implementations implement both phases of system
+firmware functionality and can also be launched as payloads by other
+bootloaders.</p>
+<p>There are many payloads currently available including EDK2 payload
+providing UEFI services, Linux as a payload, uboot payload and other
+custom implementations.</p>
+<p><strong>EDK II Payload</strong></p>
+<p>EDK II DXE and BDS stages can be launched by bootloaders as an UEFI
+payload. The EDKII payload provides the required UEFI specification
+defined architectural protocols and can launch an UEFI aware OS.</p>
+<p><strong>SBL OsLoader</strong></p>
+<p>SBL’s payload implementation that supports Linux boot protocol and
+can also launch ELF or PE executables. It also supports launching OS
+compliant with the MultiBoot specification.</p>
+<p><strong>Linux Payload</strong></p>
+<p>LinuxBoot is a firmware for modern servers that replaces specific
+firmware functionality like the UEFI DXE phase with a Linux kernel
+and runtime.</p>
+<p><a class="reference external" href="https://www.linuxboot.org/">https://www.linuxboot.org/</a></p>
+</div></blockquote>
+</div>
+<div class="section" id="current-bootloader-and-payload-interfaces">
+<h2>Current Bootloader and Payload interfaces<a class="headerlink" href="#current-bootloader-and-payload-interfaces" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p><strong>Coreboot Payload Interface</strong>:</p>
+<p><strong>Reference</strong>: <a class="reference external" href="https://www.coreboot.org/API">https://www.coreboot.org/API</a></p>
+<p><strong>Reference</strong>: <a class="reference external" href="https://doc.coreboot.org/lib/abi-data-consumption.html">https://doc.coreboot.org/lib/abi-data-consumption.html</a></p>
+<p><strong>Reference</strong>:
+<a class="reference external" href="https://github.com/tianocore/edk2/blob/master/UefiPayloadPkg/Library/CbParseLib/CbParseLib.c">https://github.com/tianocore/edk2/blob/master/UefiPayloadPkg/Library/CbParseLib/CbParseLib.c</a></p>
+<p>coreboot passes information to downstream users (payloads and/or
+operating systems) using <strong>coreboot tables</strong>.</p>
+<p>The table usually sits in memory around address 0x500. However, some
+bootloaders seem to overwrite low memory area, thus destroying the
+coreboot table integrity, rendering the table useless. So, the
+coreboot tables were moved to the high tables area.</p>
+<p>When coreboot tables were moved to high memory, a 40 bytes mini
+coreboot table with a single sub table is placed at 0x500/0x530 that
+points to the real coreboot table. This is comparable to the ACPI
+RSDT or the MP floating table.</p>
+<p>Coreboot tables is a series of data records packed back to back and
+each encoding both type and size. This is something similar to a UEFI
+HOB list. Coreboot tables provide information about</p>
+</div></blockquote>
+<ul class="simple">
+<li><strong>memory map</strong></li>
+<li><strong>Graphics Info</strong></li>
+<li>Pointers to certain CBMEM structures (<strong>ACPI, SMBIOS</strong>, etc)</li>
+</ul>
+<blockquote>
+<div><p>How to fill the gap with current coreboot and payload requirement?</p>
+<p>Use a library in coreboot to convert the new interface.</p>
+<p><strong>Slim Bootloader (SBL) Payload Interface</strong>:</p>
+<p><strong>Reference</strong>:
+<a class="reference external" href="https://slimbootloader.github.io/developer-guides/payload.html">https://slimbootloader.github.io/developer-guides/payload.html</a></p>
+<p><strong>Reference</strong>:
+<a class="reference external" href="https://uefi.org/sites/default/files/resources/PI_Spec_1_7_final_Jan_2019.pdf">https://uefi.org/sites/default/files/resources/PI_Spec_1_7_final_Jan_2019.pdf</a></p>
+<p><strong>Reference</strong>:
+<a class="reference external" href="https://github.com/tianocore/edk2/blob/master/UefiPayloadPkg/Library/SblParseLib/SblParseLib.c">https://github.com/tianocore/edk2/blob/master/UefiPayloadPkg/Library/SblParseLib/SblParseLib.c</a></p>
+<p>SBL supports “loosely coupled payload” which basically refers to
+payloads built independently (no source sharing). SBL builds a series
+of data structures called the Hand Off Blocks (HOBs) and provides a
+pointer to this HOB List to the payloads. These data structures
+conform to the HOB format as described in the Platform Initialization
+(PI) Specification.</p>
+<p><strong>PEI to DXE Interface</strong>:</p>
+<p><strong>Reference</strong>:
+<a class="reference external" href="https://uefi.org/sites/default/files/resources/PI_Spec_1_7_final_Jan_2019.pdf">https://uefi.org/sites/default/files/resources/PI_Spec_1_7_final_Jan_2019.pdf</a></p>
+<p>PEI must also provide a mechanism for components of DXE and the DXE
+Foundation to discover the state of the system when the DXE
+Foundation is invoked. Certain aspects of the system state at handoff
+are architectural, while other system state information may vary and
+hence must be described to DXE components.</p>
+<p>The DXE IPL PPI passes the Hand-Off Block (HOB) list from PEI to the
+DXE Foundation when it invokes the DXE Foundation. The handoff state
+is described in the form of HOBs in the HOB list.</p>
+</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Required HOB Type</th>
+<th class="head">Usage</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Phase Handoff Information Table
+(PHIT) HOB</td>
+<td>This HOB is required.</td>
+</tr>
+<tr class="row-odd"><td>One or more Resource Descriptor
+HOB(s) describing physical
+system memory</td>
+<td>The DXE Foundation will use this
+physical system memory for DXE.</td>
+</tr>
+<tr class="row-even"><td>Boot-strap processor (BSP) Stack
+HOB</td>
+<td>The DXE Foundation needs to know
+the current stack location so
+that it can move it if
+necessary, based upon its
+desired memory address map. This
+HOB will be of type
+EfiConventionalMemory</td>
+</tr>
+<tr class="row-odd"><td>One or more Resource Descriptor
+HOB(s) describing firmware
+devices</td>
+<td>The DXE Foundation will place
+this into the GCD.</td>
+</tr>
+<tr class="row-even"><td>One or more Firmware Volume
+HOB(s)</td>
+<td>The DXE Foundation needs this
+information to begin loading
+other drivers in the platform.</td>
+</tr>
+<tr class="row-odd"><td>A Memory Allocation Module HOB</td>
+<td>This HOB tells the DXE
+Foundation where it is when
+allocating memory into the
+initial system address map.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="os-interfaces">
+<h2>OS interfaces<a class="headerlink" href="#os-interfaces" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>While this specification aims to document the bootloader to payload
+interface, the payload to OS interface is briefly discussed just for
+the sake of completeness.</div></blockquote>
+<div class="section" id="os-boot-protocols">
+<h3>OS Boot protocols<a class="headerlink" href="#os-boot-protocols" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p><strong>UEFI</strong></p>
+<p>UEFI stands for “Unified Extensible Firmware Interface.” The UEFI
+Specification defines a new model for the interface between
+personal-computer operating systems and platform firmware. The
+interface consists of data tables that contain platform-related
+information, plus boot and runtime service calls that are available
+to the operating system and its loader. Together, these provide a
+standard environment for booting an operating system and running
+pre-boot applications.</p>
+<p><a class="reference external" href="https://uefi.org/specifications">https://uefi.org/specifications</a></p>
+<p><strong>Linux Boot Protocol</strong></p>
+<p>Linux kernel can itself be a bootable image without needing a
+separate OS Loader. The Linux boot protocol defines the requirements
+required to launch Linux kernel as a boot target.</p>
+<p><a class="reference external" href="https://www.kernel.org/doc/html/latest/x86/boot.html">https://www.kernel.org/doc/html/latest/x86/boot.html</a></p>
+<p><strong>Multiboot Protocol</strong></p>
+<p>The Multiboot specification is an open standard describing how a boot
+loader can load an x86 operating system kernel. The specification
+allows any compliant boot-loader implementation to boot any compliant
+operating-system kernel. Thus, it allows different operating systems
+and boot loaders to work together and interoperate, without the need
+for operating system–specific boot loaders.</p>
+<p><a class="reference external" href="https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html">https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html</a></p>
+</div></blockquote>
+</div>
+<div class="section" id="data-interface">
+<h3>Data interface<a class="headerlink" href="#data-interface" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>Modern buses and devices (PCI, PCIe, USB, SATA, etc.) support
+software detection, enumeration and configuration, providing true
+plug and play capabilities, there still exists some devices that are
+not enumerable through software.</p>
+<p>Examples:</p>
+</div></blockquote>
+<ul class="simple">
+<li>PCI Host Bridge</li>
+<li>GPIO</li>
+<li>Serial interfaces like I2C, HS-UART, etc.</li>
+<li>Graphics framebuffer</li>
+<li>Device Management information including manufacturer name, etc.</li>
+</ul>
+<blockquote>
+<div><p>While it is possible to write platform specific device drivers to
+support such devices/interfaces, it is efficient for the platform
+specific firmware to provide information to the platform independent
+operating system.</p>
+<p>There are two data protocols that are used extensively for this
+purpose – ACPI and Device Tree.</p>
+<p><strong>ACPI</strong></p>
+<p>Advanced Configuration and Power Interface (<strong>ACPI</strong>) provides an
+open standard that operating systems can use to discover and
+configure computer hardware components, to perform power management
+by (for example) putting unused components to sleep, and to perform
+status monitoring. In October 2013, ACPI Special Interest Group (ACPI
+SIG), the original developers of the ACPI standard, agreed to
+transfer all assets to the UEFI Forum, in which all future
+development will take place.</p>
+<p><strong>SMBIOS</strong></p>
+<p>System Management BIOS (<strong>SMBIOS</strong>) is the premier standard for
+delivering management information via system firmware.</p>
+<p><a class="reference external" href="https://uefi.org/specifications">https://uefi.org/specifications</a></p>
+<p><a class="reference external" href="https://www.dmtf.org/standards/smbios">https://www.dmtf.org/standards/smbios</a></p>
+<p><strong>DEVICE TREE</strong></p>
+<p>The devicetree is a data structure for describing hardware. A
+devicetree is a tree data structure with nodes that describe the
+devices in a system. Each node has property/value pairs that describe
+the characteristics of the device being represented.</p>
+<p><a class="reference external" href="https://www.devicetree.org/">https://www.devicetree.org/</a></p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="payload-principle">
+<h2>Payload principle<a class="headerlink" href="#payload-principle" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="line-block">
+<div class="line">Keep interface as clean and simple as possible.</div>
+<div class="line">The payload should encapsulate the boot abstractions for a given
+technology, such as UEFI payload or LinuxBoot. The Payload should
+vie to be portable to different platform implementations (PI), such
+as coreboot, Slim bootloader, or an EDKII style firmware.</div>
+<div class="line">The payload should elide strong dependencies on the payload
+launching code (e.g., coreboot versus EDKII versus slimboot) and
+also avoid board-specific dependencies. The payload behavior should
+be parameterized by the data input block.</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Open</strong><em>: Should Payload return back to bootloader if payload
+fail?</em></div>
+<div class="line"><em>Answer: No for first generation. No callbacks into payload
+launcher.</em></div>
+</div>
+<p><strong>Open</strong><em>: Do we need callback from payload to bootloader? Avoid it
+if possible</em></p>
+<div class="line-block">
+<div class="line"><strong>Open</strong><em>: How to support SMM for booloader and Payload? Where is
+trust boundary.</em></div>
+<div class="line"><em>Answer: SMM should be either part of the payload for present
+generation Management Mode (MM) PI drivers, but longer term the
+EDKII PI independent MM modules should be used. The latter are a
+class of SMM drivers (or TrustZone drivers for ARM) that are not
+launched via DXE. For coreboot SMM can be loaded from ramstage, the
+PI payload launcher, or elided from ramstage and use the portable
+MM handlers.</em></div>
+<div class="line">If there is an existing standard it will be used (e.g., ACPI table
+that’s simple to parse).</div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="security">
+<h2>Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h2>
+<p>Payload is part of system firmware TCB</p>
+<blockquote>
+<div><p>Today the payload is provisioned as part of the platform
+initialization code. As such, the payload is protected and updated by
+the platform manufacturer (PM). The payload should be covered by a
+digital signature generated by the PM. The platform owner (PO) should
+not be able to update the payload independently of the PM.</p>
+<div class="line-block">
+<div class="line">The platform initialization (PI) code should be the platform root
+of trust for update, measurement, and verification. As such, the PI
+code that launches the payload should verify the payload using
+payload Hash or using a key to verify its signature. The PI code
+should also provide a measurement into a Trusted Platform Module
+(TPM) of the payload into a TPM Platform Configuration Register
+(e.g., PCR[0]). The payload may continue the measured boot actions
+by recording code executed in the payload phase into PCR’s (e.g.,
+UEFI driver into PCR[2], UEFI OS loader into PCR[4]).</div>
+<div class="line"><em>Open: Do we need a capability boot to say if payload
+supports/requires measured/verified boot?</em></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="payload-image-format">
+<h1>Payload Image Format<a class="headerlink" href="#payload-image-format" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>Payload, as a standalone component, usually needs to be loaded by a
+bootloader into memory properly prior to execution. In this loading
+process, some additional process might be required, such as rebasing,
+assembling, etc.</p>
+<p>Today, many payloads use their own image formats (PE, ELF, FV, RAW,
+…), and it makes it difficult for a bootloader to identify and
+understand how to load a payload. To address this, a small common
+payload image header is introduced at the beginning of the payload
+image to describe necessary information required for loading.</p>
+<p>The following information might be required by a bootloader to load
+payload image:</p>
+</div></blockquote>
+<ul class="simple">
+<li></li>
+<li>Version information</li>
+<li>Architecture</li>
+<li>Entry point</li>
+<li>Relocation information</li>
+<li>Preferred base</li>
+<li>Verification</li>
+</ul>
+<p>Opens:</p>
+<blockquote>
+<div>There are several options here for bootloader on how to load a
+payload. Inputs are required to decide which option might be the best
+approach. The current proposal used option 1.</div></blockquote>
+<ul class="simple">
+<li>Option 1: Use a new standard header for payload loading.</li>
+</ul>
+<blockquote>
+<div>For example, as current proposed in section 3.1, providing a new
+standard information header for payload loading. In this way the
+bootloader implementation could be much simpler since it does not
+need to understand the different PE, ELF, FV or other formats.
+Meanwhile, a standard tool can be used to facilitate generating the
+payload image header from existing formats to reduce the effort
+required by the payloads. The downside of this approach is that it
+will introduce yet another layer of image wrapper on top of the
+native format. It might cause concerns of more fragmentation on image
+format.</div></blockquote>
+<ul class="simple">
+<li>Option 2: Converge into one existing format.</li>
+</ul>
+<blockquote>
+<div><p>This approach is to converge all different payload formats into a
+single well-known format, such as PE or ELF. It makes bootloader
+simpler to only support one known format. On the other side, it needs
+every payload to generate this new well-known format if it is not
+already in this format. Sometimes, it might be challenges. For
+example, producing ELF format from a UEFI FV image.</p>
+<p>.efi format with Linux support:
+<a class="reference external" href="https://www.kernel.org/doc/html/latest/admin-guide/efi-stub.html">https://www.kernel.org/doc/html/latest/admin-guide/efi-stub.html</a></p>
+<p>UBOOT supports EFI:
+<a class="reference external" href="https://www.xypron.de/u-boot/uefi/u-boot_on_efi.html#:~:text=U%2DBoot%20supports%20running%20as,bit%20or%2064%2Dbit%20EFI">https://www.xypron.de/u-boot/uefi/u-boot_on_efi.html#:~:text=U%2DBoot%20supports%20running%20as,bit%20or%2064%2Dbit%20EFI</a></p>
+</div></blockquote>
+<ul class="simple">
+<li>Option 3: Reuse current different payload image formats.</li>
+</ul>
+<blockquote>
+<div>This approach requires bootloader to support all different payload
+formats including PE, COFF, FV, etc, and handle them separately
+during the loading process. The advantage is that the industry
+standard formats are followed. However, it does introduce overhead to
+every bootloader to be able to handle these formats.</div></blockquote>
+<ol class="loweralpha simple">
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ol>
+<div class="section" id="payload-image-standard-header">
+<h2>Payload Image Standard Header<a class="headerlink" href="#payload-image-standard-header" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>This section defines the payload image primary header format.</p>
+<p>Table&nbsp;1. PAYLOAD_INFO_HEADER</p>
+</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="23%" />
+<col width="28%" />
+<col width="28%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte Offset</th>
+<th class="head">Size in Bytes</th>
+<th class="head">Field</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>4</td>
+<td>Identifier</td>
+<td>‘PLDH’.
+Identifier for
+the
+PAYL
+OAD_INFO_HEADER.</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>4</td>
+<td>HeaderLength</td>
+<td>Length of the
+PAY
+LOAD_INFO_HEADER
+header in bytes.</td>
+</tr>
+<tr class="row-even"><td>8</td>
+<td>1</td>
+<td>HeaderRevision</td>
+<td>Revision of the
+header. The
+current value
+for this field
+is 1.</td>
+</tr>
+<tr class="row-odd"><td>9</td>
+<td>3</td>
+<td>Reserved</td>
+<td>Not used for
+now.</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>12</td>
+<td>8</td>
+<td>ProducerId</td>
+<td>An OEM-supplied
+ASCII string
+that identifies
+the payload
+producer.</td>
+</tr>
+<tr class="row-even"><td>20</td>
+<td>8</td>
+<td>ImageId</td>
+<td>ASCII string
+that identifies
+the payload ID
+name. It can
+provide
+indication to
+bootloader on
+what kind of
+payload it is,
+such as UEFI
+payload, Linux
+payload, etc.</td>
+</tr>
+<tr class="row-odd"><td>28</td>
+<td>4</td>
+<td>Revision</td>
+<td><p class="first">Revision of the
+Payload binary.
+Major.Mino
+r.Revision.Build</p>
+<p>The
+ImageRevision
+can be decoded
+as follows:</p>
+<p>7 : 0 - Build
+Number</p>
+<p>15 : 8 -
+Revision</p>
+<p>23 : 16&nbsp;-&nbsp;Minor
+Version</p>
+<p class="last">31 : 24 -&nbsp;Major
+Version</p>
+</td>
+</tr>
+<tr class="row-even"><td>32</td>
+<td>4</td>
+<td>Length</td>
+<td>The length of
+the full payload
+binary image
+including
+primary header,
+extended headers
+and the actual
+payload itself.</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>36</td>
+<td>4</td>
+<td>Svn</td>
+<td>Security&nbsp;version
+number of the
+Payload binary.
+This is used for
+anti-roll back
+protection.</td>
+</tr>
+<tr class="row-odd"><td>40</td>
+<td>2</td>
+<td>Reserved</td>
+<td>Not used. Must
+be 0 for this
+revision.</td>
+</tr>
+<tr class="row-even"><td>42</td>
+<td>2</td>
+<td>Machine</td>
+<td>Target machine
+type as defined
+in PE/COFF. This
+can be used by
+bootloader to
+determine if the
+targeted payload
+is suitable for
+current
+proccesor
+architecture or
+execution mode.
+For example, if
+the payload
+image is ARM
+arch, and
+bootloader is
+x86, bootloader
+should jump to
+error flow
+instead of
+jumping into
+payload entry
+point.
+Similarly, if
+current
+processor is in
+x86 mode, but
+the payload
+image indicates
+x64, bootloader
+need to handle
+it accordingly.</td>
+</tr>
+<tr class="row-odd"><td>44</td>
+<td>4</td>
+<td>Capability</td>
+<td><p class="first">Capabilities for
+the payload
+images</p>
+<ul class="simple">
+<li>Bit 0 –
+Support
+position
+independent
+code (PIC).</li>
+<li>Bit 1 –
+Support
+relocation.
+If this bit
+is set and
+PIC is not
+set, a
+relocation
+table should
+exist in the
+extended
+table.</li>
+<li>Bit 2 –
+Support</li>
+</ul>
+<blockquote class="last">
+<div><dl class="docutils">
+<dt>authentication.</dt>
+<dd><blockquote class="first">
+<div>If this bit
+is set, an</div></blockquote>
+<dl class="last docutils">
+<dt>authentication</dt>
+<dd>table should
+exist in the
+extended
+table.</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+</td>
+</tr>
+<tr class="row-even"><td>48</td>
+<td>4</td>
+<td>ImageOffset</td>
+<td>Actual payload
+image start
+offset relative
+to this
+structure start.</td>
+</tr>
+<tr class="row-odd"><td>52</td>
+<td>8</td>
+<td>ImageBase</td>
+<td>Preferred actual
+payload image
+base address for
+execution. If
+relocation is
+not supported,
+the image must
+be loaded at
+this required
+base.</td>
+</tr>
+<tr class="row-even"><td>60</td>
+<td>4</td>
+<td>ImageLength</td>
+<td>Actual payload
+image size
+starting from
+ImageOffset.</td>
+</tr>
+<tr class="row-odd"><td>64</td>
+<td>4</td>
+<td>ImageAlignment</td>
+<td>Required image
+alignment for
+execution. The
+value needs to
+be power of 2. 0
+indicates no
+special
+alignment
+requirements.
+This field can
+be used to
+select proper
+loading base
+when relocation
+is supported.</td>
+</tr>
+<tr class="row-even"><td>64</td>
+<td>4</td>
+<td>EntryPointOffset</td>
+<td>Payload entry
+point offset
+relative to the
+Payload image
+base address.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div>One or more Payload Image Extend Header can immediately follow the
+payload image primary header in back to back order. The extended
+header needs to be aligned at 4-bytes boundary and must start with a
+payload image common header. If the offset of the next extended
+header is equal or greater than “<em>PAYLOAD_INFO_HEADER.
+ImageOffset”</em> field, it indicates the end of all extended headers.
+The only exception is the authentication table, it with be located at
+the very end of the whole image in order to facilitate the image
+hashing calculation. Please refer to section 3.3 for more details.</div></blockquote>
+</div>
+<div class="section" id="payload-image-relocation-table">
+<h2>Payload Image Relocation Table<a class="headerlink" href="#payload-image-relocation-table" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>In order to provide a unified way for bootloader to rebase an image,
+an optional extended header is provided to provide the relocation
+information. When <em>PAYLOAD_INFO_HEADER.Capability</em> [BIT1] is set,
+this table must exist in the extended header.</p>
+<p>Table&nbsp;1. PAYLOAD_RELOCATION_HEADER</p>
+</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="23%" />
+<col width="28%" />
+<col width="28%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte Offset</th>
+<th class="head">Size in Bytes</th>
+<th class="head">Field</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>4</td>
+<td>Identifier</td>
+<td>‘PLDR’.
+Identifier for
+the
+PAYL
+OAD_INFO_HEADER.</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>4</td>
+<td>HeaderLength</td>
+<td>Length of the
+header in bytes.</td>
+</tr>
+<tr class="row-even"><td>8</td>
+<td>1</td>
+<td>HeaderRevision</td>
+<td>Revision of the
+header. The
+current value
+for this field
+is 1.</td>
+</tr>
+<tr class="row-odd"><td>9</td>
+<td>3</td>
+<td>Reserved</td>
+<td>Not used for
+now.</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>12</td>
+<td>*</td>
+<td>RelocationBlocks</td>
+<td>Start of the
+relocation block
+data.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div><p><em>RelocationBlocks</em> follows the Base Relocation Block defined in PE
+format listed below:</p>
+<p><a class="reference external" href="https://docs.microsoft.com/en-us/windows/win32/debug/pe-format">https://docs.microsoft.com/en-us/windows/win32/debug/pe-format</a></p>
+</div></blockquote>
+</div>
+<div class="section" id="payload-image-authentication-table">
+<h2>Payload Image Authentication Table<a class="headerlink" href="#payload-image-authentication-table" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Multiple Base Relocation Blocks might present back to back. If the
+next Base Relocation Block start offset is equal or greater than the
+“<em>PAYLOAD_RELOCATION_HEADER.HeaderLength</em>” field, it indicates
+the end of all relocation blocks. In order to provide a unified way
+for bootloader to authenticate an image, an optional extended header
+is provided to provide the authentication information. When
+Capability BIT2 is 1, this table must exist in the extended headers.
+This extended table, if exists, will show up at the end of the full
+image located by offset (<em>PAYLOAD_INFO_HEADER. ImageOffset</em> +
+<em>PAYLOAD_INFO_HEADER. ImageLength</em>)</p>
+<p>Table&nbsp;1.PAYLOAD_AUTHENTICATION_HEADER</p>
+</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="23%" />
+<col width="28%" />
+<col width="28%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte Offset</th>
+<th class="head">Size in Bytes</th>
+<th class="head">Field</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>4</td>
+<td>Signature</td>
+<td>‘PLDA’.
+Signature for
+the
+PAYL
+OAD_INFO_HEADER.</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>4</td>
+<td>HeaderLength</td>
+<td>Length of the
+header in bytes.</td>
+</tr>
+<tr class="row-even"><td>8</td>
+<td>1</td>
+<td>HeaderRevision</td>
+<td>Revision of the
+header. The
+current value
+for this field
+is 1.</td>
+</tr>
+<tr class="row-odd"><td>9</td>
+<td>3</td>
+<td>Reserved</td>
+<td><p class="first">Not used for
+now.</p>
+<p class="last">Open: Add
+authentication
+type?</p>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>12</td>
+<td>4</td>
+<td>Au
+thenticationType</td>
+<td>Indicate
+authentication
+type 0 –
+PKCS1.5/2.1</td>
+</tr>
+<tr class="row-even"><td>16</td>
+<td>*</td>
+<td>Au
+thenticationData</td>
+<td>Defined by
+PAYLOAD_AUT
+HENTICATION_DATA
+structure</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div>Table&nbsp;2. PAYLOAD_AUTHENTICATION_DATA</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="23%" />
+<col width="28%" />
+<col width="28%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte Offset</th>
+<th class="head">Size in Bytes</th>
+<th class="head">Field</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>4</td>
+<td>PubKeyId</td>
+<td>‘PUBK’</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>2</td>
+<td>PubKeySize</td>
+<td>Public key
+structure size
+from the
+beginning of
+PubKeyId to the
+end of
+PubKeyData.</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>1</td>
+<td>PubKeyType</td>
+<td><p class="first">Public key type.</p>
+<p class="last">0- RSA 1-ECDSA</p>
+</td>
+</tr>
+<tr class="row-odd"><td>7</td>
+<td>1</td>
+<td>PubKeyHashAlg</td>
+<td>HASH algorithm
+used for
+signature
+calculation. 0-
+SHA2_256,
+1-SHA2_384,
+2-SHA2_512, 16 -
+SM3</td>
+</tr>
+<tr class="row-even"><td>8</td>
+<td>*</td>
+<td>PubKeyData</td>
+<td>Public key data
+buffer. The size
+is indicated by
+PubKeySize - 8</td>
+</tr>
+<tr class="row-odd"><td>i</td>
+<td>4</td>
+<td>SignatureId</td>
+<td>‘SIGN’</td>
+</tr>
+<tr class="row-even"><td>i+4</td>
+<td>2</td>
+<td>SignatureSize</td>
+<td>The signature
+structure size
+from the
+beginning of
+SignatureId to
+the end of the
+SignatureData.</td>
+</tr>
+<tr class="row-odd"><td>i+6</td>
+<td>1</td>
+<td>SignatureType</td>
+<td>0- RSA 1-RSA-PSS
+2 - ECDSA</td>
+</tr>
+<tr class="row-even"><td>i+7</td>
+<td>1</td>
+<td>SignatureHashAlg</td>
+<td>HASH algorithm
+used for
+signature
+calculation.
+Same definitions
+as PubKeyHashAlg</td>
+</tr>
+<tr class="row-odd"><td>i+8</td>
+<td>*</td>
+<td>SignatureData</td>
+<td>Signature data.
+The length is
+indicated by
+SignatureSize -
+8</td>
+</tr>
+</tbody>
+</table>
+<p>The current spec defined PKCS 1.5 and 2.1 support. Other standards can
+be extended by adding new AuthenticationType.</p>
+<p>This signature calculation should cover data starting from offset 0 of
+<em>PAYLOAD_INFO_HEADER</em></p>
+<p>to the end of the actual payload image indicated by offset
+(<em>PAYLOAD_INFO_HEADER. ImageOffset</em> + <em>PAYLOAD_INFO_HEADER.
+ImageLength</em>) excluding the <em>PAYLOAD_AUTHENTICATION_HEADER.</em> It is the
+responsibility of the bootlaoder to verify the fields in
+PAYLOAD_AUTHENTICATION_HEADER and PAYLOAD_AUTHENTICATION_DATA are valid
+before conducting the authentication. For example, if for security
+reason, SHA2_256 is not accepted, the authentication should just fail
+even though the signature might be valid.</p>
+<ul class="simple">
+<li></li>
+<li></li>
+<li></li>
+</ul>
+</div>
+</div>
+<div class="section" id="hand-off-state">
+<h1>Hand-off state<a class="headerlink" href="#hand-off-state" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>The bootloader builds the Hand-Off Block (HOB) list containing
+platform specific information and passes the address of the HOB list
+to the payload.</p>
+<p>The prototype of payload entry point is defined as:</p>
+<div class="line-block">
+<div class="line">typedef</div>
+<div class="line">VOID</div>
+<div class="line">(__cdecl *PAYLOAD_ENTRY) (</div>
+<div class="line">EFI_HOB_HANDOFF_INFO_TABLE *HobList</div>
+<div class="line">);</div>
+</div>
+<p>4.2 HOB List defines the detailed HOB list being used to transfer
+platform specific data from the bootloader to the payload.</p>
+</div></blockquote>
+<div class="section" id="ia-32-and-x64-platforms">
+<h2>IA-32 and x64 Platforms<a class="headerlink" href="#ia-32-and-x64-platforms" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="state-of-silicon">
+<h3>State of silicon<a class="headerlink" href="#state-of-silicon" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>The bootloader initializes the processor and chipset through
+vendor-specific silicon initialization implementation. For example,
+FSP is a binary form of Intel silicon initialization implementation.
+Typically, when the control transfers to the payload:</div></blockquote>
+<ul class="simple">
+<li>The memory controller is initialized such that physical memory is
+available to use.</li>
+<li>Processors (including application processors) are patched with
+microcode and initialized properly.</li>
+<li>The PCI bus is assigned with proper bus numbers, IO/MMIO space.</li>
+<li>The Graphics controller may be initialized properly.</li>
+</ul>
+<blockquote>
+<div>But the bootloader could do less silicon initialization if the
+responsibilities of the payload and the bootloader are well defined
+(out of the scope of this document).</div></blockquote>
+</div>
+<div class="section" id="instruction-execution-environment">
+<h3>Instruction execution environment<a class="headerlink" href="#instruction-execution-environment" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>Regardless of the environment where the bootloader runs, the
+processor is in 32bit protected mode when a 32bit payload starts, or
+in 64bit long-mode when a 64bit payload starts. The payload header
+contains the machine type information that the payload supports.</p>
+<p>The following sections provide a detailed description of the
+execution environment when the payload starts.</p>
+</div></blockquote>
+<div class="section" id="registers">
+<h4>Registers<a class="headerlink" href="#registers" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p class="first">ESP + 4 points to the address of the HOB list for the 32bit payload.</p>
+</li>
+<li><p class="first">RCX holds the address of the HOB list for the 64bit payload.</p>
+</li>
+<li><p class="first">Direction flag in EFLAGs is clear so the string instructions process
+from low addresses to high addresses.</p>
+</li>
+<li><p class="first">All other general-purpose register states are undefined.</p>
+</li>
+<li><p class="first">Floating-point control word is initialized to 0x027F (all exceptions
+masked, double-precision, round-to-nearest).</p>
+</li>
+<li><div class="first line-block">
+<div class="line">Multimedia-extensions control word (if supported) is initialized to
+0x1F80 (all exceptions</div>
+<div class="line">masked, round-to-nearest, flush to zero for masked underflow).</div>
+</div>
+</li>
+<li><p class="first">CR0.EM is clear.</p>
+</li>
+<li><p class="first">CR0.TS is clear.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="interrupt">
+<h4>Interrupt<a class="headerlink" href="#interrupt" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div>Interrupt is disabled. The hardware is initialized by the boot loader
+such that no interrupt triggers even when the payload sets the
+Interrupt Enable flag in EFLAGs.</div></blockquote>
+</div>
+<div class="section" id="page-table">
+<h4>Page table<a class="headerlink" href="#page-table" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>Selectors are set to be flat.</p>
+<p>Paging mode may be enabled for the 32bit payload. (have general term
+on how it could be enabled if enabling page mode).</p>
+<p>Paging mode is enabled for the 64bit payload.</p>
+<p>When paging is enabled, all memory space is identity mapped (virtual
+address equals physical address). The four-level page table is set
+up. The payload can choose to set up the five-level page table as
+needed.</p>
+</div></blockquote>
+</div>
+<div class="section" id="stack">
+<h4>Stack<a class="headerlink" href="#stack" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>4KiB stack is available for the payload. The stack is 16-byte aligned
+and may be marked as non-executable in page table.</p>
+<p>discussion: Should payload declare its required stack size in the
+payload header?</p>
+<p>Payload could setup its own stack, there is no restriction to setup a
+new stack.</p>
+</div></blockquote>
+</div>
+<div class="section" id="application-processors">
+<h4>Application processors<a class="headerlink" href="#application-processors" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>Payload starts on the bootstrap processor. All application processors
+(on a multiple-processor system) are in halt state.</p>
+<p>Use mWait and mBox to wake up. (Follow ACPI table). How about the
+legacy bootloader? Assume something if ACPI is not there.</p>
+<p>TODO: take care about virtual platforms.</p>
+</div></blockquote>
+</div>
+</div>
+</div>
+<div class="section" id="arm-platforms">
+<h2>ARM Platforms<a class="headerlink" href="#arm-platforms" title="Permalink to this headline">¶</a></h2>
+<p>Need community inputs</p>
+</div>
+<div class="section" id="risc-v-platforms">
+<h2>RISC-V Platforms<a class="headerlink" href="#risc-v-platforms" title="Permalink to this headline">¶</a></h2>
+<p>Need community inputs</p>
+</div>
+</div>
+<div class="section" id="payload-interfaces">
+<h1>Payload Interfaces<a class="headerlink" href="#payload-interfaces" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>The bootloader provides platform information to payload through
+standard ACPI table, SMBIOS table, Device tree and a series of data
+structures called the Hand Off Blocks (HOBs). If the information is
+already defined in ACPI specification, SMBIOS specification or device
+tree, the payload could parse them to get the required information.
+For the platform information that is not defined in the standard
+tables, the bootloader should build a HOB list to pass it to the
+payload.</p>
+<p>All of them should be optional</p>
+<p>(Add device tree to reference:</p>
+<p><a class="reference external" href="https://buildmedia.readthedocs.org/media/pdf/devicetree-specification/latest/devicetree-specification.pdf">https://buildmedia.readthedocs.org/media/pdf/devicetree-specification/latest/devicetree-specification.pdf</a>)</p>
+<p>Open: Do we need a set of configuration data to config payload?</p>
+<p>We don’t believe so.</p>
+<p>Open: Do we need pass data from payload to bootloader to impact
+bootloader behavior in next boot?</p>
+<p>Keep it open now.</p>
+<p>Open: will payload be run in S3 path?</p>
+<p>Suggest skipping payload.</p>
+</div></blockquote>
+<div class="section" id="acpi-tables">
+<h2>ACPI tables<a class="headerlink" href="#acpi-tables" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>ACPI table is required to boot modern operation system, especially to
+boot windows operating system. ACPI table should be provided by
+bootloader since most of the tables are platform specific. The
+payload might update some of the ACPI tables if required.</p>
+<p>The payload could parse the ACPI table to get some basic platform
+information. For example, the Fixed ACPI Description Table (FADT)
+defines various fixed hardware ACPI information to an ACPI compatible
+OS, such as the base address for the following hardware registers
+blocks: PM1a_CNT_BLK, PM_TMR_BLK, PM1a_EVT_BLK, GPE0_BLK,
+PM1b_EVT_BLK, PM1b_CNT_BLK, PM2_CNT_BLK, and GPE1_BLK. The payload
+could use them and other values (e.g. RESET_REG, RESET_VALUE) to make
+the payload platform independent.</p>
+<p>The other example is to get PCIE base address from ACPI memory mapped
+configuration space access table definition, defined in the PCI
+Firmware Specification.
+<a class="reference external" href="http://www.pcisig.com/">http://www.pcisig.com</a>.</p>
+<p>And another example is on the debug device info. The bootloader might
+report debug device following up ACPI Debug Port Table 2 (DBG2). If a
+fully 16550-compatible serial device is specified in the ACPI DBG2,
+bootloader should provide a Serial Debug Information HOB in the HOB
+list so that the payload could use same debug device with same
+setting. If the ACPI DBG2 table could not be found, the payload
+should use serial device provided by the Serial Debug Information HOB
+as the default debug device.</p>
+<p>(ACPI DBG2 document.
+<a class="reference external" href="http://download.microsoft.com/download/9/4/5/945703CA-EF1F-496F-ADCF-3332CE5594FD/microsoft-debug-port-table-2-CP.docx">http://download.microsoft.com/download/9/4/5/945703CA-EF1F-496F-ADCF-3332CE5594FD/microsoft-debug-port-table-2-CP.docx</a>)</p>
+</div></blockquote>
+</div>
+<div class="section" id="hob-list">
+<h2>HOB List<a class="headerlink" href="#hob-list" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>The bootloader should build a HOB list and pass the HOB list header
+to payload when passing control to payload. The HOB format is
+described in the <em>Platform Initialization (PI) Specification - Volume
+3: Shared Architectural Elements</em>. The payload could decide on how to
+consume the information passed from the bootloader.</p>
+<p>The sections below describe the HOBs from the bootloader to provide
+the system architecturally information. Additional bootloader
+specific HOB may be defined in the bootloader specific documents.</p>
+</div></blockquote>
+<div class="section" id="resource-descriptor-hob">
+<h3>Resource Descriptor HOB<a class="headerlink" href="#resource-descriptor-hob" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>The bootloader should report the system resources through the HOB
+following <strong>EFI_HOB_RESOURCE_DESCRIPTOR</strong> format defined in <em>Platform
+Initialization Specification Volume 3 – Shared Architectural
+elements</em>.</p>
+<p>For example, any physical memory found in bootloader should be
+reported using resource type <strong>EFI_RESOURCE_SYSTEM_MEMORY</strong>, and the
+reserved memory used by bootloader should be reported using resource
+type <strong>EFI_RESOURCE_MEMORY_RESERVED</strong>.</p>
+<p>I/O and memory mapped I/O resource should also be reported using
+resource type <strong>EFI_RESOURCE_IO</strong> and
+<strong>EFI_RESOURCE_MEMORY_MAPPED_IO</strong>.</p>
+<p><strong>Open</strong>: should report payload in memory using the Boot Firmware
+Volume (BFV) HOB?</p>
+</div></blockquote>
+</div>
+<div class="section" id="acpi-table-hob">
+<h3>ACPI Table HOB<a class="headerlink" href="#acpi-table-hob" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>The bootloader should pass ACPI table through the GUID HOB to the
+payload. So that the payload could get the platform information from
+the ACPI table.</p>
+<p>Build the different HOBs for different table using standard defined
+GUID.</p>
+<div class="line-block">
+<div class="line"><strong>HOB GUID</strong></div>
+<div class="line"><strong>#define EFI_ACPI_TABLE_GUID \</strong></div>
+<div class="line"><strong>{0x8868e871, 0xe4f1, 0x11d3, {0xbc, 0x22, 0x0, 0x80, 0xc7, 0x3c,
+0x88, 0x81}}</strong></div>
+</div>
+<p><strong>Note: This GUID reuses the same GUID defined in UEFI spec chapter
+4.6 EFI Configuration Table</strong></p>
+<p><strong>Hob Interface Structure</strong></p>
+<p>#pragma <strong>pack</strong>(1)</p>
+<div class="line-block">
+<div class="line"><em>///</em></div>
+<div class="line"><em>/// Bootloader acpi table hob</em></div>
+<div class="line"><em>///</em></div>
+<div class="line">typedef struct {</div>
+<div class="line">EFI_HOB_GUID_TYPE Header;</div>
+</div>
+<div class="line-block">
+<div class="line">UINT64 TableAddress;</div>
+<div class="line">} ACPI_TABLE_HOB;</div>
+</div>
+<p>#pragma pack()</p>
+<p><strong>Member Description</strong></p>
+<p>Header</p>
+<p>Header.Name set to EFI_ACPI_TABLE_GUID. See section 6.5
+EFI_HOB_GUID_TYPE.</p>
+<p><strong>TableAddress</strong></p>
+<p>Point to the ACPI RSDP table. The ACPI table need follow ACPI
+specification verson 2.0 or above.</p>
+</div></blockquote>
+</div>
+<div class="section" id="smbios-table-hob">
+<h3>SMBIOS Table HOB<a class="headerlink" href="#smbios-table-hob" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>The bootloader might pass SMBIOS table through the GUID HOB to the
+payload. So that the payload could get the platform information from
+the table.</p>
+<div class="line-block">
+<div class="line"><strong>HOB GUID</strong></div>
+<div class="line"><strong>#define SMBIOS_TABLE_GUID \</strong></div>
+<div class="line"><strong>{0xeb9d2d31, 0x2d88, 0x11d3, {0x9a, 0x16, 0x0, 0x90, 0x27, 0x3f,
+0xc1, 0x4d}}</strong></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>#define SMBIOS3_TABLE_GUID \</strong></div>
+<div class="line"><strong>{0xf2fd1544, 0x9794, 0x4a2c, {0x99, 0x2e, 0xe5, 0xbb, 0xcf, 0x20,
+0xe3, 0x94}}</strong></div>
+</div>
+<p><strong>Note: These GUIDs reuse the same GUIDs defined in UEFI spec chapter
+4.6 EFI Configuration Table</strong></p>
+<p><strong>Hob Interface Structure</strong></p>
+<p>#pragma <strong>pack</strong>(1)</p>
+<div class="line-block">
+<div class="line"><em>///</em></div>
+<div class="line"><em>/// Bootloader SMBIOS table hob</em></div>
+<div class="line"><em>///</em></div>
+<div class="line">typedef struct {</div>
+<div class="line">EFI_HOB_GUID_TYPE Header;</div>
+</div>
+<div class="line-block">
+<div class="line">UINT64 TableAddress;</div>
+<div class="line">} SMBIOS_TABLE_HOB;</div>
+</div>
+<p>#pragma pack()</p>
+<p><strong>Member Description</strong></p>
+<p>Header</p>
+<p>Header.Name set to SMBIOS_TABLE_GUID if SMBIOS table from
+TableAddress follows the format defined by SMBIOS_TABLE_ENTRY_POINT,
+or set to SMBIOS3_TABLE_GUID if SMBIOS table from TableAddress
+follows the format defied by SMBIOS_TABLE_3_0_ENTRY_POINT. See
+section 6.5 EFI_HOB_GUID_TYPE.</p>
+<p><strong>AcpiTableAddress</strong></p>
+<p>Point to the SMBIOS table entry point.</p>
+</div></blockquote>
+</div>
+<div class="section" id="device-tree-hob">
+<h3>DEVICE TREE HOB<a class="headerlink" href="#device-tree-hob" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>The bootloader might pass Device Tree through the GUID HOB to the
+payload. So that the payload could get the platform information from
+the table.</p>
+<div class="line-block">
+<div class="line"><strong>HOB GUID</strong></div>
+<div class="line"><strong>#define DEVICE_TREE_GUID \</strong></div>
+<div class="line"><strong>{0x6784b889, 0xb13c, 0x4c3b, {0xae, 0x4b, 0xf, 0xa, 0x2e, 0x32,
+0xe, 0xa3}}</strong></div>
+</div>
+<p><strong>Hob Interface Structure</strong></p>
+<p>#pragma <strong>pack</strong>(1)</p>
+<div class="line-block">
+<div class="line"><em>///</em></div>
+<div class="line"><em>/// Bootloader Device Tree hob</em></div>
+<div class="line"><em>///</em></div>
+<div class="line">typedef struct {</div>
+<div class="line">EFI_HOB_GUID_TYPE Header;</div>
+</div>
+<div class="line-block">
+<div class="line">UINT64 DeviceTreeAddress;</div>
+<div class="line">} DEVICE_TREE_HOB;</div>
+</div>
+<p>#pragma pack()</p>
+<p><strong>Member Description</strong></p>
+<p>Header</p>
+<p>Header.Name set to DEVICE_TREE_GUID. See section 6.5
+EFI_HOB_GUID_TYPE.</p>
+<p>DeviceTreeAddress</p>
+<p>Point to the Device Tree entry point.</p>
+</div></blockquote>
+</div>
+<div class="section" id="graphics-information-hob">
+<h3>Graphics information HOB<a class="headerlink" href="#graphics-information-hob" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>If bootloader initializes the graphics device, the bootloader might
+report graphics mode and framebuffer information through
+<strong>EFI_PEI_GRAPHICS_INFO_HOB</strong>, and graphics hardware information
+through <strong>EFI_PEI_GRAPHICS_DEVICE_INFO_HOB</strong>.</p>
+<p><strong>EFI_PEI_GRAPHICS_INFO_HOB</strong> and
+<strong>EFI_PEI_GRAPHICS_DEVICE_INFO_HOB</strong> provide the basic information
+for the graphics display. These HOBs are described in the <em>PI
+Specification.</em></p>
+<p>Please refer Appendix 6.6 EFI_PEI_GRAPHICS_INFO_HOB and 6.7
+<strong>EFI_PEI_GRAPHICS_DEVICE_INFO_HOB</strong> for the details.</p>
+</div></blockquote>
+</div>
+<div class="section" id="serial-information-hob">
+<h3>Serial Information HOB<a class="headerlink" href="#serial-information-hob" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>If the debug device type and subtype are specified in DBG2, the
+bootloader should pass SERIAL_PORT_INFO hob to payload. This hob
+provides 16550 compatible serial debug port information from
+bootloader to payload.</p>
+<p><strong>Opens: Should we let bootloader provide debug callback</strong> <strong>for
+debug?</strong></p>
+<div class="line-block">
+<div class="line"><strong>HOB GUID</strong></div>
+<div class="line"><strong>#define SERIAL_INFO_GUID \</strong></div>
+<div class="line"><strong>{0xaa7e190d, 0xbe21, 0x4409, {0x8e, 0x67, 0xa2, 0xcd, 0xf, 0x61,
+0xe1, 0x70}}</strong></div>
+</div>
+<p><strong>Hob Interface Structure</strong></p>
+<p><strong>#pragma pack(1)</strong></p>
+<p>typedef struct {</p>
+<p>UINT16 Reversion;</p>
+<p>BOOLEAN UseMmio;</p>
+<p>UINT8 RegisterWidth;</p>
+<p>UINT32 BaudRate;</p>
+<p>UINT64 RegisterBase;</p>
+<p>} SERIAL_PORT_INFO;</p>
+<p><strong>#pragma pack()</strong></p>
+<p><strong>Member Description</strong></p>
+<p><strong>UseMmio</strong></p>
+<p>Indicates the 16550 serial port registers are in MMIO space, or in
+I/O space.</p>
+<p>Reversion</p>
+<p>Use 0 for this spec</p>
+<p><strong>RegisterWidth</strong></p>
+<p>Indicates the access width for 16550 serial port registers, e.g.:</p>
+<p>8 - serial port registers are accessed in 8-bit width.</p>
+<p>32 - serial port registers are accessed in 32-bit width.</p>
+<p><strong>RegisterBase</strong></p>
+<p>Base address of 16550 serial port registers in MMIO or I/O space.</p>
+<p><strong>BaudRate</strong></p>
+<p>Baud rate for the 16550 compatible serial port.</p>
+<p>It could be 921600, 460800, 230400, 115200, 57600, 38400, 19200,
+9600, 7200, 4800, 3600, 2400, 2000, 1800, 1200, 600, 300, 150, 134,
+110, 75, 50</p>
+<p>Set to 0 to use the default baud rate 115200.</p>
+</div></blockquote>
+</div>
+<div class="section" id="cpu-info-hob">
+<h3>CPU INFO HOB<a class="headerlink" href="#cpu-info-hob" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>The bootloader should build a CPU information HOB to the payload.</p>
+<div class="line-block">
+<div class="line"><strong>HOB Type</strong></div>
+<div class="line">EFI_HOB_TYPE_CPU</div>
+</div>
+<p><strong>Hob Interface Structure</strong></p>
+<p>#pragma <strong>pack</strong>(1)</p>
+<div class="line-block">
+<div class="line"><em>///</em></div>
+<div class="line"><em>/// CPU info Hob</em></div>
+<div class="line"><em>///</em></div>
+<div class="line">typedef struct {</div>
+<div class="line">UINT8 Revision;</div>
+</div>
+<p>UINT8 Reserved;</p>
+<p>UINT8 SizeOfMemorySpace;</p>
+<div class="line-block">
+<div class="line">UINT8 SizeOfIoSpace;</div>
+<div class="line">} PAYLOAD_CPU_INFO;</div>
+<div class="line">#pragma pack()</div>
+</div>
+<p><strong>Member Description</strong></p>
+<p><strong>Revision</strong></p>
+<p>Use 0 for this structure.</p>
+<p><strong>SizeOfMemorySpace</strong></p>
+<p>The maximum physical memory addressability of the processor.</p>
+<p><strong>SizeOfIoSpace</strong></p>
+<p>The maximum physical I/O addressability of the processor.</p>
+</div></blockquote>
+</div>
+<div class="section" id="optional-hobs">
+<h3>Optional HOBs<a class="headerlink" href="#optional-hobs" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>Some more HOBs could be built by bootloaders for advanced features.</p>
+<p>e.g.:</p>
+<p>Support FVs (also other format) from bootloader to payload</p>
+<p>Add debug log as HOB to payload</p>
+<p><strong>Opens</strong>: Does the bootloader need report IO info to payload?</p>
+<p>Better let the bootloader to report it,</p>
+<p><strong>Opens</strong>: does the HOB List need a checksum?</p>
+<p>It looks not too much value. Keep it open if we really need it.</p>
+<p><strong>Opens</strong>: For some information it is already in ACPI table, should
+bootloader build HOB for same info?</p>
+<p>Payload could have a check to ACPI table to get basic info they need.</p>
+</div></blockquote>
+</div>
+</div>
+</div>
+<div class="section" id="appendix-a-hob-data-structures">
+<h1>Appendix A – HOB Data Structures<a class="headerlink" href="#appendix-a-hob-data-structures" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div>The declarations/definitions provided here are derived from the EDK2
+source available for download at <a class="reference external" href="https://github.com/tianocore/edk2">https://github.com/tianocore/edk2</a></div></blockquote>
+<div class="section" id="base-data-type">
+<h2>Base Data Type<a class="headerlink" href="#base-data-type" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="line-block">
+<div class="line"><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Base.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Base.h</a></div>
+</div>
+<blockquote>
+<div><dl class="docutils">
+<dt>typedef struct {</dt>
+<dd>UINT32 Data1;
+UINT16 Data2;
+UINT16 Data3;
+UINT8 Data4[8];</dd>
+</dl>
+<p>} GUID;</p>
+</div></blockquote>
+<dl class="docutils">
+<dt><a href="#id1"><span class="problematic" id="id2">`</span></a><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiBaseType.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiBaseType.h</a></dt>
+<dd><p class="first">&lt;<a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiBaseType.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiBaseType.h</a>&gt;`__</p>
+<blockquote class="last">
+<div>typedef GUID EFI_GUID;
+typedef UINT64 EFI_PHYSICAL_ADDRESS;</div></blockquote>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="efi-hob-type">
+<h2>EFI HOB TYPE<a class="headerlink" href="#efi-hob-type" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a></p>
+<p>//</p>
+<p>// HobType of EFI_HOB_GENERIC_HEADER.</p>
+<p>//</p>
+<p>#define EFI_HOB_TYPE_HANDOFF 0x0001</p>
+<p>#define EFI_HOB_TYPE_MEMORY_ALLOCATION 0x0002</p>
+<p>#define EFI_HOB_TYPE_RESOURCE_DESCRIPTOR 0x0003</p>
+<p>#define EFI_HOB_TYPE_GUID_EXTENSION 0x0004</p>
+<p>#define EFI_HOB_TYPE_FV 0x0005</p>
+<p>#define EFI_HOB_TYPE_CPU 0x0006</p>
+<p>#define EFI_HOB_TYPE_MEMORY_POOL 0x0007</p>
+<p>#define EFI_HOB_TYPE_FV2 0x0009</p>
+<p>#define EFI_HOB_TYPE_LOAD_PEIM_UNUSED 0x000A</p>
+<p>#define EFI_HOB_TYPE_UEFI_CAPSULE 0x000B</p>
+<p>#define EFI_HOB_TYPE_FV3 0x000C</p>
+<p>#define EFI_HOB_TYPE_UNUSED 0xFFFE</p>
+<p>#define EFI_HOB_TYPE_END_OF_HOB_LIST 0xFFFF</p>
+</div></blockquote>
+</div>
+<div class="section" id="efi-hob-generic-header">
+<h2>EFI_HOB_GENERIC_HEADER<a class="headerlink" href="#efi-hob-generic-header" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a></p>
+<p>///</p>
+<p>/// Describes the format and size of the data inside the HOB.</p>
+<p>/// All HOBs must contain this generic HOB header.</p>
+<p>///</p>
+<p>typedef struct {</p>
+<p>///</p>
+<p>/// Identifies the HOB data structure type.</p>
+<p>///</p>
+<p>UINT16 HobType;</p>
+<p>///</p>
+<p>/// The length in bytes of the HOB.</p>
+<p>///</p>
+<p>UINT16 HobLength;</p>
+<p>///</p>
+<p>/// This field must always be set to zero.</p>
+<p>///</p>
+<p>UINT32 Reserved;</p>
+<p>} EFI_HOB_GENERIC_HEADER;</p>
+</div></blockquote>
+</div>
+<div class="section" id="hob-list-header">
+<h2>HOB List Header<a class="headerlink" href="#hob-list-header" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a></div></blockquote>
+<div class="section" id="efi-hob-handoff-info-table">
+<h3>EFI_HOB_HANDOFF_INFO_TABLE<a class="headerlink" href="#efi-hob-handoff-info-table" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>///</p>
+<p>/// Contains general state information used by the HOB producer
+phase.</p>
+<p>/// This HOB must be the first one in the HOB list.</p>
+<p>///</p>
+<p>typedef struct {</p>
+<p>///</p>
+<p>/// The HOB generic header. Header.HobType = EFI_HOB_TYPE_HANDOFF.</p>
+<p>///</p>
+<p>EFI_HOB_GENERIC_HEADER Header;</p>
+<p>///</p>
+<p>/// The version number pertaining to the PHIT HOB definition.</p>
+<p>/// This value is four bytes in length to provide an 8-byte aligned
+entry</p>
+<p>/// when it is combined with the 4-byte BootMode.</p>
+<p>///</p>
+<p>UINT32 Version;</p>
+<p>///</p>
+<p>/// The system boot mode as determined during the HOB producer phase.</p>
+<p>///</p>
+<p>EFI_BOOT_MODE BootMode;</p>
+<p>///</p>
+<p>/// The highest address location of memory that is allocated for use
+by the HOB producer</p>
+<p>/// phase. This address must be 4-KB aligned to meet page
+restrictions of UEFI.</p>
+<p>///</p>
+<p>EFI_PHYSICAL_ADDRESS EfiMemoryTop;</p>
+<p>///</p>
+<p>/// The lowest address location of memory that is allocated for use
+by the HOB producer phase.</p>
+<p>///</p>
+<p>EFI_PHYSICAL_ADDRESS EfiMemoryBottom;</p>
+<p>///</p>
+<p>/// The highest address location of free memory that is currently
+available</p>
+<p>/// for use by the HOB producer phase.</p>
+<p>///</p>
+<p>EFI_PHYSICAL_ADDRESS EfiFreeMemoryTop;</p>
+<p>///</p>
+<p>/// The lowest address location of free memory that is available for
+use by the HOB producer phase.</p>
+<p>///</p>
+<p>EFI_PHYSICAL_ADDRESS EfiFreeMemoryBottom;</p>
+<p>///</p>
+<p>/// The end of the HOB list.</p>
+<p>///</p>
+<p>EFI_PHYSICAL_ADDRESS EfiEndOfHobList;</p>
+<p>} EFI_HOB_HANDOFF_INFO_TABLE;</p>
+</div></blockquote>
+</div>
+<div class="section" id="efi-hob-handoff-table-version">
+<h3>EFI_HOB_HANDOFF_TABLE_VERSION<a class="headerlink" href="#efi-hob-handoff-table-version" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>///</p>
+<p>/// Value of version in EFI_HOB_HANDOFF_INFO_TABLE.</p>
+<p>///</p>
+<p>#define EFI_HOB_HANDOFF_TABLE_VERSION 0x0009</p>
+</div></blockquote>
+</div>
+<div class="section" id="efi-boot-mode">
+<h3>EFI_BOOT_MODE<a class="headerlink" href="#efi-boot-mode" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><blockquote>
+<div><div class="line-block">
+<div class="line"><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiBootMode.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiBootMode.h</a></div>
+</div>
+<p>///</p>
+<p>/// EFI boot mode</p>
+<p>///</p>
+<p>typedef UINT32 EFI_BOOT_MODE;</p>
+<p>//</p>
+<p>// 0x21 - 0xf..f are reserved.</p>
+<p>//</p>
+<p>#define BOOT_WITH_FULL_CONFIGURATION 0x00</p>
+<p>#define BOOT_WITH_MINIMAL_CONFIGURATION 0x01</p>
+<p>#define BOOT_ASSUMING_NO_CONFIGURATION_CHANGES 0x02</p>
+<p>#define BOOT_WITH_FULL_CONFIGURATION_PLUS_DIAGNOSTICS 0x03</p>
+<p>#define BOOT_WITH_DEFAULT_SETTINGS 0x04</p>
+<p>#define BOOT_ON_S4_RESUME 0x05</p>
+<p>#define BOOT_ON_S5_RESUME 0x06</p>
+<p>#define BOOT_WITH_MFG_MODE_SETTINGS 0x07</p>
+<p>#define BOOT_ON_S2_RESUME 0x10</p>
+<p>#define BOOT_ON_S3_RESUME 0x11</p>
+<p>#define BOOT_ON_FLASH_UPDATE 0x12</p>
+<p>#define BOOT_IN_RECOVERY_MODE 0x20</p>
+</div></blockquote>
+<p>EFI_HOB_GUID_TYPE</p>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><blockquote>
+<div><div class="line-block">
+<div class="line">This is the generic HOB header for GUID type HOB.</div>
+<div class="line"><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a>
+///</div>
+</div>
+<p>/// Allows writers of executable content in the HOB producer phase to</p>
+<p>/// maintain and manage HOBs with specific GUID.</p>
+<p>///</p>
+<p>typedef struct {</p>
+<p>///</p>
+<p>/// The HOB generic header. Header.HobType =
+EFI_HOB_TYPE_GUID_EXTENSION.</p>
+<p>///</p>
+<p>EFI_HOB_GENERIC_HEADER Header;</p>
+<p>///</p>
+<p>/// A GUID that defines the contents of this HOB.</p>
+<p>///</p>
+<p>EFI_GUID Name;</p>
+<p>//</p>
+<p>// Guid specific data goes here</p>
+<p>//</p>
+<p>} EFI_HOB_GUID_TYPE;</p>
+</div></blockquote>
+<p>EFI_PEI_GRAPHICS_INFO_HOB</p>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><dl class="docutils">
+<dt><a href="#id3"><span class="problematic" id="id4">`</span></a><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h</a></dt>
+<dd>&lt;<a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h</a>&gt;`__</dd>
+</dl>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Protocol/GraphicsOutput.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Protocol/GraphicsOutput.h</a></p>
+<div class="line-block">
+<div class="line"><strong>HOB GUID</strong></div>
+<div class="line">#define EFI_PEI_GRAPHICS_INFO_HOB_GUID \</div>
+<div class="line">{0x39f62cce, 0x6825, 0x4669, {0xbb, 0x56, 0x54, 0x1a, 0xba, 0x75,
+0x3a, 0x07}}</div>
+</div>
+<p><strong>Hob Interface Structure</strong></p>
+<div class="line-block">
+<div class="line">typedef struct {</div>
+<div class="line">EFI_PHYSICAL_ADDRESS FrameBufferBase;</div>
+<div class="line">UINT32 FrameBufferSize;</div>
+<div class="line">EFI_GRAPHICS_OUTPUT_MODE_INFORMATION GraphicsMode;</div>
+<div class="line">} EFI_PEI_GRAPHICS_INFO_HOB;</div>
+</div>
+<p><strong>Related Definitions</strong></p>
+<p>typedef struct {</p>
+<p>UINT32 RedMask;</p>
+<p>UINT32 GreenMask;</p>
+<p>UINT32 BlueMask;</p>
+<p>UINT32 ReservedMask;</p>
+<p>} EFI_PIXEL_BITMASK;</p>
+<div class="line-block">
+<div class="line">If a bit is set in <em>RedMask</em>, <em>GreenMask</em>, or <em>BlueMask</em> then those
+bits of the pixel represent the</div>
+<div class="line">corresponding color. Bits in <em>RedMask</em>, <em>GreenMask</em>, <em>BlueMask</em>,
+and <em>ReserverdMask</em> must not overlap bit</div>
+<div class="line">positions. The values for the red, green, and blue components in
+the bit mask represent the color</div>
+<div class="line">intensity. The color intensities must increase as the color values
+for each color mask increase with a</div>
+<div class="line">minimum intensity of all bits in a color mask clear to a maximum
+intensity of all bits in a color mask set.</div>
+</div>
+<p>typedef enum {</p>
+<p>///</p>
+<p>/// A pixel is 32-bits and byte zero represents red, byte one
+represents green,</p>
+<p>/// byte two represents blue, and byte three is reserved. This is the
+definition</p>
+<p>/// for the physical frame buffer. The byte values for the red,
+green, and blue</p>
+<p>/// components represent the color intensity. This color intensity
+value range</p>
+<p>/// from a minimum intensity of 0 to maximum intensity of 255.</p>
+<p>///</p>
+<p>PixelRedGreenBlueReserved8BitPerColor,</p>
+<p>///</p>
+<p>/// A pixel is 32-bits and byte zero represents blue, byte one
+represents green,</p>
+<p>/// byte two represents red, and byte three is reserved. This is the
+definition</p>
+<p>/// for the physical frame buffer. The byte values for the red,
+green, and blue</p>
+<p>/// components represent the color intensity. This color intensity
+value range</p>
+<p>/// from a minimum intensity of 0 to maximum intensity of 255.</p>
+<p>///</p>
+<p>PixelBlueGreenRedReserved8BitPerColor,</p>
+<p>///</p>
+<p>/// The Pixel definition of the physical frame buffer.</p>
+<p>///</p>
+<p>PixelBitMask,</p>
+<p>///</p>
+<p>/// This mode does not support a physical frame buffer.</p>
+<p>///</p>
+<p>PixelBltOnly,</p>
+<p>///</p>
+<p>/// Valid EFI_GRAPHICS_PIXEL_FORMAT enum values are less than this
+value.</p>
+<p>///</p>
+<p>PixelFormatMax</p>
+<p>} EFI_GRAPHICS_PIXEL_FORMAT;</p>
+<p>typedef struct {</p>
+<p>///</p>
+<p>/// The version of this data structure. A value of zero represents
+the</p>
+<p>/// EFI_GRAPHICS_OUTPUT_MODE_INFORMATION structure as defined in this
+specification.</p>
+<p>///</p>
+<p>UINT32 Version;</p>
+<p>///</p>
+<p>/// The size of video screen in pixels in the X dimension.</p>
+<p>///</p>
+<p>UINT32 HorizontalResolution;</p>
+<p>///</p>
+<p>/// The size of video screen in pixels in the Y dimension.</p>
+<p>///</p>
+<p>UINT32 VerticalResolution;</p>
+<p>///</p>
+<p>/// Enumeration that defines the physical format of the pixel. A
+value of PixelBltOnly</p>
+<p>/// implies that a linear frame buffer is not available for this
+mode.</p>
+<p>///</p>
+<p>EFI_GRAPHICS_PIXEL_FORMAT PixelFormat;</p>
+<p>///</p>
+<p>/// This bitmask is only valid if PixelFormat is set to
+PixelPixelBitMask.</p>
+<p>/// A bit being set defines what bits are used for what purpose such
+as Red, Green, Blue, or Reserved.</p>
+<p>///</p>
+<p>EFI_PIXEL_BITMASK PixelInformation;</p>
+<p>///</p>
+<p>/// Defines the number of pixel elements per video memory line.</p>
+<p>///</p>
+<p>UINT32 PixelsPerScanLine;</p>
+<p>} EFI_GRAPHICS_OUTPUT_MODE_INFORMATION;</p>
+<p><strong>NOTE:</strong> for performance reasons, or due to hardware restrictions,
+scan lines may be padded to an amount of memory alignment. These
+padding pixel elements are outside the area covered by
+<em>HorizontalResolution</em> and are not visible. For direct frame buffer
+access, this number is used as a span between starts of pixel lines
+in video memory. Based on the size of an individual pixel element and
+<em>PixelsPerScanline</em>, the offset in video memory from pixel element
+(x, y) to pixel element (x, y+1) has to be calculated as “sizeof(
+PixelElement ) * PixelsPerScanLine”, not “sizeof( PixelElement ) *
+HorizontalResolution”, though in many cases those values can
+coincide. This value can depend on video hardware and mode
+resolution. GOP implementation is responsible for providing accurate
+value for this field.</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="efi-pei-graphics-device-info-hob">
+<h2>EFI_PEI_GRAPHICS_DEVICE_INFO_HOB<a class="headerlink" href="#efi-pei-graphics-device-info-hob" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><blockquote>
+<div><dl class="docutils">
+<dt><a href="#id5"><span class="problematic" id="id6">`</span></a><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h</a></dt>
+<dd>&lt;<a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h</a>&gt;`__</dd>
+</dl>
+<p><strong>HOB GUID</strong></p>
+<div class="line-block">
+<div class="line">#define EFI_PEI_GRAPHICS_DEVICE_INFO_HOB_GUID \</div>
+<div class="line">{0xe5cb2ac9, 0xd35d, 0x4430, {0x93, 0x6e, 0x1d, 0xe3, 0x32, 0x47,
+0x8d, 0xe7}}</div>
+</div>
+<p><strong>Hob Interface Structure</strong></p>
+<p>typedef struct {</p>
+<p>UINT16 VendorId; ///&lt; Ignore if the value is 0xFFFF.</p>
+<p>UINT16 DeviceId; ///&lt; Ignore if the value is 0xFFFF.</p>
+<p>UINT16 SubsystemVendorId; ///&lt; Ignore if the value is 0xFFFF.</p>
+<p>UINT16 SubsystemId; ///&lt; Ignore if the value is 0xFFFF.</p>
+<p>UINT8 RevisionId; ///&lt; Ignore if the value is 0xFF.</p>
+<p>UINT8 BarIndex; ///&lt; Ignore if the value is 0xFF.</p>
+<p>} EFI_PEI_GRAPHICS_DEVICE_INFO_HOB;</p>
+</div></blockquote>
+<p>EFI_HOB_RESOURCE_DESCRIPTOR</p>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a></div></blockquote>
+<div class="section" id="efi-resource-type">
+<h3>EFI_RESOURCE_TYPE<a class="headerlink" href="#efi-resource-type" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><blockquote>
+<div><p>///</p>
+<p>/// The resource type</p>
+<p>///</p>
+<p>typedef UINT32 EFI_RESOURCE_TYPE;</p>
+<p>///</p>
+<p>/// Value of ResourceType in EFI_HOB_RESOURCE_DESCRIPTOR.</p>
+<p>///</p>
+<p>#define EFI_RESOURCE_SYSTEM_MEMORY 0x00000000</p>
+<p>#define EFI_RESOURCE_MEMORY_MAPPED_IO 0x00000001</p>
+<p>#define EFI_RESOURCE_IO 0x00000002</p>
+<p>#define EFI_RESOURCE_FIRMWARE_DEVICE 0x00000003</p>
+<p>#define EFI_RESOURCE_MEMORY_MAPPED_IO_PORT 0x00000004</p>
+<p>#define EFI_RESOURCE_MEMORY_RESERVED 0x00000005</p>
+<p>#define EFI_RESOURCE_IO_RESERVED 0x00000006</p>
+<p>#define EFI_RESOURCE_MAX_MEMORY_TYPE 0x00000007</p>
+</div></blockquote>
+<p>EFI_RESOURCE_ATTRIBUTE_TYPE</p>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><p>///</p>
+<p>/// A type of recount attribute type.</p>
+<p>///</p>
+<p>typedef UINT32 EFI_RESOURCE_ATTRIBUTE_TYPE;</p>
+<p>//</p>
+<p>// These types can be ORed together as needed.</p>
+<p>//</p>
+<p>// The following attributes are used to describe settings</p>
+<p>//</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_PRESENT 0x00000001</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_INITIALIZED 0x00000002</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_TESTED 0x00000004</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_READ_PROTECTED 0x00000080</p>
+<p>//</p>
+<p>// This is typically used as memory cacheability attribute today.</p>
+<p>// NOTE: Since PI spec 1.4, please use
+EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTED</p>
+<p>// as Physical write protected attribute, and
+EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTED</p>
+<p>// means Memory cacheability attribute: The memory supports being
+programmed with</p>
+<p>// a writeprotected cacheable attribute.</p>
+<p>//</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTED 0x00000100</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_EXECUTION_PROTECTED 0x00000200</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_PERSISTENT 0x00800000</p>
+<p>//</p>
+<p>// The rest of the attributes are used to describe capabilities</p>
+<p>//</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_SINGLE_BIT_ECC 0x00000008</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_MULTIPLE_BIT_ECC 0x00000010</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_ECC_RESERVED_1 0x00000020</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_ECC_RESERVED_2 0x00000040</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_UNCACHEABLE 0x00000400</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_WRITE_COMBINEABLE 0x00000800</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_WRITE_THROUGH_CACHEABLE 0x00001000</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_WRITE_BACK_CACHEABLE 0x00002000</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_16_BIT_IO 0x00004000</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_32_BIT_IO 0x00008000</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_64_BIT_IO 0x00010000</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_UNCACHED_EXPORTED 0x00020000</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_READ_PROTECTABLE 0x00100000</p>
+<p>//</p>
+<p>// This is typically used as memory cacheability attribute today.</p>
+<p>// NOTE: Since PI spec 1.4, please use
+EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTABLE</p>
+<p>// as Memory capability attribute: The memory supports being
+protected from processor</p>
+<p>// writes, and EFI_RESOURCE_ATTRIBUTE_WRITE_PROTEC TABLE means Memory
+cacheability attribute:</p>
+<p>// The memory supports being programmed with a writeprotected
+cacheable attribute.</p>
+<p>//</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTABLE 0x00200000</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_EXECUTION_PROTECTABLE 0x00400000</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_PERSISTABLE 0x01000000</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTED 0x00040000</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTABLE 0x00080000</p>
+<p>//</p>
+<p>// Physical memory relative reliability attribute. This</p>
+<p>// memory provides higher reliability relative to other</p>
+<p>// memory in the system. If all memory has the same</p>
+<p>// reliability, then this bit is not used.</p>
+<p>//</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_MORE_RELIABLE 0x02000000</p>
+</div></blockquote>
+<blockquote id="efi-hob-resource-descriptor-1">
+<div>EFI_HOB_RESOURCE_DESCRIPTOR</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><blockquote>
+<div><p>///</p>
+<p>/// Describes the resource properties of all fixed,</p>
+<p>/// nonrelocatable resource ranges found on the processor</p>
+<p>/// host bus during the HOB producer phase.</p>
+<p>///</p>
+<p>typedef struct {</p>
+<p>///</p>
+<p>/// The HOB generic header. Header.HobType =
+EFI_HOB_TYPE_RESOURCE_DESCRIPTOR.</p>
+<p>///</p>
+<p>EFI_HOB_GENERIC_HEADER Header;</p>
+<p>///</p>
+<p>/// A GUID representing the owner of the resource. This GUID is used
+by HOB</p>
+<p>/// consumer phase components to correlate device ownership of a
+resource.</p>
+<p>///</p>
+<p>EFI_GUID Owner;</p>
+<p>///</p>
+<p>/// The resource type enumeration as defined by EFI_RESOURCE_TYPE.</p>
+<p>///</p>
+<p>EFI_RESOURCE_TYPE ResourceType;</p>
+<p>///</p>
+<p>/// Resource attributes as defined by EFI_RESOURCE_ATTRIBUTE_TYPE.</p>
+<p>///</p>
+<p>EFI_RESOURCE_ATTRIBUTE_TYPE ResourceAttribute;</p>
+<p>///</p>
+<p>/// The physical start address of the resource region.</p>
+<p>///</p>
+<p>EFI_PHYSICAL_ADDRESS PhysicalStart;</p>
+<p>///</p>
+<p>/// The number of bytes of the resource region.</p>
+<p>///</p>
+<p>UINT64 ResourceLength;</p>
+<p>} EFI_HOB_RESOURCE_DESCRIPTOR;</p>
+</div></blockquote>
+<p>EFI_HOB_MEMORY_ALLOCATION</p>
+</div></blockquote>
+</div>
+<hr class="docutils" />
+<div class="section" id="efi-memory-type">
+<h3>EFI_MEMORY_TYPE<a class="headerlink" href="#efi-memory-type" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiMultiPhase.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiMultiPhase.h</a></p>
+<p>///</p>
+<p>/// Enumeration of memory types introduced in UEFI.</p>
+<p>///</p>
+<p>typedef enum {</p>
+<p>///</p>
+<p>/// Not used.</p>
+<p>///</p>
+<p>EfiReservedMemoryType,</p>
+<p>///</p>
+<p>/// The code portions of a loaded application.</p>
+<p>/// (Note that UEFI OS loaders are UEFI applications.)</p>
+<p>///</p>
+<p>EfiLoaderCode,</p>
+<p>///</p>
+<p>/// The data portions of a loaded application and the default data
+allocation</p>
+<p>/// type used by an application to allocate pool memory.</p>
+<p>///</p>
+<p>EfiLoaderData,</p>
+<p>///</p>
+<p>/// The code portions of a loaded Boot Services Driver.</p>
+<p>///</p>
+<p>EfiBootServicesCode,</p>
+<p>///</p>
+<p>/// The data portions of a loaded Boot Serves Driver, and the default
+data</p>
+<p>/// allocation type used by a Boot Services Driver to allocate pool
+memory.</p>
+<p>///</p>
+<p>EfiBootServicesData,</p>
+<p>///</p>
+<p>/// The code portions of a loaded Runtime Services Driver.</p>
+<p>///</p>
+<p>EfiRuntimeServicesCode,</p>
+<p>///</p>
+<p>/// The data portions of a loaded Runtime Services Driver and the
+default</p>
+<p>/// data allocation type used by a Runtime Services Driver to
+allocate pool memory.</p>
+<p>///</p>
+<p>EfiRuntimeServicesData,</p>
+<p>///</p>
+<p>/// Free (unallocated) memory.</p>
+<p>///</p>
+<p>EfiConventionalMemory,</p>
+<p>///</p>
+<p>/// Memory in which errors have been detected.</p>
+<p>///</p>
+<p>EfiUnusableMemory,</p>
+<p>///</p>
+<p>/// Memory that holds the ACPI tables.</p>
+<p>///</p>
+<p>EfiACPIReclaimMemory,</p>
+<p>///</p>
+<p>/// Address space reserved for use by the firmware.</p>
+<p>///</p>
+<p>EfiACPIMemoryNVS,</p>
+<p>///</p>
+<p>/// Used by system firmware to request that a memory-mapped IO region</p>
+<p>/// be mapped by the OS to a virtual address so it can be accessed by
+EFI runtime services.</p>
+<p>///</p>
+<p>EfiMemoryMappedIO,</p>
+<p>///</p>
+<p>/// System memory-mapped IO region that is used to translate memory</p>
+<p>/// cycles to IO cycles by the processor.</p>
+<p>///</p>
+<p>EfiMemoryMappedIOPortSpace,</p>
+<p>///</p>
+<p>/// Address space reserved by the firmware for code that is part of
+the processor.</p>
+<p>///</p>
+<p>EfiPalCode,</p>
+<p>///</p>
+<p>/// A memory region that operates as EfiConventionalMemory,</p>
+<p>/// however it happens to also support byte-addressable
+non-volatility.</p>
+<p>///</p>
+<p>EfiPersistentMemory,</p>
+<p>EfiMaxMemoryType</p>
+<p>} EFI_MEMORY_TYPE;</p>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a></p>
+</div></blockquote>
+<p><strong>11.6.2 EFI_HOB_MEMORY_ALLOCATION_HEADER</strong></p>
+<blockquote>
+<div><p>/// EFI_HOB_MEMORY_ALLOCATION_HEADER describes the</p>
+<p>/// various attributes of the logical memory allocation. The type
+field will be used for</p>
+<p>/// subsequent inclusion in the UEFI memory map.</p>
+<p>///</p>
+<p>typedef struct {</p>
+<p>///</p>
+<p>/// A GUID that defines the memory allocation region’s type and
+purpose, as well as</p>
+<p>/// other fields within the memory allocation HOB. This GUID is used
+to define the</p>
+<p>/// additional data within the HOB that may be present for the memory
+allocation HOB.</p>
+<p>/// Type EFI_GUID is defined in InstallProtocolInterface() in the
+UEFI 2.0</p>
+<p>/// specification.</p>
+<p>///</p>
+<p>EFI_GUID Name;</p>
+<p>///</p>
+<p>/// The base address of memory allocated by this HOB. Type</p>
+<p>/// EFI_PHYSICAL_ADDRESS is defined in AllocatePages() in the UEFI
+2.0</p>
+<p>/// specification.</p>
+<p>///</p>
+<p>EFI_PHYSICAL_ADDRESS MemoryBaseAddress;</p>
+<p>///</p>
+<p>/// The length in bytes of memory allocated by this HOB.</p>
+<p>///</p>
+<p>UINT64 MemoryLength;</p>
+<p>///</p>
+<p>/// Defines the type of memory allocated by this HOB. The memory type
+definition</p>
+<p>/// follows the EFI_MEMORY_TYPE definition. Type EFI_MEMORY_TYPE is
+defined</p>
+<p>/// in AllocatePages() in the UEFI 2.0 specification.</p>
+<p>///</p>
+<p>EFI_MEMORY_TYPE MemoryType;</p>
+<p>///</p>
+<p>/// Padding for Itanium processor family</p>
+<p>///</p>
+<p>UINT8 Reserved[4];</p>
+<p>} EFI_HOB_MEMORY_ALLOCATION_HEADER;</p>
+</div></blockquote>
+<p><strong>11.6.3 EFI_HOB_MEMORY_ALLOCATION</strong></p>
+<blockquote>
+<div><p>/// Describes all memory ranges used during the HOB producer</p>
+<p>/// phase that exist outside the HOB list. This HOB type</p>
+<p>/// describes how memory is used, not the physical attributes of
+memory.</p>
+<p>///</p>
+<p>typedef struct {</p>
+<p>///</p>
+<p>/// The HOB generic header. Header.HobType =
+EFI_HOB_TYPE_MEMORY_ALLOCATION.</p>
+<p>///</p>
+<p>EFI_HOB_GENERIC_HEADER Header;</p>
+<p>///</p>
+<p>/// An instance of the EFI_HOB_MEMORY_ALLOCATION_HEADER that
+describes the</p>
+<p>/// various attributes of the logical memory allocation.</p>
+<p>///</p>
+<p>EFI_HOB_MEMORY_ALLOCATION_HEADER AllocDescriptor;</p>
+<p>//</p>
+<p>// Additional data pertaining to the “Name” Guid memory</p>
+<p>// may go here.</p>
+<p>//</p>
+<p>} EFI_HOB_MEMORY_ALLOCATION;</p>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Universal Payload</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Specifications</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Unified interface between bootloader and payload</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#introduction"><em>Introduction</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#payload-image-format">Payload Image Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hand-off-state">Hand-off state</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#payload-interfaces">Payload Interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#appendix-a-hob-data-structures">Appendix A – HOB Data Structures</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Specifications</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Specifications</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Intel Corporation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/spec/spec.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
