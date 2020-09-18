@@ -12,7 +12,11 @@ install:
 before_install:
   - mkdir -p build
   - chmod 777 build
-  - touch ./build/.nojekyll
+  - cd build
+  - mkdir -p html
+  - chmod 777 html
+  - cd ..
+  - touch ./build/html/.nojekyll
 
 script:
   - make html
