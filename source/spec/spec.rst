@@ -2,7 +2,7 @@ Unified interface between bootloader and payload
 ================================================
 
    | Version 0.7 Draft
-   | 8/13/2020
+   | 9/18/2020
 
 THIS SPECIFICATION IS PROVIDED "AS IS" WITH NO WARRANTIES WHATSOEVER,
 INCLUDING ANY
@@ -1644,7 +1644,7 @@ Base Data Type
        UINT16 Data3;
        UINT8 Data4[8];
      } GUID;
-     
+
 
    `https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiBaseType.h
     <https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiBaseType.h>`__\ 
