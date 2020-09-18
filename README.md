@@ -1,4 +1,4 @@
-This documentation is written in RST (ReStructuredText) format and can be built into web pages 
+This documentation is written in **RST (ReStructuredText)** format and can be built into web pages 
 using Sphinx rendered with an HTML theme (sphinx-rtd-theme).
 
 Getting Started
