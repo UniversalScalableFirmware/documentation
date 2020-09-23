@@ -180,7 +180,7 @@ def build_sbl (target_dir, release, arch64):
     os.environ.pop('BASE_TOOLS_PATH')
     os.environ.pop('WORKSPACE')
     os.environ.pop('CONF_PATH')
-    build_cmd = ['python', 'buildloader.py', 'build', 'qemu', '-p', 'OsLoader.efi:LLDR:Lz4;UefiPld.fd:UEFI:Lzma', '-k']
+    build_cmd = ['python', 'BuildLoader.py', 'build', 'qemu', '-p', 'OsLoader.efi:LLDR:Lz4;UefiPld.fd:UEFI:Lzma', '-k']
     if release:
         build_cmd.extend(['-r'])
     if arch64:
