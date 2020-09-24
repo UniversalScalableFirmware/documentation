@@ -197,7 +197,7 @@ and technologies without needing any changes to the operating system
 itself.</p>
 <p>A design methodology of viewing system firmware functionality as made
 up of <strong>two distinct phases</strong> – <strong>initialization</strong> and <strong>OS boot
-logic</strong> is gaining traction resulting in new implementations of
+logic</strong> is gaining traction resulting in newer implementations of
 system firmware. This approach calls for modular phases with an
 initialization phase (bootloader) which completes the system
 initialization and gets the hardware to a usable state and then a
@@ -213,6 +213,7 @@ phase. It includes how to pass parameters to payload and parameter
 format, payload image format, payload boot mode and stack usage, etc.
 The intent for this specification is to provide interoperability
 between spec compliant bootloaders and spec compliant payloads.</p>
+<img alt="../_images/design.png" src="../_images/design.png" />
 </div></blockquote>
 <p>Opens: Do we need a wrapper table on existing FV, PE/COFF, ELF?</p>
 <p>Yes.</p>
