@@ -1,5 +1,5 @@
-Unified interface between bootloader and payload
-================================================
+Universal interface between bootloader and payload
+===================================================
 
    | Version 0.7 Draft
    | 9/18/2020
