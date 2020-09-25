@@ -2,7 +2,7 @@ Universal interface between bootloader and payload
 ===================================================
 
    | Version 0.7 Draft
-   | 9/18/2020
+   | 9/25/2020
 
 THIS SPECIFICATION IS PROVIDED "AS IS" WITH NO WARRANTIES WHATSOEVER,
 INCLUDING ANY
@@ -642,7 +642,7 @@ Payload Image Format
    The following information might be required by a bootloader to load
    payload image:
 
--  
+-
 
 -  Version information
 
@@ -704,13 +704,13 @@ Opens:
    standard formats are followed. However, it does introduce overhead to
    every bootloader to be able to handle these formats.
 
-a) 
+a)
 
-b) 
+b)
 
-c) 
+c)
 
-d) 
+d)
 
 Payload Image Standard Header
 -----------------------------
@@ -1110,11 +1110,11 @@ before conducting the authentication. For example, if for security
 reason, SHA2_256 is not accepted, the authentication should just fail
 even though the signature might be valid.
 
--  
+-
 
--  
+-
 
--  
+-
 
 Hand-off state
 ==============
@@ -1649,8 +1649,8 @@ Base Data Type
 
 
    `https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiBaseType.h
-    <https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiBaseType.h>`__\ 
-    
+    <https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiBaseType.h>`__\
+
      typedef GUID EFI_GUID;
      typedef UINT64 EFI_PHYSICAL_ADDRESS;
 
