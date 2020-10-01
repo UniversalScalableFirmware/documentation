@@ -883,7 +883,12 @@ Payload Image Standard Header
 |             |               |                  | to this          |
 |             |               |                  | structure start. |
 +-------------+---------------+------------------+------------------+
-| 52          | 8             | ImageBase        | Preferred actual |
+| 52          | 4             | ImageLength      | Actual payload   |
+|             |               |                  | image size       |
+|             |               |                  | starting from    |
+|             |               |                  | ImageOffset.     |
++-------------+---------------+------------------+------------------+
+| 56          | 8             | ImageBase        | Preferred actual |
 |             |               |                  | payload image    |
 |             |               |                  | base address for |
 |             |               |                  | execution. If    |
@@ -893,11 +898,6 @@ Payload Image Standard Header
 |             |               |                  | be loaded at     |
 |             |               |                  | this required    |
 |             |               |                  | base.            |
-+-------------+---------------+------------------+------------------+
-| 60          | 4             | ImageLength      | Actual payload   |
-|             |               |                  | image size       |
-|             |               |                  | starting from    |
-|             |               |                  | ImageOffset.     |
 +-------------+---------------+------------------+------------------+
 | 64          | 4             | ImageAlignment   | Required image   |
 |             |               |                  | alignment for    |
@@ -1022,13 +1022,8 @@ Payload Image Authentication Table
 +-------------+---------------+------------------+------------------+
 |             |               |                  |                  |
 +-------------+---------------+------------------+------------------+
-| 12          | 4             | Au               | Indicate         |
-|             |               | thenticationType | authentication   |
-|             |               |                  | type 0 –         |
-|             |               |                  | PKCS1.5/2.1      |
-+-------------+---------------+------------------+------------------+
-| 16          | \*            | Au               | Defined by       |
-|             |               | thenticationData | PAYLOAD_AUT      |
+| 12          | \*            |AuthenticationData| Defined by       |
+|             |               |                  | PAYLOAD_AUT      |
 |             |               |                  | HENTICATION_DATA |
 |             |               |                  | structure        |
 +-------------+---------------+------------------+------------------+
@@ -1054,14 +1049,8 @@ Payload Image Authentication Table
 |             |               |                  |                  |
 |             |               |                  | 0- RSA 1-ECDSA   |
 +-------------+---------------+------------------+------------------+
-| 7           | 1             | PubKeyHashAlg    | HASH algorithm   |
-|             |               |                  | used for         |
-|             |               |                  | signature        |
-|             |               |                  | calculation. 0-  |
-|             |               |                  | SHA2_256,        |
-|             |               |                  | 1-SHA2_384,      |
-|             |               |                  | 2-SHA2_512, 16 - |
-|             |               |                  | SM3              |
+| 7           | 1             | Reserved         | Not used for now |
+|             |               |                  |                  |
 +-------------+---------------+------------------+------------------+
 | 8           | \*            | PubKeyData       | Public key data  |
 |             |               |                  | buffer. The size |

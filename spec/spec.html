@@ -855,6 +855,14 @@ to this
 structure start.</td>
 </tr>
 <tr class="row-odd"><td>52</td>
+<td>4</td>
+<td>ImageLength</td>
+<td>Actual payload
+image size
+starting from
+ImageOffset.</td>
+</tr>
+<tr class="row-even"><td>56</td>
 <td>8</td>
 <td>ImageBase</td>
 <td>Preferred actual
@@ -867,14 +875,6 @@ the image must
 be loaded at
 this required
 base.</td>
-</tr>
-<tr class="row-even"><td>60</td>
-<td>4</td>
-<td>ImageLength</td>
-<td>Actual payload
-image size
-starting from
-ImageOffset.</td>
 </tr>
 <tr class="row-odd"><td>64</td>
 <td>4</td>
@@ -1061,18 +1061,8 @@ type?</p>
 <td>&#160;</td>
 </tr>
 <tr class="row-odd"><td>12</td>
-<td>4</td>
-<td>Au
-thenticationType</td>
-<td>Indicate
-authentication
-type 0 –
-PKCS1.5/2.1</td>
-</tr>
-<tr class="row-even"><td>16</td>
 <td>*</td>
-<td>Au
-thenticationData</td>
+<td>AuthenticationData</td>
 <td>Defined by
 PAYLOAD_AUT
 HENTICATION_DATA
@@ -1122,15 +1112,8 @@ PubKeyData.</td>
 </tr>
 <tr class="row-odd"><td>7</td>
 <td>1</td>
-<td>PubKeyHashAlg</td>
-<td>HASH algorithm
-used for
-signature
-calculation. 0-
-SHA2_256,
-1-SHA2_384,
-2-SHA2_512, 16 -
-SM3</td>
+<td>Reserved</td>
+<td>Not used for now</td>
 </tr>
 <tr class="row-even"><td>8</td>
 <td>*</td>
