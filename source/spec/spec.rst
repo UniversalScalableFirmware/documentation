@@ -1117,11 +1117,13 @@ Hand-off state
    | typedef
    | VOID
    | (__cdecl \*PAYLOAD_ENTRY) (
-   | EFI_HOB_HANDOFF_INFO_TABLE \*HobList
+   | EFI_HOB_HANDOFF_INFO_TABLE \*HobList,
+   | VOID \*ImageBase
    | );
 
-   4.2 HOB List defines the detailed HOB list being used to transfer
+   HOB List defines the detailed HOB list being used to transfer
    platform specific data from the bootloader to the payload.
+   ImageBase defines the base address of the Payload Image
 
 IA-32 and x64 Platforms
 -----------------------
