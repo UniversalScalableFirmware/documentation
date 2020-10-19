@@ -965,14 +965,46 @@ Payload Image Relocation Table
 | 9           | 3             | Reserved         | Not used for     |
 |             |               |                  | now.             |
 +-------------+---------------+------------------+------------------+
-|             |               |                  |                  |
+| 12          | 1             | RelocFmt         | Relocation Format|
+|             |               |                  | 0: RAW - The     |
+|             |               |                  | relocation block |                  
+|             |               |                  | data starts from |                  
+|             |               |                  | end of header.   |                  
+|             |               |                  | 1: POINTER       |
+|             |               |                  | PE Relocation    |                  
+|             |               |                  | block header is  |                  
+|             |               |                  | located at end   |                  
+|             |               |                  | of the  header.  |                  
+|             |               |                  |                  |                  
 +-------------+---------------+------------------+------------------+
-| 12          | \*            | RelocationBlocks | Start of the     |
+| 13          | 1             | Reserved         | Reserved         |
++-------------+---------------+------------------+------------------+
+| 14          | 2             | RelocImgStripped | Size in bytes    |
+|             |               |                  | to be adjusted   |
+|             |               |                  | from Relocation  |
+|             |               |                  | Image.           |
++-------------+---------------+------------------+------------------+
+| 16          | 4             | RelocImgOffset   | Relocation       |
+|             |               |                  | Image Offset     |
+|             |               |                  | from Payload Base|
+|             |               |                  | address.         |
++-------------+---------------+------------------+------------------+
+| 20          | *             |*RelocationBlocks*| If RelocFmt is   |
+|             |               |                  | RAW, Relocation  |
+|             |               |                  | Blocks Data      |
+|             |               |                  | starts here      |
+|             |               |                  | If RelocFmt is   |
+|             |               |                  | POINTER,         |
+|             |               |                  | it defines the   |
+|             |               |                  | Relative Virtual |
+|             |               |                  | address (RVA) and|
+|             |               |                  | size of the      |
 |             |               |                  | relocation block |
-|             |               |                  | data.            |
+|             |               |                  | as stated        |
+|             |               |                  | by IMAGE_DATA_   |
+|             |               |                  | DIRECTORY of     |
+|             |               |                  | PE format.       |
 +-------------+---------------+------------------+------------------+
-
-..
 
    *RelocationBlocks* follows the Base Relocation Block defined in PE
    format listed below:
@@ -1123,7 +1155,7 @@ Hand-off state
 
    HOB List defines the detailed HOB list being used to transfer
    platform specific data from the bootloader to the payload.
-   ImageBase defines the base address of the Payload Image
+   ImageBase defines the base address of the Payload Image. 
 
 IA-32 and x64 Platforms
 -----------------------
