@@ -971,17 +971,62 @@ is 1.</td>
 <td>Not used for
 now.</td>
 </tr>
-<tr class="row-even"><td>&#160;</td>
-<td>&#160;</td>
-<td>&#160;</td>
-<td>&#160;</td>
-</tr>
-<tr class="row-odd"><td>12</td>
-<td>*</td>
-<td>RelocationBlocks</td>
-<td>Start of the
+<tr class="row-even"><td>12</td>
+<td>1</td>
+<td>RelocFmt</td>
+<td>Relocation Format
+0: RAW - The
 relocation block
-data.</td>
+data starts from
+end of header.
+1: POINTER
+PE Relocation
+block header is
+located at end
+of the  header.</td>
+</tr>
+<tr class="row-odd"><td>13</td>
+<td>1</td>
+<td>Reserved</td>
+<td>Reserved</td>
+</tr>
+<tr class="row-even"><td>14</td>
+<td>2</td>
+<td>RelocImgStripped</td>
+<td>Size in bytes
+to be adjusted
+from Relocation
+Image.</td>
+</tr>
+<tr class="row-odd"><td>16</td>
+<td>4</td>
+<td>RelocImgOffset</td>
+<td>Relocation
+Image Offset
+from Payload Base
+address.</td>
+</tr>
+<tr class="row-even"><td>20</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><em>RelocationBlocks</em></td>
+<td>If RelocFmt is
+RAW, Relocation
+Blocks Data
+starts here
+If RelocFmt is
+POINTER,
+it defines the
+Relative Virtual
+address (RVA) and
+size of the
+relocation block
+as stated
+by <a href="#id7"><span class="problematic" id="id8">IMAGE_DATA_</span></a>
+DIRECTORY of
+PE format.</td>
 </tr>
 </tbody>
 </table>
@@ -1196,11 +1241,13 @@ to the payload.</p>
 <div class="line">typedef</div>
 <div class="line">VOID</div>
 <div class="line">(__cdecl *PAYLOAD_ENTRY) (</div>
-<div class="line">EFI_HOB_HANDOFF_INFO_TABLE *HobList</div>
+<div class="line">EFI_HOB_HANDOFF_INFO_TABLE *HobList,</div>
+<div class="line">VOID *ImageBase</div>
 <div class="line">);</div>
 </div>
-<p>4.2 HOB List defines the detailed HOB list being used to transfer
-platform specific data from the bootloader to the payload.</p>
+<p>HOB List defines the detailed HOB list being used to transfer
+platform specific data from the bootloader to the payload.
+ImageBase defines the base address of the Payload Image.</p>
 </div></blockquote>
 <div class="section" id="ia-32-and-x64-platforms">
 <h2>IA-32 and x64 Platforms<a class="headerlink" href="#ia-32-and-x64-platforms" title="Permalink to this headline">¶</a></h2>
