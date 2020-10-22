@@ -19,7 +19,7 @@
 
 project = 'Universal Payload'
 copyright = 'Content on this site is licensed under a Creative Commons Attribution 4.0 International license'
-author = 'Universal Payload Porject Team'
+author = 'Universal Payload Project Team'
 
 
 # -- General configuration ---------------------------------------------------
