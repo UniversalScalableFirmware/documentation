@@ -4,43 +4,21 @@ Universal interface between bootloader and payload
    | Version 0.7 Draft
    | 9/25/2020
 
-THIS SPECIFICATION IS PROVIDED "AS IS" WITH NO WARRANTIES WHATSOEVER,
-INCLUDING ANY
-
-WARRANTY OF MERCHANTABILITY, NONINFRINGEMENT, FITNESS FOR ANY PARTICULAR
-PURPOSE, OR
-
-ANY WARRANTY OTHERWISE ARISING OUT OF ANY PROPOSAL, SPECIFICATION OR
-SAMPLE. Intel products are not intended for use in medical, life saving,
-or life sustaining applications.
-
-Intel may make changes to specifications and product descriptions at any
-time, without notice.
-
-Designers must not rely on the absence or characteristics of any
-features or instructions marked "reserved" or "undefined." Intel
-reserves these for future definition and shall have no responsibility
-whatsoever for conflicts or incompatibilities arising from future
-changes to them.
-
-A license is hereby granted to copy and reproduce this specification for
-internal use only.
-
-No other license, express or implied, by estoppel or otherwise, to any
-other intellectual property rights is granted herein.
-
-Intel disclaims all liability, including liability for infringement of
-any proprietary rights, relating to use of information in this
-specification. No license, express or implied, by estoppel or otherwise,
-to any intellectual property rights is granted herein.
+THIS SPECIFICATION IS PROVIDED "AS IS" WITH NO WARRANTIES WHATSOEVER, 
+INCLUDING ANY WARRANTY OF MERCHANTABILITY, NONINFRINGEMENT, FITNESS 
+FOR ANY PARTICULAR PURPOSE, OR ANY WARRANTY OTHERWISE ARISING OUT OF 
+ANY PROPOSAL, SPECIFICATION OR SAMPLE. 
 
 This specification is an intermediate draft for comment only and is
 subject to change without notice. Readers should not design products
 based on this document.
 
+The **Universal Payload Project Team** provides the content on this site under a 
+**Creative Commons Attribution 4.0 International license** (https://spdx.org/licenses/CC-BY-4.0.html) 
+except where otherwise noted.
+
 \*Other names and brands may be claimed as the property of others.
 
-Copyright © 2020 Intel Corporation. All rights reserved.
 
 **Contents**
 
