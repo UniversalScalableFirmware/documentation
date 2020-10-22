@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Universal Payload'
-copyright = '2020, Intel Corporation'
+copyright = 'Content on this site is licensed under a Creative Commons Attribution 4.0 International license'
 author = 'Universal Payload Porject Team'
 
 
