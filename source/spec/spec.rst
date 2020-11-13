@@ -611,34 +611,20 @@ Payload Image Format
    process, some additional process might be required, such as rebasing,
    assembling, etc.
 
-   Today, many payloads use their own image formats (PE, ELF, FV, RAW,
-   …), and it makes it difficult for a bootloader to identify and
-   understand how to load a payload. To address this, a small common
-   payload image header is introduced at the beginning of the payload
-   image to describe necessary information required for loading.
-
    The following information might be required by a bootloader to load
-   payload image:
-
--
-
+   a payload image:
 -  Version information
-
 -  Architecture
-
 -  Entry point
-
 -  Relocation information
-
 -  Preferred base
-
 -  Verification
 
 Opens:
 
    There are several options here for bootloader on how to load a
    payload. Inputs are required to decide which option might be the best
-   approach. The current proposal used option 1.
+   approach.
 
 -  Option 1: Use a new standard header for payload loading.
 
@@ -682,13 +668,16 @@ Opens:
    standard formats are followed. However, it does introduce overhead to
    every bootloader to be able to handle these formats.
 
-a)
+..
 
-b)
+   This specification is open to other options. Below it used the
+   proposaled option 1 as of now.
 
-c)
-
-d)
+   Today, many payloads use their own image formats (PE, ELF, FV, RAW,
+   …), and it makes it difficult for a bootloader to identify and
+   understand how to load a payload. To address this, a small common
+   payload image header is introduced at the beginning of the payload
+   image to describe necessary information required for loading.
 
 Payload Image Standard Header
 -----------------------------
