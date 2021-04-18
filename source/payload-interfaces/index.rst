@@ -32,10 +32,9 @@ Payload Interfaces
 ACPI tables
 -----------
 
-   ACPI table is required to boot modern operation system, especially to
-   boot windows operating system. ACPI table should be provided by
-   bootloader since most of the tables are platform specific. The
-   payload might update some of the ACPI tables if required.
+   ACPI table is required to boot modern operation system, especially to boot windows operating system.
+   The bootloader should provide a ACPI RSDP HOB. In the ACPI table least RSDT, FADT and MCFG should be available to the payload.
+   Payload could remove/add/modify the ACPI table passed from the bootloader if required.
 
    The payload could parse the ACPI table to get some basic platform
    information. For example, the Fixed ACPI Description Table (FADT)
@@ -49,7 +48,7 @@ ACPI tables
    The other example is to get PCIE base address from ACPI memory mapped
    configuration space access table definition, defined in the PCI
    Firmware Specification.
-   `http://www.pcisig.com <http://www.pcisig.com/>`__.
+   `http://www.pcisig.com <http://www.pcisig.com/>`.
 
    And another example is on the debug device info. The bootloader might
    report debug device following up ACPI Debug Port Table 2 (DBG2). If a
