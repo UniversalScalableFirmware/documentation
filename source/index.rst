@@ -8,13 +8,12 @@ Welcome to Universal Payload's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :glob:
 
-   spec/index    
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   introduction/index
+   overview/index
+   image-format/index
+   hand-off-state/index
+   payload-interfaces/index
+   appendix-a/index
+   references/*
