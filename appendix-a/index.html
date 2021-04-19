@@ -1,0 +1,890 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Appendix A – HOB Data Structures &mdash; Universal Payload 0.75 alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="References and Links" href="../references/references.html" />
+    <link rel="prev" title="Payload Interfaces" href="../payload-interfaces/index.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Universal Payload
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.75
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../image-format/index.html">Payload Image Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hand-off-state/index.html">Hand-off state</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../payload-interfaces/index.html">Payload Interfaces</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Appendix A – HOB Data Structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#base-data-type">Base Data Type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-hob-type">EFI HOB TYPE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-hob-generic-header">EFI_HOB_GENERIC_HEADER</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hob-list-header">HOB List Header</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hob-handoff-info-table">EFI_HOB_HANDOFF_INFO_TABLE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hob-handoff-table-version">EFI_HOB_HANDOFF_TABLE_VERSION</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-boot-mode">EFI_BOOT_MODE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-hob-guid-type">EFI_HOB_GUID_TYPE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-pei-graphics-info-hob">EFI_PEI_GRAPHICS_INFO_HOB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-pei-graphics-device-info-hob">EFI_PEI_GRAPHICS_DEVICE_INFO_HOB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-hob-resource-descriptor">EFI_HOB_RESOURCE_DESCRIPTOR</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-resource-type">EFI_RESOURCE_TYPE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-resource-attribute-type">EFI_RESOURCE_ATTRIBUTE_TYPE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hob-resource-descriptor-1">EFI_HOB_RESOURCE_DESCRIPTOR</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-hob-memory-allocation">EFI_HOB_MEMORY_ALLOCATION</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-memory-type">EFI_MEMORY_TYPE</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../references/references.html">References and Links</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Universal Payload</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Appendix A – HOB Data Structures</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="appendix-a-hob-data-structures">
+<h1>Appendix A – HOB Data Structures<a class="headerlink" href="#appendix-a-hob-data-structures" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div>The declarations/definitions provided here are derived from the EDK2
+source available for download at <a class="reference external" href="https://github.com/tianocore/edk2">https://github.com/tianocore/edk2</a></div></blockquote>
+<div class="section" id="base-data-type">
+<h2>Base Data Type<a class="headerlink" href="#base-data-type" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="line-block">
+<div class="line"><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Base.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Base.h</a></div>
+</div>
+<blockquote>
+<div><p>typedef struct {</p>
+<blockquote>
+<div><p>UINT32 Data1;</p>
+<p>UINT16 Data2;</p>
+<p>UINT16 Data3;</p>
+<p>UINT8 Data4[8];</p>
+</div></blockquote>
+<p>} GUID;</p>
+</div></blockquote>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiBaseType.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiBaseType.h</a></p>
+<p>typedef GUID EFI_GUID;</p>
+<p>typedef UINT64 EFI_PHYSICAL_ADDRESS;</p>
+</div></blockquote>
+</div>
+<div class="section" id="efi-hob-type">
+<h2>EFI HOB TYPE<a class="headerlink" href="#efi-hob-type" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a></p>
+<p>//</p>
+<p>// HobType of EFI_HOB_GENERIC_HEADER.</p>
+<p>//</p>
+<p>#define EFI_HOB_TYPE_HANDOFF 0x0001</p>
+<p>#define EFI_HOB_TYPE_MEMORY_ALLOCATION 0x0002</p>
+<p>#define EFI_HOB_TYPE_RESOURCE_DESCRIPTOR 0x0003</p>
+<p>#define EFI_HOB_TYPE_GUID_EXTENSION 0x0004</p>
+<p>#define EFI_HOB_TYPE_FV 0x0005</p>
+<p>#define EFI_HOB_TYPE_CPU 0x0006</p>
+<p>#define EFI_HOB_TYPE_MEMORY_POOL 0x0007</p>
+<p>#define EFI_HOB_TYPE_FV2 0x0009</p>
+<p>#define EFI_HOB_TYPE_LOAD_PEIM_UNUSED 0x000A</p>
+<p>#define EFI_HOB_TYPE_UEFI_CAPSULE 0x000B</p>
+<p>#define EFI_HOB_TYPE_FV3 0x000C</p>
+<p>#define EFI_HOB_TYPE_UNUSED 0xFFFE</p>
+<p>#define EFI_HOB_TYPE_END_OF_HOB_LIST 0xFFFF</p>
+</div></blockquote>
+</div>
+<div class="section" id="efi-hob-generic-header">
+<h2>EFI_HOB_GENERIC_HEADER<a class="headerlink" href="#efi-hob-generic-header" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a></p>
+<p>///</p>
+<p>/// Describes the format and size of the data inside the HOB.</p>
+<p>/// All HOBs must contain this generic HOB header.</p>
+<p>///</p>
+<p>typedef struct {</p>
+<p>///</p>
+<p>/// Identifies the HOB data structure type.</p>
+<p>///</p>
+<p>UINT16 HobType;</p>
+<p>///</p>
+<p>/// The length in bytes of the HOB.</p>
+<p>///</p>
+<p>UINT16 HobLength;</p>
+<p>///</p>
+<p>/// This field must always be set to zero.</p>
+<p>///</p>
+<p>UINT32 Reserved;</p>
+<p>} EFI_HOB_GENERIC_HEADER;</p>
+</div></blockquote>
+</div>
+<div class="section" id="hob-list-header">
+<h2>HOB List Header<a class="headerlink" href="#hob-list-header" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a></div></blockquote>
+<div class="section" id="efi-hob-handoff-info-table">
+<h3>EFI_HOB_HANDOFF_INFO_TABLE<a class="headerlink" href="#efi-hob-handoff-info-table" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>///</p>
+<p>/// Contains general state information used by the HOB producer
+phase.</p>
+<p>/// This HOB must be the first one in the HOB list.</p>
+<p>///</p>
+<p>typedef struct {</p>
+<p>///</p>
+<p>/// The HOB generic header. Header.HobType = EFI_HOB_TYPE_HANDOFF.</p>
+<p>///</p>
+<p>EFI_HOB_GENERIC_HEADER Header;</p>
+<p>///</p>
+<p>/// The version number pertaining to the PHIT HOB definition.</p>
+<p>/// This value is four bytes in length to provide an 8-byte aligned
+entry</p>
+<p>/// when it is combined with the 4-byte BootMode.</p>
+<p>///</p>
+<p>UINT32 Version;</p>
+<p>///</p>
+<p>/// The system boot mode as determined during the HOB producer phase.</p>
+<p>///</p>
+<p>EFI_BOOT_MODE BootMode;</p>
+<p>///</p>
+<p>/// The highest address location of memory that is allocated for use
+by the HOB producer</p>
+<p>/// phase. This address must be 4-KB aligned to meet page
+restrictions of UEFI.</p>
+<p>///</p>
+<p>EFI_PHYSICAL_ADDRESS EfiMemoryTop;</p>
+<p>///</p>
+<p>/// The lowest address location of memory that is allocated for use
+by the HOB producer phase.</p>
+<p>///</p>
+<p>EFI_PHYSICAL_ADDRESS EfiMemoryBottom;</p>
+<p>///</p>
+<p>/// The highest address location of free memory that is currently
+available</p>
+<p>/// for use by the HOB producer phase.</p>
+<p>///</p>
+<p>EFI_PHYSICAL_ADDRESS EfiFreeMemoryTop;</p>
+<p>///</p>
+<p>/// The lowest address location of free memory that is available for
+use by the HOB producer phase.</p>
+<p>///</p>
+<p>EFI_PHYSICAL_ADDRESS EfiFreeMemoryBottom;</p>
+<p>///</p>
+<p>/// The end of the HOB list.</p>
+<p>///</p>
+<p>EFI_PHYSICAL_ADDRESS EfiEndOfHobList;</p>
+<p>} EFI_HOB_HANDOFF_INFO_TABLE;</p>
+</div></blockquote>
+</div>
+<div class="section" id="efi-hob-handoff-table-version">
+<h3>EFI_HOB_HANDOFF_TABLE_VERSION<a class="headerlink" href="#efi-hob-handoff-table-version" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>///</p>
+<p>/// Value of version in EFI_HOB_HANDOFF_INFO_TABLE.</p>
+<p>///</p>
+<p>#define EFI_HOB_HANDOFF_TABLE_VERSION 0x0009</p>
+</div></blockquote>
+</div>
+<div class="section" id="efi-boot-mode">
+<h3>EFI_BOOT_MODE<a class="headerlink" href="#efi-boot-mode" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="line-block">
+<div class="line"><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiBootMode.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiBootMode.h</a></div>
+</div>
+<p>///</p>
+<p>/// EFI boot mode</p>
+<p>///</p>
+<p>typedef UINT32 EFI_BOOT_MODE;</p>
+<p>//</p>
+<p>// 0x21 - 0xf..f are reserved.</p>
+<p>//</p>
+<p>#define BOOT_WITH_FULL_CONFIGURATION 0x00</p>
+<p>#define BOOT_WITH_MINIMAL_CONFIGURATION 0x01</p>
+<p>#define BOOT_ASSUMING_NO_CONFIGURATION_CHANGES 0x02</p>
+<p>#define BOOT_WITH_FULL_CONFIGURATION_PLUS_DIAGNOSTICS 0x03</p>
+<p>#define BOOT_WITH_DEFAULT_SETTINGS 0x04</p>
+<p>#define BOOT_ON_S4_RESUME 0x05</p>
+<p>#define BOOT_ON_S5_RESUME 0x06</p>
+<p>#define BOOT_WITH_MFG_MODE_SETTINGS 0x07</p>
+<p>#define BOOT_ON_S2_RESUME 0x10</p>
+<p>#define BOOT_ON_S3_RESUME 0x11</p>
+<p>#define BOOT_ON_FLASH_UPDATE 0x12</p>
+<p>#define BOOT_IN_RECOVERY_MODE 0x20</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="efi-hob-guid-type">
+<h2>EFI_HOB_GUID_TYPE<a class="headerlink" href="#efi-hob-guid-type" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>This is the generic HOB header for GUID type HOB.</p>
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a></div>
+</div>
+<p>///</p>
+<p>/// Allows writers of executable content in the HOB producer phase to</p>
+<p>/// maintain and manage HOBs with specific GUID.</p>
+<p>///</p>
+<p>typedef struct {</p>
+<p>///</p>
+<p>/// The HOB generic header. Header.HobType =</p>
+<p>EFI_HOB_TYPE_GUID_EXTENSION.</p>
+<p>///</p>
+<p>EFI_HOB_GENERIC_HEADER Header;</p>
+<p>///</p>
+<p>/// A GUID that defines the contents of this HOB.</p>
+<p>///</p>
+<p>EFI_GUID Name;</p>
+<p>//</p>
+<p>// Guid specific data goes here</p>
+<p>//</p>
+<p>} EFI_HOB_GUID_TYPE;</p>
+</div></blockquote>
+</div>
+<div class="section" id="efi-pei-graphics-info-hob">
+<h2>EFI_PEI_GRAPHICS_INFO_HOB<a class="headerlink" href="#efi-pei-graphics-info-hob" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="line-block">
+<div class="line"><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h</a></div>
+</div>
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Protocol/GraphicsOutput.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Protocol/GraphicsOutput.h</a></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>HOB GUID</strong></div>
+<div class="line">#define EFI_PEI_GRAPHICS_INFO_HOB_GUID \</div>
+<div class="line">{0x39f62cce, 0x6825, 0x4669, {0xbb, 0x56, 0x54, 0x1a, 0xba, 0x75,
+0x3a, 0x07}}</div>
+</div>
+<p><strong>Hob Interface Structure</strong></p>
+<div class="line-block">
+<div class="line">typedef struct {</div>
+<div class="line">EFI_PHYSICAL_ADDRESS FrameBufferBase;</div>
+<div class="line">UINT32 FrameBufferSize;</div>
+<div class="line">EFI_GRAPHICS_OUTPUT_MODE_INFORMATION GraphicsMode;</div>
+<div class="line">} EFI_PEI_GRAPHICS_INFO_HOB;</div>
+</div>
+<p><strong>Related Definitions</strong></p>
+<p>typedef struct {</p>
+<p>UINT32 RedMask;</p>
+<p>UINT32 GreenMask;</p>
+<p>UINT32 BlueMask;</p>
+<p>UINT32 ReservedMask;</p>
+<p>} EFI_PIXEL_BITMASK;</p>
+<div class="line-block">
+<div class="line">If a bit is set in <em>RedMask</em>, <em>GreenMask</em>, or <em>BlueMask</em> then those
+bits of the pixel represent the</div>
+<div class="line">corresponding color. Bits in <em>RedMask</em>, <em>GreenMask</em>, <em>BlueMask</em>,
+and <em>ReserverdMask</em> must not overlap bit</div>
+<div class="line">positions. The values for the red, green, and blue components in
+the bit mask represent the color</div>
+<div class="line">intensity. The color intensities must increase as the color values
+for each color mask increase with a</div>
+<div class="line">minimum intensity of all bits in a color mask clear to a maximum
+intensity of all bits in a color mask set.</div>
+</div>
+<p>typedef enum {</p>
+<p>///</p>
+<p>/// A pixel is 32-bits and byte zero represents red, byte one
+represents green,</p>
+<p>/// byte two represents blue, and byte three is reserved. This is the
+definition</p>
+<p>/// for the physical frame buffer. The byte values for the red,
+green, and blue</p>
+<p>/// components represent the color intensity. This color intensity
+value range</p>
+<p>/// from a minimum intensity of 0 to maximum intensity of 255.</p>
+<p>///</p>
+<p>PixelRedGreenBlueReserved8BitPerColor,</p>
+<p>///</p>
+<p>/// A pixel is 32-bits and byte zero represents blue, byte one
+represents green,</p>
+<p>/// byte two represents red, and byte three is reserved. This is the
+definition</p>
+<p>/// for the physical frame buffer. The byte values for the red,
+green, and blue</p>
+<p>/// components represent the color intensity. This color intensity
+value range</p>
+<p>/// from a minimum intensity of 0 to maximum intensity of 255.</p>
+<p>///</p>
+<p>PixelBlueGreenRedReserved8BitPerColor,</p>
+<p>///</p>
+<p>/// The Pixel definition of the physical frame buffer.</p>
+<p>///</p>
+<p>PixelBitMask,</p>
+<p>///</p>
+<p>/// This mode does not support a physical frame buffer.</p>
+<p>///</p>
+<p>PixelBltOnly,</p>
+<p>///</p>
+<p>/// Valid EFI_GRAPHICS_PIXEL_FORMAT enum values are less than this
+value.</p>
+<p>///</p>
+<p>PixelFormatMax</p>
+<p>} EFI_GRAPHICS_PIXEL_FORMAT;</p>
+<p>typedef struct {</p>
+<p>///</p>
+<p>/// The version of this data structure. A value of zero represents
+the</p>
+<p>/// EFI_GRAPHICS_OUTPUT_MODE_INFORMATION structure as defined in this
+specification.</p>
+<p>///</p>
+<p>UINT32 Version;</p>
+<p>///</p>
+<p>/// The size of video screen in pixels in the X dimension.</p>
+<p>///</p>
+<p>UINT32 HorizontalResolution;</p>
+<p>///</p>
+<p>/// The size of video screen in pixels in the Y dimension.</p>
+<p>///</p>
+<p>UINT32 VerticalResolution;</p>
+<p>///</p>
+<p>/// Enumeration that defines the physical format of the pixel. A
+value of PixelBltOnly</p>
+<p>/// implies that a linear frame buffer is not available for this
+mode.</p>
+<p>///</p>
+<p>EFI_GRAPHICS_PIXEL_FORMAT PixelFormat;</p>
+<p>///</p>
+<p>/// This bitmask is only valid if PixelFormat is set to
+PixelPixelBitMask.</p>
+<p>/// A bit being set defines what bits are used for what purpose such
+as Red, Green, Blue, or Reserved.</p>
+<p>///</p>
+<p>EFI_PIXEL_BITMASK PixelInformation;</p>
+<p>///</p>
+<p>/// Defines the number of pixel elements per video memory line.</p>
+<p>///</p>
+<p>UINT32 PixelsPerScanLine;</p>
+<p>} EFI_GRAPHICS_OUTPUT_MODE_INFORMATION;</p>
+<p><strong>NOTE:</strong> for performance reasons, or due to hardware restrictions,
+scan lines may be padded to an amount of memory alignment. These
+padding pixel elements are outside the area covered by
+<em>HorizontalResolution</em> and are not visible. For direct frame buffer
+access, this number is used as a span between starts of pixel lines
+in video memory. Based on the size of an individual pixel element and
+<em>PixelsPerScanline</em>, the offset in video memory from pixel element
+(x, y) to pixel element (x, y+1) has to be calculated as “sizeof(
+PixelElement ) * PixelsPerScanLine”, not “sizeof( PixelElement ) *
+HorizontalResolution”, though in many cases those values can
+coincide. This value can depend on video hardware and mode
+resolution. GOP implementation is responsible for providing accurate
+value for this field.</p>
+</div></blockquote>
+</div>
+<div class="section" id="efi-pei-graphics-device-info-hob">
+<h2>EFI_PEI_GRAPHICS_DEVICE_INFO_HOB<a class="headerlink" href="#efi-pei-graphics-device-info-hob" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="line-block">
+<div class="line"><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h</a></div>
+</div>
+<p><strong>HOB GUID</strong></p>
+<div class="line-block">
+<div class="line">#define EFI_PEI_GRAPHICS_DEVICE_INFO_HOB_GUID \</div>
+<div class="line">{0xe5cb2ac9, 0xd35d, 0x4430, {0x93, 0x6e, 0x1d, 0xe3, 0x32, 0x47,
+0x8d, 0xe7}}</div>
+</div>
+<p><strong>Hob Interface Structure</strong></p>
+<p>typedef struct {</p>
+<p>UINT16 VendorId; ///&lt; Ignore if the value is 0xFFFF.</p>
+<p>UINT16 DeviceId; ///&lt; Ignore if the value is 0xFFFF.</p>
+<p>UINT16 SubsystemVendorId; ///&lt; Ignore if the value is 0xFFFF.</p>
+<p>UINT16 SubsystemId; ///&lt; Ignore if the value is 0xFFFF.</p>
+<p>UINT8 RevisionId; ///&lt; Ignore if the value is 0xFF.</p>
+<p>UINT8 BarIndex; ///&lt; Ignore if the value is 0xFF.</p>
+<p>} EFI_PEI_GRAPHICS_DEVICE_INFO_HOB;</p>
+</div></blockquote>
+</div>
+<div class="section" id="efi-hob-resource-descriptor">
+<h2>EFI_HOB_RESOURCE_DESCRIPTOR<a class="headerlink" href="#efi-hob-resource-descriptor" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="line-block">
+<div class="line"><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a></div>
+</div>
+</div></blockquote>
+<div class="section" id="efi-resource-type">
+<h3>EFI_RESOURCE_TYPE<a class="headerlink" href="#efi-resource-type" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>///</p>
+<p>/// The resource type</p>
+<p>///</p>
+<p>typedef UINT32 EFI_RESOURCE_TYPE;</p>
+<p>///</p>
+<p>/// Value of ResourceType in EFI_HOB_RESOURCE_DESCRIPTOR.</p>
+<p>///</p>
+<p>#define EFI_RESOURCE_SYSTEM_MEMORY 0x00000000</p>
+<p>#define EFI_RESOURCE_MEMORY_MAPPED_IO 0x00000001</p>
+<p>#define EFI_RESOURCE_IO 0x00000002</p>
+<p>#define EFI_RESOURCE_FIRMWARE_DEVICE 0x00000003</p>
+<p>#define EFI_RESOURCE_MEMORY_MAPPED_IO_PORT 0x00000004</p>
+<p>#define EFI_RESOURCE_MEMORY_RESERVED 0x00000005</p>
+<p>#define EFI_RESOURCE_IO_RESERVED 0x00000006</p>
+<p>#define EFI_RESOURCE_MAX_MEMORY_TYPE 0x00000007</p>
+</div></blockquote>
+</div>
+<div class="section" id="efi-resource-attribute-type">
+<h3>EFI_RESOURCE_ATTRIBUTE_TYPE<a class="headerlink" href="#efi-resource-attribute-type" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>///</p>
+<p>/// A type of recount attribute type.</p>
+<p>///</p>
+<p>typedef UINT32 EFI_RESOURCE_ATTRIBUTE_TYPE;</p>
+<p>//</p>
+<p>// These types can be ORed together as needed.</p>
+<p>//</p>
+<p>// The following attributes are used to describe settings</p>
+<p>//</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_PRESENT 0x00000001</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_INITIALIZED 0x00000002</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_TESTED 0x00000004</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_READ_PROTECTED 0x00000080</p>
+<p>//</p>
+<p>// This is typically used as memory cacheability attribute today.</p>
+<p>// NOTE: Since PI spec 1.4, please use
+EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTED</p>
+<p>// as Physical write protected attribute, and
+EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTED</p>
+<p>// means Memory cacheability attribute: The memory supports being
+programmed with</p>
+<p>// a writeprotected cacheable attribute.</p>
+<p>//</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTED 0x00000100</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_EXECUTION_PROTECTED 0x00000200</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_PERSISTENT 0x00800000</p>
+<p>//</p>
+<p>// The rest of the attributes are used to describe capabilities</p>
+<p>//</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_SINGLE_BIT_ECC 0x00000008</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_MULTIPLE_BIT_ECC 0x00000010</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_ECC_RESERVED_1 0x00000020</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_ECC_RESERVED_2 0x00000040</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_UNCACHEABLE 0x00000400</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_WRITE_COMBINEABLE 0x00000800</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_WRITE_THROUGH_CACHEABLE 0x00001000</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_WRITE_BACK_CACHEABLE 0x00002000</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_16_BIT_IO 0x00004000</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_32_BIT_IO 0x00008000</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_64_BIT_IO 0x00010000</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_UNCACHED_EXPORTED 0x00020000</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_READ_PROTECTABLE 0x00100000</p>
+<p>//</p>
+<p>// This is typically used as memory cacheability attribute today.</p>
+<p>// NOTE: Since PI spec 1.4, please use
+EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTABLE</p>
+<p>// as Memory capability attribute: The memory supports being
+protected from processor</p>
+<p>// writes, and EFI_RESOURCE_ATTRIBUTE_WRITE_PROTEC TABLE means Memory
+cacheability attribute:</p>
+<p>// The memory supports being programmed with a writeprotected
+cacheable attribute.</p>
+<p>//</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTABLE 0x00200000</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_EXECUTION_PROTECTABLE 0x00400000</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_PERSISTABLE 0x01000000</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTED 0x00040000</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTABLE 0x00080000</p>
+<p>//</p>
+<p>// Physical memory relative reliability attribute. This</p>
+<p>// memory provides higher reliability relative to other</p>
+<p>// memory in the system. If all memory has the same</p>
+<p>// reliability, then this bit is not used.</p>
+<p>//</p>
+<p>#define EFI_RESOURCE_ATTRIBUTE_MORE_RELIABLE 0x02000000</p>
+</div></blockquote>
+</div>
+<div class="section" id="efi-hob-resource-descriptor-1">
+<span id="id1"></span><h3>EFI_HOB_RESOURCE_DESCRIPTOR<a class="headerlink" href="#efi-hob-resource-descriptor-1" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>///</p>
+<p>/// Describes the resource properties of all fixed,</p>
+<p>/// nonrelocatable resource ranges found on the processor</p>
+<p>/// host bus during the HOB producer phase.</p>
+<p>///</p>
+<p>typedef struct {</p>
+<p>///</p>
+<p>/// The HOB generic header. Header.HobType =
+EFI_HOB_TYPE_RESOURCE_DESCRIPTOR.</p>
+<p>///</p>
+<p>EFI_HOB_GENERIC_HEADER Header;</p>
+<p>///</p>
+<p>/// A GUID representing the owner of the resource. This GUID is used
+by HOB</p>
+<p>/// consumer phase components to correlate device ownership of a
+resource.</p>
+<p>///</p>
+<p>EFI_GUID Owner;</p>
+<p>///</p>
+<p>/// The resource type enumeration as defined by EFI_RESOURCE_TYPE.</p>
+<p>///</p>
+<p>EFI_RESOURCE_TYPE ResourceType;</p>
+<p>///</p>
+<p>/// Resource attributes as defined by EFI_RESOURCE_ATTRIBUTE_TYPE.</p>
+<p>///</p>
+<p>EFI_RESOURCE_ATTRIBUTE_TYPE ResourceAttribute;</p>
+<p>///</p>
+<p>/// The physical start address of the resource region.</p>
+<p>///</p>
+<p>EFI_PHYSICAL_ADDRESS PhysicalStart;</p>
+<p>///</p>
+<p>/// The number of bytes of the resource region.</p>
+<p>///</p>
+<p>UINT64 ResourceLength;</p>
+<p>} EFI_HOB_RESOURCE_DESCRIPTOR;</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="efi-hob-memory-allocation">
+<h2>EFI_HOB_MEMORY_ALLOCATION<a class="headerlink" href="#efi-hob-memory-allocation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="efi-memory-type">
+<h3>EFI_MEMORY_TYPE<a class="headerlink" href="#efi-memory-type" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiMultiPhase.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiMultiPhase.h</a></p>
+<p>///</p>
+<p>/// Enumeration of memory types introduced in UEFI.</p>
+<p>///</p>
+<p>typedef enum {</p>
+<p>///</p>
+<p>/// Not used.</p>
+<p>///</p>
+<p>EfiReservedMemoryType,</p>
+<p>///</p>
+<p>/// The code portions of a loaded application.</p>
+<p>/// (Note that UEFI OS loaders are UEFI applications.)</p>
+<p>///</p>
+<p>EfiLoaderCode,</p>
+<p>///</p>
+<p>/// The data portions of a loaded application and the default data
+allocation</p>
+<p>/// type used by an application to allocate pool memory.</p>
+<p>///</p>
+<p>EfiLoaderData,</p>
+<p>///</p>
+<p>/// The code portions of a loaded Boot Services Driver.</p>
+<p>///</p>
+<p>EfiBootServicesCode,</p>
+<p>///</p>
+<p>/// The data portions of a loaded Boot Serves Driver, and the default
+data</p>
+<p>/// allocation type used by a Boot Services Driver to allocate pool
+memory.</p>
+<p>///</p>
+<p>EfiBootServicesData,</p>
+<p>///</p>
+<p>/// The code portions of a loaded Runtime Services Driver.</p>
+<p>///</p>
+<p>EfiRuntimeServicesCode,</p>
+<p>///</p>
+<p>/// The data portions of a loaded Runtime Services Driver and the
+default</p>
+<p>/// data allocation type used by a Runtime Services Driver to
+allocate pool memory.</p>
+<p>///</p>
+<p>EfiRuntimeServicesData,</p>
+<p>///</p>
+<p>/// Free (unallocated) memory.</p>
+<p>///</p>
+<p>EfiConventionalMemory,</p>
+<p>///</p>
+<p>/// Memory in which errors have been detected.</p>
+<p>///</p>
+<p>EfiUnusableMemory,</p>
+<p>///</p>
+<p>/// Memory that holds the ACPI tables.</p>
+<p>///</p>
+<p>EfiACPIReclaimMemory,</p>
+<p>///</p>
+<p>/// Address space reserved for use by the firmware.</p>
+<p>///</p>
+<p>EfiACPIMemoryNVS,</p>
+<p>///</p>
+<p>/// Used by system firmware to request that a memory-mapped IO region</p>
+<p>/// be mapped by the OS to a virtual address so it can be accessed by
+EFI runtime services.</p>
+<p>///</p>
+<p>EfiMemoryMappedIO,</p>
+<p>///</p>
+<p>/// System memory-mapped IO region that is used to translate memory</p>
+<p>/// cycles to IO cycles by the processor.</p>
+<p>///</p>
+<p>EfiMemoryMappedIOPortSpace,</p>
+<p>///</p>
+<p>/// Address space reserved by the firmware for code that is part of
+the processor.</p>
+<p>///</p>
+<p>EfiPalCode,</p>
+<p>///</p>
+<p>/// A memory region that operates as EfiConventionalMemory,</p>
+<p>/// however it happens to also support byte-addressable
+non-volatility.</p>
+<p>///</p>
+<p>EfiPersistentMemory,</p>
+<p>EfiMaxMemoryType</p>
+<p>} EFI_MEMORY_TYPE;</p>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a></p>
+</div></blockquote>
+<p><strong>11.6.2 EFI_HOB_MEMORY_ALLOCATION_HEADER</strong></p>
+<blockquote>
+<div><p>/// EFI_HOB_MEMORY_ALLOCATION_HEADER describes the</p>
+<p>/// various attributes of the logical memory allocation. The type
+field will be used for</p>
+<p>/// subsequent inclusion in the UEFI memory map.</p>
+<p>///</p>
+<p>typedef struct {</p>
+<p>///</p>
+<p>/// A GUID that defines the memory allocation region’s type and
+purpose, as well as</p>
+<p>/// other fields within the memory allocation HOB. This GUID is used
+to define the</p>
+<p>/// additional data within the HOB that may be present for the memory
+allocation HOB.</p>
+<p>/// Type EFI_GUID is defined in InstallProtocolInterface() in the
+UEFI 2.0</p>
+<p>/// specification.</p>
+<p>///</p>
+<p>EFI_GUID Name;</p>
+<p>///</p>
+<p>/// The base address of memory allocated by this HOB. Type</p>
+<p>/// EFI_PHYSICAL_ADDRESS is defined in AllocatePages() in the UEFI
+2.0</p>
+<p>/// specification.</p>
+<p>///</p>
+<p>EFI_PHYSICAL_ADDRESS MemoryBaseAddress;</p>
+<p>///</p>
+<p>/// The length in bytes of memory allocated by this HOB.</p>
+<p>///</p>
+<p>UINT64 MemoryLength;</p>
+<p>///</p>
+<p>/// Defines the type of memory allocated by this HOB. The memory type
+definition</p>
+<p>/// follows the EFI_MEMORY_TYPE definition. Type EFI_MEMORY_TYPE is
+defined</p>
+<p>/// in AllocatePages() in the UEFI 2.0 specification.</p>
+<p>///</p>
+<p>EFI_MEMORY_TYPE MemoryType;</p>
+<p>///</p>
+<p>/// Padding for Itanium processor family</p>
+<p>///</p>
+<p>UINT8 Reserved[4];</p>
+<p>} EFI_HOB_MEMORY_ALLOCATION_HEADER;</p>
+</div></blockquote>
+<p><strong>11.6.3 EFI_HOB_MEMORY_ALLOCATION</strong></p>
+<blockquote>
+<div><p>/// Describes all memory ranges used during the HOB producer</p>
+<p>/// phase that exist outside the HOB list. This HOB type</p>
+<p>/// describes how memory is used, not the physical attributes of
+memory.</p>
+<p>///</p>
+<p>typedef struct {</p>
+<p>///</p>
+<p>/// The HOB generic header. Header.HobType =
+EFI_HOB_TYPE_MEMORY_ALLOCATION.</p>
+<p>///</p>
+<p>EFI_HOB_GENERIC_HEADER Header;</p>
+<p>///</p>
+<p>/// An instance of the EFI_HOB_MEMORY_ALLOCATION_HEADER that
+describes the</p>
+<p>/// various attributes of the logical memory allocation.</p>
+<p>///</p>
+<p>EFI_HOB_MEMORY_ALLOCATION_HEADER AllocDescriptor;</p>
+<p>//</p>
+<p>// Additional data pertaining to the “Name” Guid memory</p>
+<p>// may go here.</p>
+<p>//</p>
+<p>} EFI_HOB_MEMORY_ALLOCATION;</p>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../references/references.html" class="btn btn-neutral float-right" title="References and Links" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../payload-interfaces/index.html" class="btn btn-neutral" title="Payload Interfaces" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license
+      Last updated on Apr 19, 2021.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

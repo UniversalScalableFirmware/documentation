@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introduction &mdash; Universal Payload 0.75 alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Overview" href="../overview/index.html" />
+    <link rel="prev" title="Welcome to Universal Payload’s documentation!" href="../index.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Universal Payload
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.75
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#purpose">Purpose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#intended-audience">Intended Audience</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#related-documents">Related Documents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../image-format/index.html">Payload Image Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hand-off-state/index.html">Hand-off state</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../payload-interfaces/index.html">Payload Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix-a/index.html">Appendix A – HOB Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references/references.html">References and Links</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Universal Payload</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Introduction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="introduction">
+<span id="intro"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>THIS SPECIFICATION IS PROVIDED “AS IS” WITH NO WARRANTIES WHATSOEVER,
+INCLUDING ANY WARRANTY OF MERCHANTABILITY, NONINFRINGEMENT, FITNESS
+FOR ANY PARTICULAR PURPOSE, OR ANY WARRANTY OTHERWISE ARISING OUT OF
+ANY PROPOSAL, SPECIFICATION OR SAMPLE.</p>
+<p>This specification is an intermediate draft for comment only and is
+subject to change without notice. Readers should not design products
+based on this document.</p>
+<p>The <strong>Universal Payload Project Team</strong> provides the content on this site under a
+<strong>Creative Commons Attribution 4.0 International license</strong> (<a class="reference external" href="https://spdx.org/licenses/CC-BY-4.0.html">https://spdx.org/licenses/CC-BY-4.0.html</a>)
+except where otherwise noted.</p>
+<p>*Other names and brands may be claimed as the property of others.</p>
+<div class="section" id="purpose">
+<h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h2>
+<p>The purpose of this document is to describe the architecture and interfaces between the bootloader and the payload. Bootloader or payload implementation specific details are outside the scope of this document.</p>
+</div>
+<div class="section" id="intended-audience">
+<h2>Intended Audience<a class="headerlink" href="#intended-audience" title="Permalink to this headline">¶</a></h2>
+<p>This document is targeted at all platform and system developers who need the bootloader or the payload supports the unified bootloader and payload interface. This includes, but is not limited to: BIOS developers, bootloader developers, system integrators, as well as end users.</p>
+</div>
+<div class="section" id="related-documents">
+<h2>Related Documents<a class="headerlink" href="#related-documents" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Unified Extensible Firmware Interface (UEFI) Specification</p>
+<p><a class="reference external" href="http://www.uefi.org/specifications">http://www.uefi.org/specifications</a></p>
+</li>
+<li><p class="first">Platform Initialization (PI) Specification v1.7
+<a class="reference external" href="https://uefi.org/sites/default/files/resources/PI_Spec_1_7_final_Jan_2019.pdf">https://uefi.org/sites/default/files/resources/PI_Spec_1_7_final_Jan_2019.pdf</a></p>
+</li>
+<li><p class="first">Portable Executable (PE) and Common Object File Format (COFF)</p>
+<p><a class="reference external" href="https://docs.microsoft.com/en-us/windows/win32/debug/pe-format">https://docs.microsoft.com/en-us/windows/win32/debug/pe-format</a></p>
+</li>
+<li><p class="first">PE authentication</p>
+<p><a class="reference external" href="https://download.microsoft.com/download/9/c/5/9c5b2167-8017-4bae-9fde-d599bac8184a/Authenticode_PE.docx">https://download.microsoft.com/download/9/c/5/9c5b2167-8017-4bae-9fde-d599bac8184a/Authenticode_PE.docx</a></p>
+</li>
+<li><p class="first">ACPI DBG2 table</p>
+<p><a class="reference external" href="http://download.microsoft.com/download/9/4/5/945703CA-EF1F-496F-ADCF-3332CE5594FD/microsoft-debug-port-table-2-CP.docx">http://download.microsoft.com/download/9/4/5/945703CA-EF1F-496F-ADCF-3332CE5594FD/microsoft-debug-port-table-2-CP.docx</a></p>
+</li>
+<li><p class="first">ACPI specification 6.3</p>
+<p><a class="reference external" href="https://uefi.org/sites/default/files/resources/ACPI_6_3_final_Jan30.pdf">https://uefi.org/sites/default/files/resources/ACPI_6_3_final_Jan30.pdf</a></p>
+</li>
+<li><p class="first">Device tree specification</p>
+<p><a class="reference external" href="https://buildmedia.readthedocs.org/media/pdf/devicetree-specification/latest/devicetree-specification.pdf">https://buildmedia.readthedocs.org/media/pdf/devicetree-specification/latest/devicetree-specification.pdf</a></p>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../overview/index.html" class="btn btn-neutral float-right" title="Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral" title="Welcome to Universal Payload’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license
+      Last updated on Apr 19, 2021.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
