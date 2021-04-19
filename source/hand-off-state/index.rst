@@ -1,22 +1,20 @@
 Hand-off state
 ==============
 
-   The bootloader builds the Hand-Off Block (HOB) list containing
-   platform specific information and passes the address of the HOB list
-   to the payload.
+The bootloader builds the Hand-Off Block (HOB) list containing
+platform specific information and passes the address of the HOB list
+to the payload.
 
-   The prototype of payload entry point is defined as:
+The prototype of payload entry point is defined as::
 
-   | typedef
-   | VOID
-   | (__cdecl \*PAYLOAD_ENTRY) (
-   | EFI_HOB_HANDOFF_INFO_TABLE \*HobList,
-   | VOID \*ImageBase
-   | );
+  typedef
+  VOID
+  (__cdecl *PAYLOAD_ENTRY) (
+    EFI_HOB_HANDOFF_INFO_TABLE *HobList
+  );
 
-   HOB List defines the detailed HOB list being used to transfer
-   platform specific data from the bootloader to the payload.
-   ImageBase defines the base address of the Payload Image. 
+HOB List defines the detailed HOB list being used to transfer
+platform specific data from the bootloader to the payload.
 
 IA-32 and x64 Platforms
 -----------------------
