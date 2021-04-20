@@ -172,23 +172,19 @@
             
   <div class="section" id="hand-off-state">
 <h1>Hand-off state<a class="headerlink" href="#hand-off-state" title="Permalink to this headline">¶</a></h1>
-<blockquote>
-<div><p>The bootloader builds the Hand-Off Block (HOB) list containing
+<p>The bootloader builds the Hand-Off Block (HOB) list containing
 platform specific information and passes the address of the HOB list
 to the payload.</p>
 <p>The prototype of payload entry point is defined as:</p>
-<div class="line-block">
-<div class="line">typedef</div>
-<div class="line">VOID</div>
-<div class="line">(__cdecl *PAYLOAD_ENTRY) (</div>
-<div class="line">EFI_HOB_HANDOFF_INFO_TABLE *HobList,</div>
-<div class="line">VOID *ImageBase</div>
-<div class="line">);</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">VOID</span>
+<span class="p">(</span><span class="n">__cdecl</span> <span class="o">*</span><span class="n">PAYLOAD_ENTRY</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">EFI_HOB_HANDOFF_INFO_TABLE</span> <span class="o">*</span><span class="n">HobList</span>
+<span class="p">);</span>
+</pre></div>
 </div>
 <p>HOB List defines the detailed HOB list being used to transfer
-platform specific data from the bootloader to the payload.
-ImageBase defines the base address of the Payload Image.</p>
-</div></blockquote>
+platform specific data from the bootloader to the payload.</p>
 <div class="section" id="ia-32-and-x64-platforms">
 <h2>IA-32 and x64 Platforms<a class="headerlink" href="#ia-32-and-x64-platforms" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="state-of-silicon">
@@ -322,7 +318,7 @@ legacy bootloader? Assume something if ACPI is not there.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license
-      Last updated on Apr 19, 2021.
+      Last updated on Apr 20, 2021.
 
     </p>
   </div>

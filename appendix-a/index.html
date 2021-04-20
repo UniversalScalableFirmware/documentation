@@ -111,6 +111,8 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#efi-hob-memory-allocation">EFI_HOB_MEMORY_ALLOCATION</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#efi-memory-type">EFI_MEMORY_TYPE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hob-memory-allocation-header">EFI_HOB_MEMORY_ALLOCATION_HEADER</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">EFI_HOB_MEMORY_ALLOCATION</a></li>
 </ul>
 </li>
 </ul>
@@ -180,314 +182,292 @@
             
   <div class="section" id="appendix-a-hob-data-structures">
 <h1>Appendix A – HOB Data Structures<a class="headerlink" href="#appendix-a-hob-data-structures" title="Permalink to this headline">¶</a></h1>
-<blockquote>
-<div>The declarations/definitions provided here are derived from the EDK2
-source available for download at <a class="reference external" href="https://github.com/tianocore/edk2">https://github.com/tianocore/edk2</a></div></blockquote>
+<p>The declarations/definitions provided here are derived from the EDKII at <a class="reference external" href="https://github.com/tianocore/edk2">https://github.com/tianocore/edk2</a></p>
 <div class="section" id="base-data-type">
 <h2>Base Data Type<a class="headerlink" href="#base-data-type" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><div class="line-block">
-<div class="line"><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Base.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Base.h</a></div>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Base.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Base.h</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT32</span>     <span class="n">Data1</span><span class="p">;</span>
+  <span class="n">UINT16</span>     <span class="n">Data2</span><span class="p">;</span>
+  <span class="n">UINT16</span>     <span class="n">Data3</span><span class="p">;</span>
+  <span class="n">UINT8</span>      <span class="n">Data4</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+<span class="p">}</span> <span class="n">GUID</span><span class="p">;</span>
+</pre></div>
 </div>
-<blockquote>
-<div><p>typedef struct {</p>
-<blockquote>
-<div><p>UINT32 Data1;</p>
-<p>UINT16 Data2;</p>
-<p>UINT16 Data3;</p>
-<p>UINT8 Data4[8];</p>
-</div></blockquote>
-<p>} GUID;</p>
-</div></blockquote>
-<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiBaseType.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiBaseType.h</a></p>
-<p>typedef GUID EFI_GUID;</p>
-<p>typedef UINT64 EFI_PHYSICAL_ADDRESS;</p>
-</div></blockquote>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiBaseType.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiBaseType.h</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>    <span class="n">GUID</span>       <span class="n">EFI_GUID</span><span class="p">;</span>
+<span class="n">typedef</span>    <span class="n">UINT64</span>     <span class="n">EFI_PHYSICAL_ADDRESS</span><span class="p">;</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="efi-hob-type">
 <h2>EFI HOB TYPE<a class="headerlink" href="#efi-hob-type" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a></p>
-<p>//</p>
-<p>// HobType of EFI_HOB_GENERIC_HEADER.</p>
-<p>//</p>
-<p>#define EFI_HOB_TYPE_HANDOFF 0x0001</p>
-<p>#define EFI_HOB_TYPE_MEMORY_ALLOCATION 0x0002</p>
-<p>#define EFI_HOB_TYPE_RESOURCE_DESCRIPTOR 0x0003</p>
-<p>#define EFI_HOB_TYPE_GUID_EXTENSION 0x0004</p>
-<p>#define EFI_HOB_TYPE_FV 0x0005</p>
-<p>#define EFI_HOB_TYPE_CPU 0x0006</p>
-<p>#define EFI_HOB_TYPE_MEMORY_POOL 0x0007</p>
-<p>#define EFI_HOB_TYPE_FV2 0x0009</p>
-<p>#define EFI_HOB_TYPE_LOAD_PEIM_UNUSED 0x000A</p>
-<p>#define EFI_HOB_TYPE_UEFI_CAPSULE 0x000B</p>
-<p>#define EFI_HOB_TYPE_FV3 0x000C</p>
-<p>#define EFI_HOB_TYPE_UNUSED 0xFFFE</p>
-<p>#define EFI_HOB_TYPE_END_OF_HOB_LIST 0xFFFF</p>
-</div></blockquote>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span>
+<span class="o">//</span> <span class="n">HobType</span> <span class="n">of</span> <span class="n">EFI_HOB_GENERIC_HEADER</span><span class="o">.</span>
+<span class="o">//</span>
+<span class="c1">#define EFI_HOB_TYPE_HANDOFF              0x0001</span>
+<span class="c1">#define EFI_HOB_TYPE_MEMORY_ALLOCATION    0x0002</span>
+<span class="c1">#define EFI_HOB_TYPE_RESOURCE_DESCRIPTOR  0x0003</span>
+<span class="c1">#define EFI_HOB_TYPE_GUID_EXTENSION       0x0004</span>
+<span class="c1">#define EFI_HOB_TYPE_FV                   0x0005</span>
+<span class="c1">#define EFI_HOB_TYPE_CPU                  0x0006</span>
+<span class="c1">#define EFI_HOB_TYPE_MEMORY_POOL          0x0007</span>
+<span class="c1">#define EFI_HOB_TYPE_FV2                  0x0009</span>
+<span class="c1">#define EFI_HOB_TYPE_LOAD_PEIM_UNUSED     0x000A</span>
+<span class="c1">#define EFI_HOB_TYPE_UEFI_CAPSULE         0x000B</span>
+<span class="c1">#define EFI_HOB_TYPE_FV3                  0x000C</span>
+<span class="c1">#define EFI_HOB_TYPE_UNUSED               0xFFFE</span>
+<span class="c1">#define EFI_HOB_TYPE_END_OF_HOB_LIST      0xFFFF</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="efi-hob-generic-header">
 <h2>EFI_HOB_GENERIC_HEADER<a class="headerlink" href="#efi-hob-generic-header" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a></p>
-<p>///</p>
-<p>/// Describes the format and size of the data inside the HOB.</p>
-<p>/// All HOBs must contain this generic HOB header.</p>
-<p>///</p>
-<p>typedef struct {</p>
-<p>///</p>
-<p>/// Identifies the HOB data structure type.</p>
-<p>///</p>
-<p>UINT16 HobType;</p>
-<p>///</p>
-<p>/// The length in bytes of the HOB.</p>
-<p>///</p>
-<p>UINT16 HobLength;</p>
-<p>///</p>
-<p>/// This field must always be set to zero.</p>
-<p>///</p>
-<p>UINT32 Reserved;</p>
-<p>} EFI_HOB_GENERIC_HEADER;</p>
-</div></blockquote>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
+<span class="o">///</span> <span class="n">Describes</span> <span class="n">the</span> <span class="nb">format</span> <span class="ow">and</span> <span class="n">size</span> <span class="n">of</span> <span class="n">the</span> <span class="n">data</span> <span class="n">inside</span> <span class="n">the</span> <span class="n">HOB</span><span class="o">.</span>
+<span class="o">///</span> <span class="n">All</span> <span class="n">HOBs</span> <span class="n">must</span> <span class="n">contain</span> <span class="n">this</span> <span class="n">generic</span> <span class="n">HOB</span> <span class="n">header</span><span class="o">.</span>
+<span class="o">///</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">Identifies</span> <span class="n">the</span> <span class="n">HOB</span> <span class="n">data</span> <span class="n">structure</span> <span class="nb">type</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">UINT16</span>   <span class="n">HobType</span><span class="p">;</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">length</span> <span class="ow">in</span> <span class="nb">bytes</span> <span class="n">of</span> <span class="n">the</span> <span class="n">HOB</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">UINT16</span>   <span class="n">HobLength</span><span class="p">;</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">This</span> <span class="n">field</span> <span class="n">must</span> <span class="n">always</span> <span class="n">be</span> <span class="nb">set</span> <span class="n">to</span> <span class="n">zero</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">UINT32</span>   <span class="n">Reserved</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_HOB_GENERIC_HEADER</span><span class="p">;</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="hob-list-header">
 <h2>HOB List Header<a class="headerlink" href="#hob-list-header" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a></div></blockquote>
 <div class="section" id="efi-hob-handoff-info-table">
 <h3>EFI_HOB_HANDOFF_INFO_TABLE<a class="headerlink" href="#efi-hob-handoff-info-table" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>///</p>
-<p>/// Contains general state information used by the HOB producer
-phase.</p>
-<p>/// This HOB must be the first one in the HOB list.</p>
-<p>///</p>
-<p>typedef struct {</p>
-<p>///</p>
-<p>/// The HOB generic header. Header.HobType = EFI_HOB_TYPE_HANDOFF.</p>
-<p>///</p>
-<p>EFI_HOB_GENERIC_HEADER Header;</p>
-<p>///</p>
-<p>/// The version number pertaining to the PHIT HOB definition.</p>
-<p>/// This value is four bytes in length to provide an 8-byte aligned
-entry</p>
-<p>/// when it is combined with the 4-byte BootMode.</p>
-<p>///</p>
-<p>UINT32 Version;</p>
-<p>///</p>
-<p>/// The system boot mode as determined during the HOB producer phase.</p>
-<p>///</p>
-<p>EFI_BOOT_MODE BootMode;</p>
-<p>///</p>
-<p>/// The highest address location of memory that is allocated for use
-by the HOB producer</p>
-<p>/// phase. This address must be 4-KB aligned to meet page
-restrictions of UEFI.</p>
-<p>///</p>
-<p>EFI_PHYSICAL_ADDRESS EfiMemoryTop;</p>
-<p>///</p>
-<p>/// The lowest address location of memory that is allocated for use
-by the HOB producer phase.</p>
-<p>///</p>
-<p>EFI_PHYSICAL_ADDRESS EfiMemoryBottom;</p>
-<p>///</p>
-<p>/// The highest address location of free memory that is currently
-available</p>
-<p>/// for use by the HOB producer phase.</p>
-<p>///</p>
-<p>EFI_PHYSICAL_ADDRESS EfiFreeMemoryTop;</p>
-<p>///</p>
-<p>/// The lowest address location of free memory that is available for
-use by the HOB producer phase.</p>
-<p>///</p>
-<p>EFI_PHYSICAL_ADDRESS EfiFreeMemoryBottom;</p>
-<p>///</p>
-<p>/// The end of the HOB list.</p>
-<p>///</p>
-<p>EFI_PHYSICAL_ADDRESS EfiEndOfHobList;</p>
-<p>} EFI_HOB_HANDOFF_INFO_TABLE;</p>
-</div></blockquote>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
+<span class="o">///</span> <span class="n">Contains</span> <span class="n">general</span> <span class="n">state</span> <span class="n">information</span> <span class="n">used</span> <span class="n">by</span> <span class="n">the</span> <span class="n">HOB</span> <span class="n">producerphase</span><span class="o">.</span>
+<span class="o">///</span> <span class="n">This</span> <span class="n">HOB</span> <span class="n">must</span> <span class="n">be</span> <span class="n">the</span> <span class="n">first</span> <span class="n">one</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">HOB</span> <span class="nb">list</span><span class="o">.</span>
+<span class="o">///</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">HOB</span> <span class="n">generic</span> <span class="n">header</span><span class="o">.</span> <span class="n">Header</span><span class="o">.</span><span class="n">HobType</span> <span class="o">=</span> <span class="n">EFI_HOB_TYPE_HANDOFF</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EFI_HOB_GENERIC_HEADER</span> <span class="n">Header</span><span class="p">;</span>
+
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">version</span> <span class="n">number</span> <span class="n">pertaining</span> <span class="n">to</span> <span class="n">the</span> <span class="n">PHIT</span> <span class="n">HOB</span> <span class="n">definition</span><span class="o">.</span>
+  <span class="o">///</span> <span class="n">This</span> <span class="n">value</span> <span class="ow">is</span> <span class="n">four</span> <span class="nb">bytes</span> <span class="ow">in</span> <span class="n">length</span> <span class="n">to</span> <span class="n">provide</span> <span class="n">an</span> <span class="mi">8</span><span class="o">-</span><span class="n">byte</span> <span class="n">aligned</span> <span class="n">entry</span>
+  <span class="o">///</span> <span class="n">when</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">combined</span> <span class="k">with</span> <span class="n">the</span> <span class="mi">4</span><span class="o">-</span><span class="n">byte</span> <span class="n">BootMode</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">UINT32</span> <span class="n">Version</span><span class="p">;</span>
+
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">system</span> <span class="n">boot</span> <span class="n">mode</span> <span class="k">as</span> <span class="n">determined</span> <span class="n">during</span> <span class="n">the</span> <span class="n">HOB</span> <span class="n">producer</span> <span class="n">phase</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EFI_BOOT_MODE</span> <span class="n">BootMode</span><span class="p">;</span>
+
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">highest</span> <span class="n">address</span> <span class="n">location</span> <span class="n">of</span> <span class="n">memory</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">allocated</span> <span class="k">for</span> <span class="n">use</span> <span class="n">by</span> <span class="n">the</span> <span class="n">HOB</span> <span class="n">producer</span>
+  <span class="o">///</span> <span class="n">phase</span><span class="o">.</span> <span class="n">This</span> <span class="n">address</span> <span class="n">must</span> <span class="n">be</span> <span class="mi">4</span><span class="o">-</span><span class="n">KB</span> <span class="n">aligned</span> <span class="n">to</span> <span class="n">meet</span> <span class="n">page</span> <span class="n">restrictions</span> <span class="n">of</span> <span class="n">UEFI</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EFI_PHYSICAL_ADDRESS</span> <span class="n">EfiMemoryTop</span><span class="p">;</span>
+
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">lowest</span> <span class="n">address</span> <span class="n">location</span> <span class="n">of</span> <span class="n">memory</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">allocated</span> <span class="k">for</span> <span class="n">use</span> <span class="n">by</span> <span class="n">the</span> <span class="n">HOB</span> <span class="n">producer</span> <span class="n">phase</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EFI_PHYSICAL_ADDRESS</span> <span class="n">EfiMemoryBottom</span><span class="p">;</span>
+
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">highest</span> <span class="n">address</span> <span class="n">location</span> <span class="n">of</span> <span class="n">free</span> <span class="n">memory</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">currently</span> <span class="n">available</span>
+  <span class="o">///</span> <span class="k">for</span> <span class="n">use</span> <span class="n">by</span> <span class="n">the</span> <span class="n">HOB</span> <span class="n">producer</span> <span class="n">phase</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EFI_PHYSICAL_ADDRESS</span> <span class="n">EfiFreeMemoryTop</span><span class="p">;</span>
+
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">lowest</span> <span class="n">address</span> <span class="n">location</span> <span class="n">of</span> <span class="n">free</span> <span class="n">memory</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">available</span> <span class="k">for</span> <span class="n">use</span> <span class="n">by</span> <span class="n">the</span> <span class="n">HOB</span> <span class="n">producer</span> <span class="n">phase</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EFI_PHYSICAL_ADDRESS</span> <span class="n">EfiFreeMemoryBottom</span><span class="p">;</span>
+
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">end</span> <span class="n">of</span> <span class="n">the</span> <span class="n">HOB</span> <span class="nb">list</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EFI_PHYSICAL_ADDRESS</span> <span class="n">EfiEndOfHobList</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_HOB_HANDOFF_INFO_TABLE</span><span class="p">;</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="efi-hob-handoff-table-version">
 <h3>EFI_HOB_HANDOFF_TABLE_VERSION<a class="headerlink" href="#efi-hob-handoff-table-version" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>///</p>
-<p>/// Value of version in EFI_HOB_HANDOFF_INFO_TABLE.</p>
-<p>///</p>
-<p>#define EFI_HOB_HANDOFF_TABLE_VERSION 0x0009</p>
-</div></blockquote>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
+<span class="o">///</span> <span class="n">Value</span> <span class="n">of</span> <span class="n">version</span> <span class="ow">in</span> <span class="n">EFI_HOB_HANDOFF_INFO_TABLE</span><span class="o">.</span>
+<span class="o">///</span>
+<span class="c1">#define    EFI_HOB_HANDOFF_TABLE_VERSION    0x0009</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="efi-boot-mode">
 <h3>EFI_BOOT_MODE<a class="headerlink" href="#efi-boot-mode" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><div class="line-block">
-<div class="line"><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiBootMode.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiBootMode.h</a></div>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiBootMode.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiBootMode.h</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
+<span class="o">///</span> <span class="n">EFI</span> <span class="n">boot</span> <span class="n">mode</span>
+<span class="o">///</span>
+<span class="n">typedef</span> <span class="n">UINT32</span> <span class="n">EFI_BOOT_MODE</span><span class="p">;</span>
+
+<span class="o">//</span>
+<span class="o">//</span> <span class="mh">0x21</span> <span class="o">-</span> <span class="mh">0xff</span> <span class="n">are</span> <span class="n">reserved</span><span class="o">.</span>
+<span class="o">//</span>
+<span class="c1">#define BOOT_WITH_FULL_CONFIGURATION                  0x00</span>
+<span class="c1">#define BOOT_WITH_MINIMAL_CONFIGURATION               0x01</span>
+<span class="c1">#define BOOT_ASSUMING_NO_CONFIGURATION_CHANGES        0x02</span>
+<span class="c1">#define BOOT_WITH_FULL_CONFIGURATION_PLUS_DIAGNOSTICS 0x03</span>
+<span class="c1">#define BOOT_WITH_DEFAULT_SETTINGS                    0x04</span>
+<span class="c1">#define BOOT_ON_S4_RESUME                             0x05</span>
+<span class="c1">#define BOOT_ON_S5_RESUME                             0x06</span>
+<span class="c1">#define BOOT_WITH_MFG_MODE_SETTINGS                   0x07</span>
+<span class="c1">#define BOOT_ON_S2_RESUME                             0x10</span>
+<span class="c1">#define BOOT_ON_S3_RESUME                             0x11</span>
+<span class="c1">#define BOOT_ON_FLASH_UPDATE                          0x12</span>
+<span class="c1">#define BOOT_IN_RECOVERY_MODE                         0x20</span>
+</pre></div>
 </div>
-<p>///</p>
-<p>/// EFI boot mode</p>
-<p>///</p>
-<p>typedef UINT32 EFI_BOOT_MODE;</p>
-<p>//</p>
-<p>// 0x21 - 0xf..f are reserved.</p>
-<p>//</p>
-<p>#define BOOT_WITH_FULL_CONFIGURATION 0x00</p>
-<p>#define BOOT_WITH_MINIMAL_CONFIGURATION 0x01</p>
-<p>#define BOOT_ASSUMING_NO_CONFIGURATION_CHANGES 0x02</p>
-<p>#define BOOT_WITH_FULL_CONFIGURATION_PLUS_DIAGNOSTICS 0x03</p>
-<p>#define BOOT_WITH_DEFAULT_SETTINGS 0x04</p>
-<p>#define BOOT_ON_S4_RESUME 0x05</p>
-<p>#define BOOT_ON_S5_RESUME 0x06</p>
-<p>#define BOOT_WITH_MFG_MODE_SETTINGS 0x07</p>
-<p>#define BOOT_ON_S2_RESUME 0x10</p>
-<p>#define BOOT_ON_S3_RESUME 0x11</p>
-<p>#define BOOT_ON_FLASH_UPDATE 0x12</p>
-<p>#define BOOT_IN_RECOVERY_MODE 0x20</p>
-</div></blockquote>
 </div>
 </div>
 <div class="section" id="efi-hob-guid-type">
 <h2>EFI_HOB_GUID_TYPE<a class="headerlink" href="#efi-hob-guid-type" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><p>This is the generic HOB header for GUID type HOB.</p>
-<div class="line-block">
-<div class="line"><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a></div>
+<p>This is the generic HOB header for GUID type HOB.</p>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
+<span class="o">///</span> <span class="n">Allows</span> <span class="n">writers</span> <span class="n">of</span> <span class="n">executable</span> <span class="n">content</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">HOB</span> <span class="n">producer</span> <span class="n">phase</span> <span class="n">to</span>
+<span class="o">///</span> <span class="n">maintain</span> <span class="ow">and</span> <span class="n">manage</span> <span class="n">HOBs</span> <span class="k">with</span> <span class="n">specific</span> <span class="n">GUID</span><span class="o">.</span>
+<span class="o">///</span>
+
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">HOB</span> <span class="n">generic</span> <span class="n">header</span><span class="o">.</span> <span class="n">Header</span><span class="o">.</span><span class="n">HobType</span> <span class="o">=</span> <span class="n">EFI_HOB_TYPE_GUID_EXTENSION</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EFI_HOB_GENERIC_HEADER</span> <span class="n">Header</span><span class="p">;</span>
+
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">A</span> <span class="n">GUID</span> <span class="n">that</span> <span class="n">defines</span> <span class="n">the</span> <span class="n">contents</span> <span class="n">of</span> <span class="n">this</span> <span class="n">HOB</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EFI_GUID</span> <span class="n">Name</span><span class="p">;</span>
+
+  <span class="o">//</span>
+  <span class="o">//</span> <span class="n">Guid</span> <span class="n">specific</span> <span class="n">data</span> <span class="n">goes</span> <span class="n">here</span>
+  <span class="o">//</span>
+<span class="p">}</span> <span class="n">EFI_HOB_GUID_TYPE</span><span class="p">;</span>
+</pre></div>
 </div>
-<p>///</p>
-<p>/// Allows writers of executable content in the HOB producer phase to</p>
-<p>/// maintain and manage HOBs with specific GUID.</p>
-<p>///</p>
-<p>typedef struct {</p>
-<p>///</p>
-<p>/// The HOB generic header. Header.HobType =</p>
-<p>EFI_HOB_TYPE_GUID_EXTENSION.</p>
-<p>///</p>
-<p>EFI_HOB_GENERIC_HEADER Header;</p>
-<p>///</p>
-<p>/// A GUID that defines the contents of this HOB.</p>
-<p>///</p>
-<p>EFI_GUID Name;</p>
-<p>//</p>
-<p>// Guid specific data goes here</p>
-<p>//</p>
-<p>} EFI_HOB_GUID_TYPE;</p>
-</div></blockquote>
 </div>
 <div class="section" id="efi-pei-graphics-info-hob">
 <h2>EFI_PEI_GRAPHICS_INFO_HOB<a class="headerlink" href="#efi-pei-graphics-info-hob" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><div class="line-block">
-<div class="line"><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h</a></div>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h</a></p>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Protocol/GraphicsOutput.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Protocol/GraphicsOutput.h</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">**</span><span class="n">HOB</span> <span class="n">GUID</span><span class="o">**</span>
+<span class="c1">#define    EFI_PEI_GRAPHICS_INFO_HOB_GUID    {0x39f62cce, 0x6825, 0x4669, {0xbb, 0x56, 0x54, 0x1a, 0xba, 0x75, 0x3a, 0x07}}</span>
+</pre></div>
 </div>
-<div class="line-block">
-<div class="line"><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Protocol/GraphicsOutput.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Protocol/GraphicsOutput.h</a></div>
+<p><strong>Hob Interface Structure</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">EFI_PHYSICAL_ADDRESS</span>                    <span class="n">FrameBufferBase</span><span class="p">;</span>
+  <span class="n">UINT32</span>                                  <span class="n">FrameBufferSize</span><span class="p">;</span>
+  <span class="n">EFI_GRAPHICS_OUTPUT_MODE_INFORMATION</span>    <span class="n">GraphicsMode</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_PEI_GRAPHICS_INFO_HOB</span><span class="p">;</span>
+</pre></div>
 </div>
-<div class="line-block">
-<div class="line"><strong>HOB GUID</strong></div>
-<div class="line">#define EFI_PEI_GRAPHICS_INFO_HOB_GUID \</div>
-<div class="line">{0x39f62cce, 0x6825, 0x4669, {0xbb, 0x56, 0x54, 0x1a, 0xba, 0x75,
-0x3a, 0x07}}</div>
+<p><strong>Related Definitions</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT32</span> <span class="n">RedMask</span><span class="p">;</span>
+  <span class="n">UINT32</span> <span class="n">GreenMask</span><span class="p">;</span>
+  <span class="n">UINT32</span> <span class="n">BlueMask</span><span class="p">;</span>
+  <span class="n">UINT32</span> <span class="n">ReservedMask</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_PIXEL_BITMASK</span><span class="p">;</span>
+</pre></div>
 </div>
-<p><strong>Hob Interface Structure</strong></p>
-<div class="line-block">
-<div class="line">typedef struct {</div>
-<div class="line">EFI_PHYSICAL_ADDRESS FrameBufferBase;</div>
-<div class="line">UINT32 FrameBufferSize;</div>
-<div class="line">EFI_GRAPHICS_OUTPUT_MODE_INFORMATION GraphicsMode;</div>
-<div class="line">} EFI_PEI_GRAPHICS_INFO_HOB;</div>
+<p>If a bit is set in <em>RedMask</em>, <em>GreenMask</em>, or <em>BlueMask</em> then those bits of the pixel represent the
+corresponding color. Bits in <em>RedMask</em>, <em>GreenMask</em>, <em>BlueMask</em>, and <em>ReserverdMask</em> must not overlap bit
+positions. The values for the red, green, and blue components in the bit mask represent the color
+intensity. The color intensities must increase as the color values for each color mask increase with a
+minimum intensity of all bits in a color mask clear to a maximum intensity of all bits in a color mask set.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">enum</span> <span class="p">{</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">A</span> <span class="n">pixel</span> <span class="ow">is</span> <span class="mi">32</span><span class="o">-</span><span class="n">bits</span> <span class="ow">and</span> <span class="n">byte</span> <span class="n">zero</span> <span class="n">represents</span> <span class="n">red</span><span class="p">,</span> <span class="n">byte</span> <span class="n">one</span> <span class="n">represents</span> <span class="n">green</span><span class="p">,</span>
+  <span class="o">///</span> <span class="n">byte</span> <span class="n">two</span> <span class="n">represents</span> <span class="n">blue</span><span class="p">,</span> <span class="ow">and</span> <span class="n">byte</span> <span class="n">three</span> <span class="ow">is</span> <span class="n">reserved</span><span class="o">.</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">definition</span>
+  <span class="o">///</span> <span class="k">for</span> <span class="n">the</span> <span class="n">physical</span> <span class="n">frame</span> <span class="n">buffer</span><span class="o">.</span> <span class="n">The</span> <span class="n">byte</span> <span class="n">values</span> <span class="k">for</span> <span class="n">the</span> <span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="ow">and</span> <span class="n">blue</span>
+  <span class="o">///</span> <span class="n">components</span> <span class="n">represent</span> <span class="n">the</span> <span class="n">color</span> <span class="n">intensity</span><span class="o">.</span> <span class="n">This</span> <span class="n">color</span> <span class="n">intensity</span> <span class="n">value</span> <span class="nb">range</span>
+  <span class="o">///</span> <span class="kn">from</span> <span class="nn">a</span> <span class="n">minimum</span> <span class="n">intensity</span> <span class="n">of</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">maximum</span> <span class="n">intensity</span> <span class="n">of</span> <span class="mf">255.</span>
+  <span class="o">///</span>
+  <span class="n">PixelRedGreenBlueReserved8BitPerColor</span><span class="p">,</span>
+
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">A</span> <span class="n">pixel</span> <span class="ow">is</span> <span class="mi">32</span><span class="o">-</span><span class="n">bits</span> <span class="ow">and</span> <span class="n">byte</span> <span class="n">zero</span> <span class="n">represents</span> <span class="n">blue</span><span class="p">,</span> <span class="n">byte</span> <span class="n">one</span> <span class="n">represents</span> <span class="n">green</span><span class="p">,</span>
+  <span class="o">///</span> <span class="n">byte</span> <span class="n">two</span> <span class="n">represents</span> <span class="n">red</span><span class="p">,</span> <span class="ow">and</span> <span class="n">byte</span> <span class="n">three</span> <span class="ow">is</span> <span class="n">reserved</span><span class="o">.</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">definition</span>
+  <span class="o">///</span> <span class="k">for</span> <span class="n">the</span> <span class="n">physical</span> <span class="n">frame</span> <span class="n">buffer</span><span class="o">.</span> <span class="n">The</span> <span class="n">byte</span> <span class="n">values</span> <span class="k">for</span> <span class="n">the</span> <span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="ow">and</span> <span class="n">blue</span>
+  <span class="o">///</span> <span class="n">components</span> <span class="n">represent</span> <span class="n">the</span> <span class="n">color</span> <span class="n">intensity</span><span class="o">.</span> <span class="n">This</span> <span class="n">color</span> <span class="n">intensity</span> <span class="n">value</span> <span class="nb">range</span>
+  <span class="o">///</span> <span class="kn">from</span> <span class="nn">a</span> <span class="n">minimum</span> <span class="n">intensity</span> <span class="n">of</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">maximum</span> <span class="n">intensity</span> <span class="n">of</span> <span class="mf">255.</span>
+  <span class="o">///</span>
+  <span class="n">PixelBlueGreenRedReserved8BitPerColor</span><span class="p">,</span>
+
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">Pixel</span> <span class="n">definition</span> <span class="n">of</span> <span class="n">the</span> <span class="n">physical</span> <span class="n">frame</span> <span class="n">buffer</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">PixelBitMask</span><span class="p">,</span>
+
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">This</span> <span class="n">mode</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">support</span> <span class="n">a</span> <span class="n">physical</span> <span class="n">frame</span> <span class="n">buffer</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">PixelBltOnly</span><span class="p">,</span>
+
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">Valid</span> <span class="n">EFI_GRAPHICS_PIXEL_FORMAT</span> <span class="n">enum</span> <span class="n">values</span> <span class="n">are</span> <span class="n">less</span> <span class="n">than</span> <span class="n">this</span> <span class="n">value</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">PixelFormatMax</span>
+<span class="p">}</span> <span class="n">EFI_GRAPHICS_PIXEL_FORMAT</span><span class="p">;</span>
+
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">version</span> <span class="n">of</span> <span class="n">this</span> <span class="n">data</span> <span class="n">structure</span><span class="o">.</span> <span class="n">A</span> <span class="n">value</span> <span class="n">of</span> <span class="n">zero</span> <span class="n">represents</span> <span class="n">the</span>
+  <span class="o">///</span> <span class="n">EFI_GRAPHICS_OUTPUT_MODE_INFORMATION</span> <span class="n">structure</span> <span class="k">as</span> <span class="n">defined</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">specification</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">UINT32</span> <span class="n">Version</span><span class="p">;</span>
+
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">size</span> <span class="n">of</span> <span class="n">video</span> <span class="n">screen</span> <span class="ow">in</span> <span class="n">pixels</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">X</span> <span class="n">dimension</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">UINT32</span> <span class="n">HorizontalResolution</span><span class="p">;</span>
+
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">size</span> <span class="n">of</span> <span class="n">video</span> <span class="n">screen</span> <span class="ow">in</span> <span class="n">pixels</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">Y</span> <span class="n">dimension</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">UINT32</span> <span class="n">VerticalResolution</span><span class="p">;</span>
+
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">Enumeration</span> <span class="n">that</span> <span class="n">defines</span> <span class="n">the</span> <span class="n">physical</span> <span class="nb">format</span> <span class="n">of</span> <span class="n">the</span> <span class="n">pixel</span><span class="o">.</span> <span class="n">A</span> <span class="n">value</span> <span class="n">of</span> <span class="n">PixelBltOnly</span>
+  <span class="o">///</span> <span class="n">implies</span> <span class="n">that</span> <span class="n">a</span> <span class="n">linear</span> <span class="n">frame</span> <span class="n">buffer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">available</span> <span class="k">for</span> <span class="n">this</span> <span class="n">mode</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EFI_GRAPHICS_PIXEL_FORMAT</span> <span class="n">PixelFormat</span><span class="p">;</span>
+
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">This</span> <span class="n">bitmask</span> <span class="ow">is</span> <span class="n">only</span> <span class="n">valid</span> <span class="k">if</span> <span class="n">PixelFormat</span> <span class="ow">is</span> <span class="nb">set</span> <span class="n">to</span> <span class="n">PixelPixelBitMask</span><span class="o">.</span>
+  <span class="o">///</span> <span class="n">A</span> <span class="n">bit</span> <span class="n">being</span> <span class="nb">set</span> <span class="n">defines</span> <span class="n">what</span> <span class="n">bits</span> <span class="n">are</span> <span class="n">used</span> <span class="k">for</span> <span class="n">what</span> <span class="n">purpose</span> <span class="n">such</span> <span class="k">as</span> <span class="n">Red</span><span class="p">,</span> <span class="n">Green</span><span class="p">,</span> <span class="n">Blue</span><span class="p">,</span> <span class="ow">or</span> <span class="n">Reserved</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EFI_PIXEL_BITMASK</span> <span class="n">PixelInformation</span><span class="p">;</span>
+
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">Defines</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">pixel</span> <span class="n">elements</span> <span class="n">per</span> <span class="n">video</span> <span class="n">memory</span> <span class="n">line</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">UINT32</span> <span class="n">PixelsPerScanLine</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_GRAPHICS_OUTPUT_MODE_INFORMATION</span><span class="p">;</span>
+</pre></div>
 </div>
-<p><strong>Related Definitions</strong></p>
-<p>typedef struct {</p>
-<p>UINT32 RedMask;</p>
-<p>UINT32 GreenMask;</p>
-<p>UINT32 BlueMask;</p>
-<p>UINT32 ReservedMask;</p>
-<p>} EFI_PIXEL_BITMASK;</p>
-<div class="line-block">
-<div class="line">If a bit is set in <em>RedMask</em>, <em>GreenMask</em>, or <em>BlueMask</em> then those
-bits of the pixel represent the</div>
-<div class="line">corresponding color. Bits in <em>RedMask</em>, <em>GreenMask</em>, <em>BlueMask</em>,
-and <em>ReserverdMask</em> must not overlap bit</div>
-<div class="line">positions. The values for the red, green, and blue components in
-the bit mask represent the color</div>
-<div class="line">intensity. The color intensities must increase as the color values
-for each color mask increase with a</div>
-<div class="line">minimum intensity of all bits in a color mask clear to a maximum
-intensity of all bits in a color mask set.</div>
-</div>
-<p>typedef enum {</p>
-<p>///</p>
-<p>/// A pixel is 32-bits and byte zero represents red, byte one
-represents green,</p>
-<p>/// byte two represents blue, and byte three is reserved. This is the
-definition</p>
-<p>/// for the physical frame buffer. The byte values for the red,
-green, and blue</p>
-<p>/// components represent the color intensity. This color intensity
-value range</p>
-<p>/// from a minimum intensity of 0 to maximum intensity of 255.</p>
-<p>///</p>
-<p>PixelRedGreenBlueReserved8BitPerColor,</p>
-<p>///</p>
-<p>/// A pixel is 32-bits and byte zero represents blue, byte one
-represents green,</p>
-<p>/// byte two represents red, and byte three is reserved. This is the
-definition</p>
-<p>/// for the physical frame buffer. The byte values for the red,
-green, and blue</p>
-<p>/// components represent the color intensity. This color intensity
-value range</p>
-<p>/// from a minimum intensity of 0 to maximum intensity of 255.</p>
-<p>///</p>
-<p>PixelBlueGreenRedReserved8BitPerColor,</p>
-<p>///</p>
-<p>/// The Pixel definition of the physical frame buffer.</p>
-<p>///</p>
-<p>PixelBitMask,</p>
-<p>///</p>
-<p>/// This mode does not support a physical frame buffer.</p>
-<p>///</p>
-<p>PixelBltOnly,</p>
-<p>///</p>
-<p>/// Valid EFI_GRAPHICS_PIXEL_FORMAT enum values are less than this
-value.</p>
-<p>///</p>
-<p>PixelFormatMax</p>
-<p>} EFI_GRAPHICS_PIXEL_FORMAT;</p>
-<p>typedef struct {</p>
-<p>///</p>
-<p>/// The version of this data structure. A value of zero represents
-the</p>
-<p>/// EFI_GRAPHICS_OUTPUT_MODE_INFORMATION structure as defined in this
-specification.</p>
-<p>///</p>
-<p>UINT32 Version;</p>
-<p>///</p>
-<p>/// The size of video screen in pixels in the X dimension.</p>
-<p>///</p>
-<p>UINT32 HorizontalResolution;</p>
-<p>///</p>
-<p>/// The size of video screen in pixels in the Y dimension.</p>
-<p>///</p>
-<p>UINT32 VerticalResolution;</p>
-<p>///</p>
-<p>/// Enumeration that defines the physical format of the pixel. A
-value of PixelBltOnly</p>
-<p>/// implies that a linear frame buffer is not available for this
-mode.</p>
-<p>///</p>
-<p>EFI_GRAPHICS_PIXEL_FORMAT PixelFormat;</p>
-<p>///</p>
-<p>/// This bitmask is only valid if PixelFormat is set to
-PixelPixelBitMask.</p>
-<p>/// A bit being set defines what bits are used for what purpose such
-as Red, Green, Blue, or Reserved.</p>
-<p>///</p>
-<p>EFI_PIXEL_BITMASK PixelInformation;</p>
-<p>///</p>
-<p>/// Defines the number of pixel elements per video memory line.</p>
-<p>///</p>
-<p>UINT32 PixelsPerScanLine;</p>
-<p>} EFI_GRAPHICS_OUTPUT_MODE_INFORMATION;</p>
 <p><strong>NOTE:</strong> for performance reasons, or due to hardware restrictions,
 scan lines may be padded to an amount of memory alignment. These
 padding pixel elements are outside the area covered by
@@ -501,328 +481,307 @@ HorizontalResolution”, though in many cases those values can
 coincide. This value can depend on video hardware and mode
 resolution. GOP implementation is responsible for providing accurate
 value for this field.</p>
-</div></blockquote>
 </div>
 <div class="section" id="efi-pei-graphics-device-info-hob">
 <h2>EFI_PEI_GRAPHICS_DEVICE_INFO_HOB<a class="headerlink" href="#efi-pei-graphics-device-info-hob" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><div class="line-block">
-<div class="line"><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h</a></div>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h</a></p>
+<p><strong>HOB GUID</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define    EFI_PEI_GRAPHICS_DEVICE_INFO_HOB_GUID    {0xe5cb2ac9, 0xd35d, 0x4430, {0x93, 0x6e, 0x1d, 0xe3, 0x32, 0x47, 0x8d, 0xe7}}</span>
+</pre></div>
 </div>
-<p><strong>HOB GUID</strong></p>
-<div class="line-block">
-<div class="line">#define EFI_PEI_GRAPHICS_DEVICE_INFO_HOB_GUID \</div>
-<div class="line">{0xe5cb2ac9, 0xd35d, 0x4430, {0x93, 0x6e, 0x1d, 0xe3, 0x32, 0x47,
-0x8d, 0xe7}}</div>
+<p><strong>Hob Interface Structure</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT16</span>   <span class="n">VendorId</span><span class="p">;</span>          <span class="o">///&lt;</span> <span class="n">Ignore</span> <span class="k">if</span> <span class="n">the</span> <span class="n">value</span> <span class="ow">is</span> <span class="mh">0xFFFF</span><span class="o">.</span>
+  <span class="n">UINT16</span>   <span class="n">DeviceId</span><span class="p">;</span>          <span class="o">///&lt;</span> <span class="n">Ignore</span> <span class="k">if</span> <span class="n">the</span> <span class="n">value</span> <span class="ow">is</span> <span class="mh">0xFFFF</span><span class="o">.</span>
+  <span class="n">UINT16</span>   <span class="n">SubsystemVendorId</span><span class="p">;</span> <span class="o">///&lt;</span> <span class="n">Ignore</span> <span class="k">if</span> <span class="n">the</span> <span class="n">value</span> <span class="ow">is</span> <span class="mh">0xFFFF</span><span class="o">.</span>
+  <span class="n">UINT16</span>   <span class="n">SubsystemId</span><span class="p">;</span>       <span class="o">///&lt;</span> <span class="n">Ignore</span> <span class="k">if</span> <span class="n">the</span> <span class="n">value</span> <span class="ow">is</span> <span class="mh">0xFFFF</span><span class="o">.</span>
+  <span class="n">UINT8</span>    <span class="n">RevisionId</span><span class="p">;</span>        <span class="o">///&lt;</span> <span class="n">Ignore</span> <span class="k">if</span> <span class="n">the</span> <span class="n">value</span> <span class="ow">is</span> <span class="mh">0xFF</span><span class="o">.</span>
+  <span class="n">UINT8</span>    <span class="n">BarIndex</span><span class="p">;</span>          <span class="o">///&lt;</span> <span class="n">Ignore</span> <span class="k">if</span> <span class="n">the</span> <span class="n">value</span> <span class="ow">is</span> <span class="mh">0xFF</span><span class="o">.</span>
+<span class="p">}</span> <span class="n">EFI_PEI_GRAPHICS_DEVICE_INFO_HOB</span><span class="p">;</span>
+</pre></div>
 </div>
-<p><strong>Hob Interface Structure</strong></p>
-<p>typedef struct {</p>
-<p>UINT16 VendorId; ///&lt; Ignore if the value is 0xFFFF.</p>
-<p>UINT16 DeviceId; ///&lt; Ignore if the value is 0xFFFF.</p>
-<p>UINT16 SubsystemVendorId; ///&lt; Ignore if the value is 0xFFFF.</p>
-<p>UINT16 SubsystemId; ///&lt; Ignore if the value is 0xFFFF.</p>
-<p>UINT8 RevisionId; ///&lt; Ignore if the value is 0xFF.</p>
-<p>UINT8 BarIndex; ///&lt; Ignore if the value is 0xFF.</p>
-<p>} EFI_PEI_GRAPHICS_DEVICE_INFO_HOB;</p>
-</div></blockquote>
 </div>
 <div class="section" id="efi-hob-resource-descriptor">
 <h2>EFI_HOB_RESOURCE_DESCRIPTOR<a class="headerlink" href="#efi-hob-resource-descriptor" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><div class="line-block">
-<div class="line"><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a></div>
-</div>
-</div></blockquote>
 <div class="section" id="efi-resource-type">
 <h3>EFI_RESOURCE_TYPE<a class="headerlink" href="#efi-resource-type" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>///</p>
-<p>/// The resource type</p>
-<p>///</p>
-<p>typedef UINT32 EFI_RESOURCE_TYPE;</p>
-<p>///</p>
-<p>/// Value of ResourceType in EFI_HOB_RESOURCE_DESCRIPTOR.</p>
-<p>///</p>
-<p>#define EFI_RESOURCE_SYSTEM_MEMORY 0x00000000</p>
-<p>#define EFI_RESOURCE_MEMORY_MAPPED_IO 0x00000001</p>
-<p>#define EFI_RESOURCE_IO 0x00000002</p>
-<p>#define EFI_RESOURCE_FIRMWARE_DEVICE 0x00000003</p>
-<p>#define EFI_RESOURCE_MEMORY_MAPPED_IO_PORT 0x00000004</p>
-<p>#define EFI_RESOURCE_MEMORY_RESERVED 0x00000005</p>
-<p>#define EFI_RESOURCE_IO_RESERVED 0x00000006</p>
-<p>#define EFI_RESOURCE_MAX_MEMORY_TYPE 0x00000007</p>
-</div></blockquote>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
+<span class="o">///</span> <span class="n">The</span> <span class="n">resource</span> <span class="nb">type</span><span class="o">.</span>
+<span class="o">///</span>
+<span class="n">typedef</span> <span class="n">UINT32</span> <span class="n">EFI_RESOURCE_TYPE</span><span class="p">;</span>
+
+<span class="o">//</span>
+<span class="o">//</span> <span class="n">Value</span> <span class="n">of</span> <span class="n">ResourceType</span> <span class="ow">in</span> <span class="n">EFI_HOB_RESOURCE_DESCRIPTOR</span><span class="o">.</span>
+<span class="o">//</span>
+<span class="c1">#define EFI_RESOURCE_SYSTEM_MEMORY          0x00000000</span>
+<span class="c1">#define EFI_RESOURCE_MEMORY_MAPPED_IO       0x00000001</span>
+<span class="c1">#define EFI_RESOURCE_IO                     0x00000002</span>
+<span class="c1">#define EFI_RESOURCE_FIRMWARE_DEVICE        0x00000003</span>
+<span class="c1">#define EFI_RESOURCE_MEMORY_MAPPED_IO_PORT  0x00000004</span>
+<span class="c1">#define EFI_RESOURCE_MEMORY_RESERVED        0x00000005</span>
+<span class="c1">#define EFI_RESOURCE_IO_RESERVED            0x00000006</span>
+<span class="c1">#define EFI_RESOURCE_MAX_MEMORY_TYPE        0x00000007</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="efi-resource-attribute-type">
 <h3>EFI_RESOURCE_ATTRIBUTE_TYPE<a class="headerlink" href="#efi-resource-attribute-type" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>///</p>
-<p>/// A type of recount attribute type.</p>
-<p>///</p>
-<p>typedef UINT32 EFI_RESOURCE_ATTRIBUTE_TYPE;</p>
-<p>//</p>
-<p>// These types can be ORed together as needed.</p>
-<p>//</p>
-<p>// The following attributes are used to describe settings</p>
-<p>//</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_PRESENT 0x00000001</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_INITIALIZED 0x00000002</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_TESTED 0x00000004</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_READ_PROTECTED 0x00000080</p>
-<p>//</p>
-<p>// This is typically used as memory cacheability attribute today.</p>
-<p>// NOTE: Since PI spec 1.4, please use
-EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTED</p>
-<p>// as Physical write protected attribute, and
-EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTED</p>
-<p>// means Memory cacheability attribute: The memory supports being
-programmed with</p>
-<p>// a writeprotected cacheable attribute.</p>
-<p>//</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTED 0x00000100</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_EXECUTION_PROTECTED 0x00000200</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_PERSISTENT 0x00800000</p>
-<p>//</p>
-<p>// The rest of the attributes are used to describe capabilities</p>
-<p>//</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_SINGLE_BIT_ECC 0x00000008</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_MULTIPLE_BIT_ECC 0x00000010</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_ECC_RESERVED_1 0x00000020</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_ECC_RESERVED_2 0x00000040</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_UNCACHEABLE 0x00000400</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_WRITE_COMBINEABLE 0x00000800</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_WRITE_THROUGH_CACHEABLE 0x00001000</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_WRITE_BACK_CACHEABLE 0x00002000</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_16_BIT_IO 0x00004000</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_32_BIT_IO 0x00008000</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_64_BIT_IO 0x00010000</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_UNCACHED_EXPORTED 0x00020000</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_READ_PROTECTABLE 0x00100000</p>
-<p>//</p>
-<p>// This is typically used as memory cacheability attribute today.</p>
-<p>// NOTE: Since PI spec 1.4, please use
-EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTABLE</p>
-<p>// as Memory capability attribute: The memory supports being
-protected from processor</p>
-<p>// writes, and EFI_RESOURCE_ATTRIBUTE_WRITE_PROTEC TABLE means Memory
-cacheability attribute:</p>
-<p>// The memory supports being programmed with a writeprotected
-cacheable attribute.</p>
-<p>//</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTABLE 0x00200000</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_EXECUTION_PROTECTABLE 0x00400000</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_PERSISTABLE 0x01000000</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTED 0x00040000</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTABLE 0x00080000</p>
-<p>//</p>
-<p>// Physical memory relative reliability attribute. This</p>
-<p>// memory provides higher reliability relative to other</p>
-<p>// memory in the system. If all memory has the same</p>
-<p>// reliability, then this bit is not used.</p>
-<p>//</p>
-<p>#define EFI_RESOURCE_ATTRIBUTE_MORE_RELIABLE 0x02000000</p>
-</div></blockquote>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
+<span class="o">///</span> <span class="n">A</span> <span class="nb">type</span> <span class="n">of</span> <span class="n">recount</span> <span class="n">attribute</span> <span class="nb">type</span><span class="o">.</span>
+<span class="o">///</span>
+<span class="n">typedef</span> <span class="n">UINT32</span> <span class="n">EFI_RESOURCE_ATTRIBUTE_TYPE</span><span class="p">;</span>
+
+<span class="o">//</span>
+<span class="o">//</span> <span class="n">These</span> <span class="n">types</span> <span class="n">can</span> <span class="n">be</span> <span class="n">ORed</span> <span class="n">together</span> <span class="k">as</span> <span class="n">needed</span><span class="o">.</span>
+<span class="o">//</span>
+<span class="o">//</span> <span class="n">The</span> <span class="n">following</span> <span class="n">attributes</span> <span class="n">are</span> <span class="n">used</span> <span class="n">to</span> <span class="n">describe</span> <span class="n">settings</span>
+<span class="o">//</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_PRESENT                  0x00000001</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_INITIALIZED              0x00000002</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_TESTED                   0x00000004</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_READ_PROTECTED           0x00000080</span>
+<span class="o">//</span>
+<span class="o">//</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">typically</span> <span class="n">used</span> <span class="k">as</span> <span class="n">memory</span> <span class="n">cacheability</span> <span class="n">attribute</span> <span class="n">today</span><span class="o">.</span>
+<span class="o">//</span> <span class="n">NOTE</span><span class="p">:</span> <span class="n">Since</span> <span class="n">PI</span> <span class="n">spec</span> <span class="mf">1.4</span><span class="p">,</span> <span class="n">please</span> <span class="n">use</span> <span class="n">EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTED</span>
+<span class="o">//</span> <span class="k">as</span> <span class="n">Physical</span> <span class="n">write</span> <span class="n">protected</span> <span class="n">attribute</span><span class="p">,</span> <span class="ow">and</span> <span class="n">EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTED</span>
+<span class="o">//</span> <span class="n">means</span> <span class="n">Memory</span> <span class="n">cacheability</span> <span class="n">attribute</span><span class="p">:</span> <span class="n">The</span> <span class="n">memory</span> <span class="n">supports</span> <span class="n">being</span> <span class="n">programmed</span> <span class="k">with</span>
+<span class="o">//</span> <span class="n">a</span> <span class="n">writeprotected</span> <span class="n">cacheable</span> <span class="n">attribute</span><span class="o">.</span>
+<span class="o">//</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTED          0x00000100</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_EXECUTION_PROTECTED      0x00000200</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_PERSISTENT               0x00800000</span>
+<span class="o">//</span>
+<span class="o">//</span> <span class="n">The</span> <span class="n">rest</span> <span class="n">of</span> <span class="n">the</span> <span class="n">attributes</span> <span class="n">are</span> <span class="n">used</span> <span class="n">to</span> <span class="n">describe</span> <span class="n">capabilities</span>
+<span class="o">//</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_SINGLE_BIT_ECC           0x00000008</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_MULTIPLE_BIT_ECC         0x00000010</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_ECC_RESERVED_1           0x00000020</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_ECC_RESERVED_2           0x00000040</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_UNCACHEABLE              0x00000400</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_WRITE_COMBINEABLE        0x00000800</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_WRITE_THROUGH_CACHEABLE  0x00001000</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_WRITE_BACK_CACHEABLE     0x00002000</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_16_BIT_IO                0x00004000</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_32_BIT_IO                0x00008000</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_64_BIT_IO                0x00010000</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_UNCACHED_EXPORTED        0x00020000</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_READ_PROTECTABLE         0x00100000</span>
+<span class="o">//</span>
+<span class="o">//</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">typically</span> <span class="n">used</span> <span class="k">as</span> <span class="n">memory</span> <span class="n">cacheability</span> <span class="n">attribute</span> <span class="n">today</span><span class="o">.</span>
+<span class="o">//</span> <span class="n">NOTE</span><span class="p">:</span> <span class="n">Since</span> <span class="n">PI</span> <span class="n">spec</span> <span class="mf">1.4</span><span class="p">,</span> <span class="n">please</span> <span class="n">use</span> <span class="n">EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTABLE</span>
+<span class="o">//</span> <span class="k">as</span> <span class="n">Memory</span> <span class="n">capability</span> <span class="n">attribute</span><span class="p">:</span> <span class="n">The</span> <span class="n">memory</span> <span class="n">supports</span> <span class="n">being</span> <span class="n">protected</span> <span class="kn">from</span> <span class="nn">processor</span>
+<span class="o">//</span> <span class="n">writes</span><span class="p">,</span> <span class="ow">and</span> <span class="n">EFI_RESOURCE_ATTRIBUTE_WRITE_PROTEC</span> <span class="n">TABLE</span> <span class="n">means</span> <span class="n">Memory</span> <span class="n">cacheability</span> <span class="n">attribute</span><span class="p">:</span>
+<span class="o">//</span> <span class="n">The</span> <span class="n">memory</span> <span class="n">supports</span> <span class="n">being</span> <span class="n">programmed</span> <span class="k">with</span> <span class="n">a</span> <span class="n">writeprotected</span> <span class="n">cacheable</span> <span class="n">attribute</span><span class="o">.</span>
+<span class="o">//</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTABLE        0x00200000</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_EXECUTION_PROTECTABLE    0x00400000</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_PERSISTABLE              0x01000000</span>
+
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTED      0x00040000</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTABLE    0x00080000</span>
+
+<span class="o">//</span>
+<span class="o">//</span> <span class="n">Physical</span> <span class="n">memory</span> <span class="n">relative</span> <span class="n">reliability</span> <span class="n">attribute</span><span class="o">.</span> <span class="n">This</span>
+<span class="o">//</span> <span class="n">memory</span> <span class="n">provides</span> <span class="n">higher</span> <span class="n">reliability</span> <span class="n">relative</span> <span class="n">to</span> <span class="n">other</span>
+<span class="o">//</span> <span class="n">memory</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">system</span><span class="o">.</span> <span class="n">If</span> <span class="nb">all</span> <span class="n">memory</span> <span class="n">has</span> <span class="n">the</span> <span class="n">same</span>
+<span class="o">//</span> <span class="n">reliability</span><span class="p">,</span> <span class="n">then</span> <span class="n">this</span> <span class="n">bit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">used</span><span class="o">.</span>
+<span class="o">//</span>
+<span class="c1">#define EFI_RESOURCE_ATTRIBUTE_MORE_RELIABLE            0x02000000</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="efi-hob-resource-descriptor-1">
 <span id="id1"></span><h3>EFI_HOB_RESOURCE_DESCRIPTOR<a class="headerlink" href="#efi-hob-resource-descriptor-1" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>///</p>
-<p>/// Describes the resource properties of all fixed,</p>
-<p>/// nonrelocatable resource ranges found on the processor</p>
-<p>/// host bus during the HOB producer phase.</p>
-<p>///</p>
-<p>typedef struct {</p>
-<p>///</p>
-<p>/// The HOB generic header. Header.HobType =
-EFI_HOB_TYPE_RESOURCE_DESCRIPTOR.</p>
-<p>///</p>
-<p>EFI_HOB_GENERIC_HEADER Header;</p>
-<p>///</p>
-<p>/// A GUID representing the owner of the resource. This GUID is used
-by HOB</p>
-<p>/// consumer phase components to correlate device ownership of a
-resource.</p>
-<p>///</p>
-<p>EFI_GUID Owner;</p>
-<p>///</p>
-<p>/// The resource type enumeration as defined by EFI_RESOURCE_TYPE.</p>
-<p>///</p>
-<p>EFI_RESOURCE_TYPE ResourceType;</p>
-<p>///</p>
-<p>/// Resource attributes as defined by EFI_RESOURCE_ATTRIBUTE_TYPE.</p>
-<p>///</p>
-<p>EFI_RESOURCE_ATTRIBUTE_TYPE ResourceAttribute;</p>
-<p>///</p>
-<p>/// The physical start address of the resource region.</p>
-<p>///</p>
-<p>EFI_PHYSICAL_ADDRESS PhysicalStart;</p>
-<p>///</p>
-<p>/// The number of bytes of the resource region.</p>
-<p>///</p>
-<p>UINT64 ResourceLength;</p>
-<p>} EFI_HOB_RESOURCE_DESCRIPTOR;</p>
-</div></blockquote>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
+<span class="o">///</span> <span class="n">Describes</span> <span class="n">the</span> <span class="n">resource</span> <span class="n">properties</span> <span class="n">of</span> <span class="nb">all</span> <span class="n">fixed</span><span class="p">,</span>
+<span class="o">///</span> <span class="n">nonrelocatable</span> <span class="n">resource</span> <span class="n">ranges</span> <span class="n">found</span> <span class="n">on</span> <span class="n">the</span> <span class="n">processor</span>
+<span class="o">///</span> <span class="n">host</span> <span class="n">bus</span> <span class="n">during</span> <span class="n">the</span> <span class="n">HOB</span> <span class="n">producer</span> <span class="n">phase</span><span class="o">.</span>
+<span class="o">///</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">HOB</span> <span class="n">generic</span> <span class="n">header</span><span class="o">.</span> <span class="n">Header</span><span class="o">.</span><span class="n">HobType</span> <span class="o">=</span> <span class="n">EFI_HOB_TYPE_RESOURCE_DESCRIPTOR</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EFI_HOB_GENERIC_HEADER</span>      <span class="n">Header</span><span class="p">;</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">A</span> <span class="n">GUID</span> <span class="n">representing</span> <span class="n">the</span> <span class="n">owner</span> <span class="n">of</span> <span class="n">the</span> <span class="n">resource</span><span class="o">.</span> <span class="n">This</span> <span class="n">GUID</span> <span class="ow">is</span> <span class="n">used</span> <span class="n">by</span> <span class="n">HOB</span>
+  <span class="o">///</span> <span class="n">consumer</span> <span class="n">phase</span> <span class="n">components</span> <span class="n">to</span> <span class="n">correlate</span> <span class="n">device</span> <span class="n">ownership</span> <span class="n">of</span> <span class="n">a</span> <span class="n">resource</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EFI_GUID</span>                    <span class="n">Owner</span><span class="p">;</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">resource</span> <span class="nb">type</span> <span class="n">enumeration</span> <span class="k">as</span> <span class="n">defined</span> <span class="n">by</span> <span class="n">EFI_RESOURCE_TYPE</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EFI_RESOURCE_TYPE</span>           <span class="n">ResourceType</span><span class="p">;</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">Resource</span> <span class="n">attributes</span> <span class="k">as</span> <span class="n">defined</span> <span class="n">by</span> <span class="n">EFI_RESOURCE_ATTRIBUTE_TYPE</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EFI_RESOURCE_ATTRIBUTE_TYPE</span> <span class="n">ResourceAttribute</span><span class="p">;</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">physical</span> <span class="n">start</span> <span class="n">address</span> <span class="n">of</span> <span class="n">the</span> <span class="n">resource</span> <span class="n">region</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EFI_PHYSICAL_ADDRESS</span>        <span class="n">PhysicalStart</span><span class="p">;</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">number</span> <span class="n">of</span> <span class="nb">bytes</span> <span class="n">of</span> <span class="n">the</span> <span class="n">resource</span> <span class="n">region</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">UINT64</span>                      <span class="n">ResourceLength</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_HOB_RESOURCE_DESCRIPTOR</span><span class="p">;</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="efi-hob-memory-allocation">
 <h2>EFI_HOB_MEMORY_ALLOCATION<a class="headerlink" href="#efi-hob-memory-allocation" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="efi-memory-type">
 <h3>EFI_MEMORY_TYPE<a class="headerlink" href="#efi-memory-type" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiMultiPhase.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiMultiPhase.h</a></p>
-<p>///</p>
-<p>/// Enumeration of memory types introduced in UEFI.</p>
-<p>///</p>
-<p>typedef enum {</p>
-<p>///</p>
-<p>/// Not used.</p>
-<p>///</p>
-<p>EfiReservedMemoryType,</p>
-<p>///</p>
-<p>/// The code portions of a loaded application.</p>
-<p>/// (Note that UEFI OS loaders are UEFI applications.)</p>
-<p>///</p>
-<p>EfiLoaderCode,</p>
-<p>///</p>
-<p>/// The data portions of a loaded application and the default data
-allocation</p>
-<p>/// type used by an application to allocate pool memory.</p>
-<p>///</p>
-<p>EfiLoaderData,</p>
-<p>///</p>
-<p>/// The code portions of a loaded Boot Services Driver.</p>
-<p>///</p>
-<p>EfiBootServicesCode,</p>
-<p>///</p>
-<p>/// The data portions of a loaded Boot Serves Driver, and the default
-data</p>
-<p>/// allocation type used by a Boot Services Driver to allocate pool
-memory.</p>
-<p>///</p>
-<p>EfiBootServicesData,</p>
-<p>///</p>
-<p>/// The code portions of a loaded Runtime Services Driver.</p>
-<p>///</p>
-<p>EfiRuntimeServicesCode,</p>
-<p>///</p>
-<p>/// The data portions of a loaded Runtime Services Driver and the
-default</p>
-<p>/// data allocation type used by a Runtime Services Driver to
-allocate pool memory.</p>
-<p>///</p>
-<p>EfiRuntimeServicesData,</p>
-<p>///</p>
-<p>/// Free (unallocated) memory.</p>
-<p>///</p>
-<p>EfiConventionalMemory,</p>
-<p>///</p>
-<p>/// Memory in which errors have been detected.</p>
-<p>///</p>
-<p>EfiUnusableMemory,</p>
-<p>///</p>
-<p>/// Memory that holds the ACPI tables.</p>
-<p>///</p>
-<p>EfiACPIReclaimMemory,</p>
-<p>///</p>
-<p>/// Address space reserved for use by the firmware.</p>
-<p>///</p>
-<p>EfiACPIMemoryNVS,</p>
-<p>///</p>
-<p>/// Used by system firmware to request that a memory-mapped IO region</p>
-<p>/// be mapped by the OS to a virtual address so it can be accessed by
-EFI runtime services.</p>
-<p>///</p>
-<p>EfiMemoryMappedIO,</p>
-<p>///</p>
-<p>/// System memory-mapped IO region that is used to translate memory</p>
-<p>/// cycles to IO cycles by the processor.</p>
-<p>///</p>
-<p>EfiMemoryMappedIOPortSpace,</p>
-<p>///</p>
-<p>/// Address space reserved by the firmware for code that is part of
-the processor.</p>
-<p>///</p>
-<p>EfiPalCode,</p>
-<p>///</p>
-<p>/// A memory region that operates as EfiConventionalMemory,</p>
-<p>/// however it happens to also support byte-addressable
-non-volatility.</p>
-<p>///</p>
-<p>EfiPersistentMemory,</p>
-<p>EfiMaxMemoryType</p>
-<p>} EFI_MEMORY_TYPE;</p>
-<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a></p>
-</div></blockquote>
-<p><strong>11.6.2 EFI_HOB_MEMORY_ALLOCATION_HEADER</strong></p>
-<blockquote>
-<div><p>/// EFI_HOB_MEMORY_ALLOCATION_HEADER describes the</p>
-<p>/// various attributes of the logical memory allocation. The type
-field will be used for</p>
-<p>/// subsequent inclusion in the UEFI memory map.</p>
-<p>///</p>
-<p>typedef struct {</p>
-<p>///</p>
-<p>/// A GUID that defines the memory allocation region’s type and
-purpose, as well as</p>
-<p>/// other fields within the memory allocation HOB. This GUID is used
-to define the</p>
-<p>/// additional data within the HOB that may be present for the memory
-allocation HOB.</p>
-<p>/// Type EFI_GUID is defined in InstallProtocolInterface() in the
-UEFI 2.0</p>
-<p>/// specification.</p>
-<p>///</p>
-<p>EFI_GUID Name;</p>
-<p>///</p>
-<p>/// The base address of memory allocated by this HOB. Type</p>
-<p>/// EFI_PHYSICAL_ADDRESS is defined in AllocatePages() in the UEFI
-2.0</p>
-<p>/// specification.</p>
-<p>///</p>
-<p>EFI_PHYSICAL_ADDRESS MemoryBaseAddress;</p>
-<p>///</p>
-<p>/// The length in bytes of memory allocated by this HOB.</p>
-<p>///</p>
-<p>UINT64 MemoryLength;</p>
-<p>///</p>
-<p>/// Defines the type of memory allocated by this HOB. The memory type
-definition</p>
-<p>/// follows the EFI_MEMORY_TYPE definition. Type EFI_MEMORY_TYPE is
-defined</p>
-<p>/// in AllocatePages() in the UEFI 2.0 specification.</p>
-<p>///</p>
-<p>EFI_MEMORY_TYPE MemoryType;</p>
-<p>///</p>
-<p>/// Padding for Itanium processor family</p>
-<p>///</p>
-<p>UINT8 Reserved[4];</p>
-<p>} EFI_HOB_MEMORY_ALLOCATION_HEADER;</p>
-</div></blockquote>
-<p><strong>11.6.3 EFI_HOB_MEMORY_ALLOCATION</strong></p>
-<blockquote>
-<div><p>/// Describes all memory ranges used during the HOB producer</p>
-<p>/// phase that exist outside the HOB list. This HOB type</p>
-<p>/// describes how memory is used, not the physical attributes of
-memory.</p>
-<p>///</p>
-<p>typedef struct {</p>
-<p>///</p>
-<p>/// The HOB generic header. Header.HobType =
-EFI_HOB_TYPE_MEMORY_ALLOCATION.</p>
-<p>///</p>
-<p>EFI_HOB_GENERIC_HEADER Header;</p>
-<p>///</p>
-<p>/// An instance of the EFI_HOB_MEMORY_ALLOCATION_HEADER that
-describes the</p>
-<p>/// various attributes of the logical memory allocation.</p>
-<p>///</p>
-<p>EFI_HOB_MEMORY_ALLOCATION_HEADER AllocDescriptor;</p>
-<p>//</p>
-<p>// Additional data pertaining to the “Name” Guid memory</p>
-<p>// may go here.</p>
-<p>//</p>
-<p>} EFI_HOB_MEMORY_ALLOCATION;</p>
-</div></blockquote>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiMultiPhase.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiMultiPhase.h</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
+<span class="o">///</span> <span class="n">Enumeration</span> <span class="n">of</span> <span class="n">memory</span> <span class="n">types</span> <span class="n">introduced</span> <span class="ow">in</span> <span class="n">UEFI</span><span class="o">.</span>
+<span class="o">///</span>
+<span class="n">typedef</span> <span class="n">enum</span> <span class="p">{</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">Not</span> <span class="n">used</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EfiReservedMemoryType</span><span class="p">,</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">code</span> <span class="n">portions</span> <span class="n">of</span> <span class="n">a</span> <span class="n">loaded</span> <span class="n">application</span><span class="o">.</span>
+  <span class="o">///</span> <span class="p">(</span><span class="n">Note</span> <span class="n">that</span> <span class="n">UEFI</span> <span class="n">OS</span> <span class="n">loaders</span> <span class="n">are</span> <span class="n">UEFI</span> <span class="n">applications</span><span class="o">.</span><span class="p">)</span>
+  <span class="o">///</span>
+  <span class="n">EfiLoaderCode</span><span class="p">,</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">data</span> <span class="n">portions</span> <span class="n">of</span> <span class="n">a</span> <span class="n">loaded</span> <span class="n">application</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">default</span> <span class="n">data</span> <span class="n">allocation</span>
+  <span class="o">///</span> <span class="nb">type</span> <span class="n">used</span> <span class="n">by</span> <span class="n">an</span> <span class="n">application</span> <span class="n">to</span> <span class="n">allocate</span> <span class="n">pool</span> <span class="n">memory</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EfiLoaderData</span><span class="p">,</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">code</span> <span class="n">portions</span> <span class="n">of</span> <span class="n">a</span> <span class="n">loaded</span> <span class="n">Boot</span> <span class="n">Services</span> <span class="n">Driver</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EfiBootServicesCode</span><span class="p">,</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">data</span> <span class="n">portions</span> <span class="n">of</span> <span class="n">a</span> <span class="n">loaded</span> <span class="n">Boot</span> <span class="n">Serves</span> <span class="n">Driver</span><span class="p">,</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">default</span> <span class="n">data</span>
+  <span class="o">///</span> <span class="n">allocation</span> <span class="nb">type</span> <span class="n">used</span> <span class="n">by</span> <span class="n">a</span> <span class="n">Boot</span> <span class="n">Services</span> <span class="n">Driver</span> <span class="n">to</span> <span class="n">allocate</span> <span class="n">pool</span> <span class="n">memory</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EfiBootServicesData</span><span class="p">,</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">code</span> <span class="n">portions</span> <span class="n">of</span> <span class="n">a</span> <span class="n">loaded</span> <span class="n">Runtime</span> <span class="n">Services</span> <span class="n">Driver</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EfiRuntimeServicesCode</span><span class="p">,</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">data</span> <span class="n">portions</span> <span class="n">of</span> <span class="n">a</span> <span class="n">loaded</span> <span class="n">Runtime</span> <span class="n">Services</span> <span class="n">Driver</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">default</span>
+  <span class="o">///</span> <span class="n">data</span> <span class="n">allocation</span> <span class="nb">type</span> <span class="n">used</span> <span class="n">by</span> <span class="n">a</span> <span class="n">Runtime</span> <span class="n">Services</span> <span class="n">Driver</span> <span class="n">to</span> <span class="n">allocate</span> <span class="n">pool</span> <span class="n">memory</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EfiRuntimeServicesData</span><span class="p">,</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">Free</span> <span class="p">(</span><span class="n">unallocated</span><span class="p">)</span> <span class="n">memory</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EfiConventionalMemory</span><span class="p">,</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">Memory</span> <span class="ow">in</span> <span class="n">which</span> <span class="n">errors</span> <span class="n">have</span> <span class="n">been</span> <span class="n">detected</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EfiUnusableMemory</span><span class="p">,</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">Memory</span> <span class="n">that</span> <span class="n">holds</span> <span class="n">the</span> <span class="n">ACPI</span> <span class="n">tables</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EfiACPIReclaimMemory</span><span class="p">,</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">Address</span> <span class="n">space</span> <span class="n">reserved</span> <span class="k">for</span> <span class="n">use</span> <span class="n">by</span> <span class="n">the</span> <span class="n">firmware</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EfiACPIMemoryNVS</span><span class="p">,</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">Used</span> <span class="n">by</span> <span class="n">system</span> <span class="n">firmware</span> <span class="n">to</span> <span class="n">request</span> <span class="n">that</span> <span class="n">a</span> <span class="n">memory</span><span class="o">-</span><span class="n">mapped</span> <span class="n">IO</span> <span class="n">region</span>
+  <span class="o">///</span> <span class="n">be</span> <span class="n">mapped</span> <span class="n">by</span> <span class="n">the</span> <span class="n">OS</span> <span class="n">to</span> <span class="n">a</span> <span class="n">virtual</span> <span class="n">address</span> <span class="n">so</span> <span class="n">it</span> <span class="n">can</span> <span class="n">be</span> <span class="n">accessed</span> <span class="n">by</span> <span class="n">EFI</span> <span class="n">runtime</span> <span class="n">services</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EfiMemoryMappedIO</span><span class="p">,</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">System</span> <span class="n">memory</span><span class="o">-</span><span class="n">mapped</span> <span class="n">IO</span> <span class="n">region</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">used</span> <span class="n">to</span> <span class="n">translate</span> <span class="n">memory</span>
+  <span class="o">///</span> <span class="n">cycles</span> <span class="n">to</span> <span class="n">IO</span> <span class="n">cycles</span> <span class="n">by</span> <span class="n">the</span> <span class="n">processor</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EfiMemoryMappedIOPortSpace</span><span class="p">,</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">Address</span> <span class="n">space</span> <span class="n">reserved</span> <span class="n">by</span> <span class="n">the</span> <span class="n">firmware</span> <span class="k">for</span> <span class="n">code</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">part</span> <span class="n">of</span> <span class="n">the</span> <span class="n">processor</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EfiPalCode</span><span class="p">,</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">A</span> <span class="n">memory</span> <span class="n">region</span> <span class="n">that</span> <span class="n">operates</span> <span class="k">as</span> <span class="n">EfiConventionalMemory</span><span class="p">,</span>
+  <span class="o">///</span> <span class="n">however</span> <span class="n">it</span> <span class="n">happens</span> <span class="n">to</span> <span class="n">also</span> <span class="n">support</span> <span class="n">byte</span><span class="o">-</span><span class="n">addressable</span> <span class="n">non</span><span class="o">-</span><span class="n">volatility</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EfiPersistentMemory</span><span class="p">,</span>
+  <span class="n">EfiMaxMemoryType</span>
+<span class="p">}</span> <span class="n">EFI_MEMORY_TYPE</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="efi-hob-memory-allocation-header">
+<h3>EFI_HOB_MEMORY_ALLOCATION_HEADER<a class="headerlink" href="#efi-hob-memory-allocation-header" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
+<span class="o">///</span> <span class="n">EFI_HOB_MEMORY_ALLOCATION_HEADER</span> <span class="n">describes</span> <span class="n">the</span>
+<span class="o">///</span> <span class="n">various</span> <span class="n">attributes</span> <span class="n">of</span> <span class="n">the</span> <span class="n">logical</span> <span class="n">memory</span> <span class="n">allocation</span><span class="o">.</span> <span class="n">The</span> <span class="nb">type</span> <span class="n">field</span> <span class="n">will</span> <span class="n">be</span> <span class="n">used</span> <span class="k">for</span>
+<span class="o">///</span> <span class="n">subsequent</span> <span class="n">inclusion</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">UEFI</span> <span class="n">memory</span> <span class="nb">map</span><span class="o">.</span>
+<span class="o">///</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">A</span> <span class="n">GUID</span> <span class="n">that</span> <span class="n">defines</span> <span class="n">the</span> <span class="n">memory</span> <span class="n">allocation</span> <span class="n">region</span><span class="s1">&#39;s type and purpose, as well as</span>
+  <span class="o">///</span> <span class="n">other</span> <span class="n">fields</span> <span class="n">within</span> <span class="n">the</span> <span class="n">memory</span> <span class="n">allocation</span> <span class="n">HOB</span><span class="o">.</span> <span class="n">This</span> <span class="n">GUID</span> <span class="ow">is</span> <span class="n">used</span> <span class="n">to</span> <span class="n">define</span> <span class="n">the</span>
+  <span class="o">///</span> <span class="n">additional</span> <span class="n">data</span> <span class="n">within</span> <span class="n">the</span> <span class="n">HOB</span> <span class="n">that</span> <span class="n">may</span> <span class="n">be</span> <span class="n">present</span> <span class="k">for</span> <span class="n">the</span> <span class="n">memory</span> <span class="n">allocation</span> <span class="n">HOB</span><span class="o">.</span>
+  <span class="o">///</span> <span class="n">Type</span> <span class="n">EFI_GUID</span> <span class="ow">is</span> <span class="n">defined</span> <span class="ow">in</span> <span class="n">InstallProtocolInterface</span><span class="p">()</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">UEFI</span> <span class="mf">2.0</span>
+  <span class="o">///</span> <span class="n">specification</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EFI_GUID</span>              <span class="n">Name</span><span class="p">;</span>
+
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">base</span> <span class="n">address</span> <span class="n">of</span> <span class="n">memory</span> <span class="n">allocated</span> <span class="n">by</span> <span class="n">this</span> <span class="n">HOB</span><span class="o">.</span> <span class="n">Type</span>
+  <span class="o">///</span> <span class="n">EFI_PHYSICAL_ADDRESS</span> <span class="ow">is</span> <span class="n">defined</span> <span class="ow">in</span> <span class="n">AllocatePages</span><span class="p">()</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">UEFI</span> <span class="mf">2.0</span>
+  <span class="o">///</span> <span class="n">specification</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EFI_PHYSICAL_ADDRESS</span>  <span class="n">MemoryBaseAddress</span><span class="p">;</span>
+
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">length</span> <span class="ow">in</span> <span class="nb">bytes</span> <span class="n">of</span> <span class="n">memory</span> <span class="n">allocated</span> <span class="n">by</span> <span class="n">this</span> <span class="n">HOB</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">UINT64</span>                <span class="n">MemoryLength</span><span class="p">;</span>
+
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">Defines</span> <span class="n">the</span> <span class="nb">type</span> <span class="n">of</span> <span class="n">memory</span> <span class="n">allocated</span> <span class="n">by</span> <span class="n">this</span> <span class="n">HOB</span><span class="o">.</span> <span class="n">The</span> <span class="n">memory</span> <span class="nb">type</span> <span class="n">definition</span>
+  <span class="o">///</span> <span class="n">follows</span> <span class="n">the</span> <span class="n">EFI_MEMORY_TYPE</span> <span class="n">definition</span><span class="o">.</span> <span class="n">Type</span> <span class="n">EFI_MEMORY_TYPE</span> <span class="ow">is</span> <span class="n">defined</span>
+  <span class="o">///</span> <span class="ow">in</span> <span class="n">AllocatePages</span><span class="p">()</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">UEFI</span> <span class="mf">2.0</span> <span class="n">specification</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EFI_MEMORY_TYPE</span>       <span class="n">MemoryType</span><span class="p">;</span>
+
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">Padding</span> <span class="k">for</span> <span class="n">Itanium</span> <span class="n">processor</span> <span class="n">family</span>
+  <span class="o">///</span>
+  <span class="n">UINT8</span>                 <span class="n">Reserved</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+<span class="p">}</span> <span class="n">EFI_HOB_MEMORY_ALLOCATION_HEADER</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>EFI_HOB_MEMORY_ALLOCATION<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
+<span class="o">///</span> <span class="n">Describes</span> <span class="nb">all</span> <span class="n">memory</span> <span class="n">ranges</span> <span class="n">used</span> <span class="n">during</span> <span class="n">the</span> <span class="n">HOB</span> <span class="n">producer</span>
+<span class="o">///</span> <span class="n">phase</span> <span class="n">that</span> <span class="n">exist</span> <span class="n">outside</span> <span class="n">the</span> <span class="n">HOB</span> <span class="nb">list</span><span class="o">.</span> <span class="n">This</span> <span class="n">HOB</span> <span class="nb">type</span>
+<span class="o">///</span> <span class="n">describes</span> <span class="n">how</span> <span class="n">memory</span> <span class="ow">is</span> <span class="n">used</span><span class="p">,</span> <span class="ow">not</span> <span class="n">the</span> <span class="n">physical</span> <span class="n">attributes</span> <span class="n">of</span> <span class="n">memory</span><span class="o">.</span>
+<span class="o">///</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">The</span> <span class="n">HOB</span> <span class="n">generic</span> <span class="n">header</span><span class="o">.</span> <span class="n">Header</span><span class="o">.</span><span class="n">HobType</span> <span class="o">=</span> <span class="n">EFI_HOB_TYPE_MEMORY_ALLOCATION</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EFI_HOB_GENERIC_HEADER</span>            <span class="n">Header</span><span class="p">;</span>
+  <span class="o">///</span>
+  <span class="o">///</span> <span class="n">An</span> <span class="n">instance</span> <span class="n">of</span> <span class="n">the</span> <span class="n">EFI_HOB_MEMORY_ALLOCATION_HEADER</span> <span class="n">that</span> <span class="n">describes</span> <span class="n">the</span>
+  <span class="o">///</span> <span class="n">various</span> <span class="n">attributes</span> <span class="n">of</span> <span class="n">the</span> <span class="n">logical</span> <span class="n">memory</span> <span class="n">allocation</span><span class="o">.</span>
+  <span class="o">///</span>
+  <span class="n">EFI_HOB_MEMORY_ALLOCATION_HEADER</span>  <span class="n">AllocDescriptor</span><span class="p">;</span>
+  <span class="o">//</span>
+  <span class="o">//</span> <span class="n">Additional</span> <span class="n">data</span> <span class="n">pertaining</span> <span class="n">to</span> <span class="n">the</span> <span class="s2">&quot;Name&quot;</span> <span class="n">Guid</span> <span class="n">memory</span>
+  <span class="o">//</span> <span class="n">may</span> <span class="n">go</span> <span class="n">here</span><span class="o">.</span>
+  <span class="o">//</span>
+<span class="p">}</span> <span class="n">EFI_HOB_MEMORY_ALLOCATION</span><span class="p">;</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -848,7 +807,7 @@ describes the</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license
-      Last updated on Apr 19, 2021.
+      Last updated on Apr 20, 2021.
 
     </p>
   </div>
