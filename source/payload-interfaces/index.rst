@@ -77,6 +77,14 @@ Second section defines the new HOBs.
 Reusing Interfaces in Platform Initialization Specification
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+PHIT(Phase Handoff Info Table) HOB
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The bootloader should report the general state information through
+the HOB following EFI_HOB_HANDOFF_INFO_TABLE format defined in
+*Platform Initialization Specification Volume 3: Shared Architectural
+elements*.
+
 CPU HOB
 ^^^^^^^
 
@@ -101,8 +109,28 @@ type EFI_RESOURCE_MEMORY_RESERVED.
 I/O and memory mapped I/O resource should also be reported using
 resource type EFI_RESOURCE_IO and EFI_RESOURCE_MEMORY_MAPPED_IO.
 
-**Open**: should report payload in memory using the Boot Firmware
-Volume (BFV) HOB?
+Memory Allocation HOB
+^^^^^^^^^^^^^^^^^^^^^
+
+The bootloader should report the memory usages that exist outside the
+HOB list through the HOB following EFI_HOB_MEMORY_ALLOCATION format defined
+in *Platform Initialization Specification Volume 3: Shared Architectural
+elements*.
+
+Boot-Strap Processor (BSP) Stack Memory Allocation HOB
+''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+The bootloader should report the initial stack prepared for payload through
+the HOB following EFI_HOB_MEMORY_ALLOCATION_STACK format defined in *Platform
+Initialization Specification Volume 3: Shared Architectural elements*.
+
+Memory Allocation Module HOB
+''''''''''''''''''''''''''''
+
+The bootloader should report the payload memory location and entry point
+through the HOB following EFI_HOB_MEMORY_ALLOCATION_MODULE format defined
+in *Platform Initialization Specification Volume 3: Shared Architectural
+elements*.
 
 Graphics information HOB
 ^^^^^^^^^^^^^^^^^^^^^^^^
