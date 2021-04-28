@@ -148,6 +148,24 @@ Please refer Appendix 6.6 EFI_PEI_GRAPHICS_INFO_HOB and 6.7 EFI_PEI_GRAPHICS_DEV
 New Interfaces
 ~~~~~~~~~~~~~~
 
+Common Payload Header
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+All new interfaces are GUID type HOBs starting with ``EFI_HOB_GUID_TYPE`` defined in the PI Specification.
+
+The HOB data starts with a common header defined as below::
+
+  #pragma pack(1)
+  
+  typedef struct {
+    UINT8                Revision;
+    UINT8                Reserved[3];
+  } PLD_GENERIC_HEADER;
+
+  #pragma pack()
+
+HOB data for different interfaces is defined in following sections.
+
 ACPI Table HOB
 ^^^^^^^^^^^^^^
 
