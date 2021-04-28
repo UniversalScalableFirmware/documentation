@@ -10,6 +10,7 @@ Welcome to Universal Payload's documentation!
    :maxdepth: 2
    :glob:
 
+   revision-history
    introduction/index
    overview/index
    image-format/index
