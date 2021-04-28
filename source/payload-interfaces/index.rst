@@ -166,170 +166,156 @@ The HOB data starts with a common header defined as below::
 
 HOB data for different interfaces is defined in following sections.
 
-ACPI Table HOB
-^^^^^^^^^^^^^^
+ACPI Table
+^^^^^^^^^^
 
-The bootloader should pass ACPI table through the GUID HOB to the payload. So that the payload could get the platform information from the ACPI table.
+The bootloader should pass ACPI table the payload. So that the payload could get the platform information from the ACPI table.
 
-Build the different HOBs for different table using standard defined GUID.
+**GUID**
 
-**HOB GUID**::
+::
 
-  #define EFI_ACPI_TABLE_GUID  {0x8868e871, 0xe4f1, 0x11d3, {0xbc, 0x22, 0x0, 0x80, 0xc7, 0x3c, 0x88, 0x81}}
+  gPldAcpiTableGuid = { 0x9f9a9506, 0x5597, 0x4515, { 0xba, 0xb6, 0x8b, 0xcd, 0xe7, 0x84, 0xba, 0x87 } }
 
-.. Note:: This GUID reuses the same GUID defined in UEFI spec chapter 4.6 EFI Configuration Table
+**Structure**
 
-**Hob Interface Structure**
-
-Payload ACPI table HOB::
+::
 
   #pragma pack (1)
 
   typedef struct {
-    EFI_HOB_GUID_TYPE   Header;
-    UINT64              TableAddress;
-  } ACPI_TABLE_HOB;
+    PLD_GENERIC_HEADER   PldHeader;
+    EFI_PHYSICAL_ADDRESS Rsdp;
+  } PLD_ACPI_TABLE;
 
   #pragma pack()
 
 **Member Description**
 
-``Header``
+``PldHeader``
 
-Header.Name set to EFI_ACPI_TABLE_GUID. See section 6.5
-EFI_HOB_GUID_TYPE.
+PldHeader.Revision is 0.
 
-``TableAddress``
+``Rsdp``
 
-Point to the ACPI RSDP table. The ACPI table need follow ACPI specification verson 2.0 or above.
+Point to the ACPI RSDP table. The ACPI table need follow ACPI specification version 2.0 or above.
 
-SMBIOS Table HOB
-^^^^^^^^^^^^^^^^
+SMBIOS Table
+^^^^^^^^^^^^
 
-The bootloader might pass SMBIOS table through the GUID HOB to the
-payload. So that the payload could get the platform information from
-the table.
+The bootloader might pass SMBIOS table to the payload. So that the payload could get the platform information from the table.
 
-**HOB GUID**::
+**GUID**
 
-  #define    SMBIOS_TABLE_GUID    {0xeb9d2d31, 0x2d88, 0x11d3, {0x9a, 0x16, 0x0, 0x90, 0x27, 0x3f, 0xc1, 0x4d}}
+::
 
-  #define    SMBIOS3_TABLE_GUID   {0xf2fd1544, 0x9794, 0x4a2c, {0x99, 0x2e, 0xe5, 0xbb, 0xcf, 0x20, 0xe3, 0x94}}
+  gPldSmbios3TableGuid = { 0x92b7896c, 0x3362, 0x46ce, { 0x99, 0xb3, 0x4f, 0x5e, 0x3c, 0x34, 0xeb, 0x42 } }
 
-.. Note:: These GUIDs reuse the same GUIDs defined in UEFI spec chapter 4.6 EFI Configuration Table
+  gPldSmbiosTableGuid = { 0x590a0d26, 0x06e5, 0x4d20, { 0x8a, 0x82, 0x59, 0xea, 0x1b, 0x34, 0x98, 0x2d } }
 
-**Hob Interface Structure**::
+**Structure**
+
+::
 
   #pragma pack (1)
 
-  //
-  // Bootloader SMBIOS table hob
-  //
   typedef struct {
-    EFI_HOB_GUID_TYPE   Header;
-    UINT64              TableAddress;
-  } SMBIOS_TABLE_HOB;
+    PLD_GENERIC_HEADER   PldHeader;
+    EFI_PHYSICAL_ADDRESS SmBiosEntryPoint;
+  } PLD_SMBIOS_TABLE;
 
   #pragma pack()
 
 **Member Description**
 
-``Header``
+``PldHeader``
 
-Header.Name set to SMBIOS_TABLE_GUID if SMBIOS table from
-TableAddress follows the format defined by SMBIOS_TABLE_ENTRY_POINT,
-or set to SMBIOS3_TABLE_GUID if SMBIOS table from TableAddress
-follows the format defied by SMBIOS_TABLE_3_0_ENTRY_POINT. See
-section 6.5 EFI_HOB_GUID_TYPE.
+PldHeader.Revision is 0.
 
-``AcpiTableAddress``
+``SmBiosEntryPoint``
 
-Point to the SMBIOS table entry point.
+Points to the SMBIOS table in SMBIOS 3.0+ format if GUID is ``gPldSmbios3TableGuid``.
 
-DEVICE TREE HOB
-^^^^^^^^^^^^^^^
+Points to the SMBIOS table in SMBIOS 2.x format if GUID is ``gPldSmbiosTableGuid``.
 
-The bootloader might pass Device Tree through the GUID HOB to the
-payload. So that the payload could get the platform information from
-the table.
+DEVICE TREE
+^^^^^^^^^^^
 
-**HOB GUID**::
+The bootloader might pass Device Tree to the payload. So that the payload could get the platform information from the table.
 
-  #define    DEVICE_TREE_GUID    {0x6784b889, 0xb13c, 0x4c3b, {0xae, 0x4b, 0xf, 0xa, 0x2e, 0x32, 0xe, 0xa3}}
+**GUID**
 
-**Hob Interface Structure**::
+::
+
+  gPldDeviceTreeGuid = {0x6784b889, 0xb13c, 0x4c3b, {0xae, 0x4b, 0xf, 0xa, 0x2e, 0x32, 0xe, 0xa3}}
+
+**Structure**
+
+::
 
   #pragma pack (1)
 
-  //
-  // Bootloader Device Tree hob
-  //
   typedef struct {
-    EFI_HOB_GUID_TYPE     Header;
-    UINT64                DeviceTreeAddress;
-  } DEVICE_TREE_HOB;
+    PLD_GENERIC_HEADER   PldHeader;
+    EFI_PHYSICAL_ADDRESS DeviceTreeAddress;
+  } PLD_DEVICE_TREE;
 
   #pragma pack()
 
 **Member Description**
 
-``Header``
+``PldHeader``
 
-Header.Name set to DEVICE_TREE_GUID. See section 6.5 EFI_HOB_GUID_TYPE.
+PldHeader.Revision is 0.
 
 ``DeviceTreeAddress``
 
 Point to the Device Tree entry point.
 
-Serial Information HOB
-^^^^^^^^^^^^^^^^^^^^^^
+Serial Information
+^^^^^^^^^^^^^^^^^^
 
 If the debug device type and subtype are specified in DBG2, the
-bootloader should pass SERIAL_PORT_INFO hob to payload. This hob
-provides 16550 compatible serial debug port information from
-bootloader to payload.
+bootloader should 16550 compatible serial debug port information
+to payload.
 
 **Opens: Should we let bootloader provide debug callback** **for debug?**
 
-**HOB GUID**::
+**GUID**
 
-  #define    SERIAL_INFO_GUID    {0xaa7e190d, 0xbe21, 0x4409, {0x8e, 0x67, 0xa2, 0xcd, 0xf, 0x61, 0xe1, 0x70}}
+::
 
-**Hob Interface Structure**::
+  gPldSerialPortInfoGuid   = {0xaa7e190d, 0xbe21, 0x4409, {0x8e, 0x67, 0xa2, 0xcd, 0xf, 0x61, 0xe1, 0x70}}
+
+**Structure**
+
+::
 
   #pragma pack(1)
 
   typedef struct {
-    UINT16     Reversion;
-    BOOLEAN    UseMmio;
-    UINT8      RegisterWidth;
-    UINT32     BaudRate;
-    UINT64     RegisterBase;
+    PLD_GENERIC_HEADER   PldHeader;
+    BOOLEAN              UseMmio;
+    UINT8                RegisterStride;
+    UINT32               BaudRate;
+    EFI_PHYSICAL_ADDRESS RegisterBase;
   } SERIAL_PORT_INFO;
 
   #pragma pack()
 
 **Member Description**
 
+``PldHeader``
+
+PldHeader.Revision is 0.
+
 ``UseMmio``
 
 Indicates the 16550 serial port registers are in MMIO space, or in I/O space.
 
-``Reversion``
+``RegisterStride``
 
-Use 0 for this spec
-
-``RegisterWidth``
-
-Indicates the access width for 16550 serial port registers, e.g.:
-
-  8 - serial port registers are accessed in 8-bit width.
-
-  32 - serial port registers are accessed in 32-bit width.
-
-``RegisterBase``
-
-Base address of 16550 serial port registers in MMIO or I/O space.
+Indicates the number of bytes between registers.
 
 ``BaudRate``
 
@@ -340,6 +326,10 @@ It could be 921600, 460800, 230400, 115200, 57600, 38400, 19200,
 110, 75, 50
 
 Set to 0 to use the default baud rate 115200.
+
+``RegisterBase``
+
+Base address of 16550 serial port registers in MMIO or I/O space.
 
 Optional Interfaces
 ~~~~~~~~~~~~~~~~~~~
