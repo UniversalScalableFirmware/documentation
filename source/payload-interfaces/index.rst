@@ -63,15 +63,30 @@ HOB List
 The bootloader should build a HOB list and pass the HOB list header
 to payload when passing control to payload. The HOB format is
 described in the *Platform Initialization (PI) Specification - Volume
-3: Shared Architectural Elements*. The payload could decide on how to
-consume the information passed from the bootloader.
+3: Shared Architectural Elements*.
 
-The sections below describe the HOBs from the bootloader to provide
-the system architecturally information. Additional bootloader
-specific HOB may be defined in the bootloader specific documents.
+There are two sections below describing the HOBs produced by the
+bootloader and consumed by the payload for providing the system
+architecturally information.
+
+First section describes the HOBs defined in *Platform Initialization
+Specification Volume 3: Shared Architectural elements*.
+
+Second section defines the new HOBs.
+
+Reusing Interfaces in Platform Initialization Specification
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+CPU HOB
+^^^^^^^
+
+The bootloader should report the processor information including address space
+and I/O space capabilities to the payload through the HOB following
+EFI_HOB_CPU format defined in *Platform Initialization Specification Volume 3:
+Shared Architectural elements*.
 
 Resource Descriptor HOB
-~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^
 
 The bootloader should report the system resources through the HOB
 following EFI_HOB_RESOURCE_DESCRIPTOR format defined in *Platform
@@ -89,8 +104,24 @@ resource type EFI_RESOURCE_IO and EFI_RESOURCE_MEMORY_MAPPED_IO.
 **Open**: should report payload in memory using the Boot Firmware
 Volume (BFV) HOB?
 
-ACPI Table HOB
+Graphics information HOB
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+If bootloader initializes the graphics device, the bootloader might
+report graphics mode and framebuffer information through
+EFI_PEI_GRAPHICS_INFO_HOB, and graphics hardware information
+through EFI_PEI_GRAPHICS_DEVICE_INFO_HOB.
+
+EFI_PEI_GRAPHICS_INFO_HOB and EFI_PEI_GRAPHICS_DEVICE_INFO_HOB provide the basic information
+for the graphics display. These HOBs are described in the *PI Specification.*
+
+Please refer Appendix 6.6 EFI_PEI_GRAPHICS_INFO_HOB and 6.7 EFI_PEI_GRAPHICS_DEVICE_INFO_HOB for the details.
+
+New Interfaces
 ~~~~~~~~~~~~~~
+
+ACPI Table HOB
+^^^^^^^^^^^^^^
 
 The bootloader should pass ACPI table through the GUID HOB to the payload. So that the payload could get the platform information from the ACPI table.
 
@@ -127,7 +158,7 @@ EFI_HOB_GUID_TYPE.
 Point to the ACPI RSDP table. The ACPI table need follow ACPI specification verson 2.0 or above.
 
 SMBIOS Table HOB
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 
 The bootloader might pass SMBIOS table through the GUID HOB to the
 payload. So that the payload could get the platform information from
@@ -170,7 +201,7 @@ section 6.5 EFI_HOB_GUID_TYPE.
 Point to the SMBIOS table entry point.
 
 DEVICE TREE HOB
-~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^
 
 The bootloader might pass Device Tree through the GUID HOB to the
 payload. So that the payload could get the platform information from
@@ -204,21 +235,8 @@ Header.Name set to DEVICE_TREE_GUID. See section 6.5 EFI_HOB_GUID_TYPE.
 
 Point to the Device Tree entry point.
 
-Graphics information HOB
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-If bootloader initializes the graphics device, the bootloader might
-report graphics mode and framebuffer information through
-EFI_PEI_GRAPHICS_INFO_HOB, and graphics hardware information
-through EFI_PEI_GRAPHICS_DEVICE_INFO_HOB.
-
-EFI_PEI_GRAPHICS_INFO_HOB and EFI_PEI_GRAPHICS_DEVICE_INFO_HOB provide the basic information
-for the graphics display. These HOBs are described in the *PI Specification.*
-
-Please refer Appendix 6.6 EFI_PEI_GRAPHICS_INFO_HOB and 6.7 EFI_PEI_GRAPHICS_DEVICE_INFO_HOB for the details.
-
 Serial Information HOB
-~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^
 
 If the debug device type and subtype are specified in DBG2, the
 bootloader should pass SERIAL_PORT_INFO hob to payload. This hob
@@ -277,45 +295,8 @@ It could be 921600, 460800, 230400, 115200, 57600, 38400, 19200,
 
 Set to 0 to use the default baud rate 115200.
 
-CPU INFO HOB
-~~~~~~~~~~~~
-
-The bootloader should build a CPU information HOB to the payload.
-
-**HOB Type**    EFI_HOB_TYPE_CPU
-
-**Hob Interface Structure**::
-
-  #pragma pack (1)
-
-  //
-  // CPU info Hob
-  //
-  typedef struct {
-    UINT8     Revision;
-    UINT8     Reserved;
-    UINT8     SizeOfMemorySpace;
-    UINT8     SizeOfIoSpace;
-  } PAYLOAD_CPU_INFO;
-
-  #pragma pack()
-
-**Member Description**
-
-``Revision``
-
-  Use 0 for this structure.
-
-``SizeOfMemorySpace``
-
-  The maximum physical memory addressability of the processor.
-
-``SizeOfIoSpace``
-
-  The maximum physical I/O addressability of the processor.
-
-Optional HOBs
-~~~~~~~~~~~~~
+Optional Interfaces
+~~~~~~~~~~~~~~~~~~~
 
 Some more HOBs could be built by bootloaders for advanced features. e.g.:
 
