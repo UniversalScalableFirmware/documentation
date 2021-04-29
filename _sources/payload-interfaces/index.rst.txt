@@ -63,15 +63,38 @@ HOB List
 The bootloader should build a HOB list and pass the HOB list header
 to payload when passing control to payload. The HOB format is
 described in the *Platform Initialization (PI) Specification - Volume
-3: Shared Architectural Elements*. The payload could decide on how to
-consume the information passed from the bootloader.
+3: Shared Architectural Elements*.
 
-The sections below describe the HOBs from the bootloader to provide
-the system architecturally information. Additional bootloader
-specific HOB may be defined in the bootloader specific documents.
+There are two sections below describing the HOBs produced by the
+bootloader and consumed by the payload for providing the system
+architecturally information.
+
+First section describes the HOBs defined in *Platform Initialization
+Specification Volume 3: Shared Architectural elements*.
+
+Second section defines the new HOBs.
+
+Reusing Interfaces in Platform Initialization Specification
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+PHIT(Phase Handoff Info Table) HOB
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The bootloader should report the general state information through
+the HOB following EFI_HOB_HANDOFF_INFO_TABLE format defined in
+*Platform Initialization Specification Volume 3: Shared Architectural
+elements*.
+
+CPU HOB
+^^^^^^^
+
+The bootloader should report the processor information including address space
+and I/O space capabilities to the payload through the HOB following
+EFI_HOB_CPU format defined in *Platform Initialization Specification Volume 3:
+Shared Architectural elements*.
 
 Resource Descriptor HOB
-~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^
 
 The bootloader should report the system resources through the HOB
 following EFI_HOB_RESOURCE_DESCRIPTOR format defined in *Platform
@@ -86,126 +109,31 @@ type EFI_RESOURCE_MEMORY_RESERVED.
 I/O and memory mapped I/O resource should also be reported using
 resource type EFI_RESOURCE_IO and EFI_RESOURCE_MEMORY_MAPPED_IO.
 
-**Open**: should report payload in memory using the Boot Firmware
-Volume (BFV) HOB?
+Memory Allocation HOB
+^^^^^^^^^^^^^^^^^^^^^
 
-ACPI Table HOB
-~~~~~~~~~~~~~~
+The bootloader should report the memory usages that exist outside the
+HOB list through the HOB following EFI_HOB_MEMORY_ALLOCATION format defined
+in *Platform Initialization Specification Volume 3: Shared Architectural
+elements*.
 
-The bootloader should pass ACPI table through the GUID HOB to the payload. So that the payload could get the platform information from the ACPI table.
+Boot-Strap Processor (BSP) Stack Memory Allocation HOB
+''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-Build the different HOBs for different table using standard defined GUID.
+The bootloader should report the initial stack prepared for payload through
+the HOB following EFI_HOB_MEMORY_ALLOCATION_STACK format defined in *Platform
+Initialization Specification Volume 3: Shared Architectural elements*.
 
-**HOB GUID**::
+Memory Allocation Module HOB
+''''''''''''''''''''''''''''
 
-  #define EFI_ACPI_TABLE_GUID  {0x8868e871, 0xe4f1, 0x11d3, {0xbc, 0x22, 0x0, 0x80, 0xc7, 0x3c, 0x88, 0x81}}
-
-.. Note:: This GUID reuses the same GUID defined in UEFI spec chapter 4.6 EFI Configuration Table
-
-**Hob Interface Structure**
-
-Payload ACPI table HOB::
-
-  #pragma pack (1)
-
-  typedef struct {
-    EFI_HOB_GUID_TYPE   Header;
-    UINT64              TableAddress;
-  } ACPI_TABLE_HOB;
-
-  #pragma pack()
-
-**Member Description**
-
-``Header``
-
-Header.Name set to EFI_ACPI_TABLE_GUID. See section 6.5
-EFI_HOB_GUID_TYPE.
-
-``TableAddress``
-
-Point to the ACPI RSDP table. The ACPI table need follow ACPI specification verson 2.0 or above.
-
-SMBIOS Table HOB
-~~~~~~~~~~~~~~~~
-
-The bootloader might pass SMBIOS table through the GUID HOB to the
-payload. So that the payload could get the platform information from
-the table.
-
-**HOB GUID**::
-
-  #define    SMBIOS_TABLE_GUID    {0xeb9d2d31, 0x2d88, 0x11d3, {0x9a, 0x16, 0x0, 0x90, 0x27, 0x3f, 0xc1, 0x4d}}
-
-  #define    SMBIOS3_TABLE_GUID   {0xf2fd1544, 0x9794, 0x4a2c, {0x99, 0x2e, 0xe5, 0xbb, 0xcf, 0x20, 0xe3, 0x94}}
-
-.. Note:: These GUIDs reuse the same GUIDs defined in UEFI spec chapter 4.6 EFI Configuration Table
-
-**Hob Interface Structure**::
-
-  #pragma pack (1)
-
-  //
-  // Bootloader SMBIOS table hob
-  //
-  typedef struct {
-    EFI_HOB_GUID_TYPE   Header;
-    UINT64              TableAddress;
-  } SMBIOS_TABLE_HOB;
-
-  #pragma pack()
-
-**Member Description**
-
-``Header``
-
-Header.Name set to SMBIOS_TABLE_GUID if SMBIOS table from
-TableAddress follows the format defined by SMBIOS_TABLE_ENTRY_POINT,
-or set to SMBIOS3_TABLE_GUID if SMBIOS table from TableAddress
-follows the format defied by SMBIOS_TABLE_3_0_ENTRY_POINT. See
-section 6.5 EFI_HOB_GUID_TYPE.
-
-``AcpiTableAddress``
-
-Point to the SMBIOS table entry point.
-
-DEVICE TREE HOB
-~~~~~~~~~~~~~~~
-
-The bootloader might pass Device Tree through the GUID HOB to the
-payload. So that the payload could get the platform information from
-the table.
-
-**HOB GUID**::
-
-  #define    DEVICE_TREE_GUID    {0x6784b889, 0xb13c, 0x4c3b, {0xae, 0x4b, 0xf, 0xa, 0x2e, 0x32, 0xe, 0xa3}}
-
-**Hob Interface Structure**::
-
-  #pragma pack (1)
-
-  //
-  // Bootloader Device Tree hob
-  //
-  typedef struct {
-    EFI_HOB_GUID_TYPE     Header;
-    UINT64                DeviceTreeAddress;
-  } DEVICE_TREE_HOB;
-
-  #pragma pack()
-
-**Member Description**
-
-``Header``
-
-Header.Name set to DEVICE_TREE_GUID. See section 6.5 EFI_HOB_GUID_TYPE.
-
-``DeviceTreeAddress``
-
-Point to the Device Tree entry point.
+The bootloader should report the payload memory location and entry point
+through the HOB following EFI_HOB_MEMORY_ALLOCATION_MODULE format defined
+in *Platform Initialization Specification Volume 3: Shared Architectural
+elements*.
 
 Graphics information HOB
-~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 If bootloader initializes the graphics device, the bootloader might
 report graphics mode and framebuffer information through
@@ -217,55 +145,177 @@ for the graphics display. These HOBs are described in the *PI Specification.*
 
 Please refer Appendix 6.6 EFI_PEI_GRAPHICS_INFO_HOB and 6.7 EFI_PEI_GRAPHICS_DEVICE_INFO_HOB for the details.
 
-Serial Information HOB
-~~~~~~~~~~~~~~~~~~~~~~
+New Interfaces
+~~~~~~~~~~~~~~
+
+Common Payload Header
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+All new interfaces are GUID type HOBs starting with ``EFI_HOB_GUID_TYPE`` defined in the PI Specification.
+
+The HOB data starts with a common header defined as below::
+
+  #pragma pack(1)
+  
+  typedef struct {
+    UINT8                Revision;
+    UINT8                Reserved[3];
+  } PLD_GENERIC_HEADER;
+
+  #pragma pack()
+
+HOB data for different interfaces is defined in following sections.
+
+ACPI Table
+^^^^^^^^^^
+
+The bootloader should pass ACPI table the payload. So that the payload could get the platform information from the ACPI table.
+
+**GUID**
+
+::
+
+  gPldAcpiTableGuid = { 0x9f9a9506, 0x5597, 0x4515, { 0xba, 0xb6, 0x8b, 0xcd, 0xe7, 0x84, 0xba, 0x87 } }
+
+**Structure**
+
+::
+
+  #pragma pack (1)
+
+  typedef struct {
+    PLD_GENERIC_HEADER   PldHeader;
+    EFI_PHYSICAL_ADDRESS Rsdp;
+  } PLD_ACPI_TABLE;
+
+  #pragma pack()
+
+**Member Description**
+
+``PldHeader``
+
+PldHeader.Revision is 0.
+
+``Rsdp``
+
+Point to the ACPI RSDP table. The ACPI table need follow ACPI specification version 2.0 or above.
+
+SMBIOS Table
+^^^^^^^^^^^^
+
+The bootloader might pass SMBIOS table to the payload. So that the payload could get the platform information from the table.
+
+**GUID**
+
+::
+
+  gPldSmbios3TableGuid = { 0x92b7896c, 0x3362, 0x46ce, { 0x99, 0xb3, 0x4f, 0x5e, 0x3c, 0x34, 0xeb, 0x42 } }
+
+  gPldSmbiosTableGuid = { 0x590a0d26, 0x06e5, 0x4d20, { 0x8a, 0x82, 0x59, 0xea, 0x1b, 0x34, 0x98, 0x2d } }
+
+**Structure**
+
+::
+
+  #pragma pack (1)
+
+  typedef struct {
+    PLD_GENERIC_HEADER   PldHeader;
+    EFI_PHYSICAL_ADDRESS SmBiosEntryPoint;
+  } PLD_SMBIOS_TABLE;
+
+  #pragma pack()
+
+**Member Description**
+
+``PldHeader``
+
+PldHeader.Revision is 0.
+
+``SmBiosEntryPoint``
+
+Points to the SMBIOS table in SMBIOS 3.0+ format if GUID is ``gPldSmbios3TableGuid``.
+
+Points to the SMBIOS table in SMBIOS 2.x format if GUID is ``gPldSmbiosTableGuid``.
+
+DEVICE TREE
+^^^^^^^^^^^
+
+The bootloader might pass Device Tree to the payload. So that the payload could get the platform information from the table.
+
+**GUID**
+
+::
+
+  gPldDeviceTreeGuid = {0x6784b889, 0xb13c, 0x4c3b, {0xae, 0x4b, 0xf, 0xa, 0x2e, 0x32, 0xe, 0xa3}}
+
+**Structure**
+
+::
+
+  #pragma pack (1)
+
+  typedef struct {
+    PLD_GENERIC_HEADER   PldHeader;
+    EFI_PHYSICAL_ADDRESS DeviceTreeAddress;
+  } PLD_DEVICE_TREE;
+
+  #pragma pack()
+
+**Member Description**
+
+``PldHeader``
+
+PldHeader.Revision is 0.
+
+``DeviceTreeAddress``
+
+Point to the Device Tree entry point.
+
+Serial Information
+^^^^^^^^^^^^^^^^^^
 
 If the debug device type and subtype are specified in DBG2, the
-bootloader should pass SERIAL_PORT_INFO hob to payload. This hob
-provides 16550 compatible serial debug port information from
-bootloader to payload.
+bootloader should 16550 compatible serial debug port information
+to payload.
 
 **Opens: Should we let bootloader provide debug callback** **for debug?**
 
-**HOB GUID**::
+**GUID**
 
-  #define    SERIAL_INFO_GUID    {0xaa7e190d, 0xbe21, 0x4409, {0x8e, 0x67, 0xa2, 0xcd, 0xf, 0x61, 0xe1, 0x70}}
+::
 
-**Hob Interface Structure**::
+  gPldSerialPortInfoGuid   = {0xaa7e190d, 0xbe21, 0x4409, {0x8e, 0x67, 0xa2, 0xcd, 0xf, 0x61, 0xe1, 0x70}}
+
+**Structure**
+
+::
 
   #pragma pack(1)
 
   typedef struct {
-    UINT16     Reversion;
-    BOOLEAN    UseMmio;
-    UINT8      RegisterWidth;
-    UINT32     BaudRate;
-    UINT64     RegisterBase;
+    PLD_GENERIC_HEADER   PldHeader;
+    BOOLEAN              UseMmio;
+    UINT8                RegisterStride;
+    UINT32               BaudRate;
+    EFI_PHYSICAL_ADDRESS RegisterBase;
   } SERIAL_PORT_INFO;
 
   #pragma pack()
 
 **Member Description**
 
+``PldHeader``
+
+PldHeader.Revision is 0.
+
 ``UseMmio``
 
 Indicates the 16550 serial port registers are in MMIO space, or in I/O space.
 
-``Reversion``
+``RegisterStride``
 
-Use 0 for this spec
-
-``RegisterWidth``
-
-Indicates the access width for 16550 serial port registers, e.g.:
-
-  8 - serial port registers are accessed in 8-bit width.
-
-  32 - serial port registers are accessed in 32-bit width.
-
-``RegisterBase``
-
-Base address of 16550 serial port registers in MMIO or I/O space.
+Indicates the number of bytes between registers.
 
 ``BaudRate``
 
@@ -277,45 +327,12 @@ It could be 921600, 460800, 230400, 115200, 57600, 38400, 19200,
 
 Set to 0 to use the default baud rate 115200.
 
-CPU INFO HOB
-~~~~~~~~~~~~
+``RegisterBase``
 
-The bootloader should build a CPU information HOB to the payload.
+Base address of 16550 serial port registers in MMIO or I/O space.
 
-**HOB Type**    EFI_HOB_TYPE_CPU
-
-**Hob Interface Structure**::
-
-  #pragma pack (1)
-
-  //
-  // CPU info Hob
-  //
-  typedef struct {
-    UINT8     Revision;
-    UINT8     Reserved;
-    UINT8     SizeOfMemorySpace;
-    UINT8     SizeOfIoSpace;
-  } PAYLOAD_CPU_INFO;
-
-  #pragma pack()
-
-**Member Description**
-
-``Revision``
-
-  Use 0 for this structure.
-
-``SizeOfMemorySpace``
-
-  The maximum physical memory addressability of the processor.
-
-``SizeOfIoSpace``
-
-  The maximum physical I/O addressability of the processor.
-
-Optional HOBs
-~~~~~~~~~~~~~
+Optional Interfaces
+~~~~~~~~~~~~~~~~~~~
 
 Some more HOBs could be built by bootloaders for advanced features. e.g.:
 

@@ -93,14 +93,23 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Payload Interfaces</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#acpi-tables">ACPI tables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#hob-list">HOB List</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#resource-descriptor-hob">Resource Descriptor HOB</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#acpi-table-hob">ACPI Table HOB</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#smbios-table-hob">SMBIOS Table HOB</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#device-tree-hob">DEVICE TREE HOB</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#graphics-information-hob">Graphics information HOB</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#serial-information-hob">Serial Information HOB</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#cpu-info-hob">CPU INFO HOB</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optional-hobs">Optional HOBs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reusing-interfaces-in-platform-initialization-specification">Reusing Interfaces in Platform Initialization Specification</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#phit-phase-handoff-info-table-hob">PHIT(Phase Handoff Info Table) HOB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cpu-hob">CPU HOB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#resource-descriptor-hob">Resource Descriptor HOB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#memory-allocation-hob">Memory Allocation HOB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#graphics-information-hob">Graphics information HOB</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#new-interfaces">New Interfaces</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#common-payload-header">Common Payload Header</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acpi-table">ACPI Table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#smbios-table">SMBIOS Table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#device-tree">DEVICE TREE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#serial-information">Serial Information</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#optional-interfaces">Optional Interfaces</a></li>
 </ul>
 </li>
 </ul>
@@ -219,13 +228,31 @@ as the default debug device.</p>
 <p>The bootloader should build a HOB list and pass the HOB list header
 to payload when passing control to payload. The HOB format is
 described in the <em>Platform Initialization (PI) Specification - Volume
-3: Shared Architectural Elements</em>. The payload could decide on how to
-consume the information passed from the bootloader.</p>
-<p>The sections below describe the HOBs from the bootloader to provide
-the system architecturally information. Additional bootloader
-specific HOB may be defined in the bootloader specific documents.</p>
+3: Shared Architectural Elements</em>.</p>
+<p>There are two sections below describing the HOBs produced by the
+bootloader and consumed by the payload for providing the system
+architecturally information.</p>
+<p>First section describes the HOBs defined in <em>Platform Initialization
+Specification Volume 3: Shared Architectural elements</em>.</p>
+<p>Second section defines the new HOBs.</p>
+<div class="section" id="reusing-interfaces-in-platform-initialization-specification">
+<h3>Reusing Interfaces in Platform Initialization Specification<a class="headerlink" href="#reusing-interfaces-in-platform-initialization-specification" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="phit-phase-handoff-info-table-hob">
+<h4>PHIT(Phase Handoff Info Table) HOB<a class="headerlink" href="#phit-phase-handoff-info-table-hob" title="Permalink to this headline">¶</a></h4>
+<p>The bootloader should report the general state information through
+the HOB following EFI_HOB_HANDOFF_INFO_TABLE format defined in
+<em>Platform Initialization Specification Volume 3: Shared Architectural
+elements</em>.</p>
+</div>
+<div class="section" id="cpu-hob">
+<h4>CPU HOB<a class="headerlink" href="#cpu-hob" title="Permalink to this headline">¶</a></h4>
+<p>The bootloader should report the processor information including address space
+and I/O space capabilities to the payload through the HOB following
+EFI_HOB_CPU format defined in <em>Platform Initialization Specification Volume 3:
+Shared Architectural elements</em>.</p>
+</div>
 <div class="section" id="resource-descriptor-hob">
-<h3>Resource Descriptor HOB<a class="headerlink" href="#resource-descriptor-hob" title="Permalink to this headline">¶</a></h3>
+<h4>Resource Descriptor HOB<a class="headerlink" href="#resource-descriptor-hob" title="Permalink to this headline">¶</a></h4>
 <p>The bootloader should report the system resources through the HOB
 following EFI_HOB_RESOURCE_DESCRIPTOR format defined in <em>Platform
 Initialization Specification Volume 3: Shared Architectural
@@ -236,110 +263,29 @@ reserved memory used by bootloader should be reported using resource
 type EFI_RESOURCE_MEMORY_RESERVED.</p>
 <p>I/O and memory mapped I/O resource should also be reported using
 resource type EFI_RESOURCE_IO and EFI_RESOURCE_MEMORY_MAPPED_IO.</p>
-<p><strong>Open</strong>: should report payload in memory using the Boot Firmware
-Volume (BFV) HOB?</p>
 </div>
-<div class="section" id="acpi-table-hob">
-<h3>ACPI Table HOB<a class="headerlink" href="#acpi-table-hob" title="Permalink to this headline">¶</a></h3>
-<p>The bootloader should pass ACPI table through the GUID HOB to the payload. So that the payload could get the platform information from the ACPI table.</p>
-<p>Build the different HOBs for different table using standard defined GUID.</p>
-<p><strong>HOB GUID</strong>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_ACPI_TABLE_GUID  {0x8868e871, 0xe4f1, 0x11d3, {0xbc, 0x22, 0x0, 0x80, 0xc7, 0x3c, 0x88, 0x81}}</span>
-</pre></div>
+<div class="section" id="memory-allocation-hob">
+<h4>Memory Allocation HOB<a class="headerlink" href="#memory-allocation-hob" title="Permalink to this headline">¶</a></h4>
+<p>The bootloader should report the memory usages that exist outside the
+HOB list through the HOB following EFI_HOB_MEMORY_ALLOCATION format defined
+in <em>Platform Initialization Specification Volume 3: Shared Architectural
+elements</em>.</p>
+<div class="section" id="boot-strap-processor-bsp-stack-memory-allocation-hob">
+<h5>Boot-Strap Processor (BSP) Stack Memory Allocation HOB<a class="headerlink" href="#boot-strap-processor-bsp-stack-memory-allocation-hob" title="Permalink to this headline">¶</a></h5>
+<p>The bootloader should report the initial stack prepared for payload through
+the HOB following EFI_HOB_MEMORY_ALLOCATION_STACK format defined in <em>Platform
+Initialization Specification Volume 3: Shared Architectural elements</em>.</p>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This GUID reuses the same GUID defined in UEFI spec chapter 4.6 EFI Configuration Table</p>
+<div class="section" id="memory-allocation-module-hob">
+<h5>Memory Allocation Module HOB<a class="headerlink" href="#memory-allocation-module-hob" title="Permalink to this headline">¶</a></h5>
+<p>The bootloader should report the payload memory location and entry point
+through the HOB following EFI_HOB_MEMORY_ALLOCATION_MODULE format defined
+in <em>Platform Initialization Specification Volume 3: Shared Architectural
+elements</em>.</p>
 </div>
-<p><strong>Hob Interface Structure</strong></p>
-<p>Payload ACPI table HOB:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack (1)</span>
-
-<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
-  <span class="n">EFI_HOB_GUID_TYPE</span>   <span class="n">Header</span><span class="p">;</span>
-  <span class="n">UINT64</span>              <span class="n">TableAddress</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">ACPI_TABLE_HOB</span><span class="p">;</span>
-
-<span class="c1">#pragma pack()</span>
-</pre></div>
-</div>
-<p><strong>Member Description</strong></p>
-<p><code class="docutils literal notranslate"><span class="pre">Header</span></code></p>
-<p>Header.Name set to EFI_ACPI_TABLE_GUID. See section 6.5
-EFI_HOB_GUID_TYPE.</p>
-<p><code class="docutils literal notranslate"><span class="pre">TableAddress</span></code></p>
-<p>Point to the ACPI RSDP table. The ACPI table need follow ACPI specification verson 2.0 or above.</p>
-</div>
-<div class="section" id="smbios-table-hob">
-<h3>SMBIOS Table HOB<a class="headerlink" href="#smbios-table-hob" title="Permalink to this headline">¶</a></h3>
-<p>The bootloader might pass SMBIOS table through the GUID HOB to the
-payload. So that the payload could get the platform information from
-the table.</p>
-<p><strong>HOB GUID</strong>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define    SMBIOS_TABLE_GUID    {0xeb9d2d31, 0x2d88, 0x11d3, {0x9a, 0x16, 0x0, 0x90, 0x27, 0x3f, 0xc1, 0x4d}}</span>
-
-<span class="c1">#define    SMBIOS3_TABLE_GUID   {0xf2fd1544, 0x9794, 0x4a2c, {0x99, 0x2e, 0xe5, 0xbb, 0xcf, 0x20, 0xe3, 0x94}}</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">These GUIDs reuse the same GUIDs defined in UEFI spec chapter 4.6 EFI Configuration Table</p>
-</div>
-<p><strong>Hob Interface Structure</strong>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack (1)</span>
-
-<span class="o">//</span>
-<span class="o">//</span> <span class="n">Bootloader</span> <span class="n">SMBIOS</span> <span class="n">table</span> <span class="n">hob</span>
-<span class="o">//</span>
-<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
-  <span class="n">EFI_HOB_GUID_TYPE</span>   <span class="n">Header</span><span class="p">;</span>
-  <span class="n">UINT64</span>              <span class="n">TableAddress</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">SMBIOS_TABLE_HOB</span><span class="p">;</span>
-
-<span class="c1">#pragma pack()</span>
-</pre></div>
-</div>
-<p><strong>Member Description</strong></p>
-<p><code class="docutils literal notranslate"><span class="pre">Header</span></code></p>
-<p>Header.Name set to SMBIOS_TABLE_GUID if SMBIOS table from
-TableAddress follows the format defined by SMBIOS_TABLE_ENTRY_POINT,
-or set to SMBIOS3_TABLE_GUID if SMBIOS table from TableAddress
-follows the format defied by SMBIOS_TABLE_3_0_ENTRY_POINT. See
-section 6.5 EFI_HOB_GUID_TYPE.</p>
-<p><code class="docutils literal notranslate"><span class="pre">AcpiTableAddress</span></code></p>
-<p>Point to the SMBIOS table entry point.</p>
-</div>
-<div class="section" id="device-tree-hob">
-<h3>DEVICE TREE HOB<a class="headerlink" href="#device-tree-hob" title="Permalink to this headline">¶</a></h3>
-<p>The bootloader might pass Device Tree through the GUID HOB to the
-payload. So that the payload could get the platform information from
-the table.</p>
-<p><strong>HOB GUID</strong>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define    DEVICE_TREE_GUID    {0x6784b889, 0xb13c, 0x4c3b, {0xae, 0x4b, 0xf, 0xa, 0x2e, 0x32, 0xe, 0xa3}}</span>
-</pre></div>
-</div>
-<p><strong>Hob Interface Structure</strong>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack (1)</span>
-
-<span class="o">//</span>
-<span class="o">//</span> <span class="n">Bootloader</span> <span class="n">Device</span> <span class="n">Tree</span> <span class="n">hob</span>
-<span class="o">//</span>
-<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
-  <span class="n">EFI_HOB_GUID_TYPE</span>     <span class="n">Header</span><span class="p">;</span>
-  <span class="n">UINT64</span>                <span class="n">DeviceTreeAddress</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">DEVICE_TREE_HOB</span><span class="p">;</span>
-
-<span class="c1">#pragma pack()</span>
-</pre></div>
-</div>
-<p><strong>Member Description</strong></p>
-<p><code class="docutils literal notranslate"><span class="pre">Header</span></code></p>
-<p>Header.Name set to DEVICE_TREE_GUID. See section 6.5 EFI_HOB_GUID_TYPE.</p>
-<p><code class="docutils literal notranslate"><span class="pre">DeviceTreeAddress</span></code></p>
-<p>Point to the Device Tree entry point.</p>
 </div>
 <div class="section" id="graphics-information-hob">
-<h3>Graphics information HOB<a class="headerlink" href="#graphics-information-hob" title="Permalink to this headline">¶</a></h3>
+<h4>Graphics information HOB<a class="headerlink" href="#graphics-information-hob" title="Permalink to this headline">¶</a></h4>
 <p>If bootloader initializes the graphics device, the bootloader might
 report graphics mode and framebuffer information through
 EFI_PEI_GRAPHICS_INFO_HOB, and graphics hardware information
@@ -348,84 +294,143 @@ through EFI_PEI_GRAPHICS_DEVICE_INFO_HOB.</p>
 for the graphics display. These HOBs are described in the <em>PI Specification.</em></p>
 <p>Please refer Appendix 6.6 EFI_PEI_GRAPHICS_INFO_HOB and 6.7 EFI_PEI_GRAPHICS_DEVICE_INFO_HOB for the details.</p>
 </div>
-<div class="section" id="serial-information-hob">
-<h3>Serial Information HOB<a class="headerlink" href="#serial-information-hob" title="Permalink to this headline">¶</a></h3>
-<p>If the debug device type and subtype are specified in DBG2, the
-bootloader should pass SERIAL_PORT_INFO hob to payload. This hob
-provides 16550 compatible serial debug port information from
-bootloader to payload.</p>
-<p><strong>Opens: Should we let bootloader provide debug callback</strong> <strong>for debug?</strong></p>
-<p><strong>HOB GUID</strong>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define    SERIAL_INFO_GUID    {0xaa7e190d, 0xbe21, 0x4409, {0x8e, 0x67, 0xa2, 0xcd, 0xf, 0x61, 0xe1, 0x70}}</span>
-</pre></div>
 </div>
-<p><strong>Hob Interface Structure</strong>:</p>
+<div class="section" id="new-interfaces">
+<h3>New Interfaces<a class="headerlink" href="#new-interfaces" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="common-payload-header">
+<h4>Common Payload Header<a class="headerlink" href="#common-payload-header" title="Permalink to this headline">¶</a></h4>
+<p>All new interfaces are GUID type HOBs starting with <code class="docutils literal notranslate"><span class="pre">EFI_HOB_GUID_TYPE</span></code> defined in the PI Specification.</p>
+<p>The HOB data starts with a common header defined as below:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack(1)</span>
 
 <span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
-  <span class="n">UINT16</span>     <span class="n">Reversion</span><span class="p">;</span>
-  <span class="n">BOOLEAN</span>    <span class="n">UseMmio</span><span class="p">;</span>
-  <span class="n">UINT8</span>      <span class="n">RegisterWidth</span><span class="p">;</span>
-  <span class="n">UINT32</span>     <span class="n">BaudRate</span><span class="p">;</span>
-  <span class="n">UINT64</span>     <span class="n">RegisterBase</span><span class="p">;</span>
+  <span class="n">UINT8</span>                <span class="n">Revision</span><span class="p">;</span>
+  <span class="n">UINT8</span>                <span class="n">Reserved</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+<span class="p">}</span> <span class="n">PLD_GENERIC_HEADER</span><span class="p">;</span>
+
+<span class="c1">#pragma pack()</span>
+</pre></div>
+</div>
+<p>HOB data for different interfaces is defined in following sections.</p>
+</div>
+<div class="section" id="acpi-table">
+<h4>ACPI Table<a class="headerlink" href="#acpi-table" title="Permalink to this headline">¶</a></h4>
+<p>The bootloader should pass ACPI table the payload. So that the payload could get the platform information from the ACPI table.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gPldAcpiTableGuid</span> <span class="o">=</span> <span class="p">{</span> <span class="mh">0x9f9a9506</span><span class="p">,</span> <span class="mh">0x5597</span><span class="p">,</span> <span class="mh">0x4515</span><span class="p">,</span> <span class="p">{</span> <span class="mh">0xba</span><span class="p">,</span> <span class="mh">0xb6</span><span class="p">,</span> <span class="mh">0x8b</span><span class="p">,</span> <span class="mh">0xcd</span><span class="p">,</span> <span class="mh">0xe7</span><span class="p">,</span> <span class="mh">0x84</span><span class="p">,</span> <span class="mh">0xba</span><span class="p">,</span> <span class="mh">0x87</span> <span class="p">}</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack (1)</span>
+
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">PLD_GENERIC_HEADER</span>   <span class="n">PldHeader</span><span class="p">;</span>
+  <span class="n">EFI_PHYSICAL_ADDRESS</span> <span class="n">Rsdp</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">PLD_ACPI_TABLE</span><span class="p">;</span>
+
+<span class="c1">#pragma pack()</span>
+</pre></div>
+</div>
+<p><strong>Member Description</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">PldHeader</span></code></p>
+<p>PldHeader.Revision is 0.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Rsdp</span></code></p>
+<p>Point to the ACPI RSDP table. The ACPI table need follow ACPI specification version 2.0 or above.</p>
+</div>
+<div class="section" id="smbios-table">
+<h4>SMBIOS Table<a class="headerlink" href="#smbios-table" title="Permalink to this headline">¶</a></h4>
+<p>The bootloader might pass SMBIOS table to the payload. So that the payload could get the platform information from the table.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gPldSmbios3TableGuid</span> <span class="o">=</span> <span class="p">{</span> <span class="mh">0x92b7896c</span><span class="p">,</span> <span class="mh">0x3362</span><span class="p">,</span> <span class="mh">0x46ce</span><span class="p">,</span> <span class="p">{</span> <span class="mh">0x99</span><span class="p">,</span> <span class="mh">0xb3</span><span class="p">,</span> <span class="mh">0x4f</span><span class="p">,</span> <span class="mh">0x5e</span><span class="p">,</span> <span class="mh">0x3c</span><span class="p">,</span> <span class="mh">0x34</span><span class="p">,</span> <span class="mh">0xeb</span><span class="p">,</span> <span class="mh">0x42</span> <span class="p">}</span> <span class="p">}</span>
+
+<span class="n">gPldSmbiosTableGuid</span> <span class="o">=</span> <span class="p">{</span> <span class="mh">0x590a0d26</span><span class="p">,</span> <span class="mh">0x06e5</span><span class="p">,</span> <span class="mh">0x4d20</span><span class="p">,</span> <span class="p">{</span> <span class="mh">0x8a</span><span class="p">,</span> <span class="mh">0x82</span><span class="p">,</span> <span class="mh">0x59</span><span class="p">,</span> <span class="mh">0xea</span><span class="p">,</span> <span class="mh">0x1b</span><span class="p">,</span> <span class="mh">0x34</span><span class="p">,</span> <span class="mh">0x98</span><span class="p">,</span> <span class="mh">0x2d</span> <span class="p">}</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack (1)</span>
+
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">PLD_GENERIC_HEADER</span>   <span class="n">PldHeader</span><span class="p">;</span>
+  <span class="n">EFI_PHYSICAL_ADDRESS</span> <span class="n">SmBiosEntryPoint</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">PLD_SMBIOS_TABLE</span><span class="p">;</span>
+
+<span class="c1">#pragma pack()</span>
+</pre></div>
+</div>
+<p><strong>Member Description</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">PldHeader</span></code></p>
+<p>PldHeader.Revision is 0.</p>
+<p><code class="docutils literal notranslate"><span class="pre">SmBiosEntryPoint</span></code></p>
+<p>Points to the SMBIOS table in SMBIOS 3.0+ format if GUID is <code class="docutils literal notranslate"><span class="pre">gPldSmbios3TableGuid</span></code>.</p>
+<p>Points to the SMBIOS table in SMBIOS 2.x format if GUID is <code class="docutils literal notranslate"><span class="pre">gPldSmbiosTableGuid</span></code>.</p>
+</div>
+<div class="section" id="device-tree">
+<h4>DEVICE TREE<a class="headerlink" href="#device-tree" title="Permalink to this headline">¶</a></h4>
+<p>The bootloader might pass Device Tree to the payload. So that the payload could get the platform information from the table.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gPldDeviceTreeGuid</span> <span class="o">=</span> <span class="p">{</span><span class="mh">0x6784b889</span><span class="p">,</span> <span class="mh">0xb13c</span><span class="p">,</span> <span class="mh">0x4c3b</span><span class="p">,</span> <span class="p">{</span><span class="mh">0xae</span><span class="p">,</span> <span class="mh">0x4b</span><span class="p">,</span> <span class="mh">0xf</span><span class="p">,</span> <span class="mh">0xa</span><span class="p">,</span> <span class="mh">0x2e</span><span class="p">,</span> <span class="mh">0x32</span><span class="p">,</span> <span class="mh">0xe</span><span class="p">,</span> <span class="mh">0xa3</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack (1)</span>
+
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">PLD_GENERIC_HEADER</span>   <span class="n">PldHeader</span><span class="p">;</span>
+  <span class="n">EFI_PHYSICAL_ADDRESS</span> <span class="n">DeviceTreeAddress</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">PLD_DEVICE_TREE</span><span class="p">;</span>
+
+<span class="c1">#pragma pack()</span>
+</pre></div>
+</div>
+<p><strong>Member Description</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">PldHeader</span></code></p>
+<p>PldHeader.Revision is 0.</p>
+<p><code class="docutils literal notranslate"><span class="pre">DeviceTreeAddress</span></code></p>
+<p>Point to the Device Tree entry point.</p>
+</div>
+<div class="section" id="serial-information">
+<h4>Serial Information<a class="headerlink" href="#serial-information" title="Permalink to this headline">¶</a></h4>
+<p>If the debug device type and subtype are specified in DBG2, the
+bootloader should 16550 compatible serial debug port information
+to payload.</p>
+<p><strong>Opens: Should we let bootloader provide debug callback</strong> <strong>for debug?</strong></p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gPldSerialPortInfoGuid</span>   <span class="o">=</span> <span class="p">{</span><span class="mh">0xaa7e190d</span><span class="p">,</span> <span class="mh">0xbe21</span><span class="p">,</span> <span class="mh">0x4409</span><span class="p">,</span> <span class="p">{</span><span class="mh">0x8e</span><span class="p">,</span> <span class="mh">0x67</span><span class="p">,</span> <span class="mh">0xa2</span><span class="p">,</span> <span class="mh">0xcd</span><span class="p">,</span> <span class="mh">0xf</span><span class="p">,</span> <span class="mh">0x61</span><span class="p">,</span> <span class="mh">0xe1</span><span class="p">,</span> <span class="mh">0x70</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack(1)</span>
+
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">PLD_GENERIC_HEADER</span>   <span class="n">PldHeader</span><span class="p">;</span>
+  <span class="n">BOOLEAN</span>              <span class="n">UseMmio</span><span class="p">;</span>
+  <span class="n">UINT8</span>                <span class="n">RegisterStride</span><span class="p">;</span>
+  <span class="n">UINT32</span>               <span class="n">BaudRate</span><span class="p">;</span>
+  <span class="n">EFI_PHYSICAL_ADDRESS</span> <span class="n">RegisterBase</span><span class="p">;</span>
 <span class="p">}</span> <span class="n">SERIAL_PORT_INFO</span><span class="p">;</span>
 
 <span class="c1">#pragma pack()</span>
 </pre></div>
 </div>
 <p><strong>Member Description</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">PldHeader</span></code></p>
+<p>PldHeader.Revision is 0.</p>
 <p><code class="docutils literal notranslate"><span class="pre">UseMmio</span></code></p>
 <p>Indicates the 16550 serial port registers are in MMIO space, or in I/O space.</p>
-<p><code class="docutils literal notranslate"><span class="pre">Reversion</span></code></p>
-<p>Use 0 for this spec</p>
-<p><code class="docutils literal notranslate"><span class="pre">RegisterWidth</span></code></p>
-<p>Indicates the access width for 16550 serial port registers, e.g.:</p>
-<blockquote>
-<div><p>8 - serial port registers are accessed in 8-bit width.</p>
-<p>32 - serial port registers are accessed in 32-bit width.</p>
-</div></blockquote>
-<p><code class="docutils literal notranslate"><span class="pre">RegisterBase</span></code></p>
-<p>Base address of 16550 serial port registers in MMIO or I/O space.</p>
+<p><code class="docutils literal notranslate"><span class="pre">RegisterStride</span></code></p>
+<p>Indicates the number of bytes between registers.</p>
 <p><code class="docutils literal notranslate"><span class="pre">BaudRate</span></code></p>
 <p>Baud rate for the 16550 compatible serial port.</p>
 <p>It could be 921600, 460800, 230400, 115200, 57600, 38400, 19200,
 9600, 7200, 4800, 3600, 2400, 2000, 1800, 1200, 600, 300, 150, 134,
 110, 75, 50</p>
 <p>Set to 0 to use the default baud rate 115200.</p>
+<p><code class="docutils literal notranslate"><span class="pre">RegisterBase</span></code></p>
+<p>Base address of 16550 serial port registers in MMIO or I/O space.</p>
 </div>
-<div class="section" id="cpu-info-hob">
-<h3>CPU INFO HOB<a class="headerlink" href="#cpu-info-hob" title="Permalink to this headline">¶</a></h3>
-<p>The bootloader should build a CPU information HOB to the payload.</p>
-<p><strong>HOB Type</strong>    EFI_HOB_TYPE_CPU</p>
-<p><strong>Hob Interface Structure</strong>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack (1)</span>
-
-<span class="o">//</span>
-<span class="o">//</span> <span class="n">CPU</span> <span class="n">info</span> <span class="n">Hob</span>
-<span class="o">//</span>
-<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
-  <span class="n">UINT8</span>     <span class="n">Revision</span><span class="p">;</span>
-  <span class="n">UINT8</span>     <span class="n">Reserved</span><span class="p">;</span>
-  <span class="n">UINT8</span>     <span class="n">SizeOfMemorySpace</span><span class="p">;</span>
-  <span class="n">UINT8</span>     <span class="n">SizeOfIoSpace</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">PAYLOAD_CPU_INFO</span><span class="p">;</span>
-
-<span class="c1">#pragma pack()</span>
-</pre></div>
 </div>
-<p><strong>Member Description</strong></p>
-<p><code class="docutils literal notranslate"><span class="pre">Revision</span></code></p>
-<blockquote>
-<div>Use 0 for this structure.</div></blockquote>
-<p><code class="docutils literal notranslate"><span class="pre">SizeOfMemorySpace</span></code></p>
-<blockquote>
-<div>The maximum physical memory addressability of the processor.</div></blockquote>
-<p><code class="docutils literal notranslate"><span class="pre">SizeOfIoSpace</span></code></p>
-<blockquote>
-<div>The maximum physical I/O addressability of the processor.</div></blockquote>
-</div>
-<div class="section" id="optional-hobs">
-<h3>Optional HOBs<a class="headerlink" href="#optional-hobs" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="optional-interfaces">
+<h3>Optional Interfaces<a class="headerlink" href="#optional-interfaces" title="Permalink to this headline">¶</a></h3>
 <p>Some more HOBs could be built by bootloaders for advanced features. e.g.:</p>
 <blockquote>
 <div><p>Support FVs (also other format) from bootloader to payload</p>
@@ -465,7 +470,7 @@ bootloader to payload.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license
-      Last updated on Apr 28, 2021.
+      Last updated on Apr 29, 2021.
 
     </p>
   </div>
