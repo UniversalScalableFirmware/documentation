@@ -194,7 +194,7 @@ The bootloader should pass ACPI table the payload. So that the payload could get
 
 ``PldHeader``
 
-PldHeader.Revision is 0.
+PldHeader.Revision is 1.
 
 ``Rsdp``
 
@@ -230,7 +230,7 @@ The bootloader might pass SMBIOS table to the payload. So that the payload could
 
 ``PldHeader``
 
-PldHeader.Revision is 0.
+PldHeader.Revision is 1.
 
 ``SmBiosEntryPoint``
 
@@ -266,7 +266,7 @@ The bootloader might pass Device Tree to the payload. So that the payload could 
 
 ``PldHeader``
 
-PldHeader.Revision is 0.
+PldHeader.Revision is 1.
 
 ``DeviceTreeAddress``
 
@@ -299,7 +299,7 @@ to payload.
     UINT8                RegisterStride;
     UINT32               BaudRate;
     EFI_PHYSICAL_ADDRESS RegisterBase;
-  } SERIAL_PORT_INFO;
+  } PLD_SERIAL_PORT_INFO;
 
   #pragma pack()
 
@@ -307,7 +307,7 @@ to payload.
 
 ``PldHeader``
 
-PldHeader.Revision is 0.
+PldHeader.Revision is 1.
 
 ``UseMmio``
 
