@@ -333,7 +333,7 @@ for the graphics display. These HOBs are described in the <em>PI Specification.<
 </div>
 <p><strong>Member Description</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">PldHeader</span></code></p>
-<p>PldHeader.Revision is 0.</p>
+<p>PldHeader.Revision is 1.</p>
 <p><code class="docutils literal notranslate"><span class="pre">Rsdp</span></code></p>
 <p>Point to the ACPI RSDP table. The ACPI table need follow ACPI specification version 2.0 or above.</p>
 </div>
@@ -359,7 +359,7 @@ for the graphics display. These HOBs are described in the <em>PI Specification.<
 </div>
 <p><strong>Member Description</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">PldHeader</span></code></p>
-<p>PldHeader.Revision is 0.</p>
+<p>PldHeader.Revision is 1.</p>
 <p><code class="docutils literal notranslate"><span class="pre">SmBiosEntryPoint</span></code></p>
 <p>Points to the SMBIOS table in SMBIOS 3.0+ format if GUID is <code class="docutils literal notranslate"><span class="pre">gPldSmbios3TableGuid</span></code>.</p>
 <p>Points to the SMBIOS table in SMBIOS 2.x format if GUID is <code class="docutils literal notranslate"><span class="pre">gPldSmbiosTableGuid</span></code>.</p>
@@ -384,7 +384,7 @@ for the graphics display. These HOBs are described in the <em>PI Specification.<
 </div>
 <p><strong>Member Description</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">PldHeader</span></code></p>
-<p>PldHeader.Revision is 0.</p>
+<p>PldHeader.Revision is 1.</p>
 <p><code class="docutils literal notranslate"><span class="pre">DeviceTreeAddress</span></code></p>
 <p>Point to the Device Tree entry point.</p>
 </div>
@@ -407,14 +407,14 @@ to payload.</p>
   <span class="n">UINT8</span>                <span class="n">RegisterStride</span><span class="p">;</span>
   <span class="n">UINT32</span>               <span class="n">BaudRate</span><span class="p">;</span>
   <span class="n">EFI_PHYSICAL_ADDRESS</span> <span class="n">RegisterBase</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">SERIAL_PORT_INFO</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">PLD_SERIAL_PORT_INFO</span><span class="p">;</span>
 
 <span class="c1">#pragma pack()</span>
 </pre></div>
 </div>
 <p><strong>Member Description</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">PldHeader</span></code></p>
-<p>PldHeader.Revision is 0.</p>
+<p>PldHeader.Revision is 1.</p>
 <p><code class="docutils literal notranslate"><span class="pre">UseMmio</span></code></p>
 <p>Indicates the 16550 serial port registers are in MMIO space, or in I/O space.</p>
 <p><code class="docutils literal notranslate"><span class="pre">RegisterStride</span></code></p>
@@ -470,7 +470,7 @@ to payload.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license
-      Last updated on Apr 29, 2021.
+      Last updated on Apr 30, 2021.
 
     </p>
   </div>
