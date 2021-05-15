@@ -159,10 +159,31 @@ The HOB data starts with a common header defined as below::
   
   typedef struct {
     UINT8                Revision;
-    UINT8                Reserved[3];
+    UINT8                Reserved;
+    UINT16               Length;
   } PLD_GENERIC_HEADER;
 
   #pragma pack()
+
+``Revision``
+
+It doesn't increase when new members are appended to the end of the interface.
+
+It increases by one when existing members are renamed or re-interpreted for different purposes.
+
+``Length``
+
+The Length equals to the sizeof (PLD_GENERIC_HEADER) + sizeof (<additional members>).
+
+Consumers of the interfaces should only access those members that are covered by Length.
+
+.. note::
+  ``EFI_HOB_GUID_TYPE`` contains a Length field to tell the actual bytes the whole HOB data occupies.
+
+  It also includes the optional padding bytes to make sure each HOB is multiple of 8 bytes in length.
+
+  ``PLD_GENERIC_HEADER.Length`` tells the exact length of the meaningful data excluding the padding bytes.
+  So, it's always true that ``PLD_GENERIC_HEADER.Length`` is less than or equal to the Length in ``EFI_HOB_GUID_TYPE``.
 
 HOB data for different interfaces is defined in following sections.
 
@@ -195,6 +216,8 @@ The bootloader should pass ACPI table the payload. So that the payload could get
 ``PldHeader``
 
 PldHeader.Revision is 1.
+
+PldHeader.Length is 12.
 
 ``Rsdp``
 
@@ -232,6 +255,8 @@ The bootloader might pass SMBIOS table to the payload. So that the payload could
 
 PldHeader.Revision is 1.
 
+PldHeader.Length is 12.
+
 ``SmBiosEntryPoint``
 
 Points to the SMBIOS table in SMBIOS 3.0+ format if GUID is ``gPldSmbios3TableGuid``.
@@ -267,6 +292,8 @@ The bootloader might pass Device Tree to the payload. So that the payload could 
 ``PldHeader``
 
 PldHeader.Revision is 1.
+
+PldHeader.Length is 12.
 
 ``DeviceTreeAddress``
 
@@ -308,6 +335,8 @@ to payload.
 ``PldHeader``
 
 PldHeader.Revision is 1.
+
+PldHeader.Length is 18.
 
 ``UseMmio``
 
