@@ -9,9 +9,12 @@ The prototype of payload entry point is defined as::
 
   typedef
   VOID
-  (__cdecl *PAYLOAD_ENTRY) (
+  (*PAYLOAD_ENTRY) (
     EFI_HOB_HANDOFF_INFO_TABLE *HobList
   );
+
+The compiler need use a proper attributes for this function to meet the calling convention below.
+For example, Microsoft Visual studio uses __cdecl for X64, while Linux GCC uses __attribute__((ms_abi)) for X64.
 
 HOB List defines the detailed HOB list being used to transfer
 platform specific data from the bootloader to the payload.
