@@ -305,11 +305,25 @@ for the graphics display. These HOBs are described in the <em>PI Specification.<
 
 <span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
   <span class="n">UINT8</span>                <span class="n">Revision</span><span class="p">;</span>
-  <span class="n">UINT8</span>                <span class="n">Reserved</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+  <span class="n">UINT8</span>                <span class="n">Reserved</span><span class="p">;</span>
+  <span class="n">UINT16</span>               <span class="n">Length</span><span class="p">;</span>
 <span class="p">}</span> <span class="n">PLD_GENERIC_HEADER</span><span class="p">;</span>
 
 <span class="c1">#pragma pack()</span>
 </pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Revision</span></code></p>
+<p>It doesn’t increase when new members are appended to the end of the interface.</p>
+<p>It increases by one when existing members are renamed or re-interpreted for different purposes.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Length</span></code></p>
+<p>The Length equals to the sizeof (PLD_GENERIC_HEADER) + sizeof (&lt;additional members&gt;).</p>
+<p>Consumers of the interfaces should only access those members that are covered by Length.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">EFI_HOB_GUID_TYPE</span></code> contains a Length field to tell the actual bytes the whole HOB data occupies.</p>
+<p>It also includes the optional padding bytes to make sure each HOB is multiple of 8 bytes in length.</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">PLD_GENERIC_HEADER.Length</span></code> tells the exact length of the meaningful data excluding the padding bytes.
+So, it’s always true that <code class="docutils literal notranslate"><span class="pre">PLD_GENERIC_HEADER.Length</span></code> is less than or equal to the Length in <code class="docutils literal notranslate"><span class="pre">EFI_HOB_GUID_TYPE</span></code>.</p>
 </div>
 <p>HOB data for different interfaces is defined in following sections.</p>
 </div>
@@ -334,6 +348,7 @@ for the graphics display. These HOBs are described in the <em>PI Specification.<
 <p><strong>Member Description</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">PldHeader</span></code></p>
 <p>PldHeader.Revision is 1.</p>
+<p>PldHeader.Length is 12.</p>
 <p><code class="docutils literal notranslate"><span class="pre">Rsdp</span></code></p>
 <p>Point to the ACPI RSDP table. The ACPI table need follow ACPI specification version 2.0 or above.</p>
 </div>
@@ -360,6 +375,7 @@ for the graphics display. These HOBs are described in the <em>PI Specification.<
 <p><strong>Member Description</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">PldHeader</span></code></p>
 <p>PldHeader.Revision is 1.</p>
+<p>PldHeader.Length is 12.</p>
 <p><code class="docutils literal notranslate"><span class="pre">SmBiosEntryPoint</span></code></p>
 <p>Points to the SMBIOS table in SMBIOS 3.0+ format if GUID is <code class="docutils literal notranslate"><span class="pre">gPldSmbios3TableGuid</span></code>.</p>
 <p>Points to the SMBIOS table in SMBIOS 2.x format if GUID is <code class="docutils literal notranslate"><span class="pre">gPldSmbiosTableGuid</span></code>.</p>
@@ -385,6 +401,7 @@ for the graphics display. These HOBs are described in the <em>PI Specification.<
 <p><strong>Member Description</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">PldHeader</span></code></p>
 <p>PldHeader.Revision is 1.</p>
+<p>PldHeader.Length is 12.</p>
 <p><code class="docutils literal notranslate"><span class="pre">DeviceTreeAddress</span></code></p>
 <p>Point to the Device Tree entry point.</p>
 </div>
@@ -415,6 +432,7 @@ to payload.</p>
 <p><strong>Member Description</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">PldHeader</span></code></p>
 <p>PldHeader.Revision is 1.</p>
+<p>PldHeader.Length is 18.</p>
 <p><code class="docutils literal notranslate"><span class="pre">UseMmio</span></code></p>
 <p>Indicates the 16550 serial port registers are in MMIO space, or in I/O space.</p>
 <p><code class="docutils literal notranslate"><span class="pre">RegisterStride</span></code></p>
@@ -470,7 +488,7 @@ to payload.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license
-      Last updated on May 17, 2021.
+      Last updated on May 18, 2021.
 
     </p>
   </div>
