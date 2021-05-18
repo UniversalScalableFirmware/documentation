@@ -179,11 +179,13 @@ to the payload.</p>
 <p>The prototype of payload entry point is defined as:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
 <span class="n">VOID</span>
-<span class="p">(</span><span class="n">__cdecl</span> <span class="o">*</span><span class="n">PAYLOAD_ENTRY</span><span class="p">)</span> <span class="p">(</span>
+<span class="p">(</span><span class="o">*</span><span class="n">PAYLOAD_ENTRY</span><span class="p">)</span> <span class="p">(</span>
   <span class="n">EFI_HOB_HANDOFF_INFO_TABLE</span> <span class="o">*</span><span class="n">HobList</span>
 <span class="p">);</span>
 </pre></div>
 </div>
+<p>The compiler need use a proper attributes for this function to meet the calling convention below.
+For example, Microsoft Visual studio uses __cdecl for X64, while Linux GCC uses __attribute__((ms_abi)) for X64.</p>
 <p>HOB List defines the detailed HOB list being used to transfer
 platform specific data from the bootloader to the payload.</p>
 <div class="section" id="ia-32-and-x64-platforms">
