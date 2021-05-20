@@ -4,7 +4,7 @@ Revision History
 ========  =================================================  ======
 Revision  Description                                        Date
 ========  =================================================  ======
-0.75      - Changed payload image format to ELF.             May 11, 2021
+0.75      - Changed payload image format to ELF.             May 18, 2021
           - Updated ACPI table requirement.
           - Separate new interfaces to a new chapter.
           - Reuse CPU HOB from PI Spec.
@@ -13,5 +13,6 @@ Revision  Description                                        Date
           - Add PLD_GENERIC_HEADER as the common header for
             new interfaces.
           - Add PLD_GENERIC_HEADER.Length.
+          - Add PLD_PCI_ROOT_BRIDGES definition.
 0.7       Initial draft.                                     Sep 19, 2020
 ========  =================================================  ======
