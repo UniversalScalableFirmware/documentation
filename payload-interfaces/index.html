@@ -107,6 +107,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#smbios-table">SMBIOS Table</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#device-tree">DEVICE TREE</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#serial-information">Serial Information</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pci-root-bridges">PCI Root Bridges</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#optional-interfaces">Optional Interfaces</a></li>
@@ -446,6 +447,111 @@ to payload.</p>
 <p><code class="docutils literal notranslate"><span class="pre">RegisterBase</span></code></p>
 <p>Base address of 16550 serial port registers in MMIO or I/O space.</p>
 </div>
+<div class="section" id="pci-root-bridges">
+<h4>PCI Root Bridges<a class="headerlink" href="#pci-root-bridges" title="Permalink to this headline">¶</a></h4>
+<p>The bootloader should pass information about PCI root bridges to the payload. The information tells the payload whether the PCI bus
+enumeration has been performed by the bootloader, the bus, IO and MMIO ranges that are used or will be used by the PCI bus.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gPldPciRootBridgeInfoGuid</span> <span class="o">=</span> <span class="p">{</span> <span class="mh">0xec4ebacb</span><span class="p">,</span> <span class="mh">0x2638</span><span class="p">,</span> <span class="mh">0x416e</span><span class="p">,</span> <span class="p">{</span> <span class="mh">0xbe</span><span class="p">,</span> <span class="mh">0x80</span><span class="p">,</span> <span class="mh">0xe5</span><span class="p">,</span> <span class="mh">0xfa</span><span class="p">,</span> <span class="mh">0x4b</span><span class="p">,</span> <span class="mh">0x51</span><span class="p">,</span> <span class="mh">0x19</span><span class="p">,</span> <span class="mh">0x01</span> <span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack(1)</span>
+
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">PLD_GENERIC_HEADER</span>   <span class="n">PldHeader</span><span class="p">;</span>
+  <span class="n">BOOLEAN</span>              <span class="n">ResourceAssigned</span><span class="p">;</span>
+  <span class="n">UINT8</span>                <span class="n">Count</span><span class="p">;</span>
+  <span class="n">PLD_PCI_ROOT_BRIDGE</span>  <span class="n">RootBridge</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="p">}</span> <span class="n">PLD_PCI_ROOT_BRIDGES</span><span class="p">;</span>
+
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT32</span>                       <span class="n">Segment</span><span class="p">;</span>
+  <span class="n">UINT64</span>                       <span class="n">Supports</span><span class="p">;</span>
+  <span class="n">UINT64</span>                       <span class="n">Attributes</span><span class="p">;</span>
+  <span class="n">BOOLEAN</span>                      <span class="n">DmaAbove4G</span><span class="p">;</span>
+  <span class="n">BOOLEAN</span>                      <span class="n">NoExtendedConfigSpace</span><span class="p">;</span>
+  <span class="n">UINT64</span>                       <span class="n">AllocationAttributes</span><span class="p">;</span>
+  <span class="n">PLD_PCI_ROOT_BRIDGE_APERTURE</span> <span class="n">Bus</span><span class="p">;</span>
+  <span class="n">PLD_PCI_ROOT_BRIDGE_APERTURE</span> <span class="n">Io</span><span class="p">;</span>
+  <span class="n">PLD_PCI_ROOT_BRIDGE_APERTURE</span> <span class="n">Mem</span><span class="p">;</span>
+  <span class="n">PLD_PCI_ROOT_BRIDGE_APERTURE</span> <span class="n">MemAbove4G</span><span class="p">;</span>
+  <span class="n">PLD_PCI_ROOT_BRIDGE_APERTURE</span> <span class="n">PMem</span><span class="p">;</span>
+  <span class="n">PLD_PCI_ROOT_BRIDGE_APERTURE</span> <span class="n">PMemAbove4G</span><span class="p">;</span>
+  <span class="n">UINT32</span>                       <span class="n">HID</span><span class="p">;</span>
+  <span class="n">UINT32</span>                       <span class="n">UID</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">PLD_PCI_ROOT_BRIDGE</span><span class="p">;</span>
+
+<span class="o">//</span>
+<span class="o">//</span> <span class="p">(</span><span class="n">Base</span> <span class="o">&gt;</span> <span class="n">Limit</span><span class="p">)</span> <span class="n">indicates</span> <span class="n">an</span> <span class="n">aperture</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">available</span><span class="o">.</span>
+<span class="o">//</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="o">//</span>
+  <span class="o">//</span> <span class="n">Base</span> <span class="ow">and</span> <span class="n">Limit</span> <span class="n">are</span> <span class="n">the</span> <span class="n">device</span> <span class="n">address</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">host</span> <span class="n">address</span> <span class="n">when</span>
+  <span class="o">//</span> <span class="n">Translation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">zero</span>
+  <span class="o">//</span>
+  <span class="n">UINT64</span> <span class="n">Base</span><span class="p">;</span>
+  <span class="n">UINT64</span> <span class="n">Limit</span><span class="p">;</span>
+  <span class="o">//</span>
+  <span class="o">//</span> <span class="n">According</span> <span class="n">to</span> <span class="n">UEFI</span> <span class="mf">2.7</span><span class="p">,</span> <span class="n">Device</span> <span class="n">Address</span> <span class="o">=</span> <span class="n">Host</span> <span class="n">Address</span> <span class="o">+</span> <span class="n">Translation</span><span class="p">,</span>
+  <span class="o">//</span> <span class="n">so</span> <span class="n">Translation</span> <span class="o">=</span> <span class="n">Device</span> <span class="n">Address</span> <span class="o">-</span> <span class="n">Host</span> <span class="n">Address</span><span class="o">.</span>
+  <span class="o">//</span> <span class="n">On</span> <span class="n">platforms</span> <span class="n">where</span> <span class="n">Translation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">zero</span><span class="p">,</span> <span class="n">the</span> <span class="n">subtraction</span> <span class="ow">is</span> <span class="n">probably</span> <span class="n">to</span>
+  <span class="o">//</span> <span class="n">be</span> <span class="n">performed</span> <span class="k">with</span> <span class="n">UINT64</span> <span class="n">wrap</span><span class="o">-</span><span class="n">around</span> <span class="n">semantics</span><span class="p">,</span> <span class="k">for</span> <span class="n">we</span> <span class="n">may</span> <span class="n">translate</span> <span class="n">an</span>
+  <span class="o">//</span> <span class="n">above</span><span class="o">-</span><span class="mi">4</span><span class="n">G</span> <span class="n">host</span> <span class="n">address</span> <span class="n">into</span> <span class="n">a</span> <span class="n">below</span><span class="o">-</span><span class="mi">4</span><span class="n">G</span> <span class="n">device</span> <span class="n">address</span> <span class="k">for</span> <span class="n">legacy</span> <span class="n">PCIe</span> <span class="n">device</span>
+  <span class="o">//</span> <span class="n">compatibility</span><span class="o">.</span>
+  <span class="o">//</span>
+  <span class="o">//</span> <span class="n">NOTE</span><span class="p">:</span> <span class="n">The</span> <span class="n">alignment</span> <span class="n">of</span> <span class="n">Translation</span> <span class="ow">is</span> <span class="n">required</span> <span class="n">to</span> <span class="n">be</span> <span class="n">larger</span> <span class="n">than</span> <span class="nb">any</span> <span class="n">BAR</span>
+  <span class="o">//</span> <span class="n">alignment</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">same</span> <span class="n">root</span> <span class="n">bridge</span><span class="p">,</span> <span class="n">so</span> <span class="n">that</span> <span class="n">the</span> <span class="n">same</span> <span class="n">alignment</span> <span class="n">can</span> <span class="n">be</span>
+  <span class="o">//</span> <span class="n">applied</span> <span class="n">to</span> <span class="n">both</span> <span class="n">device</span> <span class="n">address</span> <span class="ow">and</span> <span class="n">host</span> <span class="n">address</span><span class="p">,</span> <span class="n">which</span> <span class="n">simplifies</span> <span class="n">the</span>
+  <span class="o">//</span> <span class="n">situation</span> <span class="ow">and</span> <span class="n">makes</span> <span class="n">the</span> <span class="n">current</span> <span class="n">resource</span> <span class="n">allocation</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">generic</span> <span class="n">PCI</span>
+  <span class="o">//</span> <span class="n">host</span> <span class="n">bridge</span> <span class="n">driver</span> <span class="n">still</span> <span class="n">work</span><span class="o">.</span>
+  <span class="o">//</span>
+  <span class="n">UINT64</span> <span class="n">Translation</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">PLD_PCI_ROOT_BRIDGE_APERTURE</span><span class="p">;</span>
+<span class="c1">#pragma pack()</span>
+</pre></div>
+</div>
+<p><strong>Member Description</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">PldHeader</span></code></p>
+<p>PldHeader.Revision is 1.</p>
+<p>PldHeader.Length is 6 + <code class="docutils literal notranslate"><span class="pre">Count</span></code> * sizeof (PLD_PCI_ROOT_BRIDGE).</p>
+<p><code class="docutils literal notranslate"><span class="pre">ResourceAssigned</span></code></p>
+<p>Bus/IO/MMIO resources for all root bridges have been assigned when it’s TRUE.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Count</span></code></p>
+<p>Count of root bridges. Number of elements in <code class="docutils literal notranslate"><span class="pre">RootBridge</span></code> array.</p>
+<p><code class="docutils literal notranslate"><span class="pre">RootBridge[i].Segment</span></code></p>
+<p>Segment number of the root bridge.</p>
+<p><code class="docutils literal notranslate"><span class="pre">RootBridge[i].Supports</span></code></p>
+<p>Supported attributes. Refer to EFI_PCI_ATTRIBUTE_xxx used by GetAttributes() and SetAttributes() in EFI_PCI_ROOT_BRIDGE_IO_PROTOCOL
+defined in PI Specification.</p>
+<p><code class="docutils literal notranslate"><span class="pre">RootBridge[i].Attributes</span></code></p>
+<p>Initial attributes. Refer to EFI_PCI_ATTRIBUTE_xxx used by GetAttributes() and SetAttributes() in EFI_PCI_ROOT_BRIDGE_IO_PROTOCOL
+defined in PI Specification.</p>
+<p><code class="docutils literal notranslate"><span class="pre">RootBridge[i].DmaAbove4G</span></code></p>
+<p>Root bridge supports DMA above 4GB memory when it’s TRUE.</p>
+<p><code class="docutils literal notranslate"><span class="pre">RootBridge[i].NoExtendedConfigSpace</span></code></p>
+<p>Root bridge supports 256-byte configuration space only when it’s TRUE.
+Root bridge supports 4K-byte configuration space when it’s FALSE.</p>
+<p><code class="docutils literal notranslate"><span class="pre">RootBridge[i].AllocationAttributes</span></code></p>
+<p>Allocation attributes. Refer to EFI_PCI_HOST_BRIDGE_COMBINE_MEM_PMEM and EFI_PCI_HOST_BRIDGE_MEM64_DECODE used by GetAllocAttributes()
+in EFI_PCI_HOST_BRIDGE_RESOURCE_ALLOCATION_PROTOCOL defined in PI Specification.</p>
+<p><code class="docutils literal notranslate"><span class="pre">RootBridge[i].Bus</span></code></p>
+<p>Bus aperture for the root bridge.</p>
+<p><code class="docutils literal notranslate"><span class="pre">RootBridge[i].Io</span></code></p>
+<p>IO aperture for the root bridge.</p>
+<p><code class="docutils literal notranslate"><span class="pre">RootBridge[i].Mem</span></code></p>
+<p>MMIO aperture below 4GB for the root bridge.</p>
+<p><code class="docutils literal notranslate"><span class="pre">RootBridge[i].MemAbove4G</span></code></p>
+<p>MMIO aperture above 4GB for the root bridge.</p>
+<p><code class="docutils literal notranslate"><span class="pre">RootBridge[i].PMem</span></code></p>
+<p>Prefetchable MMIO aperture below 4GB for the root bridge.</p>
+<p><code class="docutils literal notranslate"><span class="pre">RootBridge[i].PMemAbove4G</span></code></p>
+<p>Prefetchable MMIO aperture above 4GB for the root bridge.</p>
+<p><code class="docutils literal notranslate"><span class="pre">RootBridge[i].HID</span></code></p>
+<p>PnP hardware ID of the root bridge. This value must match the corresponding _HID in the ACPI name space.</p>
+<p><code class="docutils literal notranslate"><span class="pre">RootBridge[i].UID</span></code></p>
+<p>Unique ID that is required by ACPI if two devices have the same _HID. This value must also match the corresponding _UID/_HID pair in the ACPI name space.</p>
+</div>
 </div>
 <div class="section" id="optional-interfaces">
 <h3>Optional Interfaces<a class="headerlink" href="#optional-interfaces" title="Permalink to this headline">¶</a></h3>
@@ -488,7 +594,7 @@ to payload.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license
-      Last updated on May 23, 2021.
+      Last updated on May 24, 2021.
 
     </p>
   </div>

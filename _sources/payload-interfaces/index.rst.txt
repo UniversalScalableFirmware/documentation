@@ -360,6 +360,152 @@ Set to 0 to use the default baud rate 115200.
 
 Base address of 16550 serial port registers in MMIO or I/O space.
 
+PCI Root Bridges
+^^^^^^^^^^^^^^^^
+
+The bootloader should pass information about PCI root bridges to the payload. The information tells the payload whether the PCI bus
+enumeration has been performed by the bootloader, the bus, IO and MMIO ranges that are used or will be used by the PCI bus.
+
+**GUID**
+
+::
+
+  gPldPciRootBridgeInfoGuid = { 0xec4ebacb, 0x2638, 0x416e, { 0xbe, 0x80, 0xe5, 0xfa, 0x4b, 0x51, 0x19, 0x01 }}
+
+**Structure**
+
+::
+
+  #pragma pack(1)
+
+  typedef struct {
+    PLD_GENERIC_HEADER   PldHeader;
+    BOOLEAN              ResourceAssigned;
+    UINT8                Count;
+    PLD_PCI_ROOT_BRIDGE  RootBridge[0];
+  } PLD_PCI_ROOT_BRIDGES;
+
+  typedef struct {
+    UINT32                       Segment;
+    UINT64                       Supports;
+    UINT64                       Attributes;
+    BOOLEAN                      DmaAbove4G;
+    BOOLEAN                      NoExtendedConfigSpace;
+    UINT64                       AllocationAttributes;
+    PLD_PCI_ROOT_BRIDGE_APERTURE Bus;
+    PLD_PCI_ROOT_BRIDGE_APERTURE Io;
+    PLD_PCI_ROOT_BRIDGE_APERTURE Mem;
+    PLD_PCI_ROOT_BRIDGE_APERTURE MemAbove4G;
+    PLD_PCI_ROOT_BRIDGE_APERTURE PMem;
+    PLD_PCI_ROOT_BRIDGE_APERTURE PMemAbove4G;
+    UINT32                       HID;
+    UINT32                       UID;
+  } PLD_PCI_ROOT_BRIDGE;
+
+  //
+  // (Base > Limit) indicates an aperture is not available.
+  //
+  typedef struct {
+    //
+    // Base and Limit are the device address instead of host address when
+    // Translation is not zero
+    //
+    UINT64 Base;
+    UINT64 Limit;
+    //
+    // According to UEFI 2.7, Device Address = Host Address + Translation,
+    // so Translation = Device Address - Host Address.
+    // On platforms where Translation is not zero, the subtraction is probably to
+    // be performed with UINT64 wrap-around semantics, for we may translate an
+    // above-4G host address into a below-4G device address for legacy PCIe device
+    // compatibility.
+    //
+    // NOTE: The alignment of Translation is required to be larger than any BAR
+    // alignment in the same root bridge, so that the same alignment can be
+    // applied to both device address and host address, which simplifies the
+    // situation and makes the current resource allocation code in generic PCI
+    // host bridge driver still work.
+    //
+    UINT64 Translation;
+  } PLD_PCI_ROOT_BRIDGE_APERTURE;
+  #pragma pack()
+
+**Member Description**
+
+``PldHeader``
+
+PldHeader.Revision is 1.
+
+PldHeader.Length is 6 + ``Count`` * sizeof (PLD_PCI_ROOT_BRIDGE).
+
+``ResourceAssigned``
+
+Bus/IO/MMIO resources for all root bridges have been assigned when it's TRUE.
+
+``Count``
+
+Count of root bridges. Number of elements in ``RootBridge`` array.
+
+``RootBridge[i].Segment``
+
+Segment number of the root bridge.
+
+``RootBridge[i].Supports``
+
+Supported attributes. Refer to EFI_PCI_ATTRIBUTE_xxx used by GetAttributes() and SetAttributes() in EFI_PCI_ROOT_BRIDGE_IO_PROTOCOL
+defined in PI Specification.
+
+``RootBridge[i].Attributes``
+
+Initial attributes. Refer to EFI_PCI_ATTRIBUTE_xxx used by GetAttributes() and SetAttributes() in EFI_PCI_ROOT_BRIDGE_IO_PROTOCOL
+defined in PI Specification.
+
+``RootBridge[i].DmaAbove4G``
+
+Root bridge supports DMA above 4GB memory when it's TRUE.
+
+``RootBridge[i].NoExtendedConfigSpace``
+
+Root bridge supports 256-byte configuration space only when it's TRUE.
+Root bridge supports 4K-byte configuration space when it's FALSE.
+
+``RootBridge[i].AllocationAttributes``
+
+Allocation attributes. Refer to EFI_PCI_HOST_BRIDGE_COMBINE_MEM_PMEM and EFI_PCI_HOST_BRIDGE_MEM64_DECODE used by GetAllocAttributes()
+in EFI_PCI_HOST_BRIDGE_RESOURCE_ALLOCATION_PROTOCOL defined in PI Specification.
+
+``RootBridge[i].Bus``
+
+Bus aperture for the root bridge.
+
+``RootBridge[i].Io``
+
+IO aperture for the root bridge.
+
+``RootBridge[i].Mem``
+
+MMIO aperture below 4GB for the root bridge.
+
+``RootBridge[i].MemAbove4G``
+
+MMIO aperture above 4GB for the root bridge.
+
+``RootBridge[i].PMem``
+
+Prefetchable MMIO aperture below 4GB for the root bridge.
+
+``RootBridge[i].PMemAbove4G``
+
+Prefetchable MMIO aperture above 4GB for the root bridge.
+
+``RootBridge[i].HID``
+
+PnP hardware ID of the root bridge. This value must match the corresponding _HID in the ACPI name space.
+
+``RootBridge[i].UID``
+
+Unique ID that is required by ACPI if two devices have the same _HID. This value must also match the corresponding _UID/_HID pair in the ACPI name space.
+
 Optional Interfaces
 ~~~~~~~~~~~~~~~~~~~
 
