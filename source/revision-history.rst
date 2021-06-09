@@ -18,5 +18,6 @@ Revision  Description                                        Date
             "PLD_" to "UNIVERSAL_PAYLOAD_".
           - Change prefix of GUIDs from
             "gPld" to "gUniversalPayload".
+          - Change "PldHeader" to "Header".
 0.7       Initial draft.                                     Sep 19, 2020
 ========  =================================================  ======

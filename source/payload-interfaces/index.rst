@@ -205,7 +205,7 @@ The bootloader should pass ACPI table the payload. So that the payload could get
   #pragma pack (1)
 
   typedef struct {
-    UNIVERSAL_PAYLOAD_GENERIC_HEADER PldHeader;
+    UNIVERSAL_PAYLOAD_GENERIC_HEADER Header;
     EFI_PHYSICAL_ADDRESS             Rsdp;
   } UNIVERSAL_PAYLOAD_ACPI_TABLE;
 
@@ -213,11 +213,11 @@ The bootloader should pass ACPI table the payload. So that the payload could get
 
 **Member Description**
 
-``PldHeader``
+``Header``
 
-PldHeader.Revision is 1.
+Header.Revision is 1.
 
-PldHeader.Length is 12.
+Header.Length is 12.
 
 ``Rsdp``
 
@@ -243,7 +243,7 @@ The bootloader might pass SMBIOS table to the payload. So that the payload could
   #pragma pack (1)
 
   typedef struct {
-    UNIVERSAL_PAYLOAD_GENERIC_HEADER PldHeader;
+    UNIVERSAL_PAYLOAD_GENERIC_HEADER Header;
     EFI_PHYSICAL_ADDRESS             SmBiosEntryPoint;
   } UNIVERSAL_PAYLOAD_SMBIOS_TABLE;
 
@@ -251,11 +251,11 @@ The bootloader might pass SMBIOS table to the payload. So that the payload could
 
 **Member Description**
 
-``PldHeader``
+``Header``
 
-PldHeader.Revision is 1.
+Header.Revision is 1.
 
-PldHeader.Length is 12.
+Header.Length is 12.
 
 ``SmBiosEntryPoint``
 
@@ -281,7 +281,7 @@ The bootloader might pass Device Tree to the payload. So that the payload could 
   #pragma pack (1)
 
   typedef struct {
-    UNIVERSAL_PAYLOAD_GENERIC_HEADER PldHeader;
+    UNIVERSAL_PAYLOAD_GENERIC_HEADER Header;
     EFI_PHYSICAL_ADDRESS             DeviceTreeAddress;
   } UNIVERSAL_PAYLOAD_DEVICE_TREE;
 
@@ -289,11 +289,11 @@ The bootloader might pass Device Tree to the payload. So that the payload could 
 
 **Member Description**
 
-``PldHeader``
+``Header``
 
-PldHeader.Revision is 1.
+Header.Revision is 1.
 
-PldHeader.Length is 12.
+Header.Length is 12.
 
 ``DeviceTreeAddress``
 
@@ -321,7 +321,7 @@ to payload.
   #pragma pack(1)
 
   typedef struct {
-    UNIVERSAL_PAYLOAD_GENERIC_HEADER PldHeader;
+    UNIVERSAL_PAYLOAD_GENERIC_HEADER Header;
     BOOLEAN                          UseMmio;
     UINT8                            RegisterStride;
     UINT32                           BaudRate;
@@ -332,11 +332,11 @@ to payload.
 
 **Member Description**
 
-``PldHeader``
+``Header``
 
-PldHeader.Revision is 1.
+Header.Revision is 1.
 
-PldHeader.Length is 18.
+Header.Length is 18.
 
 ``UseMmio``
 
@@ -379,7 +379,7 @@ enumeration has been performed by the bootloader, the bus, IO and MMIO ranges th
   #pragma pack(1)
 
   typedef struct {
-    UNIVERSAL_PAYLOAD_GENERIC_HEADER  PldHeader;
+    UNIVERSAL_PAYLOAD_GENERIC_HEADER  Header;
     BOOLEAN                           ResourceAssigned;
     UINT8                             Count;
     UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE RootBridge[0];
@@ -432,11 +432,11 @@ enumeration has been performed by the bootloader, the bus, IO and MMIO ranges th
 
 **Member Description**
 
-``PldHeader``
+``Header``
 
-PldHeader.Revision is 1.
+Header.Revision is 1.
 
-PldHeader.Length is 6 + ``Count`` * sizeof (UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE).
+Header.Length is 6 + ``Count`` * sizeof (UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE).
 
 ``ResourceAssigned``
 
