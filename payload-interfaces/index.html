@@ -308,7 +308,7 @@ for the graphics display. These HOBs are described in the <em>PI Specification.<
   <span class="n">UINT8</span>                <span class="n">Revision</span><span class="p">;</span>
   <span class="n">UINT8</span>                <span class="n">Reserved</span><span class="p">;</span>
   <span class="n">UINT16</span>               <span class="n">Length</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">PLD_GENERIC_HEADER</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">UNIVERSAL_PAYLOAD_GENERIC_HEADER</span><span class="p">;</span>
 
 <span class="c1">#pragma pack()</span>
 </pre></div>
@@ -317,14 +317,14 @@ for the graphics display. These HOBs are described in the <em>PI Specification.<
 <p>It doesn’t increase when new members are appended to the end of the interface.</p>
 <p>It increases by one when existing members are renamed or re-interpreted for different purposes.</p>
 <p><code class="docutils literal notranslate"><span class="pre">Length</span></code></p>
-<p>The Length equals to the sizeof (PLD_GENERIC_HEADER) + sizeof (&lt;additional members&gt;).</p>
+<p>The Length equals to the sizeof (UNIVERSAL_PAYLOAD_GENERIC_HEADER) + sizeof (&lt;additional members&gt;).</p>
 <p>Consumers of the interfaces should only access those members that are covered by Length.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p><code class="docutils literal notranslate"><span class="pre">EFI_HOB_GUID_TYPE</span></code> contains a Length field to tell the actual bytes the whole HOB data occupies.</p>
 <p>It also includes the optional padding bytes to make sure each HOB is multiple of 8 bytes in length.</p>
-<p class="last"><code class="docutils literal notranslate"><span class="pre">PLD_GENERIC_HEADER.Length</span></code> tells the exact length of the meaningful data excluding the padding bytes.
-So, it’s always true that <code class="docutils literal notranslate"><span class="pre">PLD_GENERIC_HEADER.Length</span></code> is less than or equal to the Length in <code class="docutils literal notranslate"><span class="pre">EFI_HOB_GUID_TYPE</span></code>.</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">UNIVERSAL_PAYLOAD_GENERIC_HEADER.Length</span></code> tells the exact length of the meaningful data excluding the padding bytes.
+So, it’s always true that <code class="docutils literal notranslate"><span class="pre">UNIVERSAL_PAYLOAD_GENERIC_HEADER.Length</span></code> is less than or equal to the Length in <code class="docutils literal notranslate"><span class="pre">EFI_HOB_GUID_TYPE</span></code>.</p>
 </div>
 <p>HOB data for different interfaces is defined in following sections.</p>
 </div>
@@ -339,9 +339,9 @@ So, it’s always true that <code class="docutils literal notranslate"><span cla
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack (1)</span>
 
 <span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
-  <span class="n">PLD_GENERIC_HEADER</span>   <span class="n">PldHeader</span><span class="p">;</span>
-  <span class="n">EFI_PHYSICAL_ADDRESS</span> <span class="n">Rsdp</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">PLD_ACPI_TABLE</span><span class="p">;</span>
+  <span class="n">UNIVERSAL_PAYLOAD_GENERIC_HEADER</span> <span class="n">PldHeader</span><span class="p">;</span>
+  <span class="n">EFI_PHYSICAL_ADDRESS</span>             <span class="n">Rsdp</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">UNIVERSAL_PAYLOAD_ACPI_TABLE</span><span class="p">;</span>
 
 <span class="c1">#pragma pack()</span>
 </pre></div>
@@ -366,9 +366,9 @@ So, it’s always true that <code class="docutils literal notranslate"><span cla
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack (1)</span>
 
 <span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
-  <span class="n">PLD_GENERIC_HEADER</span>   <span class="n">PldHeader</span><span class="p">;</span>
-  <span class="n">EFI_PHYSICAL_ADDRESS</span> <span class="n">SmBiosEntryPoint</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">PLD_SMBIOS_TABLE</span><span class="p">;</span>
+  <span class="n">UNIVERSAL_PAYLOAD_GENERIC_HEADER</span> <span class="n">PldHeader</span><span class="p">;</span>
+  <span class="n">EFI_PHYSICAL_ADDRESS</span>             <span class="n">SmBiosEntryPoint</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">UNIVERSAL_PAYLOAD_SMBIOS_TABLE</span><span class="p">;</span>
 
 <span class="c1">#pragma pack()</span>
 </pre></div>
@@ -392,9 +392,9 @@ So, it’s always true that <code class="docutils literal notranslate"><span cla
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack (1)</span>
 
 <span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
-  <span class="n">PLD_GENERIC_HEADER</span>   <span class="n">PldHeader</span><span class="p">;</span>
-  <span class="n">EFI_PHYSICAL_ADDRESS</span> <span class="n">DeviceTreeAddress</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">PLD_DEVICE_TREE</span><span class="p">;</span>
+  <span class="n">UNIVERSAL_PAYLOAD_GENERIC_HEADER</span> <span class="n">PldHeader</span><span class="p">;</span>
+  <span class="n">EFI_PHYSICAL_ADDRESS</span>             <span class="n">DeviceTreeAddress</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">UNIVERSAL_PAYLOAD_DEVICE_TREE</span><span class="p">;</span>
 
 <span class="c1">#pragma pack()</span>
 </pre></div>
@@ -420,12 +420,12 @@ to payload.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack(1)</span>
 
 <span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
-  <span class="n">PLD_GENERIC_HEADER</span>   <span class="n">PldHeader</span><span class="p">;</span>
-  <span class="n">BOOLEAN</span>              <span class="n">UseMmio</span><span class="p">;</span>
-  <span class="n">UINT8</span>                <span class="n">RegisterStride</span><span class="p">;</span>
-  <span class="n">UINT32</span>               <span class="n">BaudRate</span><span class="p">;</span>
-  <span class="n">EFI_PHYSICAL_ADDRESS</span> <span class="n">RegisterBase</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">PLD_SERIAL_PORT_INFO</span><span class="p">;</span>
+  <span class="n">UNIVERSAL_PAYLOAD_GENERIC_HEADER</span> <span class="n">PldHeader</span><span class="p">;</span>
+  <span class="n">BOOLEAN</span>                          <span class="n">UseMmio</span><span class="p">;</span>
+  <span class="n">UINT8</span>                            <span class="n">RegisterStride</span><span class="p">;</span>
+  <span class="n">UINT32</span>                           <span class="n">BaudRate</span><span class="p">;</span>
+  <span class="n">EFI_PHYSICAL_ADDRESS</span>             <span class="n">RegisterBase</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">UNIVERSAL_PAYLOAD_SERIAL_PORT_INFO</span><span class="p">;</span>
 
 <span class="c1">#pragma pack()</span>
 </pre></div>
@@ -459,28 +459,28 @@ enumeration has been performed by the bootloader, the bus, IO and MMIO ranges th
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack(1)</span>
 
 <span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
-  <span class="n">PLD_GENERIC_HEADER</span>   <span class="n">PldHeader</span><span class="p">;</span>
-  <span class="n">BOOLEAN</span>              <span class="n">ResourceAssigned</span><span class="p">;</span>
-  <span class="n">UINT8</span>                <span class="n">Count</span><span class="p">;</span>
-  <span class="n">PLD_PCI_ROOT_BRIDGE</span>  <span class="n">RootBridge</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-<span class="p">}</span> <span class="n">PLD_PCI_ROOT_BRIDGES</span><span class="p">;</span>
+  <span class="n">UNIVERSAL_PAYLOAD_GENERIC_HEADER</span>  <span class="n">PldHeader</span><span class="p">;</span>
+  <span class="n">BOOLEAN</span>                           <span class="n">ResourceAssigned</span><span class="p">;</span>
+  <span class="n">UINT8</span>                             <span class="n">Count</span><span class="p">;</span>
+  <span class="n">UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE</span> <span class="n">RootBridge</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="p">}</span> <span class="n">UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGES</span><span class="p">;</span>
 
 <span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
-  <span class="n">UINT32</span>                       <span class="n">Segment</span><span class="p">;</span>
-  <span class="n">UINT64</span>                       <span class="n">Supports</span><span class="p">;</span>
-  <span class="n">UINT64</span>                       <span class="n">Attributes</span><span class="p">;</span>
-  <span class="n">BOOLEAN</span>                      <span class="n">DmaAbove4G</span><span class="p">;</span>
-  <span class="n">BOOLEAN</span>                      <span class="n">NoExtendedConfigSpace</span><span class="p">;</span>
-  <span class="n">UINT64</span>                       <span class="n">AllocationAttributes</span><span class="p">;</span>
-  <span class="n">PLD_PCI_ROOT_BRIDGE_APERTURE</span> <span class="n">Bus</span><span class="p">;</span>
-  <span class="n">PLD_PCI_ROOT_BRIDGE_APERTURE</span> <span class="n">Io</span><span class="p">;</span>
-  <span class="n">PLD_PCI_ROOT_BRIDGE_APERTURE</span> <span class="n">Mem</span><span class="p">;</span>
-  <span class="n">PLD_PCI_ROOT_BRIDGE_APERTURE</span> <span class="n">MemAbove4G</span><span class="p">;</span>
-  <span class="n">PLD_PCI_ROOT_BRIDGE_APERTURE</span> <span class="n">PMem</span><span class="p">;</span>
-  <span class="n">PLD_PCI_ROOT_BRIDGE_APERTURE</span> <span class="n">PMemAbove4G</span><span class="p">;</span>
-  <span class="n">UINT32</span>                       <span class="n">HID</span><span class="p">;</span>
-  <span class="n">UINT32</span>                       <span class="n">UID</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">PLD_PCI_ROOT_BRIDGE</span><span class="p">;</span>
+  <span class="n">UINT32</span>                                     <span class="n">Segment</span><span class="p">;</span>
+  <span class="n">UINT64</span>                                     <span class="n">Supports</span><span class="p">;</span>
+  <span class="n">UINT64</span>                                     <span class="n">Attributes</span><span class="p">;</span>
+  <span class="n">BOOLEAN</span>                                    <span class="n">DmaAbove4G</span><span class="p">;</span>
+  <span class="n">BOOLEAN</span>                                    <span class="n">NoExtendedConfigSpace</span><span class="p">;</span>
+  <span class="n">UINT64</span>                                     <span class="n">AllocationAttributes</span><span class="p">;</span>
+  <span class="n">UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE_APERTURE</span> <span class="n">Bus</span><span class="p">;</span>
+  <span class="n">UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE_APERTURE</span> <span class="n">Io</span><span class="p">;</span>
+  <span class="n">UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE_APERTURE</span> <span class="n">Mem</span><span class="p">;</span>
+  <span class="n">UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE_APERTURE</span> <span class="n">MemAbove4G</span><span class="p">;</span>
+  <span class="n">UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE_APERTURE</span> <span class="n">PMem</span><span class="p">;</span>
+  <span class="n">UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE_APERTURE</span> <span class="n">PMemAbove4G</span><span class="p">;</span>
+  <span class="n">UINT32</span>                                     <span class="n">HID</span><span class="p">;</span>
+  <span class="n">UINT32</span>                                     <span class="n">UID</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE</span><span class="p">;</span>
 
 <span class="o">//</span>
 <span class="o">//</span> <span class="p">(</span><span class="n">Base</span> <span class="o">&gt;</span> <span class="n">Limit</span><span class="p">)</span> <span class="n">indicates</span> <span class="n">an</span> <span class="n">aperture</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">available</span><span class="o">.</span>
@@ -507,14 +507,14 @@ enumeration has been performed by the bootloader, the bus, IO and MMIO ranges th
   <span class="o">//</span> <span class="n">host</span> <span class="n">bridge</span> <span class="n">driver</span> <span class="n">still</span> <span class="n">work</span><span class="o">.</span>
   <span class="o">//</span>
   <span class="n">UINT64</span> <span class="n">Translation</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">PLD_PCI_ROOT_BRIDGE_APERTURE</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE_APERTURE</span><span class="p">;</span>
 <span class="c1">#pragma pack()</span>
 </pre></div>
 </div>
 <p><strong>Member Description</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">PldHeader</span></code></p>
 <p>PldHeader.Revision is 1.</p>
-<p>PldHeader.Length is 6 + <code class="docutils literal notranslate"><span class="pre">Count</span></code> * sizeof (PLD_PCI_ROOT_BRIDGE).</p>
+<p>PldHeader.Length is 6 + <code class="docutils literal notranslate"><span class="pre">Count</span></code> * sizeof (UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE).</p>
 <p><code class="docutils literal notranslate"><span class="pre">ResourceAssigned</span></code></p>
 <p>Bus/IO/MMIO resources for all root bridges have been assigned when it’s TRUE.</p>
 <p><code class="docutils literal notranslate"><span class="pre">Count</span></code></p>
@@ -594,7 +594,7 @@ in EFI_PCI_HOST_BRIDGE_RESOURCE_ALLOCATION_PROTOCOL defined in PI Specification.
   <div role="contentinfo">
     <p>
         &copy; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license
-      Last updated on Jun 08, 2021.
+      Last updated on Jun 09, 2021.
 
     </p>
   </div>
