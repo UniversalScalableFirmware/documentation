@@ -161,7 +161,7 @@ The HOB data starts with a common header defined as below::
     UINT8                Revision;
     UINT8                Reserved;
     UINT16               Length;
-  } PLD_GENERIC_HEADER;
+  } UNIVERSAL_PAYLOAD_GENERIC_HEADER;
 
   #pragma pack()
 
@@ -173,7 +173,7 @@ It increases by one when existing members are renamed or re-interpreted for diff
 
 ``Length``
 
-The Length equals to the sizeof (PLD_GENERIC_HEADER) + sizeof (<additional members>).
+The Length equals to the sizeof (UNIVERSAL_PAYLOAD_GENERIC_HEADER) + sizeof (<additional members>).
 
 Consumers of the interfaces should only access those members that are covered by Length.
 
@@ -182,8 +182,8 @@ Consumers of the interfaces should only access those members that are covered by
 
   It also includes the optional padding bytes to make sure each HOB is multiple of 8 bytes in length.
 
-  ``PLD_GENERIC_HEADER.Length`` tells the exact length of the meaningful data excluding the padding bytes.
-  So, it's always true that ``PLD_GENERIC_HEADER.Length`` is less than or equal to the Length in ``EFI_HOB_GUID_TYPE``.
+  ``UNIVERSAL_PAYLOAD_GENERIC_HEADER.Length`` tells the exact length of the meaningful data excluding the padding bytes.
+  So, it's always true that ``UNIVERSAL_PAYLOAD_GENERIC_HEADER.Length`` is less than or equal to the Length in ``EFI_HOB_GUID_TYPE``.
 
 HOB data for different interfaces is defined in following sections.
 
@@ -205,9 +205,9 @@ The bootloader should pass ACPI table the payload. So that the payload could get
   #pragma pack (1)
 
   typedef struct {
-    PLD_GENERIC_HEADER   PldHeader;
-    EFI_PHYSICAL_ADDRESS Rsdp;
-  } PLD_ACPI_TABLE;
+    UNIVERSAL_PAYLOAD_GENERIC_HEADER PldHeader;
+    EFI_PHYSICAL_ADDRESS             Rsdp;
+  } UNIVERSAL_PAYLOAD_ACPI_TABLE;
 
   #pragma pack()
 
@@ -243,9 +243,9 @@ The bootloader might pass SMBIOS table to the payload. So that the payload could
   #pragma pack (1)
 
   typedef struct {
-    PLD_GENERIC_HEADER   PldHeader;
-    EFI_PHYSICAL_ADDRESS SmBiosEntryPoint;
-  } PLD_SMBIOS_TABLE;
+    UNIVERSAL_PAYLOAD_GENERIC_HEADER PldHeader;
+    EFI_PHYSICAL_ADDRESS             SmBiosEntryPoint;
+  } UNIVERSAL_PAYLOAD_SMBIOS_TABLE;
 
   #pragma pack()
 
@@ -281,9 +281,9 @@ The bootloader might pass Device Tree to the payload. So that the payload could 
   #pragma pack (1)
 
   typedef struct {
-    PLD_GENERIC_HEADER   PldHeader;
-    EFI_PHYSICAL_ADDRESS DeviceTreeAddress;
-  } PLD_DEVICE_TREE;
+    UNIVERSAL_PAYLOAD_GENERIC_HEADER PldHeader;
+    EFI_PHYSICAL_ADDRESS             DeviceTreeAddress;
+  } UNIVERSAL_PAYLOAD_DEVICE_TREE;
 
   #pragma pack()
 
@@ -321,12 +321,12 @@ to payload.
   #pragma pack(1)
 
   typedef struct {
-    PLD_GENERIC_HEADER   PldHeader;
-    BOOLEAN              UseMmio;
-    UINT8                RegisterStride;
-    UINT32               BaudRate;
-    EFI_PHYSICAL_ADDRESS RegisterBase;
-  } PLD_SERIAL_PORT_INFO;
+    UNIVERSAL_PAYLOAD_GENERIC_HEADER PldHeader;
+    BOOLEAN                          UseMmio;
+    UINT8                            RegisterStride;
+    UINT32                           BaudRate;
+    EFI_PHYSICAL_ADDRESS             RegisterBase;
+  } UNIVERSAL_PAYLOAD_SERIAL_PORT_INFO;
 
   #pragma pack()
 
@@ -379,28 +379,28 @@ enumeration has been performed by the bootloader, the bus, IO and MMIO ranges th
   #pragma pack(1)
 
   typedef struct {
-    PLD_GENERIC_HEADER   PldHeader;
-    BOOLEAN              ResourceAssigned;
-    UINT8                Count;
-    PLD_PCI_ROOT_BRIDGE  RootBridge[0];
-  } PLD_PCI_ROOT_BRIDGES;
+    UNIVERSAL_PAYLOAD_GENERIC_HEADER  PldHeader;
+    BOOLEAN                           ResourceAssigned;
+    UINT8                             Count;
+    UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE RootBridge[0];
+  } UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGES;
 
   typedef struct {
-    UINT32                       Segment;
-    UINT64                       Supports;
-    UINT64                       Attributes;
-    BOOLEAN                      DmaAbove4G;
-    BOOLEAN                      NoExtendedConfigSpace;
-    UINT64                       AllocationAttributes;
-    PLD_PCI_ROOT_BRIDGE_APERTURE Bus;
-    PLD_PCI_ROOT_BRIDGE_APERTURE Io;
-    PLD_PCI_ROOT_BRIDGE_APERTURE Mem;
-    PLD_PCI_ROOT_BRIDGE_APERTURE MemAbove4G;
-    PLD_PCI_ROOT_BRIDGE_APERTURE PMem;
-    PLD_PCI_ROOT_BRIDGE_APERTURE PMemAbove4G;
-    UINT32                       HID;
-    UINT32                       UID;
-  } PLD_PCI_ROOT_BRIDGE;
+    UINT32                                     Segment;
+    UINT64                                     Supports;
+    UINT64                                     Attributes;
+    BOOLEAN                                    DmaAbove4G;
+    BOOLEAN                                    NoExtendedConfigSpace;
+    UINT64                                     AllocationAttributes;
+    UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE_APERTURE Bus;
+    UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE_APERTURE Io;
+    UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE_APERTURE Mem;
+    UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE_APERTURE MemAbove4G;
+    UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE_APERTURE PMem;
+    UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE_APERTURE PMemAbove4G;
+    UINT32                                     HID;
+    UINT32                                     UID;
+  } UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE;
 
   //
   // (Base > Limit) indicates an aperture is not available.
@@ -427,7 +427,7 @@ enumeration has been performed by the bootloader, the bus, IO and MMIO ranges th
     // host bridge driver still work.
     //
     UINT64 Translation;
-  } PLD_PCI_ROOT_BRIDGE_APERTURE;
+  } UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE_APERTURE;
   #pragma pack()
 
 **Member Description**
@@ -436,7 +436,7 @@ enumeration has been performed by the bootloader, the bus, IO and MMIO ranges th
 
 PldHeader.Revision is 1.
 
-PldHeader.Length is 6 + ``Count`` * sizeof (PLD_PCI_ROOT_BRIDGE).
+PldHeader.Length is 6 + ``Count`` * sizeof (UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE).
 
 ``ResourceAssigned``
 
