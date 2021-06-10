@@ -196,7 +196,7 @@ The bootloader should pass ACPI table the payload. So that the payload could get
 
 ::
 
-  gPldAcpiTableGuid = { 0x9f9a9506, 0x5597, 0x4515, { 0xba, 0xb6, 0x8b, 0xcd, 0xe7, 0x84, 0xba, 0x87 } }
+  gUniversalPayloadAcpiTableGuid = { 0x9f9a9506, 0x5597, 0x4515, { 0xba, 0xb6, 0x8b, 0xcd, 0xe7, 0x84, 0xba, 0x87 } }
 
 **Structure**
 
@@ -205,7 +205,7 @@ The bootloader should pass ACPI table the payload. So that the payload could get
   #pragma pack (1)
 
   typedef struct {
-    UNIVERSAL_PAYLOAD_GENERIC_HEADER PldHeader;
+    UNIVERSAL_PAYLOAD_GENERIC_HEADER Header;
     EFI_PHYSICAL_ADDRESS             Rsdp;
   } UNIVERSAL_PAYLOAD_ACPI_TABLE;
 
@@ -213,11 +213,11 @@ The bootloader should pass ACPI table the payload. So that the payload could get
 
 **Member Description**
 
-``PldHeader``
+``Header``
 
-PldHeader.Revision is 1.
+Header.Revision is 1.
 
-PldHeader.Length is 12.
+Header.Length is 12.
 
 ``Rsdp``
 
@@ -232,9 +232,9 @@ The bootloader might pass SMBIOS table to the payload. So that the payload could
 
 ::
 
-  gPldSmbios3TableGuid = { 0x92b7896c, 0x3362, 0x46ce, { 0x99, 0xb3, 0x4f, 0x5e, 0x3c, 0x34, 0xeb, 0x42 } }
+  gUniversalPayloadSmbios3TableGuid = { 0x92b7896c, 0x3362, 0x46ce, { 0x99, 0xb3, 0x4f, 0x5e, 0x3c, 0x34, 0xeb, 0x42 } }
 
-  gPldSmbiosTableGuid = { 0x590a0d26, 0x06e5, 0x4d20, { 0x8a, 0x82, 0x59, 0xea, 0x1b, 0x34, 0x98, 0x2d } }
+  gUniversalPayloadSmbiosTableGuid = { 0x590a0d26, 0x06e5, 0x4d20, { 0x8a, 0x82, 0x59, 0xea, 0x1b, 0x34, 0x98, 0x2d } }
 
 **Structure**
 
@@ -243,7 +243,7 @@ The bootloader might pass SMBIOS table to the payload. So that the payload could
   #pragma pack (1)
 
   typedef struct {
-    UNIVERSAL_PAYLOAD_GENERIC_HEADER PldHeader;
+    UNIVERSAL_PAYLOAD_GENERIC_HEADER Header;
     EFI_PHYSICAL_ADDRESS             SmBiosEntryPoint;
   } UNIVERSAL_PAYLOAD_SMBIOS_TABLE;
 
@@ -251,17 +251,17 @@ The bootloader might pass SMBIOS table to the payload. So that the payload could
 
 **Member Description**
 
-``PldHeader``
+``Header``
 
-PldHeader.Revision is 1.
+Header.Revision is 1.
 
-PldHeader.Length is 12.
+Header.Length is 12.
 
 ``SmBiosEntryPoint``
 
-Points to the SMBIOS table in SMBIOS 3.0+ format if GUID is ``gPldSmbios3TableGuid``.
+Points to the SMBIOS table in SMBIOS 3.0+ format if GUID is ``gUniversalPayloadSmbios3TableGuid``.
 
-Points to the SMBIOS table in SMBIOS 2.x format if GUID is ``gPldSmbiosTableGuid``.
+Points to the SMBIOS table in SMBIOS 2.x format if GUID is ``gUniversalPayloadSmbiosTableGuid``.
 
 DEVICE TREE
 ^^^^^^^^^^^
@@ -272,7 +272,7 @@ The bootloader might pass Device Tree to the payload. So that the payload could 
 
 ::
 
-  gPldDeviceTreeGuid = {0x6784b889, 0xb13c, 0x4c3b, {0xae, 0x4b, 0xf, 0xa, 0x2e, 0x32, 0xe, 0xa3}}
+  gUniversalPayloadDeviceTreeGuid = {0x6784b889, 0xb13c, 0x4c3b, {0xae, 0x4b, 0xf, 0xa, 0x2e, 0x32, 0xe, 0xa3}}
 
 **Structure**
 
@@ -281,7 +281,7 @@ The bootloader might pass Device Tree to the payload. So that the payload could 
   #pragma pack (1)
 
   typedef struct {
-    UNIVERSAL_PAYLOAD_GENERIC_HEADER PldHeader;
+    UNIVERSAL_PAYLOAD_GENERIC_HEADER Header;
     EFI_PHYSICAL_ADDRESS             DeviceTreeAddress;
   } UNIVERSAL_PAYLOAD_DEVICE_TREE;
 
@@ -289,11 +289,11 @@ The bootloader might pass Device Tree to the payload. So that the payload could 
 
 **Member Description**
 
-``PldHeader``
+``Header``
 
-PldHeader.Revision is 1.
+Header.Revision is 1.
 
-PldHeader.Length is 12.
+Header.Length is 12.
 
 ``DeviceTreeAddress``
 
@@ -312,7 +312,7 @@ to payload.
 
 ::
 
-  gPldSerialPortInfoGuid   = {0xaa7e190d, 0xbe21, 0x4409, {0x8e, 0x67, 0xa2, 0xcd, 0xf, 0x61, 0xe1, 0x70}}
+  gUniversalPayloadSerialPortInfoGuid   = {0xaa7e190d, 0xbe21, 0x4409, {0x8e, 0x67, 0xa2, 0xcd, 0xf, 0x61, 0xe1, 0x70}}
 
 **Structure**
 
@@ -321,7 +321,7 @@ to payload.
   #pragma pack(1)
 
   typedef struct {
-    UNIVERSAL_PAYLOAD_GENERIC_HEADER PldHeader;
+    UNIVERSAL_PAYLOAD_GENERIC_HEADER Header;
     BOOLEAN                          UseMmio;
     UINT8                            RegisterStride;
     UINT32                           BaudRate;
@@ -332,11 +332,11 @@ to payload.
 
 **Member Description**
 
-``PldHeader``
+``Header``
 
-PldHeader.Revision is 1.
+Header.Revision is 1.
 
-PldHeader.Length is 18.
+Header.Length is 18.
 
 ``UseMmio``
 
@@ -370,7 +370,7 @@ enumeration has been performed by the bootloader, the bus, IO and MMIO ranges th
 
 ::
 
-  gPldPciRootBridgeInfoGuid = { 0xec4ebacb, 0x2638, 0x416e, { 0xbe, 0x80, 0xe5, 0xfa, 0x4b, 0x51, 0x19, 0x01 }}
+  gUniversalPayloadPciRootBridgeInfoGuid = { 0xec4ebacb, 0x2638, 0x416e, { 0xbe, 0x80, 0xe5, 0xfa, 0x4b, 0x51, 0x19, 0x01 }}
 
 **Structure**
 
@@ -379,7 +379,7 @@ enumeration has been performed by the bootloader, the bus, IO and MMIO ranges th
   #pragma pack(1)
 
   typedef struct {
-    UNIVERSAL_PAYLOAD_GENERIC_HEADER  PldHeader;
+    UNIVERSAL_PAYLOAD_GENERIC_HEADER  Header;
     BOOLEAN                           ResourceAssigned;
     UINT8                             Count;
     UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE RootBridge[0];
@@ -432,11 +432,11 @@ enumeration has been performed by the bootloader, the bus, IO and MMIO ranges th
 
 **Member Description**
 
-``PldHeader``
+``Header``
 
-PldHeader.Revision is 1.
+Header.Revision is 1.
 
-PldHeader.Length is 6 + ``Count`` * sizeof (UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE).
+Header.Length is 6 + ``Count`` * sizeof (UNIVERSAL_PAYLOAD_PCI_ROOT_BRIDGE).
 
 ``ResourceAssigned``
 

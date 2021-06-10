@@ -15,6 +15,9 @@ Revision  Description                                        Date
           - Add PLD_GENERIC_HEADER.Length.
           - Add PLD_PCI_ROOT_BRIDGES definition.
           - Change prefix of interface definitions from
-            "PLD_" to "UNIVERSAL_PAYLOAD_" prefix. 
+            "PLD_" to "UNIVERSAL_PAYLOAD_".
+          - Change prefix of GUIDs from
+            "gPld" to "gUniversalPayload".
+          - Change "PldHeader" to "Header".
 0.7       Initial draft.                                     Sep 19, 2020
 ========  =================================================  ======
