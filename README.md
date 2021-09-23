@@ -2,7 +2,7 @@ This documentation is written in **RST (ReStructuredText)** format and can be bu
 using Sphinx rendered with an HTML theme (sphinx-rtd-theme). The HTML pages are then hosted using
 GitHub Pages service.
 
-The pages are hosted @ https://universalpayload.github.io/documentation/
+The pages are hosted @ https://universalscalablefirmware.github.io/documentation/
 
 Getting Started
 
