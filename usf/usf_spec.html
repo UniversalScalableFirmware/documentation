@@ -1,0 +1,2213 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Terminology &mdash; Universal Scalable Firmware (USF)  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Universal Payload" href="../universal_payload/index.html" />
+    <link rel="prev" title="Universal Scalable Firmware (USF) Specification" href="index.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Universal Scalable Firmware (USF)
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Universal Scalable Firmware (USF) Specification</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Terminology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#motivation-for-universal-scalable-firmware">Motivation for Universal Scalable Firmware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simplicity-determinisim-and-debuggability">Simplicity, Determinisim and Debuggability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#os-interface">OS interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#universal-payload">Universal Payload</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#universal-payload-api-for-different-os-payloads-i-e-uefi-linuxboot-acrn-embedded-hypervisor-and-support-for-various-bootloaders-i-e-tianocore-edkii-coreboot-slim-bootloader-u-boot">Universal Payload API for different OS payloads (i.e., UEFI, LinuxBoot, ACRN embedded hypervisor), and support for various bootloaders (i.e., tianocore/EDKII, coreboot, slim bootloader, u-boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#platform-orchestration-layer-pol">Platform Orchestration Layer (POL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scalable-firmware-support-package-sfsp">Scalable Firmware Support Package (sFSP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#universal-payload-1">Universal Payload</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#platform-orchestration-layer-pol-1">Platform Orchestration Layer (POL)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#motivation-for-pol">Motivation for POL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pol-design-principles">POL Design Principles</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#audience-document-scope">Audience / Document scope</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#terminology-1">Terminology</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#reference-documents">Reference documents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#architecture">Architecture</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pol-overview">POL Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-introduction">Configuration Introduction</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#platform-configuration">Platform configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example-implementation">1.1.1 Example implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#shareable-platform-code">Shareable platform code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#advanced-feature-details">Advanced feature details</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interface-definitions">Interface definitions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#xpu-considerations">XPU considerations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#initialization">Initialization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#update">Update</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#monitoring">Monitoring</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pol-examples">POL examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#slim-bootloader">Slim bootloader</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#u-boot">u-boot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#oreboot">Oreboot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#coreboot">coreboot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#edkii">EDKII</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#runtime-1">Runtime</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introduction-1">Introduction</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acpi-1">ACPI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#uefi-runtime">UEFI Runtime</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#smm">SMM</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#security">Security</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#security-overview">Security Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#protection">Protection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#detection">Detection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#recovery">Recovery</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#attestation">Attestation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#debug">Debug</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#debug-overview">Debug Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#design">Design</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#source-level-debugging">Source level debugging</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#yaml-format-boot-configuration"><strong>YAML Format Boot Configuration</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introduction-2">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#target-audience">Target Audience</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-description-yaml-explained">Configuration Description (YAML) Explained</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#file-layout">File Layout</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#meta-data-markers">Meta-Data Markers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#yaml-tags">YAML Tags</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#variable">Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#template">Template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configs">Configs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configuration-option-nodes">Configuration Option Nodes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#delta-dlt-file-explained">Delta (DLT) File Explained</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dlt-file-rules">DLT file rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-process">Configuration Process</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#scalable-fsp">Scalable FSP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#interfaces">Interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sfsp-interactions">sFSP interactions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fsp-2-2">FSP 2.2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fsp-2-3">FSP 2.3</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fsp-2-next-next">FSP 2.next.next</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fsp-3-0-or-fsp2-next-next">FSP 3.0 or FSP2.next.next</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#bootloader-payloads">Bootloader Payloads</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#references">References</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bootloader-payloads-1">Bootloader Payloads –</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#os-hv-interfaces">OS/Hv interfaces</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#platform-implementations">Platform implementations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#security-1">Security</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../universal_payload/index.html">Universal Payload</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Universal Scalable Firmware (USF)</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Universal Scalable Firmware (USF) Specification</a> &raquo;</li>
+        
+      <li>Terminology</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <a class="reference internal image-reference" href="../_images/image1.jpeg"><img alt="../_images/image1.jpeg" src="../_images/image1.jpeg" style="width: 6.5in; height: 4.0625in;" /></a>
+<p>Universal Scalable Firmware (USF) Specification</p>
+<p><strong>Version 0.7</strong></p>
+<p><strong>October 2021</strong></p>
+<p>© Copyright Content on document licensed under a Creative Commons
+Attribution 4.0 International license</p>
+<div class="section" id="terminology">
+<h1>Terminology<a class="headerlink" href="#terminology" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>There has been a lot of confusion regarding the terminologies
+surrounding firmware and BIOS. This section describes these
+terminologies as used in this specification. Just like “Operating
+System” (OS) is a generic name for the concept of Post-Boot
+Environment, “Basic Input Output System” (BIOS) is a generic name for
+the concept of Pre-Boot Environment. Just like there are multiple
+implementations of the concept of OS, such as Linux, there are
+various implementations of the concept of BIOS, such as UEFI FW,
+u-boot, coreboot, Slim bootloader etc.</p>
+<p>Tiano, EDKII and Min Platform are all implementations based on the
+“Universal Extensible Firmware Interface” (UEFI) and “Platform
+Initialization” (PI) interface specifications (uefi.org).</p>
+<p>This Specification uses the terminology Firmware/System Firmware/BIOS
+interchangeably to indicate the Pre-Boot environment</p>
+</div></blockquote>
+</div>
+<div class="section" id="motivation-for-universal-scalable-firmware">
+<h1>Motivation for Universal Scalable Firmware<a class="headerlink" href="#motivation-for-universal-scalable-firmware" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div>UEFI and PI Spec based BIOS implementations such as Tiano and EDKII
+has served the industry well for the past couple of decades. The goal
+is to evolve the goodness of modularity to scale for IP FW
+development model, with emphasis on simplicity, scalability,
+debuggability, readability and determinism.</div></blockquote>
+</div>
+<div class="section" id="simplicity-determinisim-and-debuggability">
+<h1>Simplicity, Determinisim and Debuggability<a class="headerlink" href="#simplicity-determinisim-and-debuggability" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>All the three attributes – Simplicity, Determinism and Debuggability
+go together. BIOS plays a major role in debugging hardware, silicon
+features and various technologies (Security, Power Management, IO,
+Virtualization, RAS etc.) and should lend itself to readability and
+determining the sequence of operations by reading the source code.
+BIOS is the abstraction layer and it often times have to deal with
+unstable hardware and Silicon workarounds. A simple, debug (hardware
+debug, not just software) friendly infrastructure is called for.</p>
+<p>Today’s platform and SoC complexity calls for a model of replaceable
+IP Modules, with the associated FW components traveling with that IP.</p>
+<p>The layers of the Universal Scalable Firmware are described in the
+following diagram.</p>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/image2.jpg"><img alt="A picture containing graphical user interface" src="../_images/image2.jpg" style="width: 6.5in; height: 6.85208in;" /></a>
+<p>Figure 1 USF stack</p>
+<blockquote>
+<div>From the top of the stack we have the following.</div></blockquote>
+</div>
+<div class="section" id="os-interface">
+<h1>OS interface<a class="headerlink" href="#os-interface" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div>These are well-known interfaces, such as ACPI, UEFI, Kexec, or
+Multiboot, that provide a means to interact with pre-OS and runtimes.</div></blockquote>
+</div>
+<div class="section" id="universal-payload">
+<h1>Universal Payload<a class="headerlink" href="#universal-payload" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="universal-payload-api-for-different-os-payloads-i-e-uefi-linuxboot-acrn-embedded-hypervisor-and-support-for-various-bootloaders-i-e-tianocore-edkii-coreboot-slim-bootloader-u-boot">
+<h1>Universal Payload API for different OS payloads (i.e., UEFI, LinuxBoot, ACRN embedded hypervisor), and support for various bootloaders (i.e., tianocore/EDKII, coreboot, slim bootloader, u-boot<a class="headerlink" href="#universal-payload-api-for-different-os-payloads-i-e-uefi-linuxboot-acrn-embedded-hypervisor-and-support-for-various-bootloaders-i-e-tianocore-edkii-coreboot-slim-bootloader-u-boot" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="platform-orchestration-layer-pol">
+<h1>Platform Orchestration Layer (POL)<a class="headerlink" href="#platform-orchestration-layer-pol" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div>Simplified ACPI support, common libraries for various bootloaders &amp;
+Rust language, standard binary configuration through YAML, support
+for FW attestation, authentication, measurement, and modern update.</div></blockquote>
+</div>
+<div class="section" id="scalable-firmware-support-package-sfsp">
+<h1>Scalable Firmware Support Package (sFSP)<a class="headerlink" href="#scalable-firmware-support-package-sfsp" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div>Scalable Firmware Support Package (sFSP) support for 64-bit reset
+vector, SMM encapsulation, various domain modules, authentication,
+unified configuration, and SOC level validation.</div></blockquote>
+</div>
+<div class="section" id="universal-payload-1">
+<span id="id1"></span><h1>Universal Payload<a class="headerlink" href="#universal-payload-1" title="Permalink to this headline">¶</a></h1>
+<p>[Guidance to editor – please integrate content from
+<a class="reference external" href="https://github.com/UniversalScalableFirmware/documentation">https://github.com/UniversalScalableFirmware/documentation</a> for
+‘universal payload’ chapter]</p>
+</div>
+<div class="section" id="platform-orchestration-layer-pol-1">
+<span id="id2"></span><h1>Platform Orchestration Layer (POL)<a class="headerlink" href="#platform-orchestration-layer-pol-1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The Platform Orchestration Layer (POL) is aimed to provide guidelines on
+writing platform code that leverage a Scalable Intel Firmware Support
+Package (sFSP) interface and payload to coordinate the overall platform
+initialization flow.</p>
+<div class="section" id="motivation-for-pol">
+<h3>Motivation for POL<a class="headerlink" href="#motivation-for-pol" title="Permalink to this headline">¶</a></h3>
+<p>Following the Next Generation Firmware initiative, the Intel system
+firmware (BIOS) is evolving to be a multilayer, modular, scalable FW
+solution which fulfills all the modern FW requirements in a super
+complex HW IP centric world. The layers are shown in Figure 1.</p>
+<p>The Platform Orchestration Layer sits between the SOC Abstraction Layer
+(SAL), as abstracted by the Scalable FSP interface, and the Payload
+Layer. The Platform Orchestration Layer coordinates the board-specific
+boot sequence, invoking the sFSP interfaces for any silicon specific
+work, and produces the interface to launch the payload environment along
+with industry standard tables that are an amalgam of silicon and
+platform, such as SMBIOS and ACPI.</p>
+<a class="reference internal image-reference" href="../_images/image3.WMF"><img alt="../_images/image3.WMF" src="../_images/image3.WMF" style="width: 6.5in; height: 3.65625in;" /></a>
+<p>Figure 2 Layers of Universal Scalable Firmware</p>
+<p>Therefore, the missions of POL layer are:</p>
+<ul class="simple">
+<li>Initialize the board by programming board specific resources and
+invoking the sFSP for SOC and/or XPU specific resources</li>
+<li>Invoke payloads for OS boot environment and possible XPU and runtime.</li>
+</ul>
+</div>
+<div class="section" id="pol-design-principles">
+<h3>POL Design Principles<a class="headerlink" href="#pol-design-principles" title="Permalink to this headline">¶</a></h3>
+<p>POL is considered as the layer for platform code. It plays a major role
+in providing vendor specific features and mainboard-specific
+initialization, as distinct from the sFSP that is scoped to be
+SOC-specific. The POL will be the vehicle to convey policy into the
+sFSP, interact with the sFSP for initialization, and retrieve state
+information from the sFSP. The architectural design of a POL shall
+follow the below principles:</p>
+<ul class="simple">
+<li>Compatibility - POL shall be compliant with FSP Specification and
+provide the configuration information into the sFSP and retrieve
+resultant output information from the sFSP.</li>
+<li>Portability – POL will attempt to be as SOC independent as possible
+and allow for source level compatibility between different open
+source platform code frameworks such as EDKII, coreboot, oreboot, and
+U-Boot. The OS boot specific code is abstracted via payloads.</li>
+<li>Determinism/Simplicity – POL should abstract SOC initialization
+through sFSP interfaces and have a simple boot flow.</li>
+</ul>
+</div>
+<div class="section" id="audience-document-scope">
+<h3>Audience / Document scope<a class="headerlink" href="#audience-document-scope" title="Permalink to this headline">¶</a></h3>
+<p>The audience for this document is BIOS/system firmware architects and
+developers that design or implement or consume Intel silicon
+initialization code. The document is intended to describe the
+architecture directions and requirements.</p>
+</div>
+<div class="section" id="terminology-1">
+<span id="id3"></span><h3>Terminology<a class="headerlink" href="#terminology-1" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Term</th>
+<th class="head">Definition</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Config</td>
+<td>Abstracted configuration information</td>
+</tr>
+<tr class="row-odd"><td>Payload</td>
+<td>OS boot container</td>
+</tr>
+<tr class="row-even"><td>sFSP</td>
+<td>SOC initialization</td>
+</tr>
+</tbody>
+</table>
+<p>Table 1 Terminology</p>
+</div>
+<div class="section" id="reference-documents">
+<h3>Reference documents<a class="headerlink" href="#reference-documents" title="Permalink to this headline">¶</a></h3>
+<p>The following documents are referenced in this specification.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="55%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Abbreviation</th>
+<th class="head">Document</th>
+<th class="head">Version</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>FSP_EAS</td>
+<td>Intel® FSP External Architecture
+Specification v2.2:
+<a class="reference external" href="https://cdrdv2.intel.com/">https://cdrdv2.intel.com/</a>
+v1/dl/getContent/627153</td>
+<td><p class="first">Version 2.2</p>
+<p class="last">May 2020</p>
+</td>
+</tr>
+<tr class="row-odd"><td>PI_SPECS</td>
+<td><p class="first">Platform Initialization
+Specification:
+<a class="reference external" href="http://www.uefi.org/sites/default/">http://www.uefi.org/sites/default/</a>
+files/resources/PI_1_4.zip</p>
+<ul class="last simple">
+<li>Volume I: PEI</li>
+<li>Volume II: DXE CIS</li>
+<li>Volume III: Shared Architecture
+Elements</li>
+<li>Volume IV: SMM</li>
+<li>Volume V: Standards</li>
+</ul>
+</td>
+<td><p class="first">Version 1.4</p>
+<p class="last">April 2015</p>
+</td>
+</tr>
+<tr class="row-even"><td>UEFI_SPEC</td>
+<td>Unified Extensible Firmware
+Interface Specification:
+<a class="reference external" href="http://www.uefi.org/sites/default/">http://www.uefi.org/sites/default/</a>
+files/resources/UEFI%202_5.pdf</td>
+<td>Version 2.0
+April 2015</td>
+</tr>
+<tr class="row-odd"><td>FSP 2.3</td>
+<td><a class="reference external" href="https://cdrdv2.intel.com/">https://cdrdv2.intel.com/</a>
+v1/dl/getContent/644852</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>FSP Measurement</td>
+<td><a class="reference external" href="https://cdrdv2.intel.com/">https://cdrdv2.intel.com/</a>
+v1/dl/getContent/644001</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>YAML config</td>
+<td><a class="reference external" href="https://github.com/joshloo/">https://github.com/joshloo/</a>
+fsp_yaml_cfg/tree/master/Tools/
+UserManuals</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>coreboot</td>
+<td><a class="reference external" href="https://github.com/coreboot/">https://github.com/coreboot/</a>
+coreboot</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>Oreboot</td>
+<td><a class="reference external" href="https://github.com/oreboot/oreboot">https://github.com/oreboot/oreboot</a></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>Min platform</td>
+<td><a class="reference external" href="https://www.tianocore.org">https://www.tianocore.org</a></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>u-boot</td>
+<td><a class="reference external" href="https://github.com/u-boot/u-boot">https://github.com/u-boot/u-boot</a></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>Slim bootloader</td>
+<td><a class="reference external" href="https://slimbootloader.github.io/">https://slimbootloader.github.io/</a></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>Payload</td>
+<td><a class="reference external" href="https://github.com">https://github.com</a>
+universalpayload/documentation</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>openspdm</td>
+<td><p class="first">Temp:
+<a class="reference external" href="https://github.com/jyao1/openspdm">https://github.com/jyao1/openspdm</a></p>
+<p class="last">Official: <a class="reference external" href="https://github.com/DMTF">https://github.com/DMTF</a>
+- TBD</p>
+</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<p>Table 2 Reference Documents</p>
+</div>
+</div>
+<div class="section" id="architecture">
+<h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h2>
+<p>The following section describes the architecture of the POL.</p>
+<div class="section" id="pol-overview">
+<h3>POL Overview<a class="headerlink" href="#pol-overview" title="Permalink to this headline">¶</a></h3>
+<p>Following the guiding principles in chapter 1.2, the high-level
+architecture of POL is shown in Figure 2. POL interfaces with the sFSP
+API specification, e.g. the 6 APIs and HOB/UPD defined in FSP 2.2 spec.
+On the other end, POL interfaces with the universal payload. It should
+invoke the payload API after providing board initialization.</p>
+<p>Within the POL, it has several stages:</p>
+<ul class="simple">
+<li>POL early initialization<ul>
+<li>Maps to<ul>
+<li>coreboot romstage</li>
+<li>EDKII SEC/PEI</li>
+<li>Slim bootloader stage 1</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>POL late initialization<ul>
+<li>Maps to<ul>
+<li>Coreboot ramstage</li>
+<li>Slim bootloader stage 2</li>
+<li>EDKII DXE</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>POL runtime<ul>
+<li>OEM SMM</li>
+</ul>
+</li>
+</ul>
+<a class="reference internal image-reference" href="../_images/image4.PNG"><img alt="Diagram Description automatically generated" src="../_images/image4.PNG" style="width: 4.16992in; height: 3.125in;" /></a>
+<p>Figure 3 POL High Level Architecture</p>
+<p>Another aspect of the POL is to allow for maximum platform code re-use
+across different SOC generations.</p>
+<a class="reference internal image-reference" href="../_images/image5.PNG"><img alt="Timeline Description automatically generated" src="../_images/image5.PNG" style="width: 6.36547in; height: 1.21892in;" /></a>
+<p>Figure 4 POL re-use</p>
+<p>Beyond re-use of platform code with different SOC’s, the POL should be
+re-useable across the most used or popular boot paradigms such as a full
+UEFI boot, LinuxBoot, or an embedded hypervisor.</p>
+<a class="reference internal image-reference" href="../_images/image6.PNG"><img alt="Diagram Description automatically generated with medium confidence" src="../_images/image6.PNG" style="width: 6.5in; height: 2.34653in;" /></a>
+<p>Figure 5 Different Payloads</p>
+<p>The Universal Payload provides the right hand side interface. There
+could be additional payloads, such as an XPU initialization payload or a
+validation payload, such as FSP-V. But in either case the POL
+implementation should be largely independent of the SOC and the payload.</p>
+<p>Finally, UFS allows for a world where there are various compositions of
+the firmware stack. This can include RUST-based firmware as either a
+payload or the platform layer implementation, as described in the figure
+below:</p>
+<a class="reference internal image-reference" href="../_images/image7.png"><img alt="../_images/image7.png" src="../_images/image7.png" style="width: 5in; height: 2.8125in;" /></a>
+<p><strong>Figure 6 Modern language-based usage</strong></p>
+<p>This architecture is based upon <a class="reference external" href="https://github.com/jyao1/rust-firmware">https://github.com/jyao1/rust-firmware</a></p>
+</div>
+</div>
+<div class="section" id="configuration-introduction">
+<h2>Configuration Introduction<a class="headerlink" href="#configuration-introduction" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">The Platform Orchestration Layer (POL) is aimed to provide guidelines
+on writing platform code that leverage a Scalable Intel Firmware
+Support Package (sFSP) interface and payload to coordinate the overall
+platform initialization flow. It needs to expose configuration, as do
+the layers below.</div>
+<div class="line">To that end, YAML, which is a variant of JSON that allows for
+embedding comments, is employed in order to have a consisten</div>
+</div>
+<div class="section" id="platform-configuration">
+<h3>Platform configuration<a class="headerlink" href="#platform-configuration" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="yaml-based-settings">
+<h4>YAML based settings<a class="headerlink" href="#yaml-based-settings" title="Permalink to this headline">¶</a></h4>
+<p>Although the POL strives to be SOC independent, the system board’s SOC,
+with its respective sFSP, and the usage of payloads, may require
+different configuration. To that end, a consistent set of YAML based
+configuration will be exposed to the system board builder and platform
+user to configure the various elements.</p>
+<p>YAML based configuration will be provided to abstract all of the
+platform configurable elements</p>
+<ul class="simple">
+<li>sFSP UPD</li>
+<li>Platform configuration<ul>
+<li>PCD/VFR for EDKII</li>
+<li>KConfig for coreboot/oreboot/u-boot</li>
+<li>DSC for slim bootloader</li>
+<li>YAML native for XPU payload</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="example-configuration">
+<h4>Example configuration<a class="headerlink" href="#example-configuration" title="Permalink to this headline">¶</a></h4>
+<p>An example of an often configurable object for the platform developer is
+GPIO.</p>
+<p>An example of GPIO configuration is as follows:</p>
+<ul class="simple">
+<li>$ACTION :</li>
+</ul>
+<p>page : GIO</p>
+<ul class="simple">
+<li>GPIO_CFG_DATA :</li>
+<li>!expand { CFGHDR_TMPL : [ GPIO_CFG_DATA, 0x400, 1, 0 ] }</li>
+<li>GPIO_CFG_HDR :</li>
+<li>GpioHeaderSize :</li>
+</ul>
+<p>length : 0x01</p>
+<p>value : _LENGTH_GPIO_CFG_HDR_</p>
+<ul class="simple">
+<li>GpioBaseTableId :</li>
+</ul>
+<p>length : 0x01</p>
+<p>value : 0xFF</p>
+<ul class="simple">
+<li>GpioItemSize :</li>
+</ul>
+<p>length : 0x02</p>
+<p>value : 8</p>
+<ul class="simple">
+<li>GpioItemCount :</li>
+</ul>
+<p>length : 0x02</p>
+<p>value : (_LENGTH_GPIO_CFG_DATA_ - _LENGTH_GPIO_CFG_HDR_ - 8) / 8</p>
+<p># Bit start offset within each GPIO entry array to identify a GPIO pin
+uniquely. EX: GPIO group id + pad id</p>
+<p># Offset is 2nd DWORD BIT16 = 1 * 32 + 16 = 48</p>
+<ul class="simple">
+<li>GpioItemIdBitOff :</li>
+</ul>
+<p>length : 0x01</p>
+<p>value : 48</p>
+<p># Bit length within each GPIO entry array to identify a GPIO pin
+uniquely.</p>
+<p># Length is 2nd DWORD BIT16 to BIT28 = 13</p>
+<ul class="simple">
+<li>GpioItemIdBitLen :</li>
+</ul>
+<p>length : 0x01</p>
+<p>value : 13</p>
+<p># Bit offset within each GPIO entry array to indicate SKIP a GPIO
+programming</p>
+<p># Offset is 2nd DWORD BIT31 = 63</p>
+<ul class="simple">
+<li>GpioItemValidBitOff :</li>
+</ul>
+<p>length : 0x01</p>
+<p>value : 63</p>
+<ul class="simple">
+<li>GpioItemUnused :</li>
+</ul>
+<p>length : 0x01</p>
+<p>value : 0</p>
+<p># Need 1 bit per GPIO. So this mask byte length needs to be at least
+(GpioNumber + 7) / 8</p>
+<p># Padding can be added to let the whole length aligned at DWORD boundary</p>
+<ul class="simple">
+<li>GpioBaseTableBitMask :</li>
+</ul>
+<p>length : 38</p>
+<p>value : {0}</p>
+<ul class="simple">
+<li>GpioTableData :</li>
+</ul>
+<p>length : 0</p>
+<p>value : 0</p>
+</div>
+</div>
+<div class="section" id="example-implementation">
+<h3>1.1.1 Example implementation<a class="headerlink" href="#example-implementation" title="Permalink to this headline">¶</a></h3>
+<p>An example of implementation in EDKII is Intel Seamless Board
+Configuration (SBC). This feature provides a standardized and
+centralized interface for various board HW configuration, including
+GPIO, PCIe Clock, USB OC, DRAM, I2C, etc. The interface currently is
+leveraging Structured PCD in VPD which allows both manually and tool
+assisted modification for different HW setting in EDK2 Platform Payload.</p>
+<p>SBC also supports multiple board configuration scenario with board
+identifier mapped to SkuId in EDKII PCD.</p>
+<a class="reference internal image-reference" href="../_images/image8.png"><img alt="../_images/image8.png" src="../_images/image8.png" style="width: 4.4375in; height: 2.86458in;" /></a>
+<p>Figure 6 Board configuration</p>
+<p>Example implementation with Structured PCD:</p>
+<p>gBoardModuleTokenSpaceGuid.VpdPcdBoardGpioTable|*|{CODE({</p>
+<div class="line-block">
+<div class="line">{GPIO_PIN_1, {GpioSettingA,GpioSettingB, GpioSettingC, …}},</div>
+<div class="line">{GPIO_PIN_2, {GpioSettingA,GpioSettingB, GpioSettingC, …}},</div>
+<div class="line">…</div>
+</div>
+<p>{0x0} // terminator</p>
+<p>})}</p>
+<p>Components in EDKII Bootloader will consume these HW configuration while
+the configuration data is already selected based on SkuId during POST.
+Then these setting will be applied into silicon or board HW via sFSP.
+Necessary information will also be wrapped and passed to OS, such as
+GPIO related setting in ACPI Table.</p>
+</div>
+<div class="section" id="shareable-platform-code">
+<h3>Shareable platform code<a class="headerlink" href="#shareable-platform-code" title="Permalink to this headline">¶</a></h3>
+<p>For the platform implementation, there are two means of code sharing.
+One way to share content is via binary universal payloads, and the other
+is via source code.</p>
+<p>TBD – example source code. Cite moving of PciBus DXE driver to slim
+bootloader stage 2 code</p>
+<p>OpenSPDM example as source code for sharing across POL implementations.</p>
+<p>Advanced features represent a set of platform technologies that are not
+needed for basic boot. These features provide a way to extend the
+platform firmware capabilities.</p>
+<p>For these features to be sharable and extensible, they must adopt a
+high-cohesive, low-coupling design. This means an advanced feature
+should be mostly self-contained and expose a set of well defined
+interfaces that can be called by components outside the feature scope.</p>
+<p>An advanced feature should not directly depend on another advanced
+feature. Such a dependency should be resolved via an integration layer
+(e.g. Board layer). The following represents a high level design of
+Advanced Features.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">AFP1</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>AFP2</td>
+</tr>
+<tr class="row-odd"><td>AFP3</td>
+</tr>
+<tr class="row-even"><td>AFP4</td>
+</tr>
+<tr class="row-odd"><td>Board Layer</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="advanced-feature-details">
+<h3>Advanced feature details<a class="headerlink" href="#advanced-feature-details" title="Permalink to this headline">¶</a></h3>
+<p>The low-level design and implementation of Advanced feature may vary
+based on boot loaders and other preferences.</p>
+<p>The EDKII Min Platform boot loader follows a rich set of design
+guidelines conforming EDKII software framework and UEFI specification.</p>
+<p>Examples of construction of a Min Platform can be found at
+<a class="reference external" href="https://github.com/tianocore/edk2-platforms/blob/master/Platform/Intel/MinPlatformPkg/Docs/A_Tour_Beyond_BIOS_Open_Source_IA_Firmware_Platform_Design_Guide_in_EFI_Developer_Kit_II%20-%20V2.pdf">https://github.com/tianocore/edk2-platforms/blob/master/Platform/Intel/MinPlatformPkg/Docs/A_Tour_Beyond_BIOS_Open_Source_IA_Firmware_Platform_Design_Guide_in_EFI_Developer_Kit_II%20-%20V2.pdf</a></p>
+<div class="section" id="shareable-platform-code-definition">
+<h4>Shareable platform code - definition<a class="headerlink" href="#shareable-platform-code-definition" title="Permalink to this headline">¶</a></h4>
+<p>+In this specification, the shareable platform code focuses on <strong>source
+code sharing</strong>. Binary sharing should be considered in scalable FSP.</p>
+<ol class="arabic simple">
+<li>The shareable platform code SHALL be reusable by multiple
+bootloaders, including but not limited, to EDKII, slim bootloader,
+coreboot.</li>
+<li>The shareable platform code SHOULD be reusable across different boot
+phase, such as EDKII PEI/DXE/SMM phase, the coreboot ROM/RAM stage.
+This highly depends upon the use case.</li>
+<li>The shareable platform code MAY be used for other firmware. For
+example, the openspdm library may be used for system firmware, BMC
+firmware, or even device firmware. It also depends upon the use case
+– if there is business need for sharing.</li>
+</ol>
+</div>
+<div class="section" id="shareable-platform-code-guideline">
+<h4>Shareable platform code - guideline<a class="headerlink" href="#shareable-platform-code-guideline" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic simple">
+<li>Don’t consume any boot load specific API. For example, UEFI boot
+services, PCI IO Protocol.</li>
+<li>Don’t consume standard C library. Not all boot load includes standard
+C library.</li>
+<li>Use static link library if possible. Don’t use dynamic link library.</li>
+<li>Use heap carefully. Some environment might not have heap.</li>
+<li>Use global variable carefully. Some environment may only support
+read-only variable because the code runs on the flash.</li>
+<li>Don’t use inline assembly. Some build environment may not support
+inline assembly.</li>
+<li>Another guideline is to not expose internal function in public header
+file. The internal header file should be hidden.</li>
+<li>Define the boot loader provided library dependency clearly, such as
+Hardware Abstract Layer (HAL). It can make library porting easier.</li>
+<li>Define the boot loader caller provided function dependency clearly,
+such as a callback function.</li>
+</ol>
+</div>
+<div class="section" id="shareable-platform-code-rust-binding-api">
+<h4>Shareable platform code – RUST binding API<a class="headerlink" href="#shareable-platform-code-rust-binding-api" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic simple">
+<li>Include length parameter for any buffer.</li>
+<li>Have single owner for one buffer. If the caller allocates the buffer,
+the caller shall free the buffer.</li>
+<li>Define the contract between the caller and callee. E.g. If the input
+buffer is trusted or untrusted?</li>
+<li>Define the error behavior clearly. Return? Deadloop? Assert?</li>
+</ol>
+</div>
+</div>
+<div class="section" id="interface-definitions">
+<h3>Interface definitions<a class="headerlink" href="#interface-definitions" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="shareable-platform-code-apis">
+<h4>Shareable platform code APIs<a class="headerlink" href="#shareable-platform-code-apis" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="min-platform-advanced-feature-packages-afp-in-edkii-coreboot-3rd-party-directory-code">
+<h5>Min Platform Advanced Feature Packages (AFP) in EDKII, coreboot 3rd party directory code<a class="headerlink" href="#min-platform-advanced-feature-packages-afp-in-edkii-coreboot-3rd-party-directory-code" title="Permalink to this headline">¶</a></h5>
+<p>Provide example of the Pci enumeration code/library</p>
+<p>Show the generic code such as sharable openspdm</p>
+</div>
+</div>
+<div class="section" id="shareable-board-asl">
+<h4>Shareable board ASL<a class="headerlink" href="#shareable-board-asl" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="tbd">
+<h5>TBD<a class="headerlink" href="#tbd" title="Permalink to this headline">¶</a></h5>
+</div>
+</div>
+<div class="section" id="shareable-platform-code-apis-rust-bindings">
+<h4>Shareable platform code APIs – Rust bindings<a class="headerlink" href="#shareable-platform-code-apis-rust-bindings" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="tbd-1">
+<span id="id4"></span><h5>TBD<a class="headerlink" href="#tbd-1" title="Permalink to this headline">¶</a></h5>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="xpu-considerations">
+<h2>XPU considerations<a class="headerlink" href="#xpu-considerations" title="Permalink to this headline">¶</a></h2>
+<p>One of the goals of the USF effort is to help support all classes of
+silicon , namely XPU’s. An XPU can be a CPU, such as the SOC based upon
+Intel Core, Intel Atom, RISC-V or ARM. In addition, the XPU can include
+integrated or discrete graphics (iGFX/dGFX), FPGA, AI, networking, or
+acceleration.</p>
+<p>To that end, there are various aspects of the XPU support.</p>
+<p>These include configuration, update, monitoring, and access, both during
+the pre-OS and at OS runtime. In the future the latter may move into
+level 0, but for now the USF shall treat these.</p>
+<p>Like other aspects of USF, XPU considerations are in the POL
+specification since the platform is where all of the system components
+come together.</p>
+<div class="section" id="configuration">
+<h3>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h3>
+<p>To configure the XPU, a canonical YAML based configuration file will be
+provided.</p>
+<div class="section" id="build-time">
+<h4>Build time<a class="headerlink" href="#build-time" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="post-ship">
+<h4>Post ship<a class="headerlink" href="#post-ship" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="pre-os">
+<h5>Pre-OS<a class="headerlink" href="#pre-os" title="Permalink to this headline">¶</a></h5>
+</div>
+<div class="section" id="runtime">
+<h5>Runtime<a class="headerlink" href="#runtime" title="Permalink to this headline">¶</a></h5>
+</div>
+</div>
+</div>
+<div class="section" id="initialization">
+<h3>Initialization<a class="headerlink" href="#initialization" title="Permalink to this headline">¶</a></h3>
+<p>Initialization can include having the XPU as part of the sFSP, a
+dedicated payload, a UEFI or legacy BIOS option ROM, or some open source
+POL portable library.</p>
+<div class="section" id="open-source-portable-initialization-code">
+<h4>Open source portable initialization code<a class="headerlink" href="#open-source-portable-initialization-code" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="dedicated-payload">
+<h4>Dedicated payload<a class="headerlink" href="#dedicated-payload" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="option-rom-e-g-dgfx-or-networking-hba">
+<h4>Option ROM (e.g., dGFX or networking HBA)<a class="headerlink" href="#option-rom-e-g-dgfx-or-networking-hba" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="sfsp-element-e-g-igfx-in-core-cpus">
+<h4>sFSP element (e.g., iGFX in Core CPUs)<a class="headerlink" href="#sfsp-element-e-g-igfx-in-core-cpus" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="update">
+<h3>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h3>
+<p>It is critical to support both the factory time integration of the XPU
+support into the IFWI and/or post ship update of XPU support code.</p>
+<div class="section" id="slim-bootloader-update-payload">
+<h4>Slim bootloader update payload<a class="headerlink" href="#slim-bootloader-update-payload" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="overview">
+<h5>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h5>
+<p>SBL embedded a built-in Firmware Update (FWU) payload to perform a
+secure and power fail-safe firmware update flow. It contains redundant
+boot partitions and depends on hardware assisted boot partition switch
+to support fail-safe update.</p>
+<p>SBL provides abstracted ACPI/WMI interface to trigger FWU flow, EDK2
+similar capsule update mechanism to pass the new firmware to bootloader,
+and EDK2 similar way to report the FWU status back to OS through ACPI
+table.</p>
+</div>
+<div class="section" id="firmware-update-flow">
+<h5>Firmware Update Flow<a class="headerlink" href="#firmware-update-flow" title="Permalink to this headline">¶</a></h5>
+<p>SBL firmware update flow utilizes redundant boot partition to perform
+firmware update in a reliable way. It involves the following high-level
+steps:</p>
+<ul class="simple">
+<li>Boot from Partition A</li>
+<li>Update Partition B</li>
+<li>Activate Partition B</li>
+<li>Reboot</li>
+<li>Boot from Partition B</li>
+<li>Update Partition A</li>
+<li>Activate Partition A</li>
+<li>Reboot</li>
+<li>Report Firmware Update status</li>
+<li>Terminate firmware update flow.</li>
+<li>Reset system to continue booting to operating system.</li>
+</ul>
+<p>Below is a detailed FWU flow chart for SBL.</p>
+<a class="reference internal image-reference" href="../_images/image9.png"><img alt="../_images/image9.png" src="../_images/image9.png" style="width: 6.14124in; height: 4.89583in;" /></a>
+<p>Figure 7</p>
+<ul class="simple">
+<li>Firmware Update capsule is copied to designated location. This
+location is configurable through SBL configuration options.</li>
+<li>Firmware update is triggered from SBL shell or from Operating system
+and followed by a system reset.</li>
+<li>SBL detects firmware update signal and sets platform into firmware
+update mode.</li>
+<li>SBL identifies firmware update mode and loads firmware update payload
+to start update flow.</li>
+<li>Firmware Update payload gathers capsule image from selected media and
+verifies capsule data. If successful, continues with firmware update.</li>
+<li>Firmware update payload initializes state machine and identifies the
+update images in the capsule.</li>
+<li>FWU payload loops through and updates each firmware identified in the
+capsule image.</li>
+<li>FWU records update status after each firmware update.</li>
+<li>If the firmware is requesting reset after update, reset the system to
+continue updating other firmware in the capsule.</li>
+<li>In case of a power failure, FWU payload will use the state machine
+stored in flash to resume from the interrupted state.</li>
+</ul>
+</div>
+<div class="section" id="firmware-update-triggering">
+<h5>Firmware Update Triggering<a class="headerlink" href="#firmware-update-triggering" title="Permalink to this headline">¶</a></h5>
+<p>SBL provides a platform independent abstracted way of triggering
+firmware update from operating system through ACPI or WMI interfaces.</p>
+<p>SBL provides common ACPI methods, DWMI.WQ00 for read and DWMI.WS00 for
+write to a platform specific chipset register that can survive a reset
+to signal firmware update. This ACPI method can be called by driver or
+application to request triggering a firmware update. On the following
+reboot flow, once the firmware update signal is detected, this signal
+will be stored into flash so that the following firmware update flow can
+resume in case of a power failure in the middle of the process.</p>
+<p>For OS that supports WMI, such as Windows, SBL further exposes
+AcpiFirmwareCommunication WMI service through ACPI table to allow
+triggering firmware updates directly using WMI from applications.</p>
+</div>
+<div class="section" id="firmware-update-status">
+<h5>Firmware Update Status<a class="headerlink" href="#firmware-update-status" title="Permalink to this headline">¶</a></h5>
+<p>SBL reports firmware update status through custom defined Firmware
+Update status (FWST) ACPI table. FWST ACPI table will be available as
+part of RSDT and can be identified with a table signature “FWST”. FWST
+ACPI table makes use of EFI_SYSTEM_RESOURCE_TABLE defined in UEFI
+specification to report firmware update status. It adds additional ACPI
+header on top of it to make it conform to ACPI speciation. OS can use
+this ACPI table to retrieve the previous firmware update information.</p>
+</div>
+</div>
+<div class="section" id="uefi-capsule-update">
+<h4>UEFI capsule update<a class="headerlink" href="#uefi-capsule-update" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="ab-update-of-payload-for-coreboot">
+<h4>AB update of payload for coreboot<a class="headerlink" href="#ab-update-of-payload-for-coreboot" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="monitoring">
+<h3>Monitoring<a class="headerlink" href="#monitoring" title="Permalink to this headline">¶</a></h3>
+<p>The ability to ascertain status of the platform and XPU’s has various
+modalities.</p>
+<div class="section" id="uefi-tables">
+<h4>UEFI tables<a class="headerlink" href="#uefi-tables" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="acpi">
+<h4>ACPI<a class="headerlink" href="#acpi" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+</div>
+<div class="section" id="pol-examples">
+<h2>POL examples<a class="headerlink" href="#pol-examples" title="Permalink to this headline">¶</a></h2>
+<p>This chapter gives a reference implementation of POL under EDKII
+framework. Below shows the code layout that POL has a dedicated package
+to hold all POL related code.</p>
+<div class="section" id="slim-bootloader">
+<h3>Slim bootloader<a class="headerlink" href="#slim-bootloader" title="Permalink to this headline">¶</a></h3>
+<p>Slim Bootloader (SBL) is a flexible, lightweight, and open-source
+reference boot loader solution designed for Intel platforms. SBL is
+architected with a modular approach by providing very basic hardware
+initialization in bootloader, then launching a payload to boot to final
+OS or application. The payload is flexible and can be at user’s choice
+to meet special needs. The SBL overall architecture is shown in the
+diagram below:</p>
+<a class="reference internal image-reference" href="../_images/image10.png"><img alt="../_images/image10.png" src="../_images/image10.png" style="width: 6.36458in; height: 2.10417in;" /></a>
+<p>Figure 8: SBL Architecture</p>
+<p>SBL takes a linear staged boot approach to initialize the platform. As
+illustrated in the diagram below, in each stage, SBL utilizes Intel® FSP
+API interfaces to initialize the silicon and utilizes static library
+interfaces to initialize the board. These static library interfaces are
+aligned with EDK2 base library implementation to abstract board
+initialization API. For examples<a class="reference internal" href="../_images/image11.png"><img alt="image1" src="../_images/image11.png" style="width: 6.375in; height: 0.60612in;" /></a>, GPIO initialization, ACPI
+initialization, etc.</p>
+<p>Figure 9</p>
+<p>The detailed SBL stages are listed in the table below:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="85%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Stage</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Stage 1A</td>
+<td>Stage 1A contains reset vector and is first stage to
+gain control. It is responsible for very basic platform
+execution environment initialization to enable following
+stage execution. It includes temporary memory, debug
+port, etc.</td>
+</tr>
+<tr class="row-odd"><td>Stage 1B</td>
+<td>Stage 1B is the “pre-memory” stage and is responsible
+for loading configuration data and initialization system
+main memory. After memory is available, it will load and
+verify Stage2 for execution.</td>
+</tr>
+<tr class="row-even"><td>Stage 2</td>
+<td>Stage 2 is the “post-memory” stage and is responsible
+for all initialization the remaining platform, including
+chipset, CPU, I/O, ACPI, PCI, etc.</td>
+</tr>
+<tr class="row-odd"><td>Payload</td>
+<td>Payload is the bridge between bootloader and the OS. It
+provides standard boot device initialize to further
+load, verify and launch OS images. It also performs
+specific actions, such as firmware update.</td>
+</tr>
+</tbody>
+</table>
+<p>As stated above, SBL utilizes static library class to abstract the API
+interfaces for platform initialization. These libraries are written in
+pure C language so that it can easily be shared between different boot
+solutions. For example, many base library instances in EDK2 MdePkg are
+directly leveraged by SBL. Many other libraries, such as SoC access
+libraries, feature libraries are also ported from corresponding EDK2
+libraries through removing UEFI specific dependencies. In addition, ACPI
+ASL files are also borrowed from EDK2 directly. These sharable libraries
+and files make it easier to quickly enable a platform using the boot
+solution at user’s choice.</p>
+<a class="reference internal image-reference" href="../_images/image12.png"><img alt="../_images/image12.png" src="../_images/image12.png" style="width: 5in; height: 3.03125in;" /></a>
+</div>
+<div class="section" id="u-boot">
+<h3>u-boot<a class="headerlink" href="#u-boot" title="Permalink to this headline">¶</a></h3>
+<p>U-Boot can be fabricated as a POL or a payload.</p>
+</div>
+<div class="section" id="oreboot">
+<h3>Oreboot<a class="headerlink" href="#oreboot" title="Permalink to this headline">¶</a></h3>
+<p>Oreboot is a RUST-based POL example</p>
+</div>
+<div class="section" id="coreboot">
+<h3>coreboot<a class="headerlink" href="#coreboot" title="Permalink to this headline">¶</a></h3>
+<p>coreboot is a POL example</p>
+</div>
+<div class="section" id="edkii">
+<h3>EDKII<a class="headerlink" href="#edkii" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">EDKII can be used to create an FSP, such as
+<a class="reference external" href="https://github.com/tianocore/edk2/tree/master/IntelFsp2Pkg">https://github.com/tianocore/edk2/tree/master/IntelFsp2Pkg</a> described in <a class="reference external" href="https://www.intel.com/content/dam/develop/public/us/en/documents/a-tour-beyond-bios-creating-the-intel-firmware-support-package-with-the-efi-developer-kit-ii-fsp2-0.pdf">https://www.intel.com/content/dam/develop/public/us/en/documents/a-tour-beyond-bios-creating-the-intel-firmware-support-package-with-the-efi-developer-kit-ii-fsp2-0.pdf</a></div>
+<div class="line">EDKII can also be a POL, including the MinPlatform
+<a class="reference external" href="https://github.com/tianocore/edk2-platforms/blob/master/Platform/Intel/Readme.md">https://github.com/tianocore/edk2-platforms/blob/master/Platform/Intel/Readme.md</a>.</div>
+</div>
+<p>EDKII can also be used to create a payload, such as
+<a class="reference external" href="https://github.com/tianocore/edk2/tree/master/UefiPayloadPkg">https://github.com/tianocore/edk2/tree/master/UefiPayloadPkg</a>.</p>
+<div class="section" id="components">
+<h4>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h4>
+<p>Components in EDKII based firmware can be separated into three
+categories:</p>
+<ul class="simple">
+<li>EDKII Bootloader</li>
+<li>UEFI Universal Payload</li>
+<li>EDKII UEFI Platform Payload (Optional)</li>
+</ul>
+<a class="reference internal image-reference" href="../_images/image13.png"><img alt="../_images/image13.png" src="../_images/image13.png" style="width: 6.5in; height: 0.79583in;" /></a>
+<p>Figure 10</p>
+<p>The system boot starts from EDKII Bootloader where the FSP is invoked to
+initialize the silicon. Then the Bootloader follows the Payload
+specification to load and start UEFI Universal Payload. It may pass
+additional FV location information to UEFI Universal Payload which tells
+the optional EDKII UEFI Platform Payload.</p>
+<p>EDKII Bootloader consists of reset vector code, necessary platform
+specific code and EDKII generic code that launches FSP. In the end of
+EDKII Bootloader, it transfers the control from EDKII Bootloader to UEFI
+Universal Payload through DxeIpl PEIM. Each platform vendor develops its
+EDKII Bootloader and the implementations for different platforms are
+different.</p>
+<p>UEFI Universal Payload consists of all the platform agnostic drivers
+that prepare the UEFI OS booting environment. For example, the RTC
+driver to support UEFI time services, the MTC driver to support the UEFI
+Monotonic Counter services. The “Universal” in the name stands for the
+goal that the same payload binary can be used by different bootloaders
+and different platforms. There is only one implementation instance of
+the UEFI Universal Payload. For example, Slim bootloader and EDKII
+Bootloader can boot to UEFI OS by using the same UEFI Universal Payload.
+All the SOC and platform specific information is abstracted in EDKII
+Bootloader and passed to UEFI Universal Payload. The abstraction format
+is defined by Payload specification.</p>
+<p>EDKII UEFI Platform Payload is an optional component. It consists of
+platform specific <a class="reference internal" href="../_images/image14.png"><img alt="Diagram Description automatically generated" src="../_images/image14.png" style="width: 6.5in; height: 1.82431in;" /></a>implementations that must be done in payload phase.
+Theoretically this component can be eliminated by moving all
+implementations to EDKII Bootloader.</p>
+<p>Figure 11</p>
+</div>
+<div class="section" id="data-flow">
+<h4>Data Flow<a class="headerlink" href="#data-flow" title="Permalink to this headline">¶</a></h4>
+<p>EDKII Bootloader passes SOC and platform information through HOBs to
+UEFI Universal Payload. UEFI Universal Payload interacts with EDKII UEFI
+Platform Payload through Protocols. EDKII Bootloader can use any
+mechanism to pass information to EDKII UEFI Platform Payload since both
+are owned by the platform vendor.</p>
+<a class="reference internal image-reference" href="../_images/image15.png"><img alt="Diagram Description automatically generated" src="../_images/image15.png" style="width: 6.5in; height: 2.86319in;" /></a>
+<p>Figure 12</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="runtime-1">
+<span id="id5"></span><h1>Runtime<a class="headerlink" href="#runtime-1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction-1">
+<span id="id6"></span><h2>Introduction<a class="headerlink" href="#introduction-1" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the boot-time POL, there are runtime variants.</p>
+<a class="reference internal image-reference" href="../_images/image16.jpg"><img alt="Timeline Description automatically generated" src="../_images/image16.jpg" style="width: 6.5in; height: 3.65625in;" /></a>
+<p>Figure 13: POL and runtime</p>
+<div class="section" id="acpi-1">
+<span id="id7"></span><h3>ACPI<a class="headerlink" href="#acpi-1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="prm">
+<h4>PRM<a class="headerlink" href="#prm" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="uefi-runtime">
+<h3>UEFI Runtime<a class="headerlink" href="#uefi-runtime" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="smm">
+<h3>SMM<a class="headerlink" href="#smm" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="section" id="security">
+<h1>Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="security-overview">
+<h2>Security Overview<a class="headerlink" href="#security-overview" title="Permalink to this headline">¶</a></h2>
+<p>There are various security considerations for the POL, sFSP, and the
+payloads. This section will describe the various overall concerns and
+technology specific aspects.</p>
+<div class="section" id="protection">
+<h3>Protection<a class="headerlink" href="#protection" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="critical-resource-lock-hardware">
+<h4>Critical Resource Lock (hardware)<a class="headerlink" href="#critical-resource-lock-hardware" title="Permalink to this headline">¶</a></h4>
+<p>The platform shall always lock the important resource before it exits
+the platform manufacture phase.</p>
+<p>The important resource includes but is not limited to flash part, SMRAM,
+SMRR, silicon register such as lockable BAR register,</p>
+</div>
+<div class="section" id="critical-service-close-software">
+<h4>Critical Service Close (software)<a class="headerlink" href="#critical-service-close-software" title="Permalink to this headline">¶</a></h4>
+<p>The platform shall always close the service that may impact the system
+resource.</p>
+<p>The service includes but is not limited to SMM registration service,
+flash update service.</p>
+</div>
+<div class="section" id="critical-resource-access">
+<h4>Critical Resource Access<a class="headerlink" href="#critical-resource-access" title="Permalink to this headline">¶</a></h4>
+<p>The platform shall only allow the critical resource access in the
+trusted execution environment such as SMM.</p>
+</div>
+<div class="section" id="update-1">
+<span id="id8"></span><h4>Update<a class="headerlink" href="#update-1" title="Permalink to this headline">¶</a></h4>
+<p>The platform shall only allow firmware update only in the trusted
+execution environment such as SMM, or before existing the platform
+manufacture phase.</p>
+<p>The update must check the secure version number to prevent rollback.</p>
+</div>
+</div>
+<div class="section" id="detection">
+<h3>Detection<a class="headerlink" href="#detection" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="secure-boot-verified-boot">
+<h4>Secure Boot (verified boot)<a class="headerlink" href="#secure-boot-verified-boot" title="Permalink to this headline">¶</a></h4>
+<p>The platform shall enable secure boot. The early boot component shall
+verify the next component.</p>
+<p>Care must be taken for Time-of-check/Time-of-use (TOC/TOU) attack.</p>
+<p>The early component shall copy the next component to a trusted execution
+environment, verify and use.</p>
+</div>
+<div class="section" id="secure-configuration-data-verification">
+<h4>Secure Configuration (data verification)<a class="headerlink" href="#secure-configuration-data-verification" title="Permalink to this headline">¶</a></h4>
+<p>If the configuration has security property, such as lock/unlock policy.
+It shall be protected and verified.</p>
+<p>The secure configuration may be treated as code and verified together
+with secure boot.</p>
+<p>Or the secure configuration may be protected by the variable
+enhancement, such as RPMB or RPMC.</p>
+</div>
+</div>
+<div class="section" id="recovery">
+<h3>Recovery<a class="headerlink" href="#recovery" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="recovery-trigger">
+<h4>Recovery trigger<a class="headerlink" href="#recovery-trigger" title="Permalink to this headline">¶</a></h4>
+<p>A platform should have a watchdog to auto trigger recovery process
+automatically. Otherwise, it should notify the end user that a manual
+recovery is required.</p>
+</div>
+<div class="section" id="known-good-image">
+<h4>Known good image<a class="headerlink" href="#known-good-image" title="Permalink to this headline">¶</a></h4>
+<p>The recovery process may load a known good image. The known good image
+itself shall be protected and follow the detection flow.</p>
+<p>The known good image shall be up to date as well, to resist rollback
+attack – recovery to an old known bad image.</p>
+</div>
+</div>
+<div class="section" id="attestation">
+<h3>Attestation<a class="headerlink" href="#attestation" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="trusted-boot-measured-boot">
+<h4>Trusted Boot (measured boot)<a class="headerlink" href="#trusted-boot-measured-boot" title="Permalink to this headline">¶</a></h4>
+<p>The platform shall enable trusted boot. The early boot component shall
+measure the next component before transfer control to it, to create a
+trust chain.</p>
+</div>
+<div class="section" id="completeness">
+<h4>Completeness<a class="headerlink" href="#completeness" title="Permalink to this headline">¶</a></h4>
+<p>The platform shall follow TCG specification to measure all required
+component. For example, the platform shall measure every boot component.
+The platform shall measure any security-related boot configuration.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="debug">
+<h1>Debug<a class="headerlink" href="#debug" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="debug-overview">
+<h2>Debug Overview<a class="headerlink" href="#debug-overview" title="Permalink to this headline">¶</a></h2>
+<p>In this specification, the word ‘trace’ is used for any message that is
+generated by BIOS components for debug purposes. These typically include
+postcodes, status codes and string messages.</p>
+<p>The general philosophy is to provide a simple and ubiquitous solution
+that supports a range of debug solutions to help with BIOS debug and
+tracing needs.</p>
+<div class="section" id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
+<p>This section summarizes a set of requirements to ensure common debug and
+trace features are supported by all modules.</p>
+<div class="section" id="trace-interfaces">
+<h4>Trace interfaces<a class="headerlink" href="#trace-interfaces" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>BIOS shall support sending trace messages to all BIOS accessible HW
+interfaces on the platform.</li>
+<li>BIOS shall support enabling and disabling the trace interfaces
+individually.</li>
+<li>BIOS modules don’t control which trace output is used.<ul>
+<li>SAL layer shall implement a middleware trace class which routes
+the messages to enabled interfaces such as NPK or UART. Enabled
+trace interfaces may be selected at build time but run time
+selection is preferred.</li>
+</ul>
+</li>
+<li>Enabled trace interfaces shall be initialized once before the first
+trace message is sent.</li>
+</ul>
+</div>
+<div class="section" id="trace-data">
+<h4>Trace data<a class="headerlink" href="#trace-data" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>BIOS trace to NPK shall follow MIPI Sys-T specification catalog
+format and BIOS error levels shall comply to Sys-T definition
+matching verbosity level definition at bit level.</li>
+<li>BIOS build shall output a catalog dictionary file for decoding the
+trace.<ul>
+<li>Generating the dictionary file shall not exceed BIOS build time
+requirements.</li>
+</ul>
+</li>
+<li>BIOS module trace shall comply to Intel Trace Specification.
+&lt;<em>provide link if available&gt;</em></li>
+<li>BIOS shall support both build time and boot time trace verbosity
+filtering.</li>
+<li>Enabling BIOS trace feature shall meet release build binary size and
+performance requirements.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="design">
+<h3>Design<a class="headerlink" href="#design" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="source-level-debugging">
+<h3>Source level debugging<a class="headerlink" href="#source-level-debugging" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="section" id="yaml-format-boot-configuration">
+<h1><strong>YAML Format Boot Configuration</strong><a class="headerlink" href="#yaml-format-boot-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction-2">
+<span id="id9"></span><h2>Introduction<a class="headerlink" href="#introduction-2" title="Permalink to this headline">¶</a></h2>
+<p>This document describes the format of the YAML based boot setting file
+used to specify features, settings, and tool display information to the
+Intel Firmware Support Package (FSP) and tools like Config Editor. It
+further describes the structure and content of YAML format files, which
+can simplify the configuration of a static binary and during dynamic
+boot process.</p>
+</div>
+<div class="section" id="target-audience">
+<h2>Target Audience<a class="headerlink" href="#target-audience" title="Permalink to this headline">¶</a></h2>
+<p>This document is intended for person creating and using firmware images.
+It is most likely of interest if a developer needs to create customized
+feature and expose binary settings for delivery to customers, or that a
+new SOC device is being enabled.</p>
+</div>
+<div class="section" id="configuration-description-yaml-explained">
+<h2>Configuration Description (YAML) Explained<a class="headerlink" href="#configuration-description-yaml-explained" title="Permalink to this headline">¶</a></h2>
+<p>The declarations required to build the configuration data blobs and the
+header files are provided in a configuration description file. This file
+uses the <strong>YAML</strong> syntax.</p>
+<p><strong>YAML</strong> (<a class="reference external" href="https://yaml.org/">https://yaml.org/</a>) is a data
+serialization language designed to be human-friendly and work well with
+modern programming languages. A quick syntax reference can be found here
+- <a class="reference external" href="https://yaml.org/refcard.html">https://yaml.org/refcard.html</a></p>
+<p>Configuration <strong>YAML</strong> files will be processed by configuration tools
+like GenCfgData, CfgDataTool, CfgDataStitch in order to generate the
+configuration header files and binary blobs.</p>
+<p>The main platform configuration file is specified in CfgDataDef.yaml.
+Please note that you may find many YAML files. However, only
+CfgDataDef.yaml is the primary file used for the platform configuration,
+and other sub YAML files will be included by the primary YAML file to
+provide component specific configuration.</p>
+<p>An example configuration file in YAML syntax is provided in Figure 15
+below.</p>
+<a class="reference internal image-reference" href="../_images/image17.png"><img alt="../_images/image17.png" src="../_images/image17.png" style="width: 6.26042in; height: 4.6291in;" /></a>
+<p>Figure 14</p>
+</div>
+<div class="section" id="file-layout">
+<h2>File Layout<a class="headerlink" href="#file-layout" title="Permalink to this headline">¶</a></h2>
+<p>The configuration YAML file has a basic organization as below</p>
+<ul class="simple">
+<li><strong>Variable</strong> declarations</li>
+<li><strong>Template</strong> declarations</li>
+<li><strong>Configuration</strong> declarations</li>
+</ul>
+<div class="section" id="meta-data-markers">
+<h3>Meta-Data Markers<a class="headerlink" href="#meta-data-markers" title="Permalink to this headline">¶</a></h3>
+<p>The configuration YAML files uses the $ sign as meta-data indicator.
+This is used by the SBL configuration parsing tools.</p>
+<p>The current specification version supports the following meta-data
+markers.</p>
+<div class="section" id="action">
+<h4>$ACTION<a class="headerlink" href="#action" title="Permalink to this headline">¶</a></h4>
+<p><strong>$ACTION</strong> is a meta-data marker and is followed by a YAML mapping node
+that contains some meta-data. The following attributes are supported
+currently.</p>
+</div>
+<div class="section" id="page">
+<h4>PAGE<a class="headerlink" href="#page" title="Permalink to this headline">¶</a></h4>
+<p>PAGE is used to declare a list of pages used in the GUI.</p>
+<p>PAGE is also used to define the display scope for a configuration
+parameter and can be applied for individual configuration parameters.</p>
+<p>In this way multiple configuration parameters can be grouped to be
+visually displayed together in the same page in GUI.</p>
+<p>Since the page: value(s) is a meta-data used by the tool (not a
+configuration option itself), it has be preceded by the <strong>$ACTION</strong>
+node.</p>
+<p><strong>Format:</strong></p>
+<blockquote>
+<div>page: PageId1:ParentPageId1:PageTxetDescription1, PageId2:
+ParentPageId2:PageTxetDescription2</div></blockquote>
+<p>If a root page needs to be defined, the ParentPageId could be empty as
+below:</p>
+<blockquote>
+<div>page: RootPageId::RootPageTxetDescription</div></blockquote>
+<a class="reference internal image-reference" href="../_images/image18.png"><img alt="../_images/image18.png" src="../_images/image18.png" style="width: 6.6928in; height: 3.375in;" /></a>
+<p>Figure 15</p>
+</div>
+<div class="section" id="struct">
+<h4>$STRUCT<a class="headerlink" href="#struct" title="Permalink to this headline">¶</a></h4>
+<p>The STRUCT directive is used to indicate a nested structure within a
+configuration structure.</p>
+<p>For example, consider the nested structure below:</p>
+<blockquote>
+<div><p>typedef struct {</p>
+<p>UINT32 Acpi : 1;</p>
+<p>UINT32 MeasuredBoot : 1;</p>
+<p>UINT32 Vt : 1;</p>
+<p>UINT32 eMMCTuning : 1;</p>
+<p>UINT32 DciDebug : 1;</p>
+<p>UINT32 Rsvd1 : 27;</p>
+<p>} FEATURES_DATA;</p>
+<p>typedef struct {</p>
+<p>FEATURES_DATA Features;</p>
+<p>} FEATURES_CFG_DATA;</p>
+</div></blockquote>
+<p>The following example shows this declaration using a $STRUCT as shown
+below</p>
+<a class="reference internal image-reference" href="../_images/image19.png"><img alt="../_images/image19.png" src="../_images/image19.png" style="width: 6.21875in; height: 6.18154in;" /></a>
+<p>Figure 16</p>
+<ul class="simple">
+<li>$ACTION :</li>
+</ul>
+<p>page : FEATURES:PLT:”Features”</p>
+<ul class="simple">
+<li>FEATURES_CFG_DATA :</li>
+<li>!expand { CFGHDR_TMPL : [ FEATURES_CFG_DATA, 0x310, 0, 0 ] }</li>
+<li>!expand { FEATURES_TMPL : [ 0x0000001F ] }</li>
+</ul>
+</div>
+</div>
+<div class="section" id="yaml-tags">
+<h3>YAML Tags<a class="headerlink" href="#yaml-tags" title="Permalink to this headline">¶</a></h3>
+<p>YAML represents type information of native data structures with a simple
+identifier, called a tag. Explicit typing is denoted with a tag using
+the exclamation point (“!”) symbol. The following application-specific
+local tags are used.</p>
+<div class="section" id="include">
+<h4>!INCLUDE<a class="headerlink" href="#include" title="Permalink to this headline">¶</a></h4>
+<p>Configuration declarations may be logically organized in multiple files.
+Additional YAML files are included in the CfgDataDef.yaml using
+“!include” tag.</p>
+<p><em>!include</em> statement may appear within any section. A relative file path
+is required to specific the file path to be included. This path should
+be relative to the current YAML file containing the <em>!include</em>
+statement. The file content to be included must match the content type
+of the current section definition, contain complete sections, or
+combination of both.</p>
+<p>Statements in <em>!include</em> files must not break the integrity of the Yaml
+file, the included file is read by parsing tools in the exact position
+of the file, and is functionally equivalent to copying contents of the
+included file and pasting them into Yaml. The indentation of the
+included file will be adjusted automatically so that the top-level
+indentation in the included file has the same level as the <em>!include</em>
+statement line. line.</p>
+<p><strong>Format:</strong></p>
+<ul class="simple">
+<li>!include RelativeFilePath</li>
+</ul>
+<p><strong>Example:</strong></p>
+<ul class="simple">
+<li>!include Platform/CommonBrdPkg/CfgData/CfgData.yaml</li>
+<li>!include Platform/Rvp7Pkg/CfgData/CfgData_GPIO.yaml</li>
+</ul>
+</div>
+<div class="section" id="expand">
+<h4>!EXPAND<a class="headerlink" href="#expand" title="Permalink to this headline">¶</a></h4>
+<p>“!expand” tag is used for declaring a configuration option defined by a
+template
+(<a class="reference external" href="https://slimbootloader.github.io/specs/config.html?highlight=yaml#sbl-template">Template</a>).
+<em>!expand</em> tag can only appear in <em>template</em> or <em>configs</em> section.</p>
+<p><strong>Format:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>!expand { CfgTmplName: [Param1, Param2, ….] }</li>
+</ul>
+</div></blockquote>
+<p>Using the CFGHDR_TMPL template example:</p>
+<p>CFGHDR_TMPL: &gt;</p>
+<ul class="simple">
+<li>CfgHeader :</li>
+</ul>
+<p>length : 0x04</p>
+<p>value : {0x01:2b, ((_LENGTH_$(1)_)/4):10b, $(3):4b, $(4):4b, $(2):12b}</p>
+<ul class="simple">
+<li>CondValue :</li>
+</ul>
+<p>length : 0x04</p>
+<p>value : 0x00000000</p>
+<ul class="simple">
+<li>!expand { CFGHDR_TMPL : [ PLATFORMID_CFG_DATA, 0x0F0, 0, 0 ] }</li>
+</ul>
+<p>Here, the template CFGHDR_TMPL will be expanded with its full template
+body. $(1), $(2), $(3) in template body will be replaced with the
+appropriate parameters where:</p>
+<ul class="simple">
+<li>$(1) is replaced with PLATFORMID_CFG_DATA,</li>
+<li>$(2) is replaced with 0x0F0,</li>
+<li>$(3) is replaced with 0,</li>
+<li>and $(4) is replaced with 0.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="variable">
+<h2>Variable<a class="headerlink" href="#variable" title="Permalink to this headline">¶</a></h2>
+<p>Variables may be considered as something equivalent to a C language
+macro. Variables are primarily used as symbolic names given to Python
+expressions. Whenever the variable name is used, it is replaced by the
+contents of the macro. Variables should only be defined in <em>variable</em>
+section.</p>
+<p>Example:</p>
+<blockquote>
+<div><p>variable:</p>
+<p>COND_GPIO_SKIP : ($GPIO_CFG_DATA.$(1)_Half0.GpioSkip == 0)</p>
+</div></blockquote>
+</div>
+<div class="section" id="template">
+<h2>Template<a class="headerlink" href="#template" title="Permalink to this headline">¶</a></h2>
+<p>Templates are used to declare the format of configuration options and
+are useful when many configuration options of the similar type are
+needed. GPIO configuration option is a good example where templates are
+useful. A platform may have a lot of GPIO pins and instead of declaring
+configuration options for GPIO_1, GPIO_2, GPIO_3, etc., a template for
+GPIO can be declared and each GPIO can reuse the same configuration
+template with different values as needed.</p>
+<p>Templates should be declared in <em>template</em> section only, and should
+always be represented as a mapping node using folded block style
+indicated by a right angle bracket (&gt;).</p>
+<p>Templates support reference to parameters to customize the expansion.
+$(n) can be used to refer to the Nth parameter passed into this template
+macro by <em>!expland</em> tag. During expansion, $(n) will be substituted with
+the actual Nth parameter.</p>
+<p>For example, a template for PCIe root port configuration is shown below:</p>
+<blockquote>
+<div><p>PCIERP_TMPL: &gt;</p>
+<ul class="simple">
+<li>PcieRpFeatures$(1) :</li>
+<li>$STRUCT :</li>
+</ul>
+<p>name : PCIE RP $(1) Config Data</p>
+<p>struct : PCIE_RP_FEAT[]</p>
+<p>length : 0x01</p>
+<p>value : $(2)</p>
+<ul class="simple">
+<li>En :</li>
+</ul>
+<p>name : PCIE RP Enable</p>
+<p>type : Combo</p>
+<p>option : $EN_DIS</p>
+<p>help : &gt;</p>
+<p>ENABLE- Enable this PCIE RP. DISABLE- Disable this PCIE RP</p>
+<p>order : 0000.0000</p>
+<p>length : 1bB</p>
+<ul class="simple">
+<li>ClkReqSup :</li>
+</ul>
+<p>name : PCIE RP Clk Req Support</p>
+<p>type : Combo</p>
+<p>option : $EN_DIS</p>
+<p>help : &gt;</p>
+<p>Enable/Disable CLKREQ# Support</p>
+<p>condition : $(COND_PCIE_RP_EN)</p>
+<p>length : 1bB</p>
+<ul class="simple">
+<li>ClkReqNum :</li>
+</ul>
+<p>name : PCIE RP Clk Req Number</p>
+<p>type : EditNum, HEX, (0x00, 0xFF)</p>
+<p>help : &gt;</p>
+<p>Configure Root Port CLKREQ Number if CLKREQ is supported</p>
+<p>condition : $(COND_PCIE_RP_CLK_REQ_SUP)</p>
+<p>length : 3bB</p>
+<ul class="simple">
+<li>Aspm :</li>
+</ul>
+<p>name : PCIE RP Aspm</p>
+<p>type : EditNum, HEX, (0x00, 0xFF)</p>
+<p>help : &gt;</p>
+<p>PCI Express Active State Power Management settings</p>
+<p>condition : $(COND_PCIE_RP_EN)</p>
+<p>length : 3bB</p>
+<p>Now, multiple PCIe root part configurations are declared using
+!expand
+(<a class="reference external" href="https://slimbootloader.github.io/specs/config.html?highlight=yaml#sbl-expand">!EXPAND</a>)
+as below:</p>
+<ul class="simple">
+<li>PCIE_RP_CFG_DATA :</li>
+<li>!expand { CFGHDR_TMPL : [ PCIE_RP_CFG_DATA, 0x302, 0, 0 ] }</li>
+<li>!expand { PCIERP_TMPL : [ 0 , 0x8B ] }</li>
+<li>!expand { PCIERP_TMPL : [ 1 , 0x8F ] }</li>
+<li>!expand { PCIERP_TMPL : [ 2 , 0x87 ] }</li>
+<li>!expand { PCIERP_TMPL : [ 3 , 0x86 ] }</li>
+<li>!expand { PCIERP_TMPL : [ 4 , 0x83 ] }</li>
+<li>!expand { PCIERP_TMPL : [ 5 , 0x8E ] }</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="configs">
+<h2>Configs<a class="headerlink" href="#configs" title="Permalink to this headline">¶</a></h2>
+<p>This section contains the configuration option declarations.</p>
+<p>A YAML <strong>node</strong> represents a single native data structure. A <strong>mapping
+node</strong> is an unordered set of <em>key: value</em> node pairs. Mappings use a
+colon and space (“: “) to mark each key: value pair.</p>
+<p>A <strong>block sequence</strong> is simply a series of nodes, each denoted by a
+leading “-” indicator. The “-” indicator must be separated from the node
+by white space. YAML’s <strong>block collections</strong> use indentation for scope
+and begin each entry on its own line.</p>
+<p>SBL configuration options are a series of YAML block sequence and form a
+YAML block collection.</p>
+<p>Every ConfigDataDef.yaml configs section starts with the declaration for
+the <strong>CDATA_BLOB_HEADER</strong> as shown in <a class="reference external" href="https://slimbootloader.github.io/specs/config.html?highlight=yaml#sbl-config-blob-header">Config BLOB
+Header</a>
+followed by a series of configuration data identied by unique tags:</p>
+<blockquote>
+<div><p>configs:</p>
+<ul class="simple">
+<li>$ACTION :</li>
+</ul>
+<p>page : PageId1::”Page Display Text”, PageId2::”Page Display Text”,
+PageId3::”Page Display Text”, …</p>
+<ul class="simple">
+<li>Signature :</li>
+</ul>
+<p>length : 0x04</p>
+<p>value : {‘CFGD’}</p>
+<ul class="simple">
+<li>HeaderLength :</li>
+</ul>
+<p>length : 0x01</p>
+<p>value : 0x10</p>
+<ul class="simple">
+<li>Reserved :</li>
+</ul>
+<p>length : 0x03</p>
+<p>value : {0,0,0}</p>
+<ul class="simple">
+<li>UsedLength :</li>
+</ul>
+<p>length : 0x04</p>
+<p>value : _LENGTH_</p>
+<ul class="simple">
+<li>TotalLength :</li>
+</ul>
+<p>length : 0x04</p>
+<p>value : 0x2000</p>
+</div></blockquote>
+<p>As discussed in <a class="reference external" href="https://slimbootloader.github.io/specs/config.html?highlight=yaml#sbl-config-tags">SBL Configuration
+Tags</a>,
+SBL configuration options are organized as groups.</p>
+<ul class="simple">
+<li>Each group <strong>is</strong> represented <strong>as</strong> a <strong>YAML</strong> block sequence
+<strong>and</strong> starts <strong>with</strong> a leading “-” indicator followed by a white
+space.</li>
+<li>Each group has a configuration header. The Configuration header
+<strong>is</strong> declared using “!expand” tag to expand a template declaration.
+The configuration header itself <strong>is</strong> a <strong>YAML</strong> block sequence</li>
+<li>Each configuration option within the group <strong>is</strong> also a block
+sequence made of mapping nodes, each <strong>with</strong> key:value pair.</li>
+</ul>
+<p>The following example will illustrate how a MrcFastBoot config option is
+declared</p>
+<blockquote>
+<div><ul class="simple">
+<li>MrcFastBoot :</li>
+</ul>
+<p>name : MrcFastBoot</p>
+<p>type : Combo</p>
+<p>option : $EN_DIS</p>
+<p>help : &gt;</p>
+<p>Enable/Disable MRC fast boot support</p>
+<p>length : 0x01</p>
+<p>value : 0x1</p>
+</div></blockquote>
+<p>The below shows the MrcFastBoot config option being under
+MEMORY_CFG_DATA.</p>
+<blockquote>
+<div><ul class="simple">
+<li>MEMORY_CFG_DATA :</li>
+<li>!expand { CFGHDR_TMPL : [ MEMORY_CFG_DATA, 0x200, 0, 0 ] }</li>
+<li>MrcFastBoot :</li>
+</ul>
+<p>name : MrcFastBoot</p>
+<p>type : Combo</p>
+<p>option : $EN_DIS</p>
+<p>help : &gt;</p>
+<p>Enable/Disable MRC fast boot support</p>
+<p>length : 0x01</p>
+<p>value : 0x1</p>
+</div></blockquote>
+<p>Example showing the MrcFastBoot config option being under
+MEMORY_CFG_DATA which is displayed in a “MEM” page.</p>
+<blockquote>
+<div><ul class="simple">
+<li>$ACTION :</li>
+</ul>
+<p>page : MEM</p>
+<ul class="simple">
+<li>MEMORY_CFG_DATA :</li>
+<li>!expand { CFGHDR_TMPL : [ MEMORY_CFG_DATA, 0x200, 0, 0 ] }</li>
+<li>MrcFastBoot :</li>
+</ul>
+<p>name : MrcFastBoot</p>
+<p>type : Combo</p>
+<p>option : $EN_DIS</p>
+<p>help : &gt;</p>
+<p>Enable/Disable MRC fast boot support</p>
+<p>length : 0x01</p>
+<p>value : 0x1</p>
+</div></blockquote>
+<div class="section" id="configuration-option-nodes">
+<h3>Configuration Option Nodes<a class="headerlink" href="#configuration-option-nodes" title="Permalink to this headline">¶</a></h3>
+<p>The below sections explain each of the “keys” used in a configuration
+option.</p>
+<div class="section" id="name">
+<h4>NAME<a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h4>
+<p>NAME gives a plain-text label for a configuration parameter. This is the
+text label that is displayed in the Config Editor tool.</p>
+<p>Format:</p>
+<blockquote>
+<div>name: CfgItemName</div></blockquote>
+<p>Example:</p>
+<blockquote>
+<div>name : MrcFastBoot</div></blockquote>
+</div>
+<div class="section" id="type">
+<h4>TYPE<a class="headerlink" href="#type" title="Permalink to this headline">¶</a></h4>
+<p>TYPE defines the format of a configuration parameter that will be
+represented in the Config Editor tool. There are 5 different types
+available for configuration parameters: <strong>EditNum</strong>, <strong>EditText</strong>,
+<strong>Combo</strong>, <strong>Table</strong>, <strong>Reserved</strong></p>
+<div class="section" id="editnum">
+<h5>EditNum<a class="headerlink" href="#editnum" title="Permalink to this headline">¶</a></h5>
+<p>EditNum is used when user needs to input any value within the range
+defined. If the configuration option is an array, the VALUE field is
+used to specify the number of elements in the array.</p>
+<p>Format:</p>
+<blockquote>
+<div><p>type : EditNum, NumType, (MinValue, MaxValue)</p>
+<p>NumType could be **HEX** (Hexa-Decimal format) <strong>or</strong> **DEC**
+(Decimal format)</p>
+<p>The MinValue <strong>and</strong> MaxValue <strong>is</strong> the minimum <strong>and</strong> maximum
+value allowed.</p>
+</div></blockquote>
+</div>
+<div class="section" id="edittext">
+<h5>EditText<a class="headerlink" href="#edittext" title="Permalink to this headline">¶</a></h5>
+<p>EditText is used when user needs to input any text string.</p>
+<blockquote>
+<div><p>Format:</p>
+<p>type : EditText</p>
+</div></blockquote>
+</div>
+<div class="section" id="combo">
+<h5>Combo<a class="headerlink" href="#combo" title="Permalink to this headline">¶</a></h5>
+<p>Combo is used to select from a drop-down list along. This list will be
+provided by OPTION field.</p>
+<p>Format:</p>
+<blockquote>
+<div><p>type : Combo</p>
+<p>option : val1:text1, val2:text2, val3:text3, …</p>
+</div></blockquote>
+<p>Example:</p>
+<blockquote>
+<div><p>type : Combo</p>
+<p>option : 0:9600, 1:19200, 2:38400, 3:57600, 4:115200</p>
+</div></blockquote>
+</div>
+<div class="section" id="table">
+<h5>Table<a class="headerlink" href="#table" title="Permalink to this headline">¶</a></h5>
+<p>Table is used to define a tabular format. It needs to be used along with
+OPTION field to provide additional information for the table including
+column header string, cell width and cell format. Further, the VALUE
+field specifies the total number of elements in the table.</p>
+<p>Format:</p>
+<blockquote>
+<div><p>type : Table</p>
+<p>option : ColumnHdr1:width:format, ColumnHdr2:width:format,
+ColumnHdr3:width:format, …</p>
+</div></blockquote>
+<p>ColumnHdr’n’ sepcifier indicates the string to be displayed as the
+column header. width indicates the cell width in number of bytes format
+is the number format and should be HEX</p>
+<p>Example:</p>
+<blockquote>
+<div><p>type : Table</p>
+<p>option : &gt;</p>
+<p>0:1:HEX, 1:1:HEX, 2:1:HEX, 3:1:HEX, 4:1:HEX, 5:1:HEX, 6:1:HEX,
+7:1:HEX, 8:1:HEX, 9:1:HEX, A:1:HEX, B:1:HEX, C:1:HEX, D:1:HEX,
+E:1:HEX, F:1:HEX</p>
+</div></blockquote>
+<p>Byte width in each cell of the table can be displayed as 1 byte, 2 bytes
+or 4 bytes.</p>
+</div>
+<div class="section" id="reserved">
+<h5>Reserved<a class="headerlink" href="#reserved" title="Permalink to this headline">¶</a></h5>
+<p>Reserved type can be used to prevent configuration parameters from being
+displayed in the Config Editor. But the configuration parameters will
+still be generated in the auto-generated C header structure.</p>
+<p>Format:</p>
+<blockquote>
+<div>type : Reserved</div></blockquote>
+</div>
+</div>
+<div class="section" id="option">
+<h4>OPTION<a class="headerlink" href="#option" title="Permalink to this headline">¶</a></h4>
+<p>This allows to provide type-specific additional information. For type
+Combo, it defines the drop-down list. For type Table, it defines the
+column display information.</p>
+<p>Format:</p>
+<blockquote>
+<div>OPTION: &gt; Value1:TextStr1, Value2:TextStr2, ….</div></blockquote>
+<p>Note: Config tools allow the value/contents for OPTION to be split into
+multiple lines. The lines except for the very first line need to start
+with ‘<strong>+’ (plus sign)</strong> to tell the parsing tool to append this
+string to previous one.</p>
+</div>
+<div class="section" id="help">
+<h4>HELP<a class="headerlink" href="#help" title="Permalink to this headline">¶</a></h4>
+<p>This defines what will appear in the ‘help’ text when hovering over the
+field in the UI tool.</p>
+<p>Format:</p>
+<blockquote>
+<div>help: &gt; Any detail about particular CfgItem</div></blockquote>
+<p>Example:</p>
+<blockquote>
+<div>help: &gt; Enable/disable LAN controller</div></blockquote>
+<p>Note: Config tools allow the value/contents for HELP to be split into
+multiple lines. The lines except for the very first line need to start
+with ‘<strong>+’ (plus sign)</strong> to tell the parsing tool to append this
+string to previous one.</p>
+</div>
+<div class="section" id="condition">
+<h4>CONDITION<a class="headerlink" href="#condition" title="Permalink to this headline">¶</a></h4>
+<p>CONDITION is used to associate conditional statement for a configuration
+parameter when required. It is useful to dynamically hide/display a
+configuration parameter that has a dependency on another configuration
+parameter value. When the condition is TRUE, the configuration parameter
+is visible. Otherwise, it is hidden.</p>
+<p>Format:</p>
+<blockquote>
+<div>condition: Expression</div></blockquote>
+<p>Expression is an expression following Python* syntax. It can have
+reference to another configuration parameter using $<em>CfgItemName</em> or
+<em>$CfgItemName.BitField</em> format. It can use variables as described in 3.3</p>
+<p>Example:</p>
+<blockquote>
+<div><p>condition : $GPIO_CFG_DATA.GpioPinConfig1_$(1).GPIOSkip_$(1) == 0</p>
+<p>condition : $SECURITY_CFG_DATA.EnableSgx != 0 and
+$SECURITY_CFG_DATA.EpochUpdate == 2</p>
+</div></blockquote>
+</div>
+<div class="section" id="order">
+<h4>ORDER<a class="headerlink" href="#order" title="Permalink to this headline">¶</a></h4>
+<p>ORDER can be used to adjust the display order for the configuration
+parameters in a page. By default, if this command is not specified, the
+order value is assigned to be the CfgitemOffset as the logic described
+below. But if a different order is required, it can be overridden by
+declaring <strong>ORDER</strong> command explicitly using format:</p>
+<blockquote>
+<div>order : {HexMajor.HexMinor}</div></blockquote>
+<p>The final order key is calculated as:</p>
+<blockquote>
+<div>Order = (HexMajor &lt;&lt; 16) + (((HexMajor &amp; 0xFF) &lt;&lt; 8) + BitFieldOffset</div></blockquote>
+<p>If ORDER {HexMajor.HexMinor} is not specified for an item, it is
+calculated as: Order = (CfgItemOffset &lt;&lt; 16)</p>
+<p>The item order value is used as the <em>sort key</em> during YAML items
+display.</p>
+<p>Example:</p>
+<blockquote>
+<div><p>order :{0000.0000}</p>
+<p>order :{0x0040.01}</p>
+</div></blockquote>
+</div>
+<div class="section" id="length">
+<h4>LENGTH<a class="headerlink" href="#length" title="Permalink to this headline">¶</a></h4>
+<p>Length is used to specify the size of the configuration option in bytes.
+Length can also be specified in bits by appending ‘b’ at the end.</p>
+<p>Example:</p>
+<blockquote>
+<div><p>length : 1b</p>
+<p>length : 0x04</p>
+</div></blockquote>
+</div>
+<div class="section" id="value">
+<h4>VALUE<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h4>
+<p>Value is used to specify the default value of the configuration option.
+It could be a number, string, or data array.</p>
+<ul class="simple">
+<li>For number, it can be DEC or HEX. HEX needs to have prefix ‘0x’.</li>
+<li>For array, <strong>{</strong> <strong>}</strong> braces are required around the element list.
+List elements should be numbers and are separated by comma. Each
+element should have the same unit size (1, 2, 4, 8 bytes). By
+default, it is BYTE for each element. The unit size can be changed
+through an extended dummy element at the beginning of the array,
+noted as “0:0[B|W|D|Q]”.</li>
+<li>For string, single or double quotes are required.</li>
+</ul>
+<p>Example:</p>
+<blockquote>
+<div><p>value : 0xFF</p>
+<p>value : {0, 1, 3, 2, 4, 5, 6, 7}</p>
+<p>{0:0B, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08}</p>
+<p>{0:0W, 0x0201, 0x0403, 0x0605, 0x0807}</p>
+<p>{0:0D, 0x04030201, 0x08070605}</p>
+<p>{0:0Q, 0x0807060504030201}</p>
+<p>value : ‘FwuImage.bin’</p>
+</div></blockquote>
+</div>
+</div>
+</div>
+<div class="section" id="delta-dlt-file-explained">
+<h2>Delta (DLT) File Explained<a class="headerlink" href="#delta-dlt-file-explained" title="Permalink to this headline">¶</a></h2>
+<p>Configuration Delta (DLT) file is an extension of the base configuration
+YAML file that contains configuration parameters that need to be
+overridden from base configuration.</p>
+<p>Each board flavor can have one DLT file specified. YAML and DLT files
+reside at the Platform folder in source. Delta files are <strong>NOT</strong>
+auto-generated files.</p>
+<p>In addition to board-specific delta files, a delta file that overrides
+configuration parameters for all boards (board ID 0) is also supported.
+Users can add/create new DLT file for each board flavor of the same SOC
+with the help of board-specific PlatformId (1 – 31) that should be
+specified in each file. Parsing tool will then calculate bit mask/value
+for each tag that is included in base configuration YAML against each
+board’s PlatformID specified in .DLT and populates relevant data based
+on PlatformID in the form of binaries (.bin) for each of the boards.</p>
+<p>If config parameters did not change for a tag, data is taken from base
+configuration itself. If it has changed for a particular tag mentioned
+in .DLT, new data from DLT will be overwritten and gets generated in the
+configuration binary for that specific board.</p>
+</div>
+<div class="section" id="dlt-file-rules">
+<h2>DLT file rules<a class="headerlink" href="#dlt-file-rules" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Users cannot add/create a new configuration parameter in DLT file,
+nor can they create a new tag. Users can only modify/overwrite the
+values for configuration parameters that are already existing in the
+base configuration YAML file.</li>
+<li>Delta file can be used to generate both default and custom/standalone
+config data. Delta file is like changing configuration items using
+<em>ConfigEditor</em> (explained later).</li>
+<li>Delta file cannot be opened in UI interface all by itself. But it’s
+possible to open in <em>ConfigEditor</em> by first loading the base
+configuration YAML, and then load DLT file on top of it. We can then
+see overrides in <em>ConfigEditor</em> that is mentioned in DLT.</li>
+<li>Delta files should be included as part of the Board Configuration
+script, BoardConfig.py in order to take effect.</li>
+</ul>
+<p>Example:</p>
+<blockquote>
+<div><p>self._CFGDATA_INT_FILE = [‘CfgData_Int_Brd0_Def.dlt’]</p>
+<p>self._CFGDATA_EXT_FILE =
+[‘CfgData_Ext_Brd1_Rvp.dlt’,’CfgData_Ext_Brd2_Crb.dlt’,’CfgData_Ext_Brd3_Bmp.dlt’]</p>
+</div></blockquote>
+<ul class="simple">
+<li>‘_CFGDATA_INT_FILE’ is used for all the default board flavors. Delta
+files included here is generated as part of the default configuration
+data consumed within the source.</li>
+<li>‘_CFGDATA_EXT_FILE’ is used for external/customer boards. Delta files
+included here is generated as a standalone binary and stitched into
+the BIOS region of the SPI Flash.</li>
+<li>Below are the current formats that can be used in DLT:<ul>
+<li>Hash “#” symbol indicates comments in the DLT file.</li>
+<li>Users can overwrite the values of existing Tag items in DLT as
+follows</li>
+</ul>
+</li>
+</ul>
+<p>Format:</p>
+<blockquote>
+<div>Tagname.itemname(s) | &lt;data value&gt;</div></blockquote>
+<p>Example:</p>
+<blockquote>
+<div>PLATFORMID_CFG_DATA.PlatformId | 1</div></blockquote>
+<p>Example:</p>
+<blockquote>
+<div>GPIO_CFG_DATA.GpioPinConfig1_GPP_A0.GPIOSkip_GPP_A0 | 1</div></blockquote>
+<ul class="simple">
+<li>Granularity of the data is based upon the size of the configuration
+parameters specified in the base configuration YAML file. In the
+above example, PlatformID in base configuration YAML is defined as 2
+bytes. So, the value should be mentioned according to its size.
+Similarly, GPIOSkip field in base configuration YAML is defined as 1
+byte. So, the value to be mentioned in DLT can either be 0 or 1. If
+we want to overwrite the full DWORD instead of individual bits, for
+example, GPIO PIN Config DWord0 or DWord1, it can be specified as
+follows, example: GPIO_CFG_DATA.GpioPinConfig0_GPP_A0 | 0x12345678</li>
+</ul>
+<p>Note: Customers who have access to source code can change DLT files
+without having to use <em>ConfigEditor</em> GUI interface and any other
+configuration tools if they are able to build and stitch the source. All
+the commands used to generate, merge, sign the binaries are all part of
+the <em>CfgDataTool</em>, which is already part of the build process. They will
+be auto generated, merged, and signed as we run the build/stitch
+commands with no manual steps needed to create the final Configuration
+binary blob.</p>
+</div>
+<div class="section" id="configuration-process">
+<h2>Configuration Process<a class="headerlink" href="#configuration-process" title="Permalink to this headline">¶</a></h2>
+<p>Configuration data flow begins with the base configuration YAML file
+along with delta (DLT) files that contain the overrides of configuration
+settings that are different from base configuration data. <em>CfgDataTool</em>
+parses YAML and DLT file(s) and <em>GenCfgData</em> auto-generates each DLT’s
+binary file.</p>
+<p>The new board-specific config binary(ies) generated from the DLT files
+will then be ‘merged’ by <em>CfgDataTool</em> along with default config binary
+files (CfgDataInt.bin*) that were previously generated for each board
+flavor.</p>
+<p>Merged configuration binary will then be ‘signed’ by <em>CfgDataTool</em> with
+a Private Key.</p>
+<p>Signed configuration binary will be the ‘final’ custom/standalone
+configuration binary (Example: CFG_EXT_SIGNED.bin) that is placed in PDR
+or BIOS region and stitched into the final image that is to be flashed
+in SPI.</p>
+</div>
+</div>
+<div class="section" id="scalable-fsp">
+<h1>Scalable FSP<a class="headerlink" href="#scalable-fsp" title="Permalink to this headline">¶</a></h1>
+<p>The scalable FSP is an evolution of the Intel Firmware Support Package
+detailed at <a class="reference external" href="http://www.intel.com/fsp">www.intel.com/fsp</a>.</p>
+<div class="section" id="interfaces">
+<h2>Interfaces<a class="headerlink" href="#interfaces" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">There are a plurality of interfaces to the FSP, including C and
+RUST-based.</div>
+<div class="line">These interfaces allow for the POL to have a generic means by which to
+interface with the scalable FSP.</div>
+</div>
+<p>C API’s include</p>
+<p>For EDKII -</p>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/tree/master/IntelFsp2WrapperPkg/Include/Library">https://github.com/tianocore/edk2/tree/master/IntelFsp2WrapperPkg/Include/Library</a></p>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/IntelFsp2WrapperPkg/Include/Library/FspMeasurementLib.h">FspMeasurementLib.h</a></p>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/IntelFsp2WrapperPkg/Include/Library/FspWrapperApiLib.h">FspWrapperApiLib.h</a></p>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/IntelFsp2WrapperPkg/Include/Library/FspWrapperApiTestLib.h">FspWrapperApiTestLib.h</a></p>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/IntelFsp2WrapperPkg/Include/Library/FspWrapperHobProcessLib.h">FspWrapperHobProcessLib.h</a></p>
+<p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/IntelFsp2WrapperPkg/Include/Library/FspWrapperPlatformLib.h">FspWrapperPlatformLib.h</a></p>
+<p>Details of some of the interfaces can be found in
+<a class="reference external" href="https://www.intel.com/content/dam/develop/external/us/en/documents/a-tour-beyond-bios-using-the-intel-firmware-support-package-with-the-efi-developer-kit-ii-fsp2-0-820293.pdf">https://www.intel.com/content/dam/develop/external/us/en/documents/a-tour-beyond-bios-using-the-intel-firmware-support-package-with-the-efi-developer-kit-ii-fsp2-0-820293.pdf</a>.</p>
+<p>RUST variants include</p>
+<p><a class="reference external" href="https://github.com/jyao1/rust-firmware/tree/master/rust-fsp-wrapper">https://github.com/jyao1/rust-firmware/tree/master/rust-fsp-wrapper</a></p>
+<p>coreboot FSP</p>
+<p><a class="reference external" href="https://github.com/coreboot/coreboot/tree/master/src/drivers/intel/fsp2_0">https://github.com/coreboot/coreboot/tree/master/src/drivers/intel/fsp2_0</a></p>
+<p><a class="reference external" href="https://github.com/coreboot/coreboot/blob/master/src/drivers/intel/fsp2_0/include/fsp/api.h">api.h</a></p>
+<p><a class="reference external" href="https://github.com/coreboot/coreboot/blob/master/src/drivers/intel/fsp2_0/include/fsp/debug.h">debug.h</a></p>
+<p><a class="reference external" href="https://github.com/coreboot/coreboot/blob/master/src/drivers/intel/fsp2_0/include/fsp/graphics.h">graphics.h</a></p>
+<p><a class="reference external" href="https://github.com/coreboot/coreboot/blob/master/src/drivers/intel/fsp2_0/include/fsp/info_header.h">info_header.h</a></p>
+<p><a class="reference external" href="https://github.com/coreboot/coreboot/blob/master/src/drivers/intel/fsp2_0/include/fsp/soc_binding.h">soc_binding.h</a></p>
+<p><a class="reference external" href="https://github.com/coreboot/coreboot/blob/master/src/drivers/intel/fsp2_0/include/fsp/upd.h">upd.h</a></p>
+<p><a class="reference external" href="https://github.com/coreboot/coreboot/blob/master/src/drivers/intel/fsp2_0/include/fsp/util.h">util.h</a></p>
+<p>Additional details can be found in
+<a class="reference external" href="https://github.com/coreboot/coreboot/tree/master/Documentation/soc/intel/fsp">https://github.com/coreboot/coreboot/tree/master/Documentation/soc/intel/fsp</a>
+and <a class="reference external" href="https://link.springer.com/chapter/10.1007/978-1-4842-0070-4_4">https://link.springer.com/chapter/10.1007/978-1-4842-0070-4_4</a></p>
+</div>
+<div class="section" id="sfsp-interactions">
+<h2>sFSP interactions<a class="headerlink" href="#sfsp-interactions" title="Permalink to this headline">¶</a></h2>
+<p>The Intel Firmware Support Package has various evolutions for the Next
+Generation Firmware program. These are tentatively described by the
+specification evolution.</p>
+<p>Since the POL uses FSP as its SOC abstraction, the POL considerations
+for the various permutations of the FSP are described below.</p>
+<div class="section" id="fsp-2-2">
+<h3>FSP 2.2<a class="headerlink" href="#fsp-2-2" title="Permalink to this headline">¶</a></h3>
+<p>Multiple notifications, bootloader debug/status code + FSP 2.1</p>
+</div>
+<div class="section" id="fsp-2-3">
+<h3>FSP 2.3<a class="headerlink" href="#fsp-2-3" title="Permalink to this headline">¶</a></h3>
+<p>FSP 2.2, large HOB support, versioning update</p>
+</div>
+<div class="section" id="fsp-2-next-next">
+<h3>FSP 2.next.next<a class="headerlink" href="#fsp-2-next-next" title="Permalink to this headline">¶</a></h3>
+<p>FSP2.3, SOC ACPI Abstraction, FSP-V, 64-bit, SMM loading</p>
+</div>
+<div class="section" id="fsp-3-0-or-fsp2-next-next">
+<h3>FSP 3.0 or FSP2.next.next<a class="headerlink" href="#fsp-3-0-or-fsp2-next-next" title="Permalink to this headline">¶</a></h3>
+<p>FSP-at-Reset (“bootable FSP”), FSP-R (FSP-Runtime)</p>
+</div>
+</div>
+</div>
+<div class="section" id="bootloader-payloads">
+<h1>Bootloader Payloads<a class="headerlink" href="#bootloader-payloads" title="Permalink to this headline">¶</a></h1>
+<p>There are a plurality of payload implementations. Below provides a
+summary.</p>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="bootloader-payloads-1">
+<span id="id10"></span><h3>Bootloader Payloads –<a class="headerlink" href="#bootloader-payloads-1" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Slimboot payload doc
+<a class="reference external" href="https://slimbootloader.github.io/developer-guides/payload.html">https://slimbootloader.github.io/developer-guides/payload.html</a></li>
+<li>coreboot payloads <a class="reference external" href="https://www.coreboot.org/Payloads">https://www.coreboot.org/Payloads</a></li>
+<li>UEFI payload
+<a class="reference external" href="https://github.com/tianocore/edk2/tree/master/UefiPayloadPkg">https://github.com/tianocore/edk2/tree/master/UefiPayloadPkg</a></li>
+<li>LinuxBoot <a class="reference external" href="https://www.linuxboot.org/">https://www.linuxboot.org/</a></li>
+<li>PI 1.7 <a class="reference external" href="https://uefi.org/specifications">https://uefi.org/specifications</a></li>
+</ul>
+</div>
+<div class="section" id="os-hv-interfaces">
+<h3>OS/Hv interfaces<a class="headerlink" href="#os-hv-interfaces" title="Permalink to this headline">¶</a></h3>
+<p>Kernel load protocol doc
+<a class="reference external" href="https://www.kernel.org/doc/Documentation/x86/boot.txt">https://www.kernel.org/doc/Documentation/x86/boot.txt</a></p>
+<ul class="simple">
+<li>UEFI 2.9 <a class="reference external" href="https://uefi.org/specifications">https://uefi.org/specifications</a></li>
+<li>ACPI 6.3 <a class="reference external" href="https://uefi.org/specifications">https://uefi.org/specifications</a></li>
+<li>PRM <a class="reference external" href="https://github.com/tianocore/edk2-staging/tree/PRMCaseStudy">https://github.com/tianocore/edk2-staging/tree/PRMCaseStudy</a></li>
+</ul>
+</div>
+<div class="section" id="platform-implementations">
+<h3>Platform implementations<a class="headerlink" href="#platform-implementations" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>EDKII <a class="reference external" href="http://www.tianocore.org/">www.tianocore.org</a> (also
+possible payload)</li>
+<li>EDKII min platform
+<a class="reference external" href="https://edk2-docs.gitbook.io/edk-ii-minimum-platform-specification/">https://edk2-docs.gitbook.io/edk-ii-minimum-platform-specification/</a></li>
+<li>coreboot <a class="reference external" href="https://www.coreboot.org/">https://www.coreboot.org</a></li>
+<li>slimboot <a class="reference external" href="https://slimbootloader.github.io/">https://slimbootloader.github.io/</a></li>
+<li>u-boot <a class="reference external" href="https://www.denx.de/wiki/U-Boot">https://www.denx.de/wiki/U-Boot</a> (also possible payload)</li>
+<li>oreboot <a class="reference external" href="https://github.com/oreboot/oreboot">https://github.com/oreboot/oreboot</a></li>
+</ul>
+</div>
+<div class="section" id="security-1">
+<span id="id11"></span><h3>Security<a class="headerlink" href="#security-1" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>SPDM
+<a class="reference external" href="https://www.dmtf.org/sites/default/files/standards/documents/DSP0274_0.99a.pdf">https://www.dmtf.org/sites/default/files/standards/documents/DSP0274_0.99a.pdf</a></li>
+<li>Building Secure Firmware
+<a class="reference external" href="https://link.springer.com/book/10.1007/978-1-4842-6106-4">https://link.springer.com/book/10.1007/978-1-4842-6106-4</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../universal_payload/index.html" class="btn btn-neutral float-right" title="Universal Payload" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Universal Scalable Firmware (USF) Specification" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license
+      Last updated on Oct 20, 2021.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

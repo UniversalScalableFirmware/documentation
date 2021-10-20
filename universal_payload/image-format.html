@@ -1,0 +1,427 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Payload Image Format &mdash; Universal Scalable Firmware (USF)  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Hand-off state" href="hand-off-state.html" />
+    <link rel="prev" title="Overview" href="overview.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Universal Scalable Firmware (USF)
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usf/index.html">Universal Scalable Firmware (USF) Specification</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Universal Payload</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="revision-history.html">Universal Payload Revision History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Payload Image Format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#payload-image-sections">Payload Image Sections</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#universal-payload-information-section">Universal Payload Information Section</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#universal-payload-loaded-image-section">Universal Payload Loaded Image Section</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="hand-off-state.html">Hand-off state</a></li>
+<li class="toctree-l2"><a class="reference internal" href="payload-interfaces.html">Payload Interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix-a.html">Appendix A – HOB Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="references.html">References and Links</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Universal Scalable Firmware (USF)</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Universal Payload</a> &raquo;</li>
+        
+      <li>Payload Image Format</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="payload-image-format">
+<h1>Payload Image Format<a class="headerlink" href="#payload-image-format" title="Permalink to this headline">¶</a></h1>
+<p>Payload, as a standalone component, usually needs to be loaded by a
+bootloader into memory properly prior to execution. In this loading
+process, additional process might be required, such as assembling,
+rebasing, authenticating, etc.&nbsp;Today, many payloads use
+their own image formats (PE, ELF, FV, RAW, etc.), and it is very
+challenging for a bootloader to identify and support all of them.</p>
+<p>To address this, a common payload image format is desired to
+facilitate the payload loading process.&nbsp;Instead of defining a new
+image format for payloads, it is preferred to reuse an already-existing
+format, such as ELF (Executable and Linkable Format) and PE (Portable
+Executable).&nbsp;This specification selects the ELF image format as the
+common universal payload image format since it is is flexible, extensible,
+and cross-platform. It is also adopted by many different operating systems
+on many different hardware platforms.</p>
+<p>For detailed information on the ELF image format, please see
+<a class="reference external" href="https://refspecs.linuxfoundation.org/elf/elf.pdf">ELF Specification</a> .</p>
+<div class="section" id="payload-image-sections">
+<h2>Payload Image Sections<a class="headerlink" href="#payload-image-sections" title="Permalink to this headline">¶</a></h2>
+<p>To use ELF image as universal payload image format, it is required to define
+a simple way for bootloader to differenciate a universal payload image from
+a regular ELF image. On the other side, a universal payload might aslo need
+addtional image information to proceed with the boot flow. This specifciation
+requires the universal payload image to provide these addtional requried
+inforamtion through new defined ELF sections, <em>Universal Payload Information
+Section</em> and <em>Universal Payload Loaded Image Section</em>.</p>
+<div class="section" id="universal-payload-information-section">
+<h3>Universal Payload Information Section<a class="headerlink" href="#universal-payload-information-section" title="Permalink to this headline">¶</a></h3>
+<p>This specification requires a mandatory ELF universal payload information section
+to indicate the ELF image conforms to this specification. If this section is found
+inside the ELF image and is valid, the bootloader can retrieve universal payload
+specific information from this section, such as payload version, payload ID, etc.
+And the bootloader shall use the interfaces defined in this specification to handoff
+the control to the payload.</p>
+<p>This Universal Payload Information section must:</p>
+<ul class="simple">
+<li>Have section name defined as “.upld_info”</li>
+<li>Have section aligned at 4-byte boundary within the ELF image.</li>
+<li>Contain UNIVERSAL_PAYLOAD_INFO structure in its section, as
+defined as below:</li>
+</ul>
+<p><strong>UNIVERSAL_PAYLOAD_INFO Strcuture</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte Offset</th>
+<th class="head">Size in Bytes</th>
+<th class="head">Field</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>4</td>
+<td>Identifier</td>
+<td>‘PLDH’
+Identifier for
+the unverial
+payload info.</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>4</td>
+<td>HeaderLength</td>
+<td>Length of the
+structure in
+bytes.</td>
+</tr>
+<tr class="row-even"><td>8</td>
+<td>2</td>
+<td>SpecRevision</td>
+<td><p class="first">Indicates
+compliance with
+a revision of
+this
+specification
+in the BCD
+format.</p>
+<p>7 : 0 - Minor
+Version</p>
+<p>15 : 8 - Major
+Version</p>
+<p class="last">For revision
+v0.75 the value
+will be 0x0075.</p>
+</td>
+</tr>
+<tr class="row-odd"><td>10</td>
+<td>2</td>
+<td>Reserved</td>
+<td>Reserved for
+future use.</td>
+</tr>
+<tr class="row-even"><td>12</td>
+<td>4</td>
+<td>Revision</td>
+<td><p class="first">Revision of the
+Payload
+binary.
+Major.Minor
+.Revision.Build</p>
+<p>The
+ImageRevision
+can be decoded
+as follows:</p>
+<p>&nbsp;7 : 0&nbsp;&nbsp;- Build
+Number</p>
+<p>15 :8&nbsp;&nbsp;-
+Revision</p>
+<p>23 :16&nbsp;-&nbsp;Minor
+Version</p>
+<p class="last">31 :24 -&nbsp;Major
+Version</p>
+</td>
+</tr>
+<tr class="row-odd"><td>16</td>
+<td>4</td>
+<td>Attribute</td>
+<td><p class="first">Bit-field
+attribute
+indicator of
+the payload
+image.</p>
+<p>BIT 0: Build
+Type.</p>
+<p>0: Release Build</p>
+<p class="last">1: Debug Build</p>
+</td>
+</tr>
+<tr class="row-even"><td>20</td>
+<td>4</td>
+<td>Capability</td>
+<td><p class="first">Bit-field
+capability
+indicator that
+the payload
+image can
+support.</p>
+<p class="last">BIT 0: Support
+SMM rebase</p>
+</td>
+</tr>
+<tr class="row-odd"><td>24</td>
+<td>16</td>
+<td>ProducerId</td>
+<td>A
+null-terminated
+OEM-supplied
+string that
+identifies the
+payload
+producer.</td>
+</tr>
+<tr class="row-even"><td>40</td>
+<td>16</td>
+<td>ImageId</td>
+<td>A
+null-terminated
+ASCII string
+that identifies
+the payload
+name.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="universal-payload-loaded-image-section">
+<h3>Universal Payload Loaded Image Section<a class="headerlink" href="#universal-payload-loaded-image-section" title="Permalink to this headline">¶</a></h3>
+<p>There are many cases that a payload might need extra images to proceed the
+boot flow. For example, UEFI payload might need additional FV images, Linux
+payload might need additional InitRd image, u-boot might need additional
+device tree blob, etc. In these cases, it is desired to pass this additional
+image information from bootloader to payload so that payload can consume these
+images later.</p>
+<p>This specification defines optional universal payload extra image sections.
+If exist, they holds extra image information to be passed into the universal
+payload.&nbsp;Please note, multiple extra image sections might exist in single
+universal payload ELF image.</p>
+<p>If an universal payload extra image section needs to be provided, it
+must:</p>
+<ul class="simple">
+<li>Have unique section name defined as “.upld.*”. The full section name string
+length needs to be less than 16. Here,&nbsp;‘*’ can be any ASCII string.</li>
+<li>Have section aligned at proper boundary within the ELF file as required by
+the nature of the extra image itself. For example, FV and InitRd might need
+4KB page-aligned.</li>
+<li>Contain the raw extra image data in its section.</li>
+</ul>
+<p>During payload image loading, the bootloader shall build these extra images into
+HOB.&nbsp;And the universal payload can locate the information from the HOB and find
+required extra image information for consumption.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="hand-off-state.html" class="btn btn-neutral float-right" title="Hand-off state" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="overview.html" class="btn btn-neutral" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license
+      Last updated on Oct 20, 2021.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

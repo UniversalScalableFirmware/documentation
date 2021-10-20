@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to Universal Scalable Firmware documentation! &mdash; Universal Payload 0.75 alpha documentation</title>
+  <title>Welcome to Universal Scalable Firmware documentation! &mdash; Universal Scalable Firmware (USF)  documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Revision History" href="revision-history.html" /> 
+    <link rel="next" title="Universal Scalable Firmware (USF) Specification" href="usf/index.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -49,7 +49,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> Universal Payload
+            <a href="#" class="icon icon-home"> Universal Scalable Firmware (USF)
           
 
           
@@ -57,10 +57,6 @@
 
           
             
-            
-              <div class="version">
-                0.75
-              </div>
             
           
 
@@ -84,14 +80,8 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="revision-history.html">Revision History</a></li>
-<li class="toctree-l1"><a class="reference internal" href="introduction/index.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="overview/index.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="image-format/index.html">Payload Image Format</a></li>
-<li class="toctree-l1"><a class="reference internal" href="hand-off-state/index.html">Hand-off state</a></li>
-<li class="toctree-l1"><a class="reference internal" href="payload-interfaces/index.html">Payload Interfaces</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix-a/index.html">Appendix A – HOB Data Structures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="references/references.html">References and Links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usf/index.html">Universal Scalable Firmware (USF) Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="universal_payload/index.html">Universal Payload</a></li>
 </ul>
 
             
@@ -106,7 +96,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">Universal Payload</a>
+          <a href="#">Universal Scalable Firmware (USF)</a>
         
       </nav>
 
@@ -158,50 +148,36 @@
 <h1>Welcome to Universal Scalable Firmware documentation!<a class="headerlink" href="#welcome-to-universal-scalable-firmware-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="revision-history.html">Revision History</a></li>
-<li class="toctree-l1"><a class="reference internal" href="introduction/index.html">Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="introduction/index.html#purpose">Purpose</a></li>
-<li class="toctree-l2"><a class="reference internal" href="introduction/index.html#intended-audience">Intended Audience</a></li>
-<li class="toctree-l2"><a class="reference internal" href="introduction/index.html#related-documents">Related Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usf/index.html">Universal Scalable Firmware (USF) Specification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usf/usf_spec.html">Terminology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf/usf_spec.html#motivation-for-universal-scalable-firmware">Motivation for Universal Scalable Firmware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf/usf_spec.html#simplicity-determinisim-and-debuggability">Simplicity, Determinisim and Debuggability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf/usf_spec.html#os-interface">OS interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf/usf_spec.html#universal-payload">Universal Payload</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf/usf_spec.html#universal-payload-api-for-different-os-payloads-i-e-uefi-linuxboot-acrn-embedded-hypervisor-and-support-for-various-bootloaders-i-e-tianocore-edkii-coreboot-slim-bootloader-u-boot">Universal Payload API for different OS payloads (i.e., UEFI, LinuxBoot, ACRN embedded hypervisor), and support for various bootloaders (i.e., tianocore/EDKII, coreboot, slim bootloader, u-boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf/usf_spec.html#platform-orchestration-layer-pol">Platform Orchestration Layer (POL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf/usf_spec.html#scalable-firmware-support-package-sfsp">Scalable Firmware Support Package (sFSP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf/usf_spec.html#universal-payload-1">Universal Payload</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf/usf_spec.html#platform-orchestration-layer-pol-1">Platform Orchestration Layer (POL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf/usf_spec.html#runtime-1">Runtime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf/usf_spec.html#security">Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf/usf_spec.html#debug">Debug</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf/usf_spec.html#yaml-format-boot-configuration"><strong>YAML Format Boot Configuration</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf/usf_spec.html#scalable-fsp">Scalable FSP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf/usf_spec.html#bootloader-payloads">Bootloader Payloads</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="overview/index.html">Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="overview/index.html#bootloaders">Bootloaders</a></li>
-<li class="toctree-l2"><a class="reference internal" href="overview/index.html#payloads">Payloads</a></li>
-<li class="toctree-l2"><a class="reference internal" href="overview/index.html#bootloader-interfaces">Bootloader interfaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="overview/index.html#os-interfaces">OS interfaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="overview/index.html#payload-principle">Payload principle</a></li>
-<li class="toctree-l2"><a class="reference internal" href="overview/index.html#security">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="universal_payload/index.html">Universal Payload</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="universal_payload/revision-history.html">Universal Payload Revision History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="universal_payload/introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="universal_payload/overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="universal_payload/image-format.html">Payload Image Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="universal_payload/hand-off-state.html">Hand-off state</a></li>
+<li class="toctree-l2"><a class="reference internal" href="universal_payload/payload-interfaces.html">Payload Interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="universal_payload/appendix-a.html">Appendix A – HOB Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="universal_payload/references.html">References and Links</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="image-format/index.html">Payload Image Format</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="image-format/index.html#payload-image-sections">Payload Image Sections</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="hand-off-state/index.html">Hand-off state</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="hand-off-state/index.html#ia-32-and-x64-platforms">IA-32 and x64 Platforms</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hand-off-state/index.html#arm-platforms">ARM Platforms</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hand-off-state/index.html#risc-v-platforms">RISC-V Platforms</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="payload-interfaces/index.html">Payload Interfaces</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="payload-interfaces/index.html#acpi-tables">ACPI tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="payload-interfaces/index.html#hob-list">HOB List</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="appendix-a/index.html">Appendix A – HOB Data Structures</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="appendix-a/index.html#base-data-type">Base Data Type</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix-a/index.html#efi-hob-type">EFI HOB TYPE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix-a/index.html#efi-hob-generic-header">EFI_HOB_GENERIC_HEADER</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix-a/index.html#hob-list-header">HOB List Header</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix-a/index.html#efi-hob-guid-type">EFI_HOB_GUID_TYPE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix-a/index.html#efi-pei-graphics-info-hob">EFI_PEI_GRAPHICS_INFO_HOB</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix-a/index.html#efi-pei-graphics-device-info-hob">EFI_PEI_GRAPHICS_DEVICE_INFO_HOB</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix-a/index.html#efi-hob-resource-descriptor">EFI_HOB_RESOURCE_DESCRIPTOR</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix-a/index.html#efi-hob-memory-allocation">EFI_HOB_MEMORY_ALLOCATION</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="references/references.html">References and Links</a></li>
 </ul>
 </div>
 </div>
@@ -214,7 +190,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="revision-history.html" class="btn btn-neutral float-right" title="Revision History" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="usf/index.html" class="btn btn-neutral float-right" title="Universal Scalable Firmware (USF) Specification" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>

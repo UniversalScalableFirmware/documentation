@@ -1,0 +1,270 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Universal Payload &mdash; Universal Scalable Firmware (USF)  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Universal Payload Revision History" href="revision-history.html" />
+    <link rel="prev" title="Terminology" href="../usf/usf_spec.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Universal Scalable Firmware (USF)
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usf/index.html">Universal Scalable Firmware (USF) Specification</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Universal Payload</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="revision-history.html">Universal Payload Revision History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image-format.html">Payload Image Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hand-off-state.html">Hand-off state</a></li>
+<li class="toctree-l2"><a class="reference internal" href="payload-interfaces.html">Payload Interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix-a.html">Appendix A – HOB Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="references.html">References and Links</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Universal Scalable Firmware (USF)</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Universal Payload</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="universal-payload">
+<h1>Universal Payload<a class="headerlink" href="#universal-payload" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="revision-history.html">Universal Payload Revision History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#purpose">Purpose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#intended-audience">Intended Audience</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#related-documents">Related Documents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#bootloaders">Bootloaders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#payloads">Payloads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#bootloader-interfaces">Bootloader interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#os-interfaces">OS interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#payload-principle">Payload principle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#security">Security</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="image-format.html">Payload Image Format</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="image-format.html#payload-image-sections">Payload Image Sections</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hand-off-state.html">Hand-off state</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hand-off-state.html#ia-32-and-x64-platforms">IA-32 and x64 Platforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hand-off-state.html#arm-platforms">ARM Platforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hand-off-state.html#risc-v-platforms">RISC-V Platforms</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="payload-interfaces.html">Payload Interfaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="payload-interfaces.html#acpi-tables">ACPI tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="payload-interfaces.html#hob-list">HOB List</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="appendix-a.html">Appendix A – HOB Data Structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix-a.html#base-data-type">Base Data Type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix-a.html#efi-hob-type">EFI HOB TYPE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix-a.html#efi-hob-generic-header">EFI_HOB_GENERIC_HEADER</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix-a.html#hob-list-header">HOB List Header</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix-a.html#efi-hob-guid-type">EFI_HOB_GUID_TYPE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix-a.html#efi-pei-graphics-info-hob">EFI_PEI_GRAPHICS_INFO_HOB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix-a.html#efi-pei-graphics-device-info-hob">EFI_PEI_GRAPHICS_DEVICE_INFO_HOB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix-a.html#efi-hob-resource-descriptor">EFI_HOB_RESOURCE_DESCRIPTOR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix-a.html#efi-hob-memory-allocation">EFI_HOB_MEMORY_ALLOCATION</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References and Links</a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="revision-history.html" class="btn btn-neutral float-right" title="Universal Payload Revision History" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../usf/usf_spec.html" class="btn btn-neutral" title="Terminology" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license
+      Last updated on Oct 20, 2021.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

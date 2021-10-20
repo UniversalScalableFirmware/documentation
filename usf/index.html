@@ -1,0 +1,285 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Universal Scalable Firmware (USF) Specification &mdash; Universal Scalable Firmware (USF)  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Terminology" href="usf_spec.html" />
+    <link rel="prev" title="Welcome to Universal Scalable Firmware documentation!" href="../index.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Universal Scalable Firmware (USF)
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Universal Scalable Firmware (USF) Specification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html">Terminology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#motivation-for-universal-scalable-firmware">Motivation for Universal Scalable Firmware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#simplicity-determinisim-and-debuggability">Simplicity, Determinisim and Debuggability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#os-interface">OS interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#universal-payload">Universal Payload</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#universal-payload-api-for-different-os-payloads-i-e-uefi-linuxboot-acrn-embedded-hypervisor-and-support-for-various-bootloaders-i-e-tianocore-edkii-coreboot-slim-bootloader-u-boot">Universal Payload API for different OS payloads (i.e., UEFI, LinuxBoot, ACRN embedded hypervisor), and support for various bootloaders (i.e., tianocore/EDKII, coreboot, slim bootloader, u-boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#platform-orchestration-layer-pol">Platform Orchestration Layer (POL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#scalable-firmware-support-package-sfsp">Scalable Firmware Support Package (sFSP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#universal-payload-1">Universal Payload</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#platform-orchestration-layer-pol-1">Platform Orchestration Layer (POL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#runtime-1">Runtime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#security">Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#debug">Debug</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#yaml-format-boot-configuration"><strong>YAML Format Boot Configuration</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#scalable-fsp">Scalable FSP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#bootloader-payloads">Bootloader Payloads</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../universal_payload/index.html">Universal Payload</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Universal Scalable Firmware (USF)</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Universal Scalable Firmware (USF) Specification</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="universal-scalable-firmware-usf-specification">
+<h1>Universal Scalable Firmware (USF) Specification<a class="headerlink" href="#universal-scalable-firmware-usf-specification" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usf_spec.html">Terminology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usf_spec.html#motivation-for-universal-scalable-firmware">Motivation for Universal Scalable Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usf_spec.html#simplicity-determinisim-and-debuggability">Simplicity, Determinisim and Debuggability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usf_spec.html#os-interface">OS interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usf_spec.html#universal-payload">Universal Payload</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usf_spec.html#universal-payload-api-for-different-os-payloads-i-e-uefi-linuxboot-acrn-embedded-hypervisor-and-support-for-various-bootloaders-i-e-tianocore-edkii-coreboot-slim-bootloader-u-boot">Universal Payload API for different OS payloads (i.e., UEFI, LinuxBoot, ACRN embedded hypervisor), and support for various bootloaders (i.e., tianocore/EDKII, coreboot, slim bootloader, u-boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usf_spec.html#platform-orchestration-layer-pol">Platform Orchestration Layer (POL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usf_spec.html#scalable-firmware-support-package-sfsp">Scalable Firmware Support Package (sFSP)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usf_spec.html#universal-payload-1">Universal Payload</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usf_spec.html#platform-orchestration-layer-pol-1">Platform Orchestration Layer (POL)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#architecture">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#configuration-introduction">Configuration Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#xpu-considerations">XPU considerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#pol-examples">POL examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usf_spec.html#runtime-1">Runtime</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#introduction-1">Introduction</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usf_spec.html#security">Security</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#security-overview">Security Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usf_spec.html#debug">Debug</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#debug-overview">Debug Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usf_spec.html#yaml-format-boot-configuration"><strong>YAML Format Boot Configuration</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#introduction-2">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#target-audience">Target Audience</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#configuration-description-yaml-explained">Configuration Description (YAML) Explained</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#file-layout">File Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#variable">Variable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#template">Template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#configs">Configs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#delta-dlt-file-explained">Delta (DLT) File Explained</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#dlt-file-rules">DLT file rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#configuration-process">Configuration Process</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usf_spec.html#scalable-fsp">Scalable FSP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#interfaces">Interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#sfsp-interactions">sFSP interactions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usf_spec.html#bootloader-payloads">Bootloader Payloads</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usf_spec.html#references">References</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="usf_spec.html" class="btn btn-neutral float-right" title="Terminology" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral" title="Welcome to Universal Scalable Firmware documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license
+      Last updated on Oct 20, 2021.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
