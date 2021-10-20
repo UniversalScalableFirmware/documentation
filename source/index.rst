@@ -10,11 +10,6 @@ Welcome to Universal Scalable Firmware documentation!
    :maxdepth: 2
    :glob:
 
-   revision-history
-   introduction/index
-   overview/index
-   image-format/index
-   hand-off-state/index
-   payload-interfaces/index
-   appendix-a/index
-   references/*
+   usf/index.rst
+   universal_payload/index.rst
+
