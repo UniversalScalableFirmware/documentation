@@ -1,0 +1,304 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Terminology &mdash; Universal Scalable Firmware (USF)  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Universal Payload" href="2_universal_payload.html" />
+    <link rel="prev" title="Revision History" href="revision_history.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Universal Scalable Firmware (USF)
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="revision_history.html">Revision History</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Terminology</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#motivation-for-universal-scalable-firmware">Motivation for Universal Scalable Firmware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simplicity-determinisim-and-debuggability">Simplicity, Determinisim and Debuggability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#os-interface">OS interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#universal-payload">Universal Payload</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#platform-orchestration-layer-pol">Platform Orchestration Layer (POL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scalable-firmware-support-package-sfsp">Scalable Firmware Support Package (sFSP)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html">Universal Payload</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_platform_orechestration_layer.html">Platform Orchestration Layer (POL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_runtime.html">Runtime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_debug.html">Debug</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7_yaml_boot_configuration.html">YAML Format Boot Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8_scalable_fsp.html">Scalable FSP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9_bootloader_payloads.html">Bootloader Payloads</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Universal Scalable Firmware (USF)</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Terminology</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <a class="reference internal image-reference" href="_images/image1.jpeg"><img alt="_images/image1.jpeg" src="_images/image1.jpeg" style="width: 6.5in; height: 4.0625in;" /></a>
+<p>Universal Scalable Firmware (USF) Specification</p>
+<p><strong>Version 0.7</strong></p>
+<p><strong>October 2021</strong></p>
+<p>© Copyright Content on document licensed under a Creative Commons
+Attribution 4.0 International license</p>
+<div class="section" id="terminology">
+<h1>Terminology<a class="headerlink" href="#terminology" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>There has been a lot of confusion regarding the terminologies
+surrounding firmware and BIOS. This section describes these
+terminologies as used in this specification. Just like “Operating
+System” (OS) is a generic name for the concept of Post-Boot
+Environment, “Basic Input Output System” (BIOS) is a generic name for
+the concept of Pre-Boot Environment. Just like there are multiple
+implementations of the concept of OS, such as Linux, there are
+various implementations of the concept of BIOS, such as UEFI FW,
+u-boot, coreboot, Slim bootloader etc.</p>
+<p>Tiano, EDKII and Min Platform are all implementations based on the
+“Universal Extensible Firmware Interface” (UEFI) and “Platform
+Initialization” (PI) interface specifications (uefi.org).</p>
+<p>This Specification uses the terminology Firmware/System Firmware/BIOS
+interchangeably to indicate the Pre-Boot environment</p>
+</div></blockquote>
+<div class="section" id="motivation-for-universal-scalable-firmware">
+<h2>Motivation for Universal Scalable Firmware<a class="headerlink" href="#motivation-for-universal-scalable-firmware" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>UEFI and PI Spec based BIOS implementations such as Tiano and EDKII
+has served the industry well for the past couple of decades. The goal
+is to evolve the goodness of modularity to scale for IP FW
+development model, with emphasis on simplicity, scalability,
+debuggability, readability and determinism.</div></blockquote>
+</div>
+<div class="section" id="simplicity-determinisim-and-debuggability">
+<h2>Simplicity, Determinisim and Debuggability<a class="headerlink" href="#simplicity-determinisim-and-debuggability" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>All the three attributes – Simplicity, Determinism and Debuggability
+go together. BIOS plays a major role in debugging hardware, silicon
+features and various technologies (Security, Power Management, IO,
+Virtualization, RAS etc.) and should lend itself to readability and
+determining the sequence of operations by reading the source code.
+BIOS is the abstraction layer and it often times have to deal with
+unstable hardware and Silicon workarounds. A simple, debug (hardware
+debug, not just software) friendly infrastructure is called for.</p>
+<p>Today’s platform and SoC complexity calls for a model of replaceable
+IP Modules, with the associated FW components traveling with that IP.</p>
+<p>The layers of the Universal Scalable Firmware are described in the
+following diagram.</p>
+</div></blockquote>
+<a class="reference internal image-reference" href="_images/image2.jpg"><img alt="A picture containing graphical user interface" src="_images/image2.jpg" style="width: 6.5in; height: 6.85208in;" /></a>
+<p>Figure 1 USF stack</p>
+<blockquote>
+<div>From the top of the stack we have the following.</div></blockquote>
+</div>
+<div class="section" id="os-interface">
+<h2>OS interface<a class="headerlink" href="#os-interface" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>These are well-known interfaces, such as ACPI, UEFI, Kexec, or
+Multiboot, that provide a means to interact with pre-OS and runtimes.</div></blockquote>
+</div>
+<div class="section" id="universal-payload">
+<h2>Universal Payload<a class="headerlink" href="#universal-payload" title="Permalink to this headline">¶</a></h2>
+<p>Universal Payload API for different OS payloads (i.e., UEFI, LinuxBoot, ACRN embedded hypervisor), and support for various bootloaders (i.e., tianocore/EDKII, coreboot, slim bootloader, and u-boot.</p>
+</div>
+<div class="section" id="platform-orchestration-layer-pol">
+<h2>Platform Orchestration Layer (POL)<a class="headerlink" href="#platform-orchestration-layer-pol" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>Simplified ACPI support, common libraries for various bootloaders &amp;
+Rust language, standard binary configuration through YAML, support
+for FW attestation, authentication, measurement, and modern update.</div></blockquote>
+</div>
+<div class="section" id="scalable-firmware-support-package-sfsp">
+<h2>Scalable Firmware Support Package (sFSP)<a class="headerlink" href="#scalable-firmware-support-package-sfsp" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>Scalable Firmware Support Package (sFSP) support for 64-bit reset
+vector, SMM encapsulation, various domain modules, authentication,
+unified configuration, and SOC level validation.</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="2_universal_payload.html" class="btn btn-neutral float-right" title="Universal Payload" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="revision_history.html" class="btn btn-neutral" title="Revision History" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license
+      Last updated on Oct 21, 2021.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

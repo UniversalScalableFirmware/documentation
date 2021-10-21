@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Security &mdash; Universal Scalable Firmware (USF)  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Debug" href="6_debug.html" />
+    <link rel="prev" title="Runtime" href="4_runtime.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Universal Scalable Firmware (USF)
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="revision_history.html">Revision History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_terminology.html">Terminology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html">Universal Payload</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_platform_orechestration_layer.html">Platform Orchestration Layer (POL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_runtime.html">Runtime</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Security</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#security-overview">Security Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#protection">Protection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#critical-resource-lock-hardware">Critical Resource Lock (hardware)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#critical-service-close-software">Critical Service Close (software)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#critical-resource-access">Critical Resource Access</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#update">Update</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#detection">Detection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#secure-boot-verified-boot">Secure Boot (verified boot)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#secure-configuration-data-verification">Secure Configuration (data verification)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#recovery">Recovery</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#recovery-trigger">Recovery trigger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#known-good-image">Known good image</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#attestation">Attestation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#trusted-boot-measured-boot">Trusted Boot (measured boot)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#completeness">Completeness</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="6_debug.html">Debug</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7_yaml_boot_configuration.html">YAML Format Boot Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8_scalable_fsp.html">Scalable FSP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9_bootloader_payloads.html">Bootloader Payloads</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Universal Scalable Firmware (USF)</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Security</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="security">
+<span id="id1"></span><h1>Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="security-overview">
+<h2>Security Overview<a class="headerlink" href="#security-overview" title="Permalink to this headline">¶</a></h2>
+<p>There are various security considerations for the POL, sFSP, and the
+payloads. This section will describe the various overall concerns and
+technology specific aspects.</p>
+<div class="section" id="protection">
+<h3>Protection<a class="headerlink" href="#protection" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="critical-resource-lock-hardware">
+<h4>Critical Resource Lock (hardware)<a class="headerlink" href="#critical-resource-lock-hardware" title="Permalink to this headline">¶</a></h4>
+<p>The platform shall always lock the important resource before it exits
+the platform manufacture phase.</p>
+<p>The important resource includes but is not limited to flash part, SMRAM,
+SMRR, silicon register such as lockable BAR register,</p>
+</div>
+<div class="section" id="critical-service-close-software">
+<h4>Critical Service Close (software)<a class="headerlink" href="#critical-service-close-software" title="Permalink to this headline">¶</a></h4>
+<p>The platform shall always close the service that may impact the system
+resource.</p>
+<p>The service includes but is not limited to SMM registration service,
+flash update service.</p>
+</div>
+<div class="section" id="critical-resource-access">
+<h4>Critical Resource Access<a class="headerlink" href="#critical-resource-access" title="Permalink to this headline">¶</a></h4>
+<p>The platform shall only allow the critical resource access in the
+trusted execution environment such as SMM.</p>
+</div>
+<div class="section" id="update">
+<span id="update-1"></span><h4>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h4>
+<p>The platform shall only allow firmware update only in the trusted
+execution environment such as SMM, or before existing the platform
+manufacture phase.</p>
+<p>The update must check the secure version number to prevent rollback.</p>
+</div>
+</div>
+<div class="section" id="detection">
+<h3>Detection<a class="headerlink" href="#detection" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="secure-boot-verified-boot">
+<h4>Secure Boot (verified boot)<a class="headerlink" href="#secure-boot-verified-boot" title="Permalink to this headline">¶</a></h4>
+<p>The platform shall enable secure boot. The early boot component shall
+verify the next component.</p>
+<p>Care must be taken for Time-of-check/Time-of-use (TOC/TOU) attack.</p>
+<p>The early component shall copy the next component to a trusted execution
+environment, verify and use.</p>
+</div>
+<div class="section" id="secure-configuration-data-verification">
+<h4>Secure Configuration (data verification)<a class="headerlink" href="#secure-configuration-data-verification" title="Permalink to this headline">¶</a></h4>
+<p>If the configuration has security property, such as lock/unlock policy.
+It shall be protected and verified.</p>
+<p>The secure configuration may be treated as code and verified together
+with secure boot.</p>
+<p>Or the secure configuration may be protected by the variable
+enhancement, such as RPMB or RPMC.</p>
+</div>
+</div>
+<div class="section" id="recovery">
+<h3>Recovery<a class="headerlink" href="#recovery" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="recovery-trigger">
+<h4>Recovery trigger<a class="headerlink" href="#recovery-trigger" title="Permalink to this headline">¶</a></h4>
+<p>A platform should have a watchdog to auto trigger recovery process
+automatically. Otherwise, it should notify the end user that a manual
+recovery is required.</p>
+</div>
+<div class="section" id="known-good-image">
+<h4>Known good image<a class="headerlink" href="#known-good-image" title="Permalink to this headline">¶</a></h4>
+<p>The recovery process may load a known good image. The known good image
+itself shall be protected and follow the detection flow.</p>
+<p>The known good image shall be up to date as well, to resist rollback
+attack – recovery to an old known bad image.</p>
+</div>
+</div>
+<div class="section" id="attestation">
+<h3>Attestation<a class="headerlink" href="#attestation" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="trusted-boot-measured-boot">
+<h4>Trusted Boot (measured boot)<a class="headerlink" href="#trusted-boot-measured-boot" title="Permalink to this headline">¶</a></h4>
+<p>The platform shall enable trusted boot. The early boot component shall
+measure the next component before transfer control to it, to create a
+trust chain.</p>
+</div>
+<div class="section" id="completeness">
+<h4>Completeness<a class="headerlink" href="#completeness" title="Permalink to this headline">¶</a></h4>
+<p>The platform shall follow TCG specification to measure all required
+component. For example, the platform shall measure every boot component.
+The platform shall measure any security-related boot configuration.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="6_debug.html" class="btn btn-neutral float-right" title="Debug" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="4_runtime.html" class="btn btn-neutral" title="Runtime" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license
+      Last updated on Oct 21, 2021.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
