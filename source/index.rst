@@ -7,9 +7,16 @@ Welcome to Universal Scalable Firmware documentation!
 =====================================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :glob:
 
-   usf/index.rst
-   universal_payload/index.rst
-
+   revision_history
+   1_terminology
+   2_universal_payload
+   3_platform_orechestration_layer
+   4_runtime
+   5_security
+   6_debug
+   7_yaml_boot_configuration
+   8_scalable_fsp
+   9_bootloader_payloads

@@ -1,6 +1,0 @@
-.. |br|     raw:: html        .. force a line break in HTML output (blank lines needed here)
-
-   <br />
-.. |PN| replace:: Universal Payload
-
-
