@@ -83,12 +83,14 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="revision_history.html">Revision History</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Terminology</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#motivation-for-universal-scalable-firmware">Motivation for Universal Scalable Firmware</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#simplicity-determinisim-and-debuggability">Simplicity, Determinisim and Debuggability</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#os-interface">OS interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#universal-payload">Universal Payload</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#platform-orchestration-layer-pol">Platform Orchestration Layer (POL)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#scalable-firmware-support-package-sfsp">Scalable Firmware Support Package (sFSP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#motivation-for-universal-scalable-firmware-usf">Motivation for Universal Scalable Firmware (USF)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simplicity-determinisim-and-debuggability">Simplicity, Determinisim and Debuggability</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#os-interfaces">OS Interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#universal-payload">Universal Payload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#platform-orchestration-layer-pol">Platform Orchestration Layer (POL)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scalable-firmware-support-package-sfsp">Scalable Firmware Support Package (sFSP)</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html">Universal Payload</a></li>
@@ -165,79 +167,47 @@
 <p>Universal Scalable Firmware (USF) Specification</p>
 <p><strong>Version 0.7</strong></p>
 <p><strong>October 2021</strong></p>
-<p>© Copyright Content on document licensed under a Creative Commons
-Attribution 4.0 International license</p>
+<p>© Copyright Content on document licensed under a Creative Commons Attribution 4.0 International license</p>
 <div class="section" id="terminology">
 <h1>Terminology<a class="headerlink" href="#terminology" title="Permalink to this headline">¶</a></h1>
-<blockquote>
-<div><p>There has been a lot of confusion regarding the terminologies
-surrounding firmware and BIOS. This section describes these
-terminologies as used in this specification. Just like “Operating
-System” (OS) is a generic name for the concept of Post-Boot
-Environment, “Basic Input Output System” (BIOS) is a generic name for
-the concept of Pre-Boot Environment. Just like there are multiple
-implementations of the concept of OS, such as Linux, there are
-various implementations of the concept of BIOS, such as UEFI FW,
-u-boot, coreboot, Slim bootloader etc.</p>
-<p>Tiano, EDKII and Min Platform are all implementations based on the
-“Universal Extensible Firmware Interface” (UEFI) and “Platform
-Initialization” (PI) interface specifications (uefi.org).</p>
-<p>This Specification uses the terminology Firmware/System Firmware/BIOS
-interchangeably to indicate the Pre-Boot environment</p>
-</div></blockquote>
-<div class="section" id="motivation-for-universal-scalable-firmware">
-<h2>Motivation for Universal Scalable Firmware<a class="headerlink" href="#motivation-for-universal-scalable-firmware" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div>UEFI and PI Spec based BIOS implementations such as Tiano and EDKII
-has served the industry well for the past couple of decades. The goal
-is to evolve the goodness of modularity to scale for IP FW
-development model, with emphasis on simplicity, scalability,
-debuggability, readability and determinism.</div></blockquote>
+<p>Early personal computers used a “Basic Input/Output System” (BIOS) to boot the system and provide communication between hardware and the Operating System (OS). Hence the term BIOS has come to be used as a generic term for all computer firmware, but this is not technically correct. In the 1990s, Intel developed the “Extensible Firmware Interface” (EFI) to provide more features than legacy BIOS, and this eventually evolved into the Unified Extensible Firmware Interface (UEFI) maintained by the Unified EFI Forum, Inc. (See <a class="reference external" href="https://uefi.org/">https://uefi.org/</a>) Most modern PCs ship with some variation of UEFI firmware, and UEFI is widely supported by both commercial and open source operating systems. Tianocore, EDKII and Intel’s Minimum Platform Architecture (MPA or “min platform) are all implementations based on the UEFI standard for system firmware.</p>
+<p>This Specification uses “firmware” or “system firmware” interchangeably to indicate a computer’s pre-boot environment. “BIOS” may also be used as a generic term, but should not be considered a reference to legacy firmware implementations.</p>
+<div class="section" id="motivation-for-universal-scalable-firmware-usf">
+<h2>Motivation for Universal Scalable Firmware (USF)<a class="headerlink" href="#motivation-for-universal-scalable-firmware-usf" title="Permalink to this headline">¶</a></h2>
+<p>Firmware implementations such as Tianocore and EDKII have served the industry well for a couple of decades now. But issues such as the following are now driving the need for new system firmware standards:</p>
+<ul class="simple">
+<li>Growing demands from customers requiring firmware flexibility to easily support various bootloaders.</li>
+<li>Fragmented Tianocore/EDKII/min-platform/FSP solutions are leading to higher development and validation cost.</li>
+<li>Closely coupled Platform/SOC/IP level firmware design &amp; code are resulting in low reusability and long time to market (TTM).</li>
+<li>High complexity with key modules like MRC &amp; security result in quality, test, and debug challenges.</li>
+<li>Limited modularity.</li>
+<li>Lack of unified/common interfaces to support platform XPUs (CPU, dGPU, etc).</li>
+</ul>
+<p>The goal of developing the Universal Scalable Firmware standard is to evolve modularity to scale for an IP firmware development model, with an emphasis on simplicity, scalability, debuggability, readability and determinism.</p>
 </div>
 <div class="section" id="simplicity-determinisim-and-debuggability">
 <h2>Simplicity, Determinisim and Debuggability<a class="headerlink" href="#simplicity-determinisim-and-debuggability" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><p>All the three attributes – Simplicity, Determinism and Debuggability
-go together. BIOS plays a major role in debugging hardware, silicon
-features and various technologies (Security, Power Management, IO,
-Virtualization, RAS etc.) and should lend itself to readability and
-determining the sequence of operations by reading the source code.
-BIOS is the abstraction layer and it often times have to deal with
-unstable hardware and Silicon workarounds. A simple, debug (hardware
-debug, not just software) friendly infrastructure is called for.</p>
-<p>Today’s platform and SoC complexity calls for a model of replaceable
-IP Modules, with the associated FW components traveling with that IP.</p>
-<p>The layers of the Universal Scalable Firmware are described in the
-following diagram.</p>
-</div></blockquote>
+<p>The three attributes of Simplicity, Determinism and Debuggability go together. Firmware plays a major role in debugging hardware, silicon features and various technologies (Security, Power Management, IO, Virtualization, RAS etc.) and should lend itself to readability and determining the sequence of operations by reading the source code. Firmware is the abstraction layer and it often times have to deal with unstable hardware and Silicon workarounds. A simple, debug (hardware debug, not just software) friendly infrastructure is called for.Today’s platform and SoC complexity calls for a model of replaceable IP Modules, with the associated FW components traveling with that IP.</p>
+<p>The layers of  Universal Scalable Firmware are described in the following diagram.</p>
 <a class="reference internal image-reference" href="_images/image2.jpg"><img alt="A picture containing graphical user interface" src="_images/image2.jpg" style="width: 6.5in; height: 6.85208in;" /></a>
-<p>Figure 1 USF stack</p>
-<blockquote>
-<div>From the top of the stack we have the following.</div></blockquote>
-</div>
-<div class="section" id="os-interface">
-<h2>OS interface<a class="headerlink" href="#os-interface" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div>These are well-known interfaces, such as ACPI, UEFI, Kexec, or
-Multiboot, that provide a means to interact with pre-OS and runtimes.</div></blockquote>
+<p><strong>Figure 1: USF stack</strong></p>
+<p>Starting from the top of this stack, we have the following items.</p>
+<div class="section" id="os-interfaces">
+<h3>OS Interfaces<a class="headerlink" href="#os-interfaces" title="Permalink to this headline">¶</a></h3>
+<p>These are well-known interfaces such as ACPI, UEFI, Kexec, or Multiboot, that provide a means to interact with pre-OS and runtimes.</p>
 </div>
 <div class="section" id="universal-payload">
-<h2>Universal Payload<a class="headerlink" href="#universal-payload" title="Permalink to this headline">¶</a></h2>
+<h3>Universal Payload<a class="headerlink" href="#universal-payload" title="Permalink to this headline">¶</a></h3>
 <p>Universal Payload API for different OS payloads (i.e., UEFI, LinuxBoot, ACRN embedded hypervisor), and support for various bootloaders (i.e., tianocore/EDKII, coreboot, slim bootloader, and u-boot.</p>
 </div>
 <div class="section" id="platform-orchestration-layer-pol">
-<h2>Platform Orchestration Layer (POL)<a class="headerlink" href="#platform-orchestration-layer-pol" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div>Simplified ACPI support, common libraries for various bootloaders &amp;
-Rust language, standard binary configuration through YAML, support
-for FW attestation, authentication, measurement, and modern update.</div></blockquote>
+<h3>Platform Orchestration Layer (POL)<a class="headerlink" href="#platform-orchestration-layer-pol" title="Permalink to this headline">¶</a></h3>
+<p>Simplified ACPI support, common libraries for various bootloaders &amp; Rust language, standard binary configuration through YAML, support for FW attestation, authentication, measurement, and modern update.</p>
 </div>
 <div class="section" id="scalable-firmware-support-package-sfsp">
-<h2>Scalable Firmware Support Package (sFSP)<a class="headerlink" href="#scalable-firmware-support-package-sfsp" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div>Scalable Firmware Support Package (sFSP) support for 64-bit reset
-vector, SMM encapsulation, various domain modules, authentication,
-unified configuration, and SOC level validation.</div></blockquote>
+<h3>Scalable Firmware Support Package (sFSP)<a class="headerlink" href="#scalable-firmware-support-package-sfsp" title="Permalink to this headline">¶</a></h3>
+<p>Scalable Firmware Support Package (sFSP) support for 64-bit reset vector, SMM encapsulation, various domain modules, authentication, unified configuration, and SOC level validation.</p>
+</div>
 </div>
 </div>
 
