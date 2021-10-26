@@ -1,13 +1,13 @@
 .. _universal_payload:
 
-===================
 Universal Payload
 ===================
 
-.. _intro:
+
+.. _introduction:
 
 Introduction
-=============
+-----------------
 
 THIS SPECIFICATION IS PROVIDED "AS IS" WITH NO WARRANTIES WHATSOEVER, 
 INCLUDING ANY WARRANTY OF MERCHANTABILITY, NONINFRINGEMENT, FITNESS 
@@ -22,17 +22,26 @@ The **Universal Payload Project Team** provides the content on this site under a
 **Creative Commons Attribution 4.0 International license** (https://spdx.org/licenses/CC-BY-4.0.html) 
 except where otherwise noted.
 
-\*Other names and brands may be claimed as the property of others.
+Other names and brands may be claimed as the property of others.
+
+
+.. _purpose:
 
 Purpose
 ---------
 
 The purpose of this document is to describe the architecture and interfaces between the bootloader and the payload. Bootloader or payload implementation specific details are outside the scope of this document.
 
+
+.. _intended-audience:
+
 Intended Audience
 -------------------
 
 This document is targeted at all platform and system developers who need the bootloader or the payload supports the unified bootloader and payload interface. This includes, but is not limited to: BIOS developers, bootloader developers, system integrators, as well as end users.
+
+
+.. _related-documents:
 
 Related Documents
 -------------------
@@ -64,8 +73,11 @@ Related Documents
 
    https://buildmedia.readthedocs.org/pdf/devicetree-specification/latest/devicetree-specification.pdf
 
+
+.. _overview:
+
 Overview
-========
+----------
 
    Most modern platforms rely on system Firmware to initialize the
    hardware and launch an Operating System (OS). The system firmware is
@@ -108,10 +120,8 @@ Overview
 
 .. image:: images/design.png
 
-.. Opens: Do we need a wrapper table on existing FV, PE/COFF, ELF?
-.. Yes.
-.. Should we put the wrapper inside the existing payload?
-.. Open.
+
+.. _bootloaders:
 
 Bootloaders
 -----------
@@ -166,6 +176,9 @@ Bootloaders
 
    https://www.denx.de/wiki/U-Boot/WebHome
 
+
+.. _payloads:
+
 Payloads
 --------
 
@@ -219,8 +232,12 @@ Payloads
 
    https://www.linuxboot.org/
 
+
+.. _bootloader-interfaces:
+
 Bootloader interfaces
 ---------------------
+
 
 Coreboot Payload Interface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -247,19 +264,14 @@ Coreboot Payload Interface
 
    Coreboot tables is a series of data records packed back to back and
    each encoding both type and size. This is something similar to a UEFI
-   HOB list. Coreboot tables provide information about
+   HOB list. Coreboot tables provide information about: 
 
--  **memory map**
+   -  **memory map**
 
--  **Graphics Info**
+   -  **Graphics Info**
 
--  Pointers to certain CBMEM structures (**ACPI, SMBIOS**, etc)
+   -  Pointers to certain CBMEM structures (**ACPI, SMBIOS**, etc)
 
-..
-
-   How to fill the gap with current coreboot and payload requirement?
-
-   Use a library in coreboot to convert the new interface.
 
 Slim Bootloader (SBL) Payload Interface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -279,6 +291,7 @@ Slim Bootloader (SBL) Payload Interface
    pointer to this HOB List to the payloads. These data structures
    conform to the HOB format as described in the Platform Initialization
    (PI) Specification.
+
 
 PEI to DXE Interface
 ~~~~~~~~~~~~~~~~~~~~
@@ -328,12 +341,16 @@ PEI to DXE Interface
 |                                  | initial system address map.      |
 +----------------------------------+----------------------------------+
 
+
+.. _os-interfaces:
+
 OS interfaces
 -------------
 
    While this specification aims to document the bootloader to payload
    interface, the payload to OS interface is briefly discussed just for
    the sake of completeness.
+
 
 OS Boot protocols
 ~~~~~~~~~~~~~~~~~
@@ -370,6 +387,7 @@ OS Boot protocols
 
    https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html
 
+
 Data interface
 ~~~~~~~~~~~~~~
 
@@ -380,17 +398,15 @@ Data interface
 
    Examples:
 
--  PCI Host Bridge
+   -  PCI Host Bridge
 
--  GPIO
+   -  GPIO
 
--  Serial interfaces like I2C, HS-UART, etc.
+   -  Serial interfaces like I2C, HS-UART, etc.
 
--  Graphics framebuffer
+   -  Graphics framebuffer
 
--  Device Management information including manufacturer name, etc.
-
-..
+   -  Device Management information including manufacturer name, etc.
 
    While it is possible to write platform specific device drivers to
    support such devices/interfaces, it is efficient for the platform
@@ -485,6 +501,7 @@ Payload is part of system firmware TCB
    | *Open: Do we need a capability boot to say if payload
      supports/requires measured/verified boot?*
 
+
 Payload Image Format
 ====================
 
@@ -537,6 +554,7 @@ This Universal Payload Information section must:
 
 -  Contain UNIVERSAL_PAYLOAD_INFO structure in its section, as
    defined as below:
+
 
 **UNIVERSAL_PAYLOAD_INFO Structure**
 
@@ -1992,4 +2010,3 @@ References and Links
 .. |ACPI DBG2 document| raw:: html
 
    <a href="http://download.microsoft.com/download/9/4/5/945703CA-EF1F-496F-ADCF-3332CE5594FD/microsoft-debug-port-table-2-CP.docx" target="_blank">ACPI DBG2</a>
-
