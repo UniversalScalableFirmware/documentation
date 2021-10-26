@@ -143,10 +143,7 @@ The following documents are referenced in this specification.
 +-----------------+-------------------------------------------------------------------------+-------------+
 | Payload         | https://github.com/universalpayload/documentation                       |             |
 +-----------------+-------------------------------------------------------------------------+-------------+
-| openspdm        | Temp: https://github.com/jyao1/openspdm                                 |             |
-|                 |                                                                         |             |
-|                 | Official: https://github.com/DMTF                                       |             |
-|                 | - TBD                                                                   |             |
+| libspdm         | https://github.com/DMTF/libspdm                                         |             |
 +-----------------+-------------------------------------------------------------------------+-------------+
 
 Architecture
@@ -233,7 +230,9 @@ below:
 
 **Figure 6 Modern language-based usage**
 
-This architecture is based upon https://github.com/jyao1/rust-firmware
+This architecture is based upon https://github.com/jyao1/rust-firmware.
+
+The rust API for FSP wrapper is at https://github.com/jyao1/rust-firmware/tree/master/rust-fsp-wrapper.
 
 Configuration Introduction
 --------------------------
@@ -473,7 +472,7 @@ code sharing**. Binary sharing should be considered in scalable FSP.
    This highly depends upon the use case.
 
 3. The shareable platform code MAY be used for other firmware. For
-   example, the openspdm library may be used for system firmware, BMC
+   example, the `libspdm <https://github.com/DMTF/libspdm>`_ library may be used for system firmware, BMC
    firmware, or even device firmware. It also depends upon the use case
    – if there is business need for sharing.
 
@@ -529,7 +528,7 @@ Min Platform Advanced Feature Packages (AFP) in EDKII, coreboot 3rd party direct
 
 Provide example of the Pci enumeration code/library
 
-Show the generic code such as sharable openspdm
+Show the generic code such as sharable `libspdm <https://github.com/DMTF/libspdm>`_
 
 Shareable board ASL
 ^^^^^^^^^^^^^^^^^^^
@@ -540,10 +539,20 @@ TBD
 Shareable platform code APIs – Rust bindings
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. _tbd-1:
+A Rust library can be created on top of C - API. For example:
 
-TBD
-'''
+ * `rust-openssl <https://github.com/sfackler/rust-openssl>`_ is a Rust binding for `openssl <https://www.openssl.org/>`_ library.
+
+ * `rust-mbedtls <https://github.com/fortanix/rust-mbedtls>`_ is a Rust binding for `mbedtls <https://tls.mbed.org/>`_ library.
+
+In firmware, we have below example:
+
+ * `r-efi <https://github.com/r-efi/r-efi>`_ defines a set of Rust style UEFI data structure.
+
+ * `uefi-rs <https://github.com/rust-osdev/uefi-rs>`_ provides a set of UEFI services interface in Rust.
+
+ * `rust-fsp-wrapper <https://github.com/jyao1/rust-firmware/tree/master/rust-fsp-wrapper>`_ provides a set of Intel FSP APIs for the FSP wrapper.
+
 
 XPU considerations
 ------------------
