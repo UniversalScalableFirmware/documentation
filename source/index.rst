@@ -1,14 +1,10 @@
-.. Universal Scalable Firmware documentation master file, created by
-   sphinx-quickstart on Thu Sep 17 12:10:00 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. Index file for the Universal Scalable Firmware Specification. This file must contain at least one "toctree" directive with links to the content files for this documentation, which should be in ReStructuredText format. The file names are to be listed without the file type extension. 
 
-Welcome to Universal Scalable Firmware documentation!
-=====================================================
+Universal Scalable Firmware Specification
+==========================================
 
 .. toctree::
    :maxdepth: 3
-   :glob:
 
    revision_history
    1_terminology
