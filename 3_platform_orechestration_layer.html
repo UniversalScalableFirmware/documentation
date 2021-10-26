@@ -399,11 +399,8 @@ April 2015</td>
 <td><a class="reference external" href="https://github.com/universalpayload/documentation">https://github.com/universalpayload/documentation</a></td>
 <td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>openspdm</td>
-<td><p class="first">Temp: <a class="reference external" href="https://github.com/jyao1/openspdm">https://github.com/jyao1/openspdm</a></p>
-<p class="last">Official: <a class="reference external" href="https://github.com/DMTF">https://github.com/DMTF</a>
-- TBD</p>
-</td>
+<tr class="row-odd"><td>libspdm</td>
+<td><a class="reference external" href="https://github.com/DMTF/libspdm">https://github.com/DMTF/libspdm</a></td>
 <td>&#160;</td>
 </tr>
 </tbody>
@@ -466,7 +463,8 @@ payload or the platform layer implementation, as described in the figure
 below:</p>
 <a class="reference internal image-reference" href="_images/image7.png"><img alt="_images/image7.png" src="_images/image7.png" style="width: 5in; height: 2.8125in;" /></a>
 <p><strong>Figure 6 Modern language-based usage</strong></p>
-<p>This architecture is based upon <a class="reference external" href="https://github.com/jyao1/rust-firmware">https://github.com/jyao1/rust-firmware</a></p>
+<p>This architecture is based upon <a class="reference external" href="https://github.com/jyao1/rust-firmware">https://github.com/jyao1/rust-firmware</a>.</p>
+<p>The rust API for FSP wrapper is at <a class="reference external" href="https://github.com/jyao1/rust-firmware/tree/master/rust-fsp-wrapper">https://github.com/jyao1/rust-firmware/tree/master/rust-fsp-wrapper</a>.</p>
 </div>
 </div>
 <div class="section" id="configuration-introduction">
@@ -664,7 +662,7 @@ coreboot.</li>
 phase, such as EDKII PEI/DXE/SMM phase, the coreboot ROM/RAM stage.
 This highly depends upon the use case.</li>
 <li>The shareable platform code MAY be used for other firmware. For
-example, the openspdm library may be used for system firmware, BMC
+example, the <a class="reference external" href="https://github.com/DMTF/libspdm">libspdm</a> library may be used for system firmware, BMC
 firmware, or even device firmware. It also depends upon the use case
 – if there is business need for sharing.</li>
 </ol>
@@ -709,7 +707,7 @@ buffer is trusted or untrusted?</li>
 <div class="section" id="min-platform-advanced-feature-packages-afp-in-edkii-coreboot-3rd-party-directory-code">
 <h5>Min Platform Advanced Feature Packages (AFP) in EDKII, coreboot 3rd party directory code<a class="headerlink" href="#min-platform-advanced-feature-packages-afp-in-edkii-coreboot-3rd-party-directory-code" title="Permalink to this headline">¶</a></h5>
 <p>Provide example of the Pci enumeration code/library</p>
-<p>Show the generic code such as sharable openspdm</p>
+<p>Show the generic code such as sharable <a class="reference external" href="https://github.com/DMTF/libspdm">libspdm</a></p>
 </div>
 </div>
 <div class="section" id="shareable-board-asl">
@@ -720,9 +718,21 @@ buffer is trusted or untrusted?</li>
 </div>
 <div class="section" id="shareable-platform-code-apis-rust-bindings">
 <h4>Shareable platform code APIs – Rust bindings<a class="headerlink" href="#shareable-platform-code-apis-rust-bindings" title="Permalink to this headline">¶</a></h4>
-<div class="section" id="tbd-1">
-<span id="id3"></span><h5>TBD<a class="headerlink" href="#tbd-1" title="Permalink to this headline">¶</a></h5>
-</div>
+<p>A Rust library can be created on top of C - API. For example:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="https://github.com/sfackler/rust-openssl">rust-openssl</a> is a Rust binding for <a class="reference external" href="https://www.openssl.org/">openssl</a> library.</li>
+<li><a class="reference external" href="https://github.com/fortanix/rust-mbedtls">rust-mbedtls</a> is a Rust binding for <a class="reference external" href="https://tls.mbed.org/">mbedtls</a> library.</li>
+</ul>
+</div></blockquote>
+<p>In firmware, we have below example:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="https://github.com/r-efi/r-efi">r-efi</a> defines a set of Rust style UEFI data structure.</li>
+<li><a class="reference external" href="https://github.com/rust-osdev/uefi-rs">uefi-rs</a> provides a set of UEFI services interface in Rust.</li>
+<li><a class="reference external" href="https://github.com/jyao1/rust-firmware/tree/master/rust-fsp-wrapper">rust-fsp-wrapper</a> provides a set of Intel FSP APIs for the FSP wrapper.</li>
+</ul>
+</div></blockquote>
 </div>
 </div>
 </div>
@@ -1052,7 +1062,7 @@ are owned by the platform vendor.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license
-      Last updated on Oct 25, 2021.
+      Last updated on Oct 26, 2021.
 
     </p>
   </div>
