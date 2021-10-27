@@ -32,7 +32,7 @@ Firmware implementations such as Tianocore and EDKII have served the industry we
 
 - Closely coupled Platform/SOC/IP level firmware design & code are resulting in low reusability and long time to market (TTM). 
 
-- High complexity with key modules like MRC & security result in quality, test, and debug challenges. 
+- High complexity with key modules like Memory Reference Code (MRC) andsecurity result in quality, test, and debug challenges. 
 
 - Limited modularity. 
 
@@ -44,7 +44,7 @@ The goal of developing the Universal Scalable Firmware standard is to evolve mod
 Simplicity, Determinisim and Debuggability
 ============================================
 
-The three attributes of Simplicity, Determinism and Debuggability go together. Firmware plays a major role in debugging hardware, silicon features and various technologies (Security, Power Management, IO, Virtualization, RAS etc.) and should lend itself to readability and determining the sequence of operations by reading the source code. Firmware is the abstraction layer and it often times have to deal with unstable hardware and Silicon workarounds. A simple, debug (hardware debug, not just software) friendly infrastructure is called for.Today’s platform and SoC complexity calls for a model of replaceable IP Modules, with the associated FW components traveling with that IP.
+The three attributes of Simplicity, Determinism and Debuggability go together. Firmware plays a major role in debugging hardware, silicon features and various technologies (Security, Power Management, IO, Virtualization, RAS etc.) and should lend itself to readability and determining the sequence of operations by reading the source code. Firmware is the abstraction layer and it often times have to deal with unstable hardware and Silicon workarounds. A simple, debug (hardware debug, not just software) friendly infrastructure is called for. Today’s platform and SoC complexity calls for a model of replaceable IP Modules, with the associated FW components traveling with that IP.
 
 USF Layers
 ============
@@ -70,7 +70,7 @@ These are well-known interfaces such as ACPI, UEFI, Kexec, or Multiboot, that pr
 Universal Payload
 ------------------
 
-Universal Payload API for different OS payloads (i.e., UEFI, LinuxBoot, ACRN embedded hypervisor), and support for various bootloaders (i.e., tianocore/EDKII, coreboot, slim bootloader, and u-boot.
+Universal Payload API for different OS payloads (e.g. UEFI, LinuxBoot, ACRN embedded hypervisor), and support for various bootloaders (e.g. tianocore/EDKII, coreboot, slim bootloader, and u-boot).
 
 
 Platform Orchestration Layer (POL)
