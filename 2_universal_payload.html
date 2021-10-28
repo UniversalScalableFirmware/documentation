@@ -31,7 +31,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Platform Orchestration Layer (POL)" href="3_platform_orechestration_layer.html" />
-    <link rel="prev" title="Terminology" href="1_terminology.html" /> 
+    <link rel="prev" title="Universal Scalable Firmware (USF) Specification" href="1_terminology.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -82,86 +82,104 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="revision_history.html">Revision History</a></li>
-<li class="toctree-l1"><a class="reference internal" href="1_terminology.html">Terminology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_terminology.html">Universal Scalable Firmware (USF) Specification</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Universal Payload</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#purpose">Purpose</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#intended-audience">Intended Audience</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#related-documents">Related Documents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#purpose">Purpose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#intended-audience">Intended Audience</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#related-documents">Related Documents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bootloaders">Bootloaders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#payloads">Payloads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bootloader-interfaces">Bootloader interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#coreboot-payload-interface">Coreboot Payload Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slim-bootloader-sbl-payload-interface">Slim Bootloader (SBL) Payload Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pei-to-dxe-interface">PEI to DXE Interface</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#bootloaders">Bootloaders</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#payloads">Payloads</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#bootloader-interfaces">Bootloader interfaces</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#coreboot-payload-interface">Coreboot Payload Interface</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#slim-bootloader-sbl-payload-interface">Slim Bootloader (SBL) Payload Interface</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#pei-to-dxe-interface">PEI to DXE Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#os-interfaces">OS interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#os-boot-protocols">OS Boot protocols</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-interface">Data interface</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#os-interfaces">OS interfaces</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#os-boot-protocols">OS Boot protocols</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#data-interface">Data interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#payload-principle">Payload principle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#security">Security</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#payload-principle">Payload principle</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#security">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#payload-image-format">Payload Image Format</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#payload-image-sections">Payload Image Sections</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#payload-image-format">Payload Image Format</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#payload-image-sections">Payload Image Sections</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#hand-off-state">Hand-off state</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#ia-32-and-x64-platforms">IA-32 and x64 Platforms</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#state-of-silicon">State of silicon</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#instruction-execution-environment">Instruction execution environment</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#arm-platforms">ARM Platforms</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#risc-v-platforms">RISC-V Platforms</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#payload-interfaces">Payload Interfaces</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#acpi-tables">ACPI tables</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#hob-list">HOB List</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#reusing-interfaces-in-platform-initialization-specification">Reusing Interfaces in Platform Initialization Specification</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#new-interfaces">New Interfaces</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#optional-interfaces">Optional Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#hand-off-state">Hand-off state</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ia-32-and-x64-platforms">IA-32 and x64 Platforms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#state-of-silicon">State of silicon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#instruction-execution-environment">Instruction execution environment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#registers">Registers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interrupt">Interrupt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#page-table">Page table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stack">Stack</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#application-processors">Application processors</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#appendix-a-hob-data-structures">Appendix A – HOB Data Structures</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#base-data-type">Base Data Type</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#efi-hob-type">EFI HOB TYPE</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#efi-hob-generic-header">EFI_HOB_GENERIC_HEADER</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#hob-list-header">HOB List Header</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#efi-hob-handoff-info-table">EFI_HOB_HANDOFF_INFO_TABLE</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#efi-hob-handoff-table-version">EFI_HOB_HANDOFF_TABLE_VERSION</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#efi-boot-mode">EFI_BOOT_MODE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#arm-platforms">ARM Platforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#risc-v-platforms">RISC-V Platforms</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#efi-hob-guid-type">EFI_HOB_GUID_TYPE</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#efi-pei-graphics-info-hob">EFI_PEI_GRAPHICS_INFO_HOB</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#efi-pei-graphics-device-info-hob">EFI_PEI_GRAPHICS_DEVICE_INFO_HOB</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#efi-hob-resource-descriptor">EFI_HOB_RESOURCE_DESCRIPTOR</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#efi-resource-type">EFI_RESOURCE_TYPE</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#efi-resource-attribute-type">EFI_RESOURCE_ATTRIBUTE_TYPE</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#efi-hob-resource-descriptor-1">EFI_HOB_RESOURCE_DESCRIPTOR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#payload-interfaces">Payload Interfaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#acpi-tables">ACPI tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hob-list">HOB List</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#reusing-interfaces-in-platform-initialization-specification">Reusing Interfaces in Platform Initialization Specification</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#phit-phase-handoff-info-table-hob">PHIT(Phase Handoff Info Table) HOB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cpu-hob">CPU HOB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#resource-descriptor-hob">Resource Descriptor HOB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#memory-allocation-hob">Memory Allocation HOB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#graphics-information-hob">Graphics information HOB</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#efi-hob-memory-allocation">EFI_HOB_MEMORY_ALLOCATION</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#efi-memory-type">EFI_MEMORY_TYPE</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#efi-hob-memory-allocation-header">EFI_HOB_MEMORY_ALLOCATION_HEADER</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id4">EFI_HOB_MEMORY_ALLOCATION</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#new-interfaces">New Interfaces</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#common-payload-header">Common Payload Header</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acpi-table">ACPI Table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#smbios-table">SMBIOS Table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#device-tree">DEVICE TREE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#serial-information">Serial Information</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pci-root-bridges">PCI Root Bridges</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#optional-interfaces">Optional Interfaces</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#references-and-links">References and Links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#appendix-a-hob-data-structures">Appendix A – HOB Data Structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#base-data-type">Base Data Type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-hob-type">EFI HOB TYPE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-hob-generic-header">EFI_HOB_GENERIC_HEADER</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hob-list-header">HOB List Header</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hob-handoff-info-table">EFI_HOB_HANDOFF_INFO_TABLE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hob-handoff-table-version">EFI_HOB_HANDOFF_TABLE_VERSION</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-boot-mode">EFI_BOOT_MODE</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-hob-guid-type">EFI_HOB_GUID_TYPE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-pei-graphics-info-hob">EFI_PEI_GRAPHICS_INFO_HOB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-pei-graphics-device-info-hob">EFI_PEI_GRAPHICS_DEVICE_INFO_HOB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-hob-resource-descriptor">EFI_HOB_RESOURCE_DESCRIPTOR</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-resource-type">EFI_RESOURCE_TYPE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-resource-attribute-type">EFI_RESOURCE_ATTRIBUTE_TYPE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hob-resource-descriptor-1">EFI_HOB_RESOURCE_DESCRIPTOR</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-hob-memory-allocation">EFI_HOB_MEMORY_ALLOCATION</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-memory-type">EFI_MEMORY_TYPE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hob-memory-allocation-header">EFI_HOB_MEMORY_ALLOCATION_HEADER</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">EFI_HOB_MEMORY_ALLOCATION</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#references-and-links">References and Links</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_platform_orechestration_layer.html">Platform Orchestration Layer (POL)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_runtime.html">Runtime</a></li>
 <li class="toctree-l1"><a class="reference internal" href="5_security.html">Security</a></li>
@@ -234,7 +252,7 @@
   <div class="section" id="universal-payload">
 <span id="id1"></span><h1>Universal Payload<a class="headerlink" href="#universal-payload" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="introduction">
-<span id="intro"></span><h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<span id="id2"></span><h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>THIS SPECIFICATION IS PROVIDED “AS IS” WITH NO WARRANTIES WHATSOEVER,
 INCLUDING ANY WARRANTY OF MERCHANTABILITY, NONINFRINGEMENT, FITNESS
 FOR ANY PARTICULAR PURPOSE, OR ANY WARRANTY OTHERWISE ARISING OUT OF
@@ -245,17 +263,18 @@ based on this document.</p>
 <p>The <strong>Universal Payload Project Team</strong> provides the content on this site under a
 <strong>Creative Commons Attribution 4.0 International license</strong> (<a class="reference external" href="https://spdx.org/licenses/CC-BY-4.0.html">https://spdx.org/licenses/CC-BY-4.0.html</a>)
 except where otherwise noted.</p>
-<p>*Other names and brands may be claimed as the property of others.</p>
+<p>Other names and brands may be claimed as the property of others.</p>
+</div>
 <div class="section" id="purpose">
-<h3>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h3>
+<span id="id3"></span><h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h2>
 <p>The purpose of this document is to describe the architecture and interfaces between the bootloader and the payload. Bootloader or payload implementation specific details are outside the scope of this document.</p>
 </div>
 <div class="section" id="intended-audience">
-<h3>Intended Audience<a class="headerlink" href="#intended-audience" title="Permalink to this headline">¶</a></h3>
+<span id="id4"></span><h2>Intended Audience<a class="headerlink" href="#intended-audience" title="Permalink to this headline">¶</a></h2>
 <p>This document is targeted at all platform and system developers who need the bootloader or the payload supports the unified bootloader and payload interface. This includes, but is not limited to: BIOS developers, bootloader developers, system integrators, as well as end users.</p>
 </div>
 <div class="section" id="related-documents">
-<h3>Related Documents<a class="headerlink" href="#related-documents" title="Permalink to this headline">¶</a></h3>
+<span id="id5"></span><h2>Related Documents<a class="headerlink" href="#related-documents" title="Permalink to this headline">¶</a></h2>
 <ul>
 <li><p class="first">Unified Extensible Firmware Interface (UEFI) Specification</p>
 <p><a class="reference external" href="http://www.uefi.org/specifications">http://www.uefi.org/specifications</a></p>
@@ -280,9 +299,8 @@ except where otherwise noted.</p>
 </li>
 </ul>
 </div>
-</div>
 <div class="section" id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<span id="id6"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><p>Most modern platforms rely on system Firmware to initialize the
 hardware and launch an Operating System (OS). The system firmware is
@@ -320,8 +338,9 @@ The intent for this specification is to provide interoperability
 between spec compliant bootloaders and spec compliant payloads.</p>
 </div></blockquote>
 <img alt="_images/design.png" src="_images/design.png" />
+</div>
 <div class="section" id="bootloaders">
-<h3>Bootloaders<a class="headerlink" href="#bootloaders" title="Permalink to this headline">¶</a></h3>
+<span id="id7"></span><h2>Bootloaders<a class="headerlink" href="#bootloaders" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><p>Bootloaders are primarily responsible for initializing the system
 hardware including, but not limited to CPU initialization, memory
@@ -362,7 +381,7 @@ Public License (GPL)</p>
 </div></blockquote>
 </div>
 <div class="section" id="payloads">
-<h3>Payloads<a class="headerlink" href="#payloads" title="Permalink to this headline">¶</a></h3>
+<span id="id8"></span><h2>Payloads<a class="headerlink" href="#payloads" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><p>After initializing the system hardware, bootloaders launch the
 payload modules. Payloads ideally are modular and platform
@@ -405,9 +424,9 @@ and runtime.</p>
 </div></blockquote>
 </div>
 <div class="section" id="bootloader-interfaces">
-<h3>Bootloader interfaces<a class="headerlink" href="#bootloader-interfaces" title="Permalink to this headline">¶</a></h3>
+<span id="id9"></span><h2>Bootloader interfaces<a class="headerlink" href="#bootloader-interfaces" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="coreboot-payload-interface">
-<h4>Coreboot Payload Interface<a class="headerlink" href="#coreboot-payload-interface" title="Permalink to this headline">¶</a></h4>
+<h3>Coreboot Payload Interface<a class="headerlink" href="#coreboot-payload-interface" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p><strong>Reference</strong>: <a class="reference external" href="https://www.coreboot.org/API">https://www.coreboot.org/API</a></p>
 <p><strong>Reference</strong>: <a class="reference external" href="https://doc.coreboot.org/lib/abi-data-consumption.html">https://doc.coreboot.org/lib/abi-data-consumption.html</a></p>
@@ -425,20 +444,16 @@ points to the real coreboot table. This is comparable to the ACPI
 RSDT or the MP floating table.</p>
 <p>Coreboot tables is a series of data records packed back to back and
 each encoding both type and size. This is something similar to a UEFI
-HOB list. Coreboot tables provide information about</p>
-</div></blockquote>
+HOB list. Coreboot tables provide information about:</p>
 <ul class="simple">
 <li><strong>memory map</strong></li>
 <li><strong>Graphics Info</strong></li>
 <li>Pointers to certain CBMEM structures (<strong>ACPI, SMBIOS</strong>, etc)</li>
 </ul>
-<blockquote>
-<div><p>How to fill the gap with current coreboot and payload requirement?</p>
-<p>Use a library in coreboot to convert the new interface.</p>
 </div></blockquote>
 </div>
 <div class="section" id="slim-bootloader-sbl-payload-interface">
-<h4>Slim Bootloader (SBL) Payload Interface<a class="headerlink" href="#slim-bootloader-sbl-payload-interface" title="Permalink to this headline">¶</a></h4>
+<h3>Slim Bootloader (SBL) Payload Interface<a class="headerlink" href="#slim-bootloader-sbl-payload-interface" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p><strong>Reference</strong>:
 <a class="reference external" href="https://slimbootloader.github.io/developer-guides/payload.html">https://slimbootloader.github.io/developer-guides/payload.html</a></p>
@@ -455,7 +470,7 @@ conform to the HOB format as described in the Platform Initialization
 </div></blockquote>
 </div>
 <div class="section" id="pei-to-dxe-interface">
-<h4>PEI to DXE Interface<a class="headerlink" href="#pei-to-dxe-interface" title="Permalink to this headline">¶</a></h4>
+<h3>PEI to DXE Interface<a class="headerlink" href="#pei-to-dxe-interface" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p><strong>Reference</strong>:
 <a class="reference external" href="https://uefi.org/sites/default/files/resources/PI_Spec_1_7_final_Jan_2019.pdf">https://uefi.org/sites/default/files/resources/PI_Spec_1_7_final_Jan_2019.pdf</a></p>
@@ -522,13 +537,13 @@ initial system address map.</td>
 </div>
 </div>
 <div class="section" id="os-interfaces">
-<h3>OS interfaces<a class="headerlink" href="#os-interfaces" title="Permalink to this headline">¶</a></h3>
+<span id="id10"></span><h2>OS interfaces<a class="headerlink" href="#os-interfaces" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div>While this specification aims to document the bootloader to payload
 interface, the payload to OS interface is briefly discussed just for
 the sake of completeness.</div></blockquote>
 <div class="section" id="os-boot-protocols">
-<h4>OS Boot protocols<a class="headerlink" href="#os-boot-protocols" title="Permalink to this headline">¶</a></h4>
+<h3>OS Boot protocols<a class="headerlink" href="#os-boot-protocols" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p><strong>UEFI</strong></p>
 <p>UEFI stands for “Unified Extensible Firmware Interface.” The UEFI
@@ -556,14 +571,13 @@ for operating system specific boot loaders.</p>
 </div></blockquote>
 </div>
 <div class="section" id="data-interface">
-<h4>Data interface<a class="headerlink" href="#data-interface" title="Permalink to this headline">¶</a></h4>
+<h3>Data interface<a class="headerlink" href="#data-interface" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>Modern buses and devices (PCI, PCIe, USB, SATA, etc.) support
 software detection, enumeration and configuration, providing true
 plug and play capabilities, there still exists some devices that are
 not enumerable through software.</p>
 <p>Examples:</p>
-</div></blockquote>
 <ul class="simple">
 <li>PCI Host Bridge</li>
 <li>GPIO</li>
@@ -571,8 +585,7 @@ not enumerable through software.</p>
 <li>Graphics framebuffer</li>
 <li>Device Management information including manufacturer name, etc.</li>
 </ul>
-<blockquote>
-<div><p>While it is possible to write platform specific device drivers to
+<p>While it is possible to write platform specific device drivers to
 support such devices/interfaces, it is efficient for the platform
 specific firmware to provide information to the platform independent
 operating system.</p>
@@ -602,7 +615,7 @@ the characteristics of the device being represented.</p>
 </div>
 </div>
 <div class="section" id="payload-principle">
-<h3>Payload principle<a class="headerlink" href="#payload-principle" title="Permalink to this headline">¶</a></h3>
+<h2>Payload principle<a class="headerlink" href="#payload-principle" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><div class="line-block">
 <div class="line">Keep interface as clean and simple as possible.</div>
@@ -639,7 +652,7 @@ that is simple to parse).</div>
 </div></blockquote>
 </div>
 <div class="section" id="security">
-<h3>Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h3>
+<h2>Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h2>
 <p>Payload is part of system firmware TCB</p>
 <blockquote>
 <div><p>Today the payload is provisioned as part of the platform
@@ -664,7 +677,7 @@ supports/requires measured/verified boot?</em></div>
 </div>
 </div>
 <div class="section" id="payload-image-format">
-<h2>Payload Image Format<a class="headerlink" href="#payload-image-format" title="Permalink to this headline">¶</a></h2>
+<h1>Payload Image Format<a class="headerlink" href="#payload-image-format" title="Permalink to this headline">¶</a></h1>
 <p>Payload, as a standalone component, usually needs to be loaded by a
 bootloader into memory properly prior to execution. In this loading
 process, additional process might be required, such as assembling,
@@ -682,7 +695,7 @@ on many different hardware platforms.</p>
 <p>For detailed information on the ELF image format, please see
 <a class="reference external" href="https://refspecs.linuxfoundation.org/elf/elf.pdf">ELF Specification</a> .</p>
 <div class="section" id="payload-image-sections">
-<h3>Payload Image Sections<a class="headerlink" href="#payload-image-sections" title="Permalink to this headline">¶</a></h3>
+<h2>Payload Image Sections<a class="headerlink" href="#payload-image-sections" title="Permalink to this headline">¶</a></h2>
 <p>To use ELF image as universal payload image format, it is required to define
 a simple way for bootloader to differenciate a universal payload image from
 a regular ELF image. On the other side, a universal payload might aslo need
@@ -857,7 +870,7 @@ required extra image information for consumption.</p>
 </div>
 </div>
 <div class="section" id="hand-off-state">
-<h2>Hand-off state<a class="headerlink" href="#hand-off-state" title="Permalink to this headline">¶</a></h2>
+<h1>Hand-off state<a class="headerlink" href="#hand-off-state" title="Permalink to this headline">¶</a></h1>
 <p>The bootloader builds the Hand-Off Block (HOB) list containing
 platform specific information and passes the address of the HOB list
 to the payload.</p>
@@ -874,9 +887,9 @@ For example, Microsoft Visual studio uses __cdecl for X64, while Linux GCC uses 
 <p>HOB List defines the detailed HOB list being used to transfer
 platform specific data from the bootloader to the payload.</p>
 <div class="section" id="ia-32-and-x64-platforms">
-<h3>IA-32 and x64 Platforms<a class="headerlink" href="#ia-32-and-x64-platforms" title="Permalink to this headline">¶</a></h3>
+<h2>IA-32 and x64 Platforms<a class="headerlink" href="#ia-32-and-x64-platforms" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="state-of-silicon">
-<h4>State of silicon<a class="headerlink" href="#state-of-silicon" title="Permalink to this headline">¶</a></h4>
+<h3>State of silicon<a class="headerlink" href="#state-of-silicon" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div>The bootloader initializes the processor and chipset through
 vendor-specific silicon initialization implementation. For example,
@@ -896,7 +909,7 @@ responsibilities of the payload and the bootloader are well defined
 (out of the scope of this document).</div></blockquote>
 </div>
 <div class="section" id="instruction-execution-environment">
-<h4>Instruction execution environment<a class="headerlink" href="#instruction-execution-environment" title="Permalink to this headline">¶</a></h4>
+<h3>Instruction execution environment<a class="headerlink" href="#instruction-execution-environment" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>Regardless of the environment where the bootloader runs, the
 processor is in 32bit protected mode when a 32bit payload starts, or
@@ -906,7 +919,7 @@ contains the machine type information that the payload supports.</p>
 execution environment when the payload starts.</p>
 </div></blockquote>
 <div class="section" id="registers">
-<h5>Registers<a class="headerlink" href="#registers" title="Permalink to this headline">¶</a></h5>
+<h4>Registers<a class="headerlink" href="#registers" title="Permalink to this headline">¶</a></h4>
 <ul>
 <li><p class="first">ESP + 4 points to the address of the HOB list for the 32bit payload.</p>
 </li>
@@ -933,14 +946,14 @@ masked, double-precision, round-to-nearest).</p>
 </ul>
 </div>
 <div class="section" id="interrupt">
-<h5>Interrupt<a class="headerlink" href="#interrupt" title="Permalink to this headline">¶</a></h5>
+<h4>Interrupt<a class="headerlink" href="#interrupt" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div>Interrupt is disabled. The hardware is initialized by the boot loader
 such that no interrupt triggers even when the payload sets the
 Interrupt Enable flag in EFLAGs.</div></blockquote>
 </div>
 <div class="section" id="page-table">
-<h5>Page table<a class="headerlink" href="#page-table" title="Permalink to this headline">¶</a></h5>
+<h4>Page table<a class="headerlink" href="#page-table" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>Selectors are set to be flat.</p>
 <p>Paging mode may be enabled for the 32bit payload. (have general term
@@ -953,7 +966,7 @@ needed.</p>
 </div></blockquote>
 </div>
 <div class="section" id="stack">
-<h5>Stack<a class="headerlink" href="#stack" title="Permalink to this headline">¶</a></h5>
+<h4>Stack<a class="headerlink" href="#stack" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>4KiB stack is available for the payload. The stack is 16-byte aligned
 and may be marked as non-executable in page table.</p>
@@ -964,7 +977,7 @@ new stack.</p>
 </div></blockquote>
 </div>
 <div class="section" id="application-processors">
-<h5>Application processors<a class="headerlink" href="#application-processors" title="Permalink to this headline">¶</a></h5>
+<h4>Application processors<a class="headerlink" href="#application-processors" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>Payload starts on the bootstrap processor. All application processors
 (on a multiple-processor system) are in halt state.</p>
@@ -976,16 +989,16 @@ legacy bootloader? Assume something if ACPI is not there.</p>
 </div>
 </div>
 <div class="section" id="arm-platforms">
-<h3>ARM Platforms<a class="headerlink" href="#arm-platforms" title="Permalink to this headline">¶</a></h3>
+<h2>ARM Platforms<a class="headerlink" href="#arm-platforms" title="Permalink to this headline">¶</a></h2>
 <p>Need community inputs</p>
 </div>
 <div class="section" id="risc-v-platforms">
-<h3>RISC-V Platforms<a class="headerlink" href="#risc-v-platforms" title="Permalink to this headline">¶</a></h3>
+<h2>RISC-V Platforms<a class="headerlink" href="#risc-v-platforms" title="Permalink to this headline">¶</a></h2>
 <p>Need community inputs</p>
 </div>
 </div>
 <div class="section" id="payload-interfaces">
-<h2>Payload Interfaces<a class="headerlink" href="#payload-interfaces" title="Permalink to this headline">¶</a></h2>
+<h1>Payload Interfaces<a class="headerlink" href="#payload-interfaces" title="Permalink to this headline">¶</a></h1>
 <p>The bootloader provides platform information to payload through
 standard ACPI table, SMBIOS table, Device tree and a series of data
 structures called the Hand Off Blocks (HOBs). If the information is
@@ -1004,7 +1017,7 @@ payload.</p>
 <blockquote>
 <div>Suggest skipping payload.</div></blockquote>
 <div class="section" id="acpi-tables">
-<span id="id2"></span><h3>ACPI tables<a class="headerlink" href="#acpi-tables" title="Permalink to this headline">¶</a></h3>
+<span id="id11"></span><h2>ACPI tables<a class="headerlink" href="#acpi-tables" title="Permalink to this headline">¶</a></h2>
 <p>ACPI table is required to boot modern operation system, especially to boot windows operating system.
 The bootloader should provide a ACPI RSDP HOB. In the ACPI table least RSDT, FADT and MCFG should be available to the payload.
 Payload could remove/add/modify the ACPI table passed from the bootloader if required.</p>
@@ -1030,7 +1043,7 @@ should use serial device provided by the Serial Debug Information HOB
 as the default debug device.</p>
 </div>
 <div class="section" id="hob-list">
-<h3>HOB List<a class="headerlink" href="#hob-list" title="Permalink to this headline">¶</a></h3>
+<h2>HOB List<a class="headerlink" href="#hob-list" title="Permalink to this headline">¶</a></h2>
 <p>The bootloader should build a HOB list and pass the HOB list header
 to payload when passing control to payload. The HOB format is
 described in the <em>Platform Initialization (PI) Specification - Volume
@@ -1042,23 +1055,23 @@ architecturally information.</p>
 Specification Volume 3: Shared Architectural elements</em>.</p>
 <p>Second section defines the new HOBs.</p>
 <div class="section" id="reusing-interfaces-in-platform-initialization-specification">
-<h4>Reusing Interfaces in Platform Initialization Specification<a class="headerlink" href="#reusing-interfaces-in-platform-initialization-specification" title="Permalink to this headline">¶</a></h4>
+<h3>Reusing Interfaces in Platform Initialization Specification<a class="headerlink" href="#reusing-interfaces-in-platform-initialization-specification" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="phit-phase-handoff-info-table-hob">
-<h5>PHIT(Phase Handoff Info Table) HOB<a class="headerlink" href="#phit-phase-handoff-info-table-hob" title="Permalink to this headline">¶</a></h5>
+<h4>PHIT(Phase Handoff Info Table) HOB<a class="headerlink" href="#phit-phase-handoff-info-table-hob" title="Permalink to this headline">¶</a></h4>
 <p>The bootloader should report the general state information through
 the HOB following EFI_HOB_HANDOFF_INFO_TABLE format defined in
 <em>Platform Initialization Specification Volume 3: Shared Architectural
 elements</em>.</p>
 </div>
 <div class="section" id="cpu-hob">
-<h5>CPU HOB<a class="headerlink" href="#cpu-hob" title="Permalink to this headline">¶</a></h5>
+<h4>CPU HOB<a class="headerlink" href="#cpu-hob" title="Permalink to this headline">¶</a></h4>
 <p>The bootloader should report the processor information including address space
 and I/O space capabilities to the payload through the HOB following
 EFI_HOB_CPU format defined in <em>Platform Initialization Specification Volume 3:
 Shared Architectural elements</em>.</p>
 </div>
 <div class="section" id="resource-descriptor-hob">
-<h5>Resource Descriptor HOB<a class="headerlink" href="#resource-descriptor-hob" title="Permalink to this headline">¶</a></h5>
+<h4>Resource Descriptor HOB<a class="headerlink" href="#resource-descriptor-hob" title="Permalink to this headline">¶</a></h4>
 <p>The bootloader should report the system resources through the HOB
 following EFI_HOB_RESOURCE_DESCRIPTOR format defined in <em>Platform
 Initialization Specification Volume 3: Shared Architectural
@@ -1071,19 +1084,19 @@ type EFI_RESOURCE_MEMORY_RESERVED.</p>
 resource type EFI_RESOURCE_IO and EFI_RESOURCE_MEMORY_MAPPED_IO.</p>
 </div>
 <div class="section" id="memory-allocation-hob">
-<h5>Memory Allocation HOB<a class="headerlink" href="#memory-allocation-hob" title="Permalink to this headline">¶</a></h5>
+<h4>Memory Allocation HOB<a class="headerlink" href="#memory-allocation-hob" title="Permalink to this headline">¶</a></h4>
 <p>The bootloader should report the memory usages that exist outside the
 HOB list through the HOB following EFI_HOB_MEMORY_ALLOCATION format defined
 in <em>Platform Initialization Specification Volume 3: Shared Architectural
 elements</em>.</p>
 <div class="section" id="boot-strap-processor-bsp-stack-memory-allocation-hob">
-<h6>Boot-Strap Processor (BSP) Stack Memory Allocation HOB<a class="headerlink" href="#boot-strap-processor-bsp-stack-memory-allocation-hob" title="Permalink to this headline">¶</a></h6>
+<h5>Boot-Strap Processor (BSP) Stack Memory Allocation HOB<a class="headerlink" href="#boot-strap-processor-bsp-stack-memory-allocation-hob" title="Permalink to this headline">¶</a></h5>
 <p>The bootloader should report the initial stack prepared for payload through
 the HOB following EFI_HOB_MEMORY_ALLOCATION_STACK format defined in <em>Platform
 Initialization Specification Volume 3: Shared Architectural elements</em>.</p>
 </div>
 <div class="section" id="memory-allocation-module-hob">
-<h6>Memory Allocation Module HOB<a class="headerlink" href="#memory-allocation-module-hob" title="Permalink to this headline">¶</a></h6>
+<h5>Memory Allocation Module HOB<a class="headerlink" href="#memory-allocation-module-hob" title="Permalink to this headline">¶</a></h5>
 <p>The bootloader should report the payload memory location and entry point
 through the HOB following EFI_HOB_MEMORY_ALLOCATION_MODULE format defined
 in <em>Platform Initialization Specification Volume 3: Shared Architectural
@@ -1091,7 +1104,7 @@ elements</em>.</p>
 </div>
 </div>
 <div class="section" id="graphics-information-hob">
-<h5>Graphics information HOB<a class="headerlink" href="#graphics-information-hob" title="Permalink to this headline">¶</a></h5>
+<h4>Graphics information HOB<a class="headerlink" href="#graphics-information-hob" title="Permalink to this headline">¶</a></h4>
 <p>If bootloader initializes the graphics device, the bootloader might
 report graphics mode and framebuffer information through
 EFI_PEI_GRAPHICS_INFO_HOB, and graphics hardware information
@@ -1102,9 +1115,9 @@ for the graphics display. These HOBs are described in the <em>PI Specification.<
 </div>
 </div>
 <div class="section" id="new-interfaces">
-<h4>New Interfaces<a class="headerlink" href="#new-interfaces" title="Permalink to this headline">¶</a></h4>
+<h3>New Interfaces<a class="headerlink" href="#new-interfaces" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="common-payload-header">
-<h5>Common Payload Header<a class="headerlink" href="#common-payload-header" title="Permalink to this headline">¶</a></h5>
+<h4>Common Payload Header<a class="headerlink" href="#common-payload-header" title="Permalink to this headline">¶</a></h4>
 <p>All new interfaces are GUID type HOBs starting with <code class="docutils literal notranslate"><span class="pre">EFI_HOB_GUID_TYPE</span></code> defined in the PI Specification.</p>
 <p>The HOB data starts with a common header defined as below:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack(1)</span>
@@ -1134,7 +1147,7 @@ So, it’s always true that <code class="docutils literal notranslate"><span cla
 <p>HOB data for different interfaces is defined in following sections.</p>
 </div>
 <div class="section" id="acpi-table">
-<h5>ACPI Table<a class="headerlink" href="#acpi-table" title="Permalink to this headline">¶</a></h5>
+<h4>ACPI Table<a class="headerlink" href="#acpi-table" title="Permalink to this headline">¶</a></h4>
 <p>The bootloader should pass ACPI table the payload. So that the payload could get the platform information from the ACPI table.</p>
 <p><strong>GUID</strong></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gUniversalPayloadAcpiTableGuid</span> <span class="o">=</span> <span class="p">{</span> <span class="mh">0x9f9a9506</span><span class="p">,</span> <span class="mh">0x5597</span><span class="p">,</span> <span class="mh">0x4515</span><span class="p">,</span> <span class="p">{</span> <span class="mh">0xba</span><span class="p">,</span> <span class="mh">0xb6</span><span class="p">,</span> <span class="mh">0x8b</span><span class="p">,</span> <span class="mh">0xcd</span><span class="p">,</span> <span class="mh">0xe7</span><span class="p">,</span> <span class="mh">0x84</span><span class="p">,</span> <span class="mh">0xba</span><span class="p">,</span> <span class="mh">0x87</span> <span class="p">}</span> <span class="p">}</span>
@@ -1159,7 +1172,7 @@ So, it’s always true that <code class="docutils literal notranslate"><span cla
 <p>Point to the ACPI RSDP table. The ACPI table need follow ACPI specification version 2.0 or above.</p>
 </div>
 <div class="section" id="smbios-table">
-<h5>SMBIOS Table<a class="headerlink" href="#smbios-table" title="Permalink to this headline">¶</a></h5>
+<h4>SMBIOS Table<a class="headerlink" href="#smbios-table" title="Permalink to this headline">¶</a></h4>
 <p>The bootloader might pass SMBIOS table to the payload. So that the payload could get the platform information from the table.</p>
 <p><strong>GUID</strong></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gUniversalPayloadSmbios3TableGuid</span> <span class="o">=</span> <span class="p">{</span> <span class="mh">0x92b7896c</span><span class="p">,</span> <span class="mh">0x3362</span><span class="p">,</span> <span class="mh">0x46ce</span><span class="p">,</span> <span class="p">{</span> <span class="mh">0x99</span><span class="p">,</span> <span class="mh">0xb3</span><span class="p">,</span> <span class="mh">0x4f</span><span class="p">,</span> <span class="mh">0x5e</span><span class="p">,</span> <span class="mh">0x3c</span><span class="p">,</span> <span class="mh">0x34</span><span class="p">,</span> <span class="mh">0xeb</span><span class="p">,</span> <span class="mh">0x42</span> <span class="p">}</span> <span class="p">}</span>
@@ -1187,7 +1200,7 @@ So, it’s always true that <code class="docutils literal notranslate"><span cla
 <p>Points to the SMBIOS table in SMBIOS 2.x format if GUID is <code class="docutils literal notranslate"><span class="pre">gUniversalPayloadSmbiosTableGuid</span></code>.</p>
 </div>
 <div class="section" id="device-tree">
-<h5>DEVICE TREE<a class="headerlink" href="#device-tree" title="Permalink to this headline">¶</a></h5>
+<h4>DEVICE TREE<a class="headerlink" href="#device-tree" title="Permalink to this headline">¶</a></h4>
 <p>The bootloader might pass Device Tree to the payload. So that the payload could get the platform information from the table.</p>
 <p><strong>GUID</strong></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gUniversalPayloadDeviceTreeGuid</span> <span class="o">=</span> <span class="p">{</span><span class="mh">0x6784b889</span><span class="p">,</span> <span class="mh">0xb13c</span><span class="p">,</span> <span class="mh">0x4c3b</span><span class="p">,</span> <span class="p">{</span><span class="mh">0xae</span><span class="p">,</span> <span class="mh">0x4b</span><span class="p">,</span> <span class="mh">0xf</span><span class="p">,</span> <span class="mh">0xa</span><span class="p">,</span> <span class="mh">0x2e</span><span class="p">,</span> <span class="mh">0x32</span><span class="p">,</span> <span class="mh">0xe</span><span class="p">,</span> <span class="mh">0xa3</span><span class="p">}}</span>
@@ -1212,7 +1225,7 @@ So, it’s always true that <code class="docutils literal notranslate"><span cla
 <p>Point to the Device Tree entry point.</p>
 </div>
 <div class="section" id="serial-information">
-<h5>Serial Information<a class="headerlink" href="#serial-information" title="Permalink to this headline">¶</a></h5>
+<h4>Serial Information<a class="headerlink" href="#serial-information" title="Permalink to this headline">¶</a></h4>
 <p>If the debug device type and subtype are specified in DBG2, the
 bootloader should 16550 compatible serial debug port information
 to payload.</p>
@@ -1253,7 +1266,7 @@ to payload.</p>
 <p>Base address of 16550 serial port registers in MMIO or I/O space.</p>
 </div>
 <div class="section" id="pci-root-bridges">
-<h5>PCI Root Bridges<a class="headerlink" href="#pci-root-bridges" title="Permalink to this headline">¶</a></h5>
+<h4>PCI Root Bridges<a class="headerlink" href="#pci-root-bridges" title="Permalink to this headline">¶</a></h4>
 <p>The bootloader should pass information about PCI root bridges to the payload. The information tells the payload whether the PCI bus
 enumeration has been performed by the bootloader, the bus, IO and MMIO ranges that are used or will be used by the PCI bus.</p>
 <p><strong>GUID</strong></p>
@@ -1359,7 +1372,7 @@ in EFI_PCI_HOST_BRIDGE_RESOURCE_ALLOCATION_PROTOCOL defined in PI Specification.
 </div>
 </div>
 <div class="section" id="optional-interfaces">
-<h4>Optional Interfaces<a class="headerlink" href="#optional-interfaces" title="Permalink to this headline">¶</a></h4>
+<h3>Optional Interfaces<a class="headerlink" href="#optional-interfaces" title="Permalink to this headline">¶</a></h3>
 <p>Some more HOBs could be built by bootloaders for advanced features. e.g.:</p>
 <blockquote>
 <div><p>Support FVs (also other format) from bootloader to payload</p>
@@ -1378,10 +1391,10 @@ in EFI_PCI_HOST_BRIDGE_RESOURCE_ALLOCATION_PROTOCOL defined in PI Specification.
 </div>
 </div>
 <div class="section" id="appendix-a-hob-data-structures">
-<h2>Appendix A – HOB Data Structures<a class="headerlink" href="#appendix-a-hob-data-structures" title="Permalink to this headline">¶</a></h2>
+<h1>Appendix A – HOB Data Structures<a class="headerlink" href="#appendix-a-hob-data-structures" title="Permalink to this headline">¶</a></h1>
 <p>The declarations/definitions provided here are derived from the EDKII at <a class="reference external" href="https://github.com/tianocore/edk2">https://github.com/tianocore/edk2</a></p>
 <div class="section" id="base-data-type">
-<h3>Base Data Type<a class="headerlink" href="#base-data-type" title="Permalink to this headline">¶</a></h3>
+<h2>Base Data Type<a class="headerlink" href="#base-data-type" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Base.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Base.h</a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
   <span class="n">UINT32</span>     <span class="n">Data1</span><span class="p">;</span>
@@ -1398,7 +1411,7 @@ in EFI_PCI_HOST_BRIDGE_RESOURCE_ALLOCATION_PROTOCOL defined in PI Specification.
 </div>
 </div>
 <div class="section" id="efi-hob-type">
-<h3>EFI HOB TYPE<a class="headerlink" href="#efi-hob-type" title="Permalink to this headline">¶</a></h3>
+<h2>EFI HOB TYPE<a class="headerlink" href="#efi-hob-type" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span>
 <span class="o">//</span> <span class="n">HobType</span> <span class="n">of</span> <span class="n">EFI_HOB_GENERIC_HEADER</span><span class="o">.</span>
@@ -1420,7 +1433,7 @@ in EFI_PCI_HOST_BRIDGE_RESOURCE_ALLOCATION_PROTOCOL defined in PI Specification.
 </div>
 </div>
 <div class="section" id="efi-hob-generic-header">
-<h3>EFI_HOB_GENERIC_HEADER<a class="headerlink" href="#efi-hob-generic-header" title="Permalink to this headline">¶</a></h3>
+<h2>EFI_HOB_GENERIC_HEADER<a class="headerlink" href="#efi-hob-generic-header" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
 <span class="o">///</span> <span class="n">Describes</span> <span class="n">the</span> <span class="nb">format</span> <span class="ow">and</span> <span class="n">size</span> <span class="n">of</span> <span class="n">the</span> <span class="n">data</span> <span class="n">inside</span> <span class="n">the</span> <span class="n">HOB</span><span class="o">.</span>
@@ -1444,9 +1457,9 @@ in EFI_PCI_HOST_BRIDGE_RESOURCE_ALLOCATION_PROTOCOL defined in PI Specification.
 </div>
 </div>
 <div class="section" id="hob-list-header">
-<h3>HOB List Header<a class="headerlink" href="#hob-list-header" title="Permalink to this headline">¶</a></h3>
+<h2>HOB List Header<a class="headerlink" href="#hob-list-header" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="efi-hob-handoff-info-table">
-<h4>EFI_HOB_HANDOFF_INFO_TABLE<a class="headerlink" href="#efi-hob-handoff-info-table" title="Permalink to this headline">¶</a></h4>
+<h3>EFI_HOB_HANDOFF_INFO_TABLE<a class="headerlink" href="#efi-hob-handoff-info-table" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
 <span class="o">///</span> <span class="n">Contains</span> <span class="n">general</span> <span class="n">state</span> <span class="n">information</span> <span class="n">used</span> <span class="n">by</span> <span class="n">the</span> <span class="n">HOB</span> <span class="n">producerphase</span><span class="o">.</span>
@@ -1501,7 +1514,7 @@ in EFI_PCI_HOST_BRIDGE_RESOURCE_ALLOCATION_PROTOCOL defined in PI Specification.
 </div>
 </div>
 <div class="section" id="efi-hob-handoff-table-version">
-<h4>EFI_HOB_HANDOFF_TABLE_VERSION<a class="headerlink" href="#efi-hob-handoff-table-version" title="Permalink to this headline">¶</a></h4>
+<h3>EFI_HOB_HANDOFF_TABLE_VERSION<a class="headerlink" href="#efi-hob-handoff-table-version" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
 <span class="o">///</span> <span class="n">Value</span> <span class="n">of</span> <span class="n">version</span> <span class="ow">in</span> <span class="n">EFI_HOB_HANDOFF_INFO_TABLE</span><span class="o">.</span>
@@ -1511,7 +1524,7 @@ in EFI_PCI_HOST_BRIDGE_RESOURCE_ALLOCATION_PROTOCOL defined in PI Specification.
 </div>
 </div>
 <div class="section" id="efi-boot-mode">
-<h4>EFI_BOOT_MODE<a class="headerlink" href="#efi-boot-mode" title="Permalink to this headline">¶</a></h4>
+<h3>EFI_BOOT_MODE<a class="headerlink" href="#efi-boot-mode" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiBootMode.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiBootMode.h</a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
 <span class="o">///</span> <span class="n">EFI</span> <span class="n">boot</span> <span class="n">mode</span>
@@ -1538,7 +1551,7 @@ in EFI_PCI_HOST_BRIDGE_RESOURCE_ALLOCATION_PROTOCOL defined in PI Specification.
 </div>
 </div>
 <div class="section" id="efi-hob-guid-type">
-<h3>EFI_HOB_GUID_TYPE<a class="headerlink" href="#efi-hob-guid-type" title="Permalink to this headline">¶</a></h3>
+<h2>EFI_HOB_GUID_TYPE<a class="headerlink" href="#efi-hob-guid-type" title="Permalink to this headline">¶</a></h2>
 <p>This is the generic HOB header for GUID type HOB.</p>
 <p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
@@ -1565,7 +1578,7 @@ in EFI_PCI_HOST_BRIDGE_RESOURCE_ALLOCATION_PROTOCOL defined in PI Specification.
 </div>
 </div>
 <div class="section" id="efi-pei-graphics-info-hob">
-<h3>EFI_PEI_GRAPHICS_INFO_HOB<a class="headerlink" href="#efi-pei-graphics-info-hob" title="Permalink to this headline">¶</a></h3>
+<h2>EFI_PEI_GRAPHICS_INFO_HOB<a class="headerlink" href="#efi-pei-graphics-info-hob" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h</a></p>
 <p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Protocol/GraphicsOutput.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Protocol/GraphicsOutput.h</a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">**</span><span class="n">HOB</span> <span class="n">GUID</span><span class="o">**</span>
@@ -1680,7 +1693,7 @@ resolution. GOP implementation is responsible for providing accurate
 value for this field.</p>
 </div>
 <div class="section" id="efi-pei-graphics-device-info-hob">
-<h3>EFI_PEI_GRAPHICS_DEVICE_INFO_HOB<a class="headerlink" href="#efi-pei-graphics-device-info-hob" title="Permalink to this headline">¶</a></h3>
+<h2>EFI_PEI_GRAPHICS_DEVICE_INFO_HOB<a class="headerlink" href="#efi-pei-graphics-device-info-hob" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h</a></p>
 <p><strong>HOB GUID</strong>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define    EFI_PEI_GRAPHICS_DEVICE_INFO_HOB_GUID    {0xe5cb2ac9, 0xd35d, 0x4430, {0x93, 0x6e, 0x1d, 0xe3, 0x32, 0x47, 0x8d, 0xe7}}</span>
@@ -1699,9 +1712,9 @@ value for this field.</p>
 </div>
 </div>
 <div class="section" id="efi-hob-resource-descriptor">
-<h3>EFI_HOB_RESOURCE_DESCRIPTOR<a class="headerlink" href="#efi-hob-resource-descriptor" title="Permalink to this headline">¶</a></h3>
+<h2>EFI_HOB_RESOURCE_DESCRIPTOR<a class="headerlink" href="#efi-hob-resource-descriptor" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="efi-resource-type">
-<h4>EFI_RESOURCE_TYPE<a class="headerlink" href="#efi-resource-type" title="Permalink to this headline">¶</a></h4>
+<h3>EFI_RESOURCE_TYPE<a class="headerlink" href="#efi-resource-type" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
 <span class="o">///</span> <span class="n">The</span> <span class="n">resource</span> <span class="nb">type</span><span class="o">.</span>
@@ -1723,7 +1736,7 @@ value for this field.</p>
 </div>
 </div>
 <div class="section" id="efi-resource-attribute-type">
-<h4>EFI_RESOURCE_ATTRIBUTE_TYPE<a class="headerlink" href="#efi-resource-attribute-type" title="Permalink to this headline">¶</a></h4>
+<h3>EFI_RESOURCE_ATTRIBUTE_TYPE<a class="headerlink" href="#efi-resource-attribute-type" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
 <span class="o">///</span> <span class="n">A</span> <span class="nb">type</span> <span class="n">of</span> <span class="n">recount</span> <span class="n">attribute</span> <span class="nb">type</span><span class="o">.</span>
@@ -1790,7 +1803,7 @@ value for this field.</p>
 </div>
 </div>
 <div class="section" id="efi-hob-resource-descriptor-1">
-<span id="id3"></span><h4>EFI_HOB_RESOURCE_DESCRIPTOR<a class="headerlink" href="#efi-hob-resource-descriptor-1" title="Permalink to this headline">¶</a></h4>
+<span id="id12"></span><h3>EFI_HOB_RESOURCE_DESCRIPTOR<a class="headerlink" href="#efi-hob-resource-descriptor-1" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
 <span class="o">///</span> <span class="n">Describes</span> <span class="n">the</span> <span class="n">resource</span> <span class="n">properties</span> <span class="n">of</span> <span class="nb">all</span> <span class="n">fixed</span><span class="p">,</span>
@@ -1829,9 +1842,9 @@ value for this field.</p>
 </div>
 </div>
 <div class="section" id="efi-hob-memory-allocation">
-<h3>EFI_HOB_MEMORY_ALLOCATION<a class="headerlink" href="#efi-hob-memory-allocation" title="Permalink to this headline">¶</a></h3>
+<h2>EFI_HOB_MEMORY_ALLOCATION<a class="headerlink" href="#efi-hob-memory-allocation" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="efi-memory-type">
-<h4>EFI_MEMORY_TYPE<a class="headerlink" href="#efi-memory-type" title="Permalink to this headline">¶</a></h4>
+<h3>EFI_MEMORY_TYPE<a class="headerlink" href="#efi-memory-type" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiMultiPhase.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiMultiPhase.h</a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
 <span class="o">///</span> <span class="n">Enumeration</span> <span class="n">of</span> <span class="n">memory</span> <span class="n">types</span> <span class="n">introduced</span> <span class="ow">in</span> <span class="n">UEFI</span><span class="o">.</span>
@@ -1910,7 +1923,7 @@ value for this field.</p>
 </div>
 </div>
 <div class="section" id="efi-hob-memory-allocation-header">
-<h4>EFI_HOB_MEMORY_ALLOCATION_HEADER<a class="headerlink" href="#efi-hob-memory-allocation-header" title="Permalink to this headline">¶</a></h4>
+<h3>EFI_HOB_MEMORY_ALLOCATION_HEADER<a class="headerlink" href="#efi-hob-memory-allocation-header" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
 <span class="o">///</span> <span class="n">EFI_HOB_MEMORY_ALLOCATION_HEADER</span> <span class="n">describes</span> <span class="n">the</span>
@@ -1954,8 +1967,8 @@ value for this field.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="id4">
-<h4>EFI_HOB_MEMORY_ALLOCATION<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id13">
+<h3>EFI_HOB_MEMORY_ALLOCATION<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h">https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h</a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">///</span>
 <span class="o">///</span> <span class="n">Describes</span> <span class="nb">all</span> <span class="n">memory</span> <span class="n">ranges</span> <span class="n">used</span> <span class="n">during</span> <span class="n">the</span> <span class="n">HOB</span> <span class="n">producer</span>
@@ -1983,7 +1996,7 @@ value for this field.</p>
 </div>
 </div>
 <div class="section" id="references-and-links">
-<h2>References and Links<a class="headerlink" href="#references-and-links" title="Permalink to this headline">¶</a></h2>
+<h1>References and Links<a class="headerlink" href="#references-and-links" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li><a href="https://firmware.intel.com/learn/fsp/about-intel-fsp" target="_blank">Intel® Firmware Support Package</a></li>
 <li><a href="https://github.com/tianocore/tianocore.github.io/wiki/EDK-II-Specifications" target="_blank">EDK II Specifications</a></li>
@@ -1992,7 +2005,6 @@ value for this field.</p>
 <li><a href="https://buildmedia.readthedocs.org/pdf/devicetree-specification/latest/devicetree-specification.pdf" target="_blank">Device Tree</a></li>
 <li><a href="http://download.microsoft.com/download/9/4/5/945703CA-EF1F-496F-ADCF-3332CE5594FD/microsoft-debug-port-table-2-CP.docx" target="_blank">ACPI DBG2</a></li>
 </ul>
-</div>
 </div>
 
 
@@ -2006,7 +2018,7 @@ value for this field.</p>
         <a href="3_platform_orechestration_layer.html" class="btn btn-neutral float-right" title="Platform Orchestration Layer (POL)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="1_terminology.html" class="btn btn-neutral" title="Terminology" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="1_terminology.html" class="btn btn-neutral" title="Universal Scalable Firmware (USF) Specification" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

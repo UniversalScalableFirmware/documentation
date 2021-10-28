@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Terminology &mdash; Universal Scalable Firmware (USF)  documentation</title>
+  <title>Universal Scalable Firmware (USF) Specification &mdash; Universal Scalable Firmware (USF)  documentation</title>
   
 
   
@@ -82,9 +82,11 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="revision_history.html">Revision History</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Terminology</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#motivation-for-universal-scalable-firmware-usf">Motivation for Universal Scalable Firmware (USF)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#simplicity-determinisim-and-debuggability">Simplicity, Determinisim and Debuggability</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Universal Scalable Firmware (USF) Specification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#terminology">Terminology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#motivation-for-universal-scalable-firmware">Motivation for Universal Scalable Firmware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simplicity-determinisim-and-debuggability">Simplicity, Determinisim and Debuggability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usf-layers">USF Layers</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#os-interfaces">OS Interfaces</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#universal-payload">Universal Payload</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#platform-orchestration-layer-pol">Platform Orchestration Layer (POL)</a></li>
@@ -94,6 +96,11 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html">Universal Payload</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html#payload-image-format">Payload Image Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html#hand-off-state">Hand-off state</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html#payload-interfaces">Payload Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html#appendix-a-hob-data-structures">Appendix A – HOB Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html#references-and-links">References and Links</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_platform_orechestration_layer.html">Platform Orchestration Layer (POL)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_runtime.html">Runtime</a></li>
 <li class="toctree-l1"><a class="reference internal" href="5_security.html">Security</a></li>
@@ -146,7 +153,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Terminology</li>
+      <li>Universal Scalable Firmware (USF) Specification</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -163,23 +170,25 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <a class="reference internal image-reference" href="_images/image1.jpeg"><img alt="_images/image1.jpeg" src="_images/image1.jpeg" style="width: 6.5in; height: 4.0625in;" /></a>
-<p>Universal Scalable Firmware (USF) Specification</p>
+  <a class="reference internal image-reference" href="_images/image1.jpeg"><img alt="_images/image1.jpeg" src="_images/image1.jpeg" style="width: 6in; height: 3.5in;" /></a>
+<div class="section" id="universal-scalable-firmware-usf-specification">
+<h1>Universal Scalable Firmware (USF) Specification<a class="headerlink" href="#universal-scalable-firmware-usf-specification" title="Permalink to this headline">¶</a></h1>
 <p><strong>Version 0.7</strong></p>
 <p><strong>October 2021</strong></p>
-<p>© Copyright Content on document licensed under a Creative Commons Attribution 4.0 International license</p>
+<p>© Copyright 2021 - Document content licensed under a Creative Commons Attribution 4.0 International license</p>
 <div class="section" id="terminology">
-<h1>Terminology<a class="headerlink" href="#terminology" title="Permalink to this headline">¶</a></h1>
-<p>Early personal computers used a “Basic Input/Output System” (BIOS) to boot the system and provide communication between hardware and the Operating System (OS). Hence the term BIOS has come to be used as a generic term for all computer firmware, but this is not technically correct. In the 1990s, Intel developed the “Extensible Firmware Interface” (EFI) to provide more features than legacy BIOS, and this eventually evolved into the Unified Extensible Firmware Interface (UEFI) maintained by the Unified EFI Forum, Inc. (See <a class="reference external" href="https://uefi.org/">https://uefi.org/</a>) Most modern PCs ship with some variation of UEFI firmware, and UEFI is widely supported by both commercial and open source operating systems. Tianocore, EDKII and Intel’s Minimum Platform Architecture (MPA or “min platform) are all implementations based on the UEFI standard for system firmware.</p>
-<p>This Specification uses “firmware” or “system firmware” interchangeably to indicate a computer’s pre-boot environment. “BIOS” may also be used as a generic term, but should not be considered a reference to legacy firmware implementations.</p>
-<div class="section" id="motivation-for-universal-scalable-firmware-usf">
-<h2>Motivation for Universal Scalable Firmware (USF)<a class="headerlink" href="#motivation-for-universal-scalable-firmware-usf" title="Permalink to this headline">¶</a></h2>
-<p>Firmware implementations such as Tianocore and EDKII have served the industry well for a couple of decades now. But issues such as the following are now driving the need for new system firmware standards:</p>
+<h2>Terminology<a class="headerlink" href="#terminology" title="Permalink to this headline">¶</a></h2>
+<p>Early personal computers used a “Basic Input/Output System” (BIOS) to boot the system and provide communication between hardware and the Operating System (OS). Hence the term BIOS has come to be used as a generic term for all computer firmware, but this is not technically correct. In the 1990s, Intel developed the “Extensible Firmware Interface” (EFI) to provide more features than legacy BIOS, and this eventually evolved into the <a class="reference external" href="https://uefi.org/specifications">Unified Extensible Firmware Interface (UEFI)</a> maintained by the <a class="reference external" href="https://uefi.org/">Unified EFI Forum, Inc.</a> Most modern PCs ship with some variation of UEFI firmware, and UEFI is widely supported by both commercial and open source operating systems. Both TianoCore EDKII and Intel’s Minimum Platform Architecture (MPA or “min platform”) are implementations based on the UEFI standard for system firmware.</p>
+<p>This Specification uses “firmware” or “system firmware” interchangeably to indicate a computer’s pre-boot environment. “BIOS” may also be used as a generic term, and should not be considered a reference to legacy firmware implementations.</p>
+</div>
+<div class="section" id="motivation-for-universal-scalable-firmware">
+<h2>Motivation for Universal Scalable Firmware<a class="headerlink" href="#motivation-for-universal-scalable-firmware" title="Permalink to this headline">¶</a></h2>
+<p>Firmware implementations such as TianoCore EDKII have served the industry well for a couple of decades now. But issues such as the following are now driving the need for new system firmware standards:</p>
 <ul class="simple">
 <li>Growing demands from customers requiring firmware flexibility to easily support various bootloaders.</li>
 <li>Fragmented Tianocore/EDKII/min-platform/FSP solutions are leading to higher development and validation cost.</li>
 <li>Closely coupled Platform/SOC/IP level firmware design &amp; code are resulting in low reusability and long time to market (TTM).</li>
-<li>High complexity with key modules like MRC &amp; security result in quality, test, and debug challenges.</li>
+<li>High complexity with key modules like Memory Reference Code (MRC) and security result in quality, test, and debug challenges.</li>
 <li>Limited modularity.</li>
 <li>Lack of unified/common interfaces to support platform XPUs (CPU, dGPU, etc).</li>
 </ul>
@@ -187,18 +196,21 @@
 </div>
 <div class="section" id="simplicity-determinisim-and-debuggability">
 <h2>Simplicity, Determinisim and Debuggability<a class="headerlink" href="#simplicity-determinisim-and-debuggability" title="Permalink to this headline">¶</a></h2>
-<p>The three attributes of Simplicity, Determinism and Debuggability go together. Firmware plays a major role in debugging hardware, silicon features and various technologies (Security, Power Management, IO, Virtualization, RAS etc.) and should lend itself to readability and determining the sequence of operations by reading the source code. Firmware is the abstraction layer and it often times have to deal with unstable hardware and Silicon workarounds. A simple, debug (hardware debug, not just software) friendly infrastructure is called for.Today’s platform and SoC complexity calls for a model of replaceable IP Modules, with the associated FW components traveling with that IP.</p>
+<p>The three attributes of Simplicity, Determinism and Debuggability go together. Firmware plays a major role in debugging hardware, silicon features, and various technologies such as Security, Power Management, IO, Virtualization, RAS, etc. Hence firmware should lend itself to readability and determining the sequence of operations by reading the source code. Firmware is the abstraction layer and often has to deal with unstable hardware and silicon workarounds. A simple debug-friendly infrastructure (hardware debug, not just software) is called for. Today’s platform and SoC complexity calls for a model of replaceable IP Modules, with the associated firmware components traveling with that IP.</p>
+</div>
+<div class="section" id="usf-layers">
+<h2>USF Layers<a class="headerlink" href="#usf-layers" title="Permalink to this headline">¶</a></h2>
 <p>The layers of  Universal Scalable Firmware are described in the following diagram.</p>
-<a class="reference internal image-reference" href="_images/image2.jpg"><img alt="A picture containing graphical user interface" src="_images/image2.jpg" style="width: 6.5in; height: 6.85208in;" /></a>
+<a class="reference internal image-reference" href="_images/image2.jpg"><img alt="A picture containing graphical user interface" src="_images/image2.jpg" style="width: 6in; height: 6.25in;" /></a>
 <p><strong>Figure 1: USF stack</strong></p>
 <p>Starting from the top of this stack, we have the following items.</p>
 <div class="section" id="os-interfaces">
 <h3>OS Interfaces<a class="headerlink" href="#os-interfaces" title="Permalink to this headline">¶</a></h3>
-<p>These are well-known interfaces such as ACPI, UEFI, Kexec, or Multiboot, that provide a means to interact with pre-OS and runtimes.</p>
+<p>These are well-known interfaces such as ACPI, UEFI, Kexec, or Multi-boot, that provide a means to interact with pre-OS and runtimes.</p>
 </div>
 <div class="section" id="universal-payload">
 <h3>Universal Payload<a class="headerlink" href="#universal-payload" title="Permalink to this headline">¶</a></h3>
-<p>Universal Payload API for different OS payloads (i.e., UEFI, LinuxBoot, ACRN embedded hypervisor), and support for various bootloaders (i.e., tianocore/EDKII, coreboot, slim bootloader, and u-boot.</p>
+<p>A Universal Payload API for different OS payloads such as UEFI, LinuxBoot, and ACRN embedded hypervisor, plus support for various bootloaders such as tianocore/EDKII, coreboot, slim bootloader, and u-boot.</p>
 </div>
 <div class="section" id="platform-orchestration-layer-pol">
 <h3>Platform Orchestration Layer (POL)<a class="headerlink" href="#platform-orchestration-layer-pol" title="Permalink to this headline">¶</a></h3>
