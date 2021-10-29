@@ -91,7 +91,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#bootloaders">Bootloaders</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#payloads">Payloads</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#bootloader-interfaces">Bootloader interfaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#bootloader-interfaces">Bootloader Interfaces</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#coreboot-payload-interface">Coreboot Payload Interface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#slim-bootloader-sbl-payload-interface">Slim Bootloader (SBL) Payload Interface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#pei-to-dxe-interface">PEI to DXE Interface</a></li>
@@ -261,7 +261,7 @@ ANY PROPOSAL, SPECIFICATION OR SAMPLE.</p>
 subject to change without notice. Readers should not design products
 based on this document.</p>
 <p>The <strong>Universal Payload Project Team</strong> provides the content on this site under a
-<strong>Creative Commons Attribution 4.0 International license</strong> (<a class="reference external" href="https://spdx.org/licenses/CC-BY-4.0.html">https://spdx.org/licenses/CC-BY-4.0.html</a>)
+<strong>Creative Commons Attribution 4.0 International license</strong> (<a class="reference external" href="https://spdx.org/licenses/CC-BY-4.0.html">https://spdx.org/licenses/CC-BY-4.0.html</a>),
 except where otherwise noted.</p>
 <p>Other names and brands may be claimed as the property of others.</p>
 </div>
@@ -271,7 +271,7 @@ except where otherwise noted.</p>
 </div>
 <div class="section" id="intended-audience">
 <span id="id4"></span><h2>Intended Audience<a class="headerlink" href="#intended-audience" title="Permalink to this headline">¶</a></h2>
-<p>This document is targeted at all platform and system developers who need the bootloader or the payload supports the unified bootloader and payload interface. This includes, but is not limited to: BIOS developers, bootloader developers, system integrators, as well as end users.</p>
+<p>This document is targeted at all platform and system developers who need the bootloader or payload to support the unified bootloader and payload interface. This includes firmware developers, bootloader developers, system integrators, and end users.</p>
 </div>
 <div class="section" id="related-documents">
 <span id="id5"></span><h2>Related Documents<a class="headerlink" href="#related-documents" title="Permalink to this headline">¶</a></h2>
@@ -302,13 +302,13 @@ except where otherwise noted.</p>
 <div class="section" id="overview">
 <span id="id6"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div><p>Most modern platforms rely on system Firmware to initialize the
+<div><p>Most modern platforms rely on system firmware to initialize the
 hardware and launch an Operating System (OS). The system firmware is
 responsible for initializing the platform hardware including CPU and
 other silicon functional blocks, detecting and initializing the
 memory subsystem, boot media initialization and setting up hardware
 abstractions for use by the operating systems.</p>
-<p>While newer architectural enhancements (e.g. - PCI, PCIe, USB, etc.)
+<p>While newer architectural enhancements such as PCI, PCIe, and USB
 are developed at an industrial scale, there are vendor specific
 micro-architectural enhancements that happens at a much faster pace.
 Silicon vendors differentiate through these microarchitectural
@@ -330,9 +330,9 @@ system boot, diagnostics, etc.</p>
 <p>While certain system firmware implementations implement both the
 initialization and OS boot logic in a single code base, the
 distinction lies in the functionality provided.</p>
-<p>This specification is used to describe the interface between the
+<p>This specification describes an interface between the
 bootloader phase that initializes the system hardware and the payload
-phase. It includes how to pass parameters to payload and parameter
+phase. It includes how to pass parameters to the payload and parameter
 format, payload image format, payload boot mode and stack usage, etc.
 The intent for this specification is to provide interoperability
 between spec compliant bootloaders and spec compliant payloads.</p>
@@ -350,26 +350,26 @@ to the initialization itself, bootloader is responsible for providing
 the system configuration information to the subsequent stages in the
 boot process. In addition to proprietary options, there are many open
 sourced bootloaders available.</p>
-<p><strong>EDKII</strong></p>
-<p>EDK II is a modern, feature-rich, cross-platform firmware development
+<p><strong>EDK II</strong></p>
+<p>TianoCore EDK II is a modern feature-rich, cross-platform firmware development
 environment for the UEFI and UEFI Platform Initialization (PI)
 specifications. EDKII performs both first stage (hardware
 initialization) and second stage booting.</p>
 <p>Reference implementations for many platforms are also available in
-open source under BSD + Patents license.</p>
+open source, under BSD + Patents license.</p>
 <p><a class="reference external" href="https://www.tianocore.org/">https://www.tianocore.org/</a></p>
 <p><strong>Slim Bootloader</strong></p>
 <p>Slim Bootloader is an open source system firmware implementation that
 adopts the modular initialization followed by payload launch approach
-of system firmware design. Slim Bootloader project provides both the
-initialization phases as well as the OsLoader payload, but it also
+of system firmware design. Slim Bootloader provides both the
+initialization phase and OsLoader payload, and it also
 supports launching of different payloads. Open source Slim Bootloader
-uses BSD + Patents License.</p>
+uses a BSD + Patents License.</p>
 <p><a class="reference external" href="https://slimbootloader.github.io/">https://slimbootloader.github.io/</a></p>
 <p><strong>coreboot</strong></p>
-<p>coreboot is a project to develop open source boot firmware for
+<p>Coreboot is a project to develop open source boot firmware for
 various architectures. It follows the design philosophy of minimum
-necessary initialization followed by payload. coreboot is released
+necessary initialization followed by payload. Coreboot is released
 under GNU’s General Public License (GPL).</p>
 <p><a class="reference external" href="https://www.coreboot.org/">https://www.coreboot.org/</a></p>
 <p><strong>U-Boot</strong></p>
@@ -385,46 +385,46 @@ Public License (GPL)</p>
 <blockquote>
 <div><p>After initializing the system hardware, bootloaders launch the
 payload modules. Payloads ideally are modular and platform
-independent. Payloads depend on the abstract interfaces (scope of
+independent. Payloads depend on abstract interfaces (scope of
 this document) to be platform independent.</p>
 <p>While OS boot protocol is one of the main functionalities provided by
-payloads, there could be other functionalities (e.g - diagnostics)
+payloads, there could be other functionalities such as diagnostics
 that can be enabled by payloads.</p>
 <p>From a design point of view, a payload is different from a boot image
 based on its relationship with the system firmware. Payloads are
-considered part of system firmware and is typically in the flash
+considered part of system firmware and are typically in flash memory,
 while boot images are not considered part of system firmware (not
-within the trusted firmware boundary) and is often in a boot media.</p>
-<p>Also, as mentioned earlier, while certain system firmware
-implementations implement both the initialization and OS boot logic
+within the trusted firmware boundary) and are often in separate boot media.</p>
+<p>As mentioned earlier, while certain system firmware
+implementations include both the initialization and OS boot logic
 in a single code base, the distinction lies in the functionality
 provided. This leads to use cases where some system firmware
-implementations can act as a payload providing OS boot capability
+implementations can act as a payload providing OS boot capability,
 while relying on an underlying bootloader layer for system hardware
-initialization. Examples of such payloads include EDKII and Uboot.
-Both EDKII and uboot implementations implement both phases of system
-firmware functionality and can also be launched as payloads by other
+initialization. Examples of such payloads include TianoCore EDKII and U-boot.
+Both EDKII and uboot implementations include both phases of system
+firmware functionality, and can also be launched as payloads by other
 bootloaders.</p>
-<p>There are many payloads currently available including EDK2 payload
-providing UEFI services, Linux as a payload, uboot payload and other
+<p>There are many payloads currently available, including the EDK II payload,
+that provide UEFI services, Linux as a payload, u-boot payload and other
 custom implementations.</p>
 <p><strong>EDK II Payload</strong></p>
-<p>EDK II DXE and BDS stages can be launched by bootloaders as an UEFI
-payload. The EDKII payload provides the required UEFI specification
-defined architectural protocols and can launch an UEFI aware OS.</p>
+<p>EDK II DXE and BDS stages can be launched by bootloaders as a UEFI
+payload. The EDK II payload provides the required UEFI specification
+defined architectural protocols, and can launch a UEFI aware OS.</p>
 <p><strong>SBL OsLoader</strong></p>
-<p>It is SBL payload implementation that supports Linux boot protocol and
-can also launch ELF or PE executables. It also supports launching OS
-compliant with the MultiBoot specification.</p>
+<p>This is an SBL payload implementation that supports the Linux boot protocol, and
+can also launch ELF or PE executables. It also supports launching an OS
+compliant with the Multi-Boot specification.</p>
 <p><strong>Linux Payload</strong></p>
-<p>LinuxBoot is a firmware for modern servers that replaces specific
-firmware functionality like the UEFI DXE phase with a Linux kernel
+<p>LinuxBoot is firmware for modern servers that replaces specific
+firmware functionality, like the UEFI DXE phase with a Linux kernel
 and runtime.</p>
 <p><a class="reference external" href="https://www.linuxboot.org/">https://www.linuxboot.org/</a></p>
 </div></blockquote>
 </div>
 <div class="section" id="bootloader-interfaces">
-<span id="id9"></span><h2>Bootloader interfaces<a class="headerlink" href="#bootloader-interfaces" title="Permalink to this headline">¶</a></h2>
+<span id="id9"></span><h2>Bootloader Interfaces<a class="headerlink" href="#bootloader-interfaces" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="coreboot-payload-interface">
 <h3>Coreboot Payload Interface<a class="headerlink" href="#coreboot-payload-interface" title="Permalink to this headline">¶</a></h3>
 <blockquote>
@@ -432,7 +432,7 @@ and runtime.</p>
 <p><strong>Reference</strong>: <a class="reference external" href="https://doc.coreboot.org/lib/abi-data-consumption.html">https://doc.coreboot.org/lib/abi-data-consumption.html</a></p>
 <p><strong>Reference</strong>:
 <a class="reference external" href="https://github.com/tianocore/edk2/blob/master/UefiPayloadPkg/Library/CbParseLib/CbParseLib.c">https://github.com/tianocore/edk2/blob/master/UefiPayloadPkg/Library/CbParseLib/CbParseLib.c</a></p>
-<p>coreboot passes information to downstream users (payloads and/or
+<p>Coreboot passes information to downstream users (payloads and/or
 operating systems) using <strong>coreboot tables</strong>.</p>
 <p>The table usually sits in memory around address 0x500. However, some
 bootloaders seem to overwrite low memory area, thus destroying the
@@ -442,13 +442,13 @@ coreboot tables were moved to the high tables area.</p>
 coreboot table with a single sub table is placed at 0x500/0x530 that
 points to the real coreboot table. This is comparable to the ACPI
 RSDT or the MP floating table.</p>
-<p>Coreboot tables is a series of data records packed back to back and
+<p>Coreboot tables contain a series of data records packed back to back, with
 each encoding both type and size. This is something similar to a UEFI
 HOB list. Coreboot tables provide information about:</p>
 <ul class="simple">
 <li><strong>memory map</strong></li>
 <li><strong>Graphics Info</strong></li>
-<li>Pointers to certain CBMEM structures (<strong>ACPI, SMBIOS</strong>, etc)</li>
+<li>Pointers to certain CBMEM structures, such as <strong>ACPI, SMBIOS</strong>, etc.</li>
 </ul>
 </div></blockquote>
 </div>
@@ -573,9 +573,9 @@ for operating system specific boot loaders.</p>
 <div class="section" id="data-interface">
 <h3>Data interface<a class="headerlink" href="#data-interface" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div><p>Modern buses and devices (PCI, PCIe, USB, SATA, etc.) support
+<div><p>Modern computer buses and devices such as PCI, PCIe, USB, and SATA support
 software detection, enumeration and configuration, providing true
-plug and play capabilities, there still exists some devices that are
+plug and play capabilities. However, there still exists some devices that are
 not enumerable through software.</p>
 <p>Examples:</p>
 <ul class="simple">
@@ -2028,7 +2028,7 @@ value for this field.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license
-      Last updated on Oct 28, 2021.
+      Last updated on Oct 29, 2021.
 
     </p>
   </div>
