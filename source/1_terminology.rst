@@ -38,7 +38,7 @@ Firmware implementations such as TianoCore EDKII have served the industry well f
 
 - Lack of unified/common interfaces to support platform XPUs (CPU, dGPU, etc).
 
-The goal of developing the Universal Scalable Firmware standard is to evolve modularity to scale for an IP firmware development model, with an emphasis on simplicity, scalability, debuggability, readability and determinism.
+The goal of developing the Universal Scalable Firmware standard is to make sure that Intel has universal control over key aspects of firmware implementations.
 
 
 Simplicity, Determinisim and Debuggability
