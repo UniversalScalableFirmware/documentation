@@ -232,6 +232,13 @@ Payloads
 
    https://www.linuxboot.org/
 
+   **VaultBoot Payload**
+   VaultBoot is a firmware security payload highly focus on trusted computing 
+   and advanced defense, e.g: Verified boot (also known as Secure Boot) and 
+   measured boot, TPMv2 based FDE (Full-disk encryption), local/remote 
+   attestation, built-in DH key exchange against physical attack such as TPM Genie.
+
+   https://github.com/hardenedvault/vaultboot
 
 .. _bootloader-interfaces:
 

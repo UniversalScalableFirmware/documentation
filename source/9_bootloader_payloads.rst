@@ -26,6 +26,8 @@ Bootloader Payloads –
 
 -  PI 1.7 https://uefi.org/specifications
 
+-  VaultBoot https://github.com/hardenedvault/vaultboot
+  
 OS/Hv interfaces 
 ~~~~~~~~~~~~~~~~
 
