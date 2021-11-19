@@ -544,7 +544,7 @@ Section* and *Universal Payload Loaded Image Section*.
 
 
 Universal Payload Information Section
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This specification requires a mandatory ELF universal payload information section
 to indicate the ELF image conforms to this specification. If this section is found
@@ -664,7 +664,7 @@ This Universal Payload Information section must:
 
 
 Universal Payload Loaded Image Section
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 There are many cases that a payload might need extra images to proceed the
 boot flow. For example, UEFI payload might need additional FV images, Linux

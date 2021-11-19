@@ -4,9 +4,15 @@ Universal Scalable Firmware Specification
 ==========================================
 
 .. toctree::
-   :maxdepth: 3
+   :name: frontmatter
 
    revision_history
+
+.. toctree::
+   :name: content
+   :maxdepth: 3
+   :numbered:
+
    1_terminology
    2_universal_payload
    3_platform_orechestration_layer
