@@ -70,7 +70,7 @@ These are well-known interfaces such as ACPI, UEFI, Kexec, or Multi-boot, that p
 Universal Payload
 ------------------
 
-A Universal Payload API for different OS payloads such as UEFI, LinuxBoot, and ACRN embedded hypervisor, plus support for various bootloaders such as tianocore/EDKII, coreboot, slim bootloader, and u-boot.
+A Universal Payload API for different OS payloads such as UEFI, LinuxBoot, VaultBoot and ACRN embedded hypervisor, plus support for various bootloaders such as tianocore/EDKII, coreboot, slim bootloader, and u-boot.
 
 
 Platform Orchestration Layer (POL)
