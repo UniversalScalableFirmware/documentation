@@ -7,6 +7,7 @@ Universal Scalable Firmware Specification
    :name: frontmatter
 
    revision_history
+   disclaimers
 
 .. toctree::
    :name: content
