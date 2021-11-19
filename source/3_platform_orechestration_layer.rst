@@ -205,7 +205,7 @@ Figure 4 POL re-use
 
 Beyond re-use of platform code with different SOC’s, the POL should be
 re-useable across the most used or popular boot paradigms such as a full
-UEFI boot, LinuxBoot, or an embedded hypervisor.
+UEFI boot, LinuxBoot, VaultBoot or an embedded hypervisor.
 
 .. image:: images/image6.PNG
    :alt: Different Payloads
