@@ -510,7 +510,7 @@ Payload is part of system firmware TCB
 
 
 Payload Image Format
-====================
+-----------------------
 
 Payload, as a standalone component, usually needs to be loaded by a
 bootloader into memory properly prior to execution. In this loading
@@ -533,7 +533,8 @@ For detailed information on the ELF image format, please see
 
 
 Payload Image Sections
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
+
 To use ELF image as universal payload image format, it is required to define
 a simple way for bootloader to differenciate a universal payload image from
 a regular ELF image. On the other side, a universal payload might aslo need
@@ -544,7 +545,7 @@ Section* and *Universal Payload Loaded Image Section*.
 
 
 Universal Payload Information Section
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This specification requires a mandatory ELF universal payload information section
 to indicate the ELF image conforms to this specification. If this section is found
@@ -664,7 +665,7 @@ This Universal Payload Information section must:
 
 
 Universal Payload Loaded Image Section
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 There are many cases that a payload might need extra images to proceed the
 boot flow. For example, UEFI payload might need additional FV images, Linux
@@ -696,7 +697,7 @@ required extra image information for consumption. 
 
 
 Hand-off state
-==============
+----------------
 
 The bootloader builds the Hand-Off Block (HOB) list containing
 platform specific information and passes the address of the HOB list
@@ -717,10 +718,10 @@ HOB List defines the detailed HOB list being used to transfer
 platform specific data from the bootloader to the payload.
 
 IA-32 and x64 Platforms
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 State of silicon
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
    The bootloader initializes the processor and chipset through
    vendor-specific silicon initialization implementation. For example,
@@ -744,7 +745,7 @@ State of silicon
    (out of the scope of this document).
 
 Instruction execution environment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
    Regardless of the environment where the bootloader runs, the
    processor is in 32bit protected mode when a 32bit payload starts, or
@@ -755,7 +756,7 @@ Instruction execution environment
    execution environment when the payload starts.
 
 Registers
-^^^^^^^^^
+%%%%%%%%%%%
 
 -  ESP + 4 points to the address of the HOB list for the 32bit payload.
 
@@ -778,14 +779,14 @@ Registers
 -  CR0.TS is clear.
 
 Interrupt
-^^^^^^^^^
+%%%%%%%%%%%
 
    Interrupt is disabled. The hardware is initialized by the boot loader
    such that no interrupt triggers even when the payload sets the
    Interrupt Enable flag in EFLAGs.
 
 Page table
-^^^^^^^^^^
+%%%%%%%%%%%%
 
    Selectors are set to be flat.
 
@@ -800,7 +801,7 @@ Page table
    needed.
 
 Stack
-^^^^^
+%%%%%%%
 
    4KiB stack is available for the payload. The stack is 16-byte aligned
    and may be marked as non-executable in page table.
@@ -812,7 +813,7 @@ Stack
    new stack.
 
 Application processors
-^^^^^^^^^^^^^^^^^^^^^^
+%%%%%%%%%%%%%%%%%%%%%%%%
 
    Payload starts on the bootstrap processor. All application processors
    (on a multiple-processor system) are in halt state.
@@ -823,18 +824,18 @@ Application processors
    TODO: take care about virtual platforms.
 
 ARM Platforms
--------------
+~~~~~~~~~~~~~~~
 
 Need community inputs
 
 RISC-V Platforms
-----------------
+~~~~~~~~~~~~~~~~~
 
 Need community inputs
 
 
 Payload Interfaces
-==================
+--------------------
 
 The bootloader provides platform information to payload through
 standard ACPI table, SMBIOS table, Device tree and a series of data
@@ -860,7 +861,7 @@ Open: will payload be run in S3 path?
 .. _acpi_tables:
 
 ACPI tables
------------
+~~~~~~~~~~~~~
 
 ACPI table is required to boot modern operation system, especially to boot windows operating system.
 The bootloader should provide a ACPI RSDP HOB. In the ACPI table least RSDT, FADT and MCFG should be available to the payload.
@@ -892,7 +893,7 @@ as the default debug device.
 .. hob_list:
 
 HOB List
---------
+~~~~~~~~~~
 
 The bootloader should build a HOB list and pass the HOB list header
 to payload when passing control to payload. The HOB format is
@@ -909,10 +910,10 @@ Specification Volume 3: Shared Architectural elements*.
 Second section defines the new HOBs.
 
 Reusing Interfaces in Platform Initialization Specification
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 PHIT(Phase Handoff Info Table) HOB
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The bootloader should report the general state information through
 the HOB following EFI_HOB_HANDOFF_INFO_TABLE format defined in
@@ -920,7 +921,7 @@ the HOB following EFI_HOB_HANDOFF_INFO_TABLE format defined in
 elements*.
 
 CPU HOB
-^^^^^^^
+%%%%%%%%%
 
 The bootloader should report the processor information including address space
 and I/O space capabilities to the payload through the HOB following
@@ -928,7 +929,7 @@ EFI_HOB_CPU format defined in *Platform Initialization Specification Volume 3:
 Shared Architectural elements*.
 
 Resource Descriptor HOB
-^^^^^^^^^^^^^^^^^^^^^^^
+%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The bootloader should report the system resources through the HOB
 following EFI_HOB_RESOURCE_DESCRIPTOR format defined in *Platform
@@ -944,7 +945,7 @@ I/O and memory mapped I/O resource should also be reported using
 resource type EFI_RESOURCE_IO and EFI_RESOURCE_MEMORY_MAPPED_IO.
 
 Memory Allocation HOB
-^^^^^^^^^^^^^^^^^^^^^
+%%%%%%%%%%%%%%%%%%%%%%%%
 
 The bootloader should report the memory usages that exist outside the
 HOB list through the HOB following EFI_HOB_MEMORY_ALLOCATION format defined
@@ -952,14 +953,14 @@ in *Platform Initialization Specification Volume 3: Shared Architectural
 elements*.
 
 Boot-Strap Processor (BSP) Stack Memory Allocation HOB
-''''''''''''''''''''''''''''''''''''''''''''''''''''''
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 The bootloader should report the initial stack prepared for payload through
 the HOB following EFI_HOB_MEMORY_ALLOCATION_STACK format defined in *Platform
 Initialization Specification Volume 3: Shared Architectural elements*.
 
 Memory Allocation Module HOB
-''''''''''''''''''''''''''''
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 The bootloader should report the payload memory location and entry point
 through the HOB following EFI_HOB_MEMORY_ALLOCATION_MODULE format defined
@@ -967,7 +968,7 @@ in *Platform Initialization Specification Volume 3: Shared Architectural
 elements*.
 
 Graphics information HOB
-^^^^^^^^^^^^^^^^^^^^^^^^
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 If bootloader initializes the graphics device, the bootloader might
 report graphics mode and framebuffer information through
@@ -980,10 +981,10 @@ for the graphics display. These HOBs are described in the *PI Specification.*
 Please refer Appendix 6.6 EFI_PEI_GRAPHICS_INFO_HOB and 6.7 EFI_PEI_GRAPHICS_DEVICE_INFO_HOB for the details.
 
 New Interfaces
-~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^
 
 Common Payload Header
-^^^^^^^^^^^^^^^^^^^^^^^^^
+%%%%%%%%%%%%%%%%%%%%%%%
 
 All new interfaces are GUID type HOBs starting with ``EFI_HOB_GUID_TYPE`` defined in the PI Specification.
 
@@ -1022,7 +1023,7 @@ Consumers of the interfaces should only access those members that are covered by
 HOB data for different interfaces is defined in following sections.
 
 ACPI Table
-^^^^^^^^^^
+%%%%%%%%%%%%
 
 The bootloader should pass ACPI table the payload. So that the payload could get the platform information from the ACPI table.
 
@@ -1058,7 +1059,7 @@ Header.Length is 12.
 Point to the ACPI RSDP table. The ACPI table need follow ACPI specification version 2.0 or above.
 
 SMBIOS Table
-^^^^^^^^^^^^
+%%%%%%%%%%%%%%
 
 The bootloader might pass SMBIOS table to the payload. So that the payload could get the platform information from the table.
 
@@ -1098,7 +1099,7 @@ Points to the SMBIOS table in SMBIOS 3.0+ format if GUID is ``gUniversalPayloadS
 Points to the SMBIOS table in SMBIOS 2.x format if GUID is ``gUniversalPayloadSmbiosTableGuid``.
 
 DEVICE TREE
-^^^^^^^^^^^
+%%%%%%%%%%%%%
 
 The bootloader might pass Device Tree to the payload. So that the payload could get the platform information from the table.
 
@@ -1134,7 +1135,7 @@ Header.Length is 12.
 Point to the Device Tree entry point.
 
 Serial Information
-^^^^^^^^^^^^^^^^^^
+%%%%%%%%%%%%%%%%%%%%
 
 If the debug device type and subtype are specified in DBG2, the
 bootloader should 16550 compatible serial debug port information
@@ -1195,7 +1196,7 @@ Set to 0 to use the default baud rate 115200.
 Base address of 16550 serial port registers in MMIO or I/O space.
 
 PCI Root Bridges
-^^^^^^^^^^^^^^^^
+%%%%%%%%%%%%%%%%%%%%
 
 The bootloader should pass information about PCI root bridges to the payload. The information tells the payload whether the PCI bus
 enumeration has been performed by the bootloader, the bus, IO and MMIO ranges that are used or will be used by the PCI bus.
@@ -1341,7 +1342,7 @@ PnP hardware ID of the root bridge. This value must match the corresponding _HID
 Unique ID that is required by ACPI if two devices have the same _HID. This value must also match the corresponding _UID/_HID pair in the ACPI name space.
 
 Optional Interfaces
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^
 
 Some more HOBs could be built by bootloaders for advanced features. e.g.:
 
@@ -1362,13 +1363,13 @@ Some more HOBs could be built by bootloaders for advanced features. e.g.:
       Payload could have a check to ACPI table to get basic info they need.
 
 
-Appendix A – HOB Data Structures
-================================
+HOB Data Structures
+---------------------
 
 The declarations/definitions provided here are derived from the EDKII at https://github.com/tianocore/edk2
 
 Base Data Type
---------------
+~~~~~~~~~~~~~~~~
 
 https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Base.h::
 
@@ -1385,7 +1386,7 @@ https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiBaseType.h
   typedef    UINT64     EFI_PHYSICAL_ADDRESS;
 
 EFI HOB TYPE
-------------
+~~~~~~~~~~~~~~
 
 https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h::
 
@@ -1407,7 +1408,7 @@ https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h::
   #define EFI_HOB_TYPE_END_OF_HOB_LIST      0xFFFF
 
 EFI_HOB_GENERIC_HEADER
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h::
 
@@ -1432,10 +1433,10 @@ https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h::
 
 
 HOB List Header
----------------
+~~~~~~~~~~~~~~~~~~
 
 EFI_HOB_HANDOFF_INFO_TABLE
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h::
 
@@ -1490,7 +1491,7 @@ https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h::
   } EFI_HOB_HANDOFF_INFO_TABLE;
 
 EFI_HOB_HANDOFF_TABLE_VERSION
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h::
 
@@ -1500,7 +1501,7 @@ https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h::
   #define    EFI_HOB_HANDOFF_TABLE_VERSION    0x0009
 
 EFI_BOOT_MODE
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^
 
 https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiBootMode.h::
 
@@ -1526,7 +1527,7 @@ https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiBootMode.h::
   #define BOOT_IN_RECOVERY_MODE                         0x20
 
 EFI_HOB_GUID_TYPE
------------------
+~~~~~~~~~~~~~~~~~~~~
 
 This is the generic HOB header for GUID type HOB.
 
@@ -1554,7 +1555,7 @@ https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h::
   } EFI_HOB_GUID_TYPE;
 
 EFI_PEI_GRAPHICS_INFO_HOB
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h
 
@@ -1671,7 +1672,7 @@ resolution. GOP implementation is responsible for providing accurate
 value for this field.
 
 EFI_PEI_GRAPHICS_DEVICE_INFO_HOB
---------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHob.h
 
@@ -1691,10 +1692,10 @@ https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Guid/GraphicsInfoHo
   } EFI_PEI_GRAPHICS_DEVICE_INFO_HOB;
 
 EFI_HOB_RESOURCE_DESCRIPTOR
----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 EFI_RESOURCE_TYPE
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^
 
 https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h::
 
@@ -1717,7 +1718,7 @@ https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h::
 
 
 EFI_RESOURCE_ATTRIBUTE_TYPE
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h::
 
@@ -1787,7 +1788,7 @@ https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h::
 .. _efi_hob_resource_descriptor-1:
 
 EFI_HOB_RESOURCE_DESCRIPTOR
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h::
 
@@ -1825,10 +1826,10 @@ https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h::
   } EFI_HOB_RESOURCE_DESCRIPTOR;
 
 EFI_HOB_MEMORY_ALLOCATION
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 EFI_MEMORY_TYPE
-~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^
 
 https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiMultiPhase.h::
 
@@ -1908,7 +1909,7 @@ https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Uefi/UefiMultiPhase
 
 
 EFI_HOB_MEMORY_ALLOCATION_HEADER
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h::
 
@@ -1954,7 +1955,7 @@ https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h::
 
 
 EFI_HOB_MEMORY_ALLOCATION
-~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h::
 
@@ -1980,7 +1981,7 @@ https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h::
   } EFI_HOB_MEMORY_ALLOCATION;
 
 References and Links
-=====================
+----------------------
 
 * |Intel® Firmware Support Package|
 

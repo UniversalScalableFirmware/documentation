@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Universal Scalable Firmware (USF) Specification &mdash; Universal Scalable Firmware (USF)  documentation</title>
+  <title>1. Universal Scalable Firmware (USF) Specification &mdash; Universal Scalable Firmware (USF)  documentation</title>
   
 
   
@@ -30,8 +30,8 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Universal Payload" href="2_universal_payload.html" />
-    <link rel="prev" title="Revision History" href="revision_history.html" /> 
+    <link rel="next" title="2. Universal Payload" href="2_universal_payload.html" />
+    <link rel="prev" title="Notices and Disclaimers" href="disclaimers.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -80,34 +80,32 @@
               
             
             
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="revision_history.html">Revision History</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Universal Scalable Firmware (USF) Specification</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#terminology">Terminology</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#motivation-for-universal-scalable-firmware">Motivation for Universal Scalable Firmware</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#simplicity-determinisim-and-debuggability">Simplicity, Determinisim and Debuggability</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#usf-layers">USF Layers</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#os-interfaces">OS Interfaces</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#universal-payload">Universal Payload</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#platform-orchestration-layer-pol">Platform Orchestration Layer (POL)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#scalable-firmware-support-package-sfsp">Scalable Firmware Support Package (sFSP)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="disclaimers.html">Notices and Disclaimers</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. Universal Scalable Firmware (USF) Specification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#terminology">1.1. Terminology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#motivation-for-universal-scalable-firmware">1.2. Motivation for Universal Scalable Firmware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simplicity-determinisim-and-debuggability">1.3. Simplicity, Determinisim and Debuggability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usf-layers">1.4. USF Layers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#os-interfaces">1.4.1. OS Interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#universal-payload">1.4.2. Universal Payload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#platform-orchestration-layer-pol">1.4.3. Platform Orchestration Layer (POL)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scalable-firmware-support-package-sfsp">1.4.4. Scalable Firmware Support Package (sFSP)</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html">Universal Payload</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html#payload-image-format">Payload Image Format</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html#hand-off-state">Hand-off state</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html#payload-interfaces">Payload Interfaces</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html#appendix-a-hob-data-structures">Appendix A – HOB Data Structures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html#references-and-links">References and Links</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3_platform_orechestration_layer.html">Platform Orchestration Layer (POL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4_runtime.html">Runtime</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5_security.html">Security</a></li>
-<li class="toctree-l1"><a class="reference internal" href="6_debug.html">Debug</a></li>
-<li class="toctree-l1"><a class="reference internal" href="7_yaml_boot_configuration.html">YAML Format Boot Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="8_scalable_fsp.html">Scalable FSP</a></li>
-<li class="toctree-l1"><a class="reference internal" href="9_bootloader_payloads.html">Bootloader Payloads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html">2. Universal Payload</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_platform_orechestration_layer.html">3. Platform Orchestration Layer (POL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_runtime.html">4. Runtime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_security.html">5. Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_debug.html">6. Debug</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7_yaml_boot_configuration.html">7. YAML Format Boot Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8_scalable_fsp.html">8. Scalable FSP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9_bootloader_payloads.html">9. Bootloader Payloads</a></li>
 </ul>
 
             
@@ -153,7 +151,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Universal Scalable Firmware (USF) Specification</li>
+      <li>1. Universal Scalable Firmware (USF) Specification</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -172,17 +170,17 @@
             
   <a class="reference internal image-reference" href="_images/image1.jpeg"><img alt="_images/image1.jpeg" src="_images/image1.jpeg" style="width: 6in; height: 3.5in;" /></a>
 <div class="section" id="universal-scalable-firmware-usf-specification">
-<h1>Universal Scalable Firmware (USF) Specification<a class="headerlink" href="#universal-scalable-firmware-usf-specification" title="Permalink to this headline">¶</a></h1>
+<h1>1. Universal Scalable Firmware (USF) Specification<a class="headerlink" href="#universal-scalable-firmware-usf-specification" title="Permalink to this headline">¶</a></h1>
 <p><strong>Version 0.7</strong></p>
 <p><strong>October 2021</strong></p>
 <p>© Copyright 2021 - Document content licensed under a Creative Commons Attribution 4.0 International license</p>
 <div class="section" id="terminology">
-<h2>Terminology<a class="headerlink" href="#terminology" title="Permalink to this headline">¶</a></h2>
+<h2>1.1. Terminology<a class="headerlink" href="#terminology" title="Permalink to this headline">¶</a></h2>
 <p>Early personal computers used a “Basic Input/Output System” (BIOS) to boot the system and provide communication between hardware and the Operating System (OS). Hence the term BIOS has come to be used as a generic term for all computer firmware, but this is not technically correct. In the 1990s, Intel developed the “Extensible Firmware Interface” (EFI) to provide more features than legacy BIOS, and this eventually evolved into the <a class="reference external" href="https://uefi.org/specifications">Unified Extensible Firmware Interface (UEFI)</a> maintained by the <a class="reference external" href="https://uefi.org/">Unified EFI Forum, Inc.</a> Most modern PCs ship with some variation of UEFI firmware, and UEFI is widely supported by both commercial and open source operating systems. Both TianoCore EDKII and Intel’s Minimum Platform Architecture (MPA or “min platform”) are implementations based on the UEFI standard for system firmware.</p>
 <p>This Specification uses “firmware” or “system firmware” interchangeably to indicate a computer’s pre-boot environment. “BIOS” may also be used as a generic term, and should not be considered a reference to legacy firmware implementations.</p>
 </div>
 <div class="section" id="motivation-for-universal-scalable-firmware">
-<h2>Motivation for Universal Scalable Firmware<a class="headerlink" href="#motivation-for-universal-scalable-firmware" title="Permalink to this headline">¶</a></h2>
+<h2>1.2. Motivation for Universal Scalable Firmware<a class="headerlink" href="#motivation-for-universal-scalable-firmware" title="Permalink to this headline">¶</a></h2>
 <p>Firmware implementations such as TianoCore EDKII have served the industry well for a couple of decades now. But issues such as the following are now driving the need for new system firmware standards:</p>
 <ul class="simple">
 <li>Growing demands from customers requiring firmware flexibility to easily support various bootloaders.</li>
@@ -195,29 +193,29 @@
 <p>The goal of developing the Universal Scalable Firmware standard is to evolve modularity to scale for an IP firmware development model, with an emphasis on simplicity, scalability, debuggability, readability and determinism.</p>
 </div>
 <div class="section" id="simplicity-determinisim-and-debuggability">
-<h2>Simplicity, Determinisim and Debuggability<a class="headerlink" href="#simplicity-determinisim-and-debuggability" title="Permalink to this headline">¶</a></h2>
+<h2>1.3. Simplicity, Determinisim and Debuggability<a class="headerlink" href="#simplicity-determinisim-and-debuggability" title="Permalink to this headline">¶</a></h2>
 <p>The three attributes of Simplicity, Determinism and Debuggability go together. Firmware plays a major role in debugging hardware, silicon features, and various technologies such as Security, Power Management, IO, Virtualization, RAS, etc. Hence firmware should lend itself to readability and determining the sequence of operations by reading the source code. Firmware is the abstraction layer and often has to deal with unstable hardware and silicon workarounds. A simple debug-friendly infrastructure (hardware debug, not just software) is called for. Today’s platform and SoC complexity calls for a model of replaceable IP Modules, with the associated firmware components traveling with that IP.</p>
 </div>
 <div class="section" id="usf-layers">
-<h2>USF Layers<a class="headerlink" href="#usf-layers" title="Permalink to this headline">¶</a></h2>
+<h2>1.4. USF Layers<a class="headerlink" href="#usf-layers" title="Permalink to this headline">¶</a></h2>
 <p>The layers of  Universal Scalable Firmware are described in the following diagram.</p>
 <a class="reference internal image-reference" href="_images/image2.jpg"><img alt="A picture containing graphical user interface" src="_images/image2.jpg" style="width: 6in; height: 6.25in;" /></a>
 <p><strong>Figure 1: USF stack</strong></p>
 <p>Starting from the top of this stack, we have the following items.</p>
 <div class="section" id="os-interfaces">
-<h3>OS Interfaces<a class="headerlink" href="#os-interfaces" title="Permalink to this headline">¶</a></h3>
+<h3>1.4.1. OS Interfaces<a class="headerlink" href="#os-interfaces" title="Permalink to this headline">¶</a></h3>
 <p>These are well-known interfaces such as ACPI, UEFI, Kexec, or Multi-boot, that provide a means to interact with pre-OS and runtimes.</p>
 </div>
 <div class="section" id="universal-payload">
-<h3>Universal Payload<a class="headerlink" href="#universal-payload" title="Permalink to this headline">¶</a></h3>
+<h3>1.4.2. Universal Payload<a class="headerlink" href="#universal-payload" title="Permalink to this headline">¶</a></h3>
 <p>A Universal Payload API for different OS payloads such as UEFI, LinuxBoot, VaultBoot and ACRN embedded hypervisor, plus support for various bootloaders such as tianocore/EDKII, coreboot, slim bootloader, and u-boot.</p>
 </div>
 <div class="section" id="platform-orchestration-layer-pol">
-<h3>Platform Orchestration Layer (POL)<a class="headerlink" href="#platform-orchestration-layer-pol" title="Permalink to this headline">¶</a></h3>
+<h3>1.4.3. Platform Orchestration Layer (POL)<a class="headerlink" href="#platform-orchestration-layer-pol" title="Permalink to this headline">¶</a></h3>
 <p>Simplified ACPI support, common libraries for various bootloaders &amp; Rust language, standard binary configuration through YAML, support for FW attestation, authentication, measurement, and modern update.</p>
 </div>
 <div class="section" id="scalable-firmware-support-package-sfsp">
-<h3>Scalable Firmware Support Package (sFSP)<a class="headerlink" href="#scalable-firmware-support-package-sfsp" title="Permalink to this headline">¶</a></h3>
+<h3>1.4.4. Scalable Firmware Support Package (sFSP)<a class="headerlink" href="#scalable-firmware-support-package-sfsp" title="Permalink to this headline">¶</a></h3>
 <p>Scalable Firmware Support Package (sFSP) support for 64-bit reset vector, SMM encapsulation, various domain modules, authentication, unified configuration, and SOC level validation.</p>
 </div>
 </div>
@@ -231,10 +229,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="2_universal_payload.html" class="btn btn-neutral float-right" title="Universal Payload" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="2_universal_payload.html" class="btn btn-neutral float-right" title="2. Universal Payload" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="revision_history.html" class="btn btn-neutral" title="Revision History" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="disclaimers.html" class="btn btn-neutral" title="Notices and Disclaimers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -244,7 +242,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license
-      Last updated on Jan 06, 2022.
+      Last updated on Jan 07, 2022.
 
     </p>
   </div>

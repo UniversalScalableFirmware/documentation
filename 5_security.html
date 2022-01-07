@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Security &mdash; Universal Scalable Firmware (USF)  documentation</title>
+  <title>5. Security &mdash; Universal Scalable Firmware (USF)  documentation</title>
   
 
   
@@ -30,8 +30,8 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Debug" href="6_debug.html" />
-    <link rel="prev" title="Runtime" href="4_runtime.html" /> 
+    <link rel="next" title="6. Debug" href="6_debug.html" />
+    <link rel="prev" title="4. Runtime" href="4_runtime.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -80,77 +80,75 @@
               
             
             
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="revision_history.html">Revision History</a></li>
-<li class="toctree-l1"><a class="reference internal" href="1_terminology.html">Universal Scalable Firmware (USF) Specification</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html">Universal Payload</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html#payload-image-format">Payload Image Format</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html#hand-off-state">Hand-off state</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html#payload-interfaces">Payload Interfaces</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html#appendix-a-hob-data-structures">Appendix A – HOB Data Structures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html#references-and-links">References and Links</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3_platform_orechestration_layer.html">Platform Orchestration Layer (POL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4_runtime.html">Runtime</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Security</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#security-overview">Security Overview</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#firmware-resiliency-protection">Firmware Resiliency - Protection</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#critical-resource-lock-hardware">Critical Resource Lock (hardware)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#critical-service-close-software">Critical Service Close (software)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#critical-resource-access">Critical Resource Access</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#update">Update</a></li>
+<li class="toctree-l1"><a class="reference internal" href="disclaimers.html">Notices and Disclaimers</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1_terminology.html">1. Universal Scalable Firmware (USF) Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html">2. Universal Payload</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_platform_orechestration_layer.html">3. Platform Orchestration Layer (POL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_runtime.html">4. Runtime</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. Security</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#security-overview">5.1. Security Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#firmware-resiliency-protection">5.1.1. Firmware Resiliency - Protection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#critical-resource-lock-hardware">5.1.1.1. Critical Resource Lock (hardware)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#critical-service-close-software">5.1.1.2. Critical Service Close (software)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#critical-resource-access">5.1.1.3. Critical Resource Access</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#update">5.1.1.4. Update</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#firmware-resiliency-detection">Firmware Resiliency - Detection</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#secure-boot-verified-boot">Secure Boot (verified boot)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#secure-configuration-data-verification">Secure Configuration (data verification)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#firmware-resiliency-detection">5.1.2. Firmware Resiliency - Detection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#secure-boot-verified-boot">5.1.2.1. Secure Boot (verified boot)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#secure-configuration-data-verification">5.1.2.2. Secure Configuration (data verification)</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#firmware-resiliency-recovery">Firmware Resiliency - Recovery</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#recovery-trigger">Recovery trigger</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#known-good-image">Known good image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#firmware-resiliency-recovery">5.1.3. Firmware Resiliency - Recovery</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#recovery-trigger">5.1.3.1. Recovery trigger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#known-good-image">5.1.3.2. Known good image</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#measurment-and-attestation">Measurment and Attestation</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#trusted-boot-measured-boot">Trusted Boot (measured boot)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#completeness">Completeness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#measurment-and-attestation">5.1.4. Measurment and Attestation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#trusted-boot-measured-boot">5.1.4.1. Trusted Boot (measured boot)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#completeness">5.1.4.2. Completeness</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#dma-protection">DMA Protection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dma-protection">5.1.5. DMA Protection</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#vulnerability-mitigation-strategy">Vulnerability Mitigation Strategy</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#eliminate-vulnerability">Eliminate Vulnerability</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#minimize-smi-handler">Minimize SMI handler</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#minimize-uefi-variable">Minimize UEFI variable</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#adopt-firmware-security-best-practice">Adopt Firmware Security Best Practice</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#consider-side-channel-mitigation">Consider Side Channel Mitigation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#support-cryptography-agility">Support Cryptography Agility</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#type-safe-programming-language">Type Safe Programming Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vulnerability-mitigation-strategy">5.2. Vulnerability Mitigation Strategy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#eliminate-vulnerability">5.2.1. Eliminate Vulnerability</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#minimize-smi-handler">5.2.1.1. Minimize SMI handler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#minimize-uefi-variable">5.2.1.2. Minimize UEFI variable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#adopt-firmware-security-best-practice">5.2.1.3. Adopt Firmware Security Best Practice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#consider-side-channel-mitigation">5.2.1.4. Consider Side Channel Mitigation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#support-cryptography-agility">5.2.1.5. Support Cryptography Agility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#type-safe-programming-language">5.2.1.6. Type Safe Programming Language</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#break-exploitation">Break Exploitation</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#data-execution-prevention-dep">Data Execution Prevention (DEP)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#control-flow-guard-cfg">Control Flow Guard (CFG)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#address-space-layout-randomization-aslr">Address Space Layout Randomization (ASLR)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#break-exploitation">5.2.2. Break Exploitation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#data-execution-prevention-dep">5.2.2.1. Data Execution Prevention (DEP)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#control-flow-guard-cfg">5.2.2.2. Control Flow Guard (CFG)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#address-space-layout-randomization-aslr">5.2.2.3. Address Space Layout Randomization (ASLR)</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#contain-damage">Contain Damage</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#deprevilege-execution">Deprevilege Execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#contain-damage">5.2.3. Contain Damage</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#deprevilege-execution">5.2.3.1. Deprevilege Execution</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#limit-attack-window">Limit Attack Window</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#live-patching">Live Patching</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#firmware-component-manifest">Firmware Component Manifest</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="#limit-attack-window">5.2.4. Limit Attack Window</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#live-patching">5.2.4.1. Live Patching</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#firmware-component-manifest">5.2.4.2. Firmware Component Manifest</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="6_debug.html">Debug</a></li>
-<li class="toctree-l1"><a class="reference internal" href="7_yaml_boot_configuration.html">YAML Format Boot Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="8_scalable_fsp.html">Scalable FSP</a></li>
-<li class="toctree-l1"><a class="reference internal" href="9_bootloader_payloads.html">Bootloader Payloads</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="6_debug.html">6. Debug</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7_yaml_boot_configuration.html">7. YAML Format Boot Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8_scalable_fsp.html">8. Scalable FSP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9_bootloader_payloads.html">9. Bootloader Payloads</a></li>
 </ul>
 
             
@@ -196,7 +194,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Security</li>
+      <li>5. Security</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -214,35 +212,35 @@
            <div itemprop="articleBody">
             
   <div class="section" id="security">
-<span id="id1"></span><h1>Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>5. Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="security-overview">
-<h2>Security Overview<a class="headerlink" href="#security-overview" title="Permalink to this headline">¶</a></h2>
+<h2>5.1. Security Overview<a class="headerlink" href="#security-overview" title="Permalink to this headline">¶</a></h2>
 <p>There are various security considerations for the POL, sFSP, and the
 payloads. This section will describe the various overall concerns and
 technology specific aspects.</p>
 <div class="section" id="firmware-resiliency-protection">
-<h3>Firmware Resiliency - Protection<a class="headerlink" href="#firmware-resiliency-protection" title="Permalink to this headline">¶</a></h3>
+<h3>5.1.1. Firmware Resiliency - Protection<a class="headerlink" href="#firmware-resiliency-protection" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="critical-resource-lock-hardware">
-<h4>Critical Resource Lock (hardware)<a class="headerlink" href="#critical-resource-lock-hardware" title="Permalink to this headline">¶</a></h4>
+<h4>5.1.1.1. Critical Resource Lock (hardware)<a class="headerlink" href="#critical-resource-lock-hardware" title="Permalink to this headline">¶</a></h4>
 <p>The platform shall always lock the important resource before it exits
 the platform manufacture phase.</p>
 <p>The important resource includes but is not limited to flash part, SMRAM,
 SMRR, silicon register such as lockable BAR register,</p>
 </div>
 <div class="section" id="critical-service-close-software">
-<h4>Critical Service Close (software)<a class="headerlink" href="#critical-service-close-software" title="Permalink to this headline">¶</a></h4>
+<h4>5.1.1.2. Critical Service Close (software)<a class="headerlink" href="#critical-service-close-software" title="Permalink to this headline">¶</a></h4>
 <p>The platform shall always close the service that may impact the system
 resource.</p>
 <p>The service includes but is not limited to SMM registration service,
 flash update service.</p>
 </div>
 <div class="section" id="critical-resource-access">
-<h4>Critical Resource Access<a class="headerlink" href="#critical-resource-access" title="Permalink to this headline">¶</a></h4>
+<h4>5.1.1.3. Critical Resource Access<a class="headerlink" href="#critical-resource-access" title="Permalink to this headline">¶</a></h4>
 <p>The platform shall only allow the critical resource access in the
 trusted execution environment such as SMM.</p>
 </div>
 <div class="section" id="update">
-<span id="update-1"></span><h4>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h4>
+<span id="update-1"></span><h4>5.1.1.4. Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h4>
 <p>The platform shall only allow firmware update only in the trusted
 execution environment such as SMM, or before existing the platform
 manufacture phase.</p>
@@ -250,9 +248,9 @@ manufacture phase.</p>
 </div>
 </div>
 <div class="section" id="firmware-resiliency-detection">
-<h3>Firmware Resiliency - Detection<a class="headerlink" href="#firmware-resiliency-detection" title="Permalink to this headline">¶</a></h3>
+<h3>5.1.2. Firmware Resiliency - Detection<a class="headerlink" href="#firmware-resiliency-detection" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="secure-boot-verified-boot">
-<h4>Secure Boot (verified boot)<a class="headerlink" href="#secure-boot-verified-boot" title="Permalink to this headline">¶</a></h4>
+<h4>5.1.2.1. Secure Boot (verified boot)<a class="headerlink" href="#secure-boot-verified-boot" title="Permalink to this headline">¶</a></h4>
 <p>The platform shall enable secure boot. The early boot component shall
 verify the next component.</p>
 <p>Care must be taken for Time-of-check/Time-of-use (TOC/TOU) attack.</p>
@@ -261,7 +259,7 @@ environment, verify and use.</p>
 <p>Please refer to <a class="reference external" href="https://tianocore-docs.github.io/Understanding_UEFI_Secure_Boot_Chain/draft/">Understanding the UEFI Secure Boot Chain</a></p>
 </div>
 <div class="section" id="secure-configuration-data-verification">
-<h4>Secure Configuration (data verification)<a class="headerlink" href="#secure-configuration-data-verification" title="Permalink to this headline">¶</a></h4>
+<h4>5.1.2.2. Secure Configuration (data verification)<a class="headerlink" href="#secure-configuration-data-verification" title="Permalink to this headline">¶</a></h4>
 <p>If the configuration has security property, such as lock/unlock policy.
 It shall be protected and verified.</p>
 <p>The secure configuration may be treated as code and verified together
@@ -271,15 +269,15 @@ enhancement, such as RPMB or RPMC.</p>
 </div>
 </div>
 <div class="section" id="firmware-resiliency-recovery">
-<h3>Firmware Resiliency - Recovery<a class="headerlink" href="#firmware-resiliency-recovery" title="Permalink to this headline">¶</a></h3>
+<h3>5.1.3. Firmware Resiliency - Recovery<a class="headerlink" href="#firmware-resiliency-recovery" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="recovery-trigger">
-<h4>Recovery trigger<a class="headerlink" href="#recovery-trigger" title="Permalink to this headline">¶</a></h4>
+<h4>5.1.3.1. Recovery trigger<a class="headerlink" href="#recovery-trigger" title="Permalink to this headline">¶</a></h4>
 <p>A platform should have a watchdog to auto trigger recovery process
 automatically. Otherwise, it should notify the end user that a manual
 recovery is required.</p>
 </div>
 <div class="section" id="known-good-image">
-<h4>Known good image<a class="headerlink" href="#known-good-image" title="Permalink to this headline">¶</a></h4>
+<h4>5.1.3.2. Known good image<a class="headerlink" href="#known-good-image" title="Permalink to this headline">¶</a></h4>
 <p>The recovery process may load a known good image. The known good image
 itself shall be protected and follow the detection flow.</p>
 <p>The known good image shall be up to date as well, to resist rollback
@@ -287,29 +285,29 @@ attack – recovery to an old known bad image.</p>
 </div>
 </div>
 <div class="section" id="measurment-and-attestation">
-<h3>Measurment and Attestation<a class="headerlink" href="#measurment-and-attestation" title="Permalink to this headline">¶</a></h3>
+<h3>5.1.4. Measurment and Attestation<a class="headerlink" href="#measurment-and-attestation" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="trusted-boot-measured-boot">
-<h4>Trusted Boot (measured boot)<a class="headerlink" href="#trusted-boot-measured-boot" title="Permalink to this headline">¶</a></h4>
+<h4>5.1.4.1. Trusted Boot (measured boot)<a class="headerlink" href="#trusted-boot-measured-boot" title="Permalink to this headline">¶</a></h4>
 <p>The platform shall enable trusted boot. The early boot component shall
 measure the next component before transfer control to it, to create a
 trust chain.</p>
 <p>Please refer to <a class="reference external" href="https://tianocore-docs.github.io/edk2-TrustedBootChain/release-1.00/edk2-TrustedBootChain-release-1.00.pdf">Understanding the Trusted Boot Chain Implementation</a></p>
 </div>
 <div class="section" id="completeness">
-<h4>Completeness<a class="headerlink" href="#completeness" title="Permalink to this headline">¶</a></h4>
+<h4>5.1.4.2. Completeness<a class="headerlink" href="#completeness" title="Permalink to this headline">¶</a></h4>
 <p>The platform shall follow TCG specification to measure all required
 component. For example, the platform shall measure every boot component.
 The platform shall measure any security-related boot configuration.</p>
 </div>
 </div>
 <div class="section" id="dma-protection">
-<h3>DMA Protection<a class="headerlink" href="#dma-protection" title="Permalink to this headline">¶</a></h3>
+<h3>5.1.5. DMA Protection<a class="headerlink" href="#dma-protection" title="Permalink to this headline">¶</a></h3>
 <p>The platform shall enable IOMMU based DMA protection.</p>
 <p>For example, <a class="reference external" href="https://software.intel.com/sites/default/files/managed/8d/88/intel-whitepaper-using-iommu-for-dma-protection-in-uefi.pdf">Using IOMMU for DMA Protection in UEFI Firmware</a>.</p>
 </div>
 </div>
 <div class="section" id="vulnerability-mitigation-strategy">
-<h2>Vulnerability Mitigation Strategy<a class="headerlink" href="#vulnerability-mitigation-strategy" title="Permalink to this headline">¶</a></h2>
+<h2>5.2. Vulnerability Mitigation Strategy<a class="headerlink" href="#vulnerability-mitigation-strategy" title="Permalink to this headline">¶</a></h2>
 <p>The platform should make the attacker difficult to find, exploit and leverage the vulnerabilities.</p>
 <blockquote>
 <div><table border="1" class="colwidths-auto docutils">
@@ -340,23 +338,23 @@ The platform shall measure any security-related boot configuration.</p>
 </table>
 </div></blockquote>
 <div class="section" id="eliminate-vulnerability">
-<h3>Eliminate Vulnerability<a class="headerlink" href="#eliminate-vulnerability" title="Permalink to this headline">¶</a></h3>
+<h3>5.2.1. Eliminate Vulnerability<a class="headerlink" href="#eliminate-vulnerability" title="Permalink to this headline">¶</a></h3>
 <p>First, a platform should try to remove any attack surfaces and eliminate the potential vulnerablity.</p>
 <div class="section" id="minimize-smi-handler">
-<h4>Minimize SMI handler<a class="headerlink" href="#minimize-smi-handler" title="Permalink to this headline">¶</a></h4>
+<h4>5.2.1.1. Minimize SMI handler<a class="headerlink" href="#minimize-smi-handler" title="Permalink to this headline">¶</a></h4>
 <p>In a system firmware, the SMI Handler is the most critical attack surface, because the SMM code has highest privilege. A platform should use <a class="reference external" href="https://github.com/tianocore/tianocore.github.io/wiki/SMI-handler-profile-feature">SMI Handler Profile</a> to evaluate if the exposed SMI handlers are necessary.</p>
 </div>
 <div class="section" id="minimize-uefi-variable">
-<h4>Minimize UEFI variable<a class="headerlink" href="#minimize-uefi-variable" title="Permalink to this headline">¶</a></h4>
+<h4>5.2.1.2. Minimize UEFI variable<a class="headerlink" href="#minimize-uefi-variable" title="Permalink to this headline">¶</a></h4>
 <p>Every UEFI variable is an attack surface, because the attacker can use UEFI API to modify it. A platform should review all UEFI variable and evaluate if it is really needed.</p>
 </div>
 <div class="section" id="adopt-firmware-security-best-practice">
-<h4>Adopt Firmware Security Best Practice<a class="headerlink" href="#adopt-firmware-security-best-practice" title="Permalink to this headline">¶</a></h4>
+<h4>5.2.1.3. Adopt Firmware Security Best Practice<a class="headerlink" href="#adopt-firmware-security-best-practice" title="Permalink to this headline">¶</a></h4>
 <p>The platform should follow the existing firmware security best practice, such as <a class="reference external" href="https://github.com/tianocore-docs/Docs/raw/master/White_Papers/A_Tour_Beyond_BIOS_Security_Design_Guide_in_EDK_II.pdf">EDKII Secure Design Guide</a>, <a class="reference external" href="https://tianocore-docs.github.io/EDK_II_Secure_Coding_Guide/draft/">EDKII Secure Coding Guide</a>, <a class="reference external" href="https://tianocore-docs.github.io/EDK_II_Secure_Code_Review_Guide/draft/">EDKII Secure Code Review Guide</a>.</p>
 <p>Other EDKII security related document can be found at <a class="reference external" href="https://github.com/tianocore/tianocore.github.io/wiki/EDK-II-Security-White-Papers">EDKII Security White Papers</a>.</p>
 </div>
 <div class="section" id="consider-side-channel-mitigation">
-<h4>Consider Side Channel Mitigation<a class="headerlink" href="#consider-side-channel-mitigation" title="Permalink to this headline">¶</a></h4>
+<h4>5.2.1.4. Consider Side Channel Mitigation<a class="headerlink" href="#consider-side-channel-mitigation" title="Permalink to this headline">¶</a></h4>
 <p>A platform shall follow <a class="reference external" href="https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/technical-documentation/host-firmware-speculative-side-channel-mitigation.html">Host Firmware Speculative Execution Side Channel Mitigation</a>.</p>
 <ol class="arabic simple">
 <li>LFENCE after validation of untrusted data but before use</li>
@@ -364,7 +362,7 @@ The platform shall measure any security-related boot configuration.</p>
 </ol>
 </div>
 <div class="section" id="support-cryptography-agility">
-<h4>Support Cryptography Agility<a class="headerlink" href="#support-cryptography-agility" title="Permalink to this headline">¶</a></h4>
+<h4>5.2.1.5. Support Cryptography Agility<a class="headerlink" href="#support-cryptography-agility" title="Permalink to this headline">¶</a></h4>
 <p>A firmware infrastructure shall allow the implementation to choose different cryptographic algorithms, to compliant with different standards. This is called Cryptography agility.
 TPM2.0 standard is a good example. A TPM2.0 device may support SHA256, SHA384, SM3_256, or future algorithms such as SHA3_256 or SHA3_384.</p>
 <p>Below table shows the supported crypto algorithms.</p>
@@ -449,7 +447,7 @@ TPM2.0 standard is a good example. A TPM2.0 device may support SHA256, SHA384, S
 </ol>
 </div>
 <div class="section" id="type-safe-programming-language">
-<h4>Type Safe Programming Language<a class="headerlink" href="#type-safe-programming-language" title="Permalink to this headline">¶</a></h4>
+<h4>5.2.1.6. Type Safe Programming Language<a class="headerlink" href="#type-safe-programming-language" title="Permalink to this headline">¶</a></h4>
 <p>An analysis has found that 50% of the open source BIOS security bugs are due to buffer overflows and integer overflows. There are a variety of tools and techniques to prevent these bugs, by identifying and eliminating the vulnerability or by ensuring the vulnerability is not exploitable. Alternatively, instead of providing an ever-increasing set of guidance and tools to address these bugs, we could seek ways to avoid introducing the bugs in the first place.  An emerging approach is to use memory-safe programming languages.</p>
 <p><a class="reference external" href="https://www.rust-lang.org/">Rust</a> is a promising new programming language that can eliminate memory safety issues at compile time. Engineers at Microsoft have made a <a class="reference external" href="https://msrc-blog.microsoft.com/2019/07/16/a-proactive-approach-to-more-secure-code/">case</a> for using memory-safe languages like Rust. A number of firmware and embedded projects are embracing Rust, including <a class="reference external" href="https://github.com/oreboot/oreboot">oreboot</a> system firmware, RISC-V <a class="reference external" href="https://github.com/rustsbi/rustsbi">rustsbi</a> and <a class="reference external" href="https://github.com/tock/tock">tock</a> embedded OS. Rust also supports UEFI toolchains, x86-64-unknown-uefi and i686-unknown-uefi, which can be used to generate a UEFI executable directly. There are UEFI related Rust projects including <a class="reference external" href="https://github.com/r-efi/r-efi">r-efi</a> and <a class="reference external" href="https://github.com/rust-osdev/uefi-rs">uefi-rs</a>.</p>
 <p>EDKII firmware may use Rust to build a component with <a class="reference external" href="https://github.com/jyao1/edk2/tree/edkii-rust/RustPkg">RustPkg</a>. A lightweight pure <a class="reference external" href="https://github.com/jyao1/rust-firmware">rust-firmware</a> is also possible to boot the system with Intel FSP.</p>
@@ -460,41 +458,41 @@ TPM2.0 standard is a good example. A TPM2.0 device may support SHA256, SHA384, S
 </div>
 </div>
 <div class="section" id="break-exploitation">
-<h3>Break Exploitation<a class="headerlink" href="#break-exploitation" title="Permalink to this headline">¶</a></h3>
+<h3>5.2.2. Break Exploitation<a class="headerlink" href="#break-exploitation" title="Permalink to this headline">¶</a></h3>
 <p>If a platform may contain the vulnerablities, the platform should adopt defence in deptch to break the exploitation. <a class="reference external" href="https://edk2-docs.gitbook.io/a-tour-beyond-bios-memory-protection-in-uefi-bios">Memory Protection in UEFI BIOS</a>, <a class="reference external" href="https://tianocore-docs.github.io/ATBB-Mitigate_Buffer_Overflow_in_UEFI/draft/">Mitigate Buffer Overflow in UEFI</a>, <a class="reference external" href="https://github.com/tianocore-docs/Docs/raw/master/White_Papers/A_Tour_Beyond_BIOS_Secure_SMM_Communication.pdf">Secure SMM Communication</a>, and <a class="reference external" href="https://github.com/tianocore/tianocore.github.io/wiki/CET-in-SMM">CET in SMM</a> provides guideline on how to mitigate those threats.</p>
 <div class="section" id="data-execution-prevention-dep">
-<h4>Data Execution Prevention (DEP)<a class="headerlink" href="#data-execution-prevention-dep" title="Permalink to this headline">¶</a></h4>
+<h4>5.2.2.1. Data Execution Prevention (DEP)<a class="headerlink" href="#data-execution-prevention-dep" title="Permalink to this headline">¶</a></h4>
 <p>A platform should set data memory to be non-executable and code memory to be read-only. As such, the data page (including stack, heap, global data, and usable memory) cannot be executed. It is an efficient way to prevent code injection.</p>
 </div>
 <div class="section" id="control-flow-guard-cfg">
-<h4>Control Flow Guard (CFG)<a class="headerlink" href="#control-flow-guard-cfg" title="Permalink to this headline">¶</a></h4>
+<h4>5.2.2.2. Control Flow Guard (CFG)<a class="headerlink" href="#control-flow-guard-cfg" title="Permalink to this headline">¶</a></h4>
 <p>Control flow attack is feasiable even if the DEP is enabled. A platform may enable compiler feature (stack cookie) or use the CPU feature such as Intel Control Flow Enforcement Technology (CET) to guard the control flow.</p>
 </div>
 <div class="section" id="address-space-layout-randomization-aslr">
-<h4>Address Space Layout Randomization (ASLR)<a class="headerlink" href="#address-space-layout-randomization-aslr" title="Permalink to this headline">¶</a></h4>
+<h4>5.2.2.3. Address Space Layout Randomization (ASLR)<a class="headerlink" href="#address-space-layout-randomization-aslr" title="Permalink to this headline">¶</a></h4>
 <p>ASLR is makes it more difficult for an attacker to predict target addresses even if there is vulnerability in the program. The randomization technology can include shuffling, most likely for the image, or shifting, most likely for the data.</p>
 </div>
 </div>
 <div class="section" id="contain-damage">
-<h3>Contain Damage<a class="headerlink" href="#contain-damage" title="Permalink to this headline">¶</a></h3>
+<h3>5.2.3. Contain Damage<a class="headerlink" href="#contain-damage" title="Permalink to this headline">¶</a></h3>
 <p>If a platform does not have an efficient way to break the exploitation, the platform may consider to limit the damage in a small scope.</p>
 <div class="section" id="deprevilege-execution">
-<h4>Deprevilege Execution<a class="headerlink" href="#deprevilege-execution" title="Permalink to this headline">¶</a></h4>
+<h4>5.2.3.1. Deprevilege Execution<a class="headerlink" href="#deprevilege-execution" title="Permalink to this headline">¶</a></h4>
 <p>By default, the system firwmare execution environment is in ring-0. Platform may run untrusted component in a deprevileged environment ring-3.</p>
 <p>For example, the UEFI firmware can run 3rd party option ROM in ring-3, a small SMM CPU code can run the OEM SMM driver in ring-3, etc.</p>
 <p>If the vulnerabilities in option ROM or OEM SMM code are exploited, the damage will only be in the ring-3 component and will not impact the system.</p>
 </div>
 </div>
 <div class="section" id="limit-attack-window">
-<h3>Limit Attack Window<a class="headerlink" href="#limit-attack-window" title="Permalink to this headline">¶</a></h3>
+<h3>5.2.4. Limit Attack Window<a class="headerlink" href="#limit-attack-window" title="Permalink to this headline">¶</a></h3>
 <p>If a platform really has vulnerablity escaping from all defense and impact the system, we need patch it platform in time.</p>
 <div class="section" id="live-patching">
-<h4>Live Patching<a class="headerlink" href="#live-patching" title="Permalink to this headline">¶</a></h4>
+<h4>5.2.4.1. Live Patching<a class="headerlink" href="#live-patching" title="Permalink to this headline">¶</a></h4>
 <p>Live patching is trend in the industry. For example, Linux kernel implemented live patching of a running kernel.</p>
 <p>The system firmware may consider using similar mechanims to patch the runtime component if there is.</p>
 </div>
 <div class="section" id="firmware-component-manifest">
-<h4>Firmware Component Manifest<a class="headerlink" href="#firmware-component-manifest" title="Permalink to this headline">¶</a></h4>
+<h4>5.2.4.2. Firmware Component Manifest<a class="headerlink" href="#firmware-component-manifest" title="Permalink to this headline">¶</a></h4>
 <p>Before a firmware patch is deployed, an adiminstrator may need to know how many systems are impacted.</p>
 <p>A platform may include many firmware components, which are from different sources. Now we need a way to collect those information. We define 2 category of firmwares in below table</p>
 <blockquote>
@@ -585,10 +583,10 @@ TPM2.0 standard is a good example. A TPM2.0 device may support SHA256, SHA384, S
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="6_debug.html" class="btn btn-neutral float-right" title="Debug" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="6_debug.html" class="btn btn-neutral float-right" title="6. Debug" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="4_runtime.html" class="btn btn-neutral" title="Runtime" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="4_runtime.html" class="btn btn-neutral" title="4. Runtime" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -598,7 +596,7 @@ TPM2.0 standard is a good example. A TPM2.0 device may support SHA256, SHA384, S
   <div role="contentinfo">
     <p>
         &copy; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license
-      Last updated on Jan 06, 2022.
+      Last updated on Jan 07, 2022.
 
     </p>
   </div>
