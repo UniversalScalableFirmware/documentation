@@ -237,16 +237,64 @@ The rust API for FSP wrapper is at https://github.com/jyao1/rust-firmware/tree/m
 Configuration Introduction
 --------------------------
 
-| The Platform Orchestration Layer (POL) is aimed to provide guidelines
-  on writing platform code that leverage a Scalable Intel Firmware
-  Support Package (sFSP) interface and payload to coordinate the overall
-  platform initialization flow. It needs to expose configuration, as do
-  the layers below.
-| To that end, YAML, which is a variant of JSON that allows for
-  embedding comments, is employed in order to have a consisten
+The Platform Orchestration Layer (POL) is aimed to provide guidelines on writing platform code that leverage a Scalable Intel Firmware Support Package (sFSP) interface and payload to coordinate the overall platform initialization flow. It needs to expose configuration, as do the layers below.
+
+To that end, YAML, which is a variant of JSON that allows for  embedding comments, is employed in order to have a consistent language across various codebase configuration efforts.
 
 Platform configuration
 ~~~~~~~~~~~~~~~~~~~~~~
+
+**Goals of the Configuration Efforts**
+
+  * Normalize how configuration is done across various codebases and firmware domains (e.g. FSP, Boot Firmware, other on-board devices).
+
+    - Deliver a unified API-based FW programming model across bootloaders for all Intel platforms, XPUs/SOCs, and IPs. 
+
+  * Make adoption by stakeholders/partners as pain-free as possible. 
+
+    - Prepare internal stakeholders, ecosystem partners, and customers to take advantage of the transition to a common configuration paradigm.
+
+**Why do this?**
+
+  * Intel has stakeholders and customers with investments in a variety of codebases, each of which have different underlying methods for firmware configuration.
+
+  * This makes it difficult to have a consistent user/developer experience when configuring platforms based on various underlying firmware technologies. This is a problem for both internal stakeholders and Intel customers.
+
+.. image:: images/POL_common_config_tool_diagram.png
+   :alt: new common config tool diagram
+
+*New common config tool diagram*
+  
+**Tasks associated with the effort**
+
+Create a unified approach to configuring a platform regardless of the underlying codebase without requiring the product group to change what they’re doing in any significant way. Low touch/Enable via tools.
+
+  * Assume no significant changes needed in the native codebase to support this solution.
+
+  * Use YAML to express configuration data
+
+  * Gap analysis between the various config methodologies
+
+    - XML-->YAML, BSF-->YAML, VPD/HII/etc --> YAML
+
+  * Create build-time tools to import codebase config data, modify it, and export it back into its native form.
+
+    - This is especially important and useful when some codebases have config data scattered in many places, thus increasing the usability for developers in configuring the defaults of the codebase.
+
+  * Runtime config
+
+    - Scripting in runtime may be needed for manufacturing line usage etc – something to consider.
+
+  * Telemetry?
+
+    - Address how we expose necessary data from the machine.
+
+  * Port ESRT content into an ACPI context.
+
+    - More easily enable firmware updates without an underlying UEFI infrastructure/assumption.
+
+Although the POL strives to be SOC independent, the system board’s SOC, with its respective sFSP, and the usage of payloads, may require different configuration. To that end, a consistent set of YAML based configuration will be exposed to the system board builder and platform user to configure the various elements.
+
 
 YAML based settings
 ^^^^^^^^^^^^^^^^^^^
