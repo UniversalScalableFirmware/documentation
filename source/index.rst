@@ -16,7 +16,7 @@ Universal Scalable Firmware Specification
 
    1_terminology
    2_universal_payload
-   3_platform_orechestration_layer
+   3_platform_orchestration_layer
    4_runtime
    5_security
    6_debug
