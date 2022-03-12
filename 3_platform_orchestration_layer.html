@@ -472,17 +472,61 @@ below:</p>
 </div>
 <div class="section" id="configuration-introduction">
 <h2>3.3. Configuration Introduction<a class="headerlink" href="#configuration-introduction" title="Permalink to this headline">¶</a></h2>
-<div class="line-block">
-<div class="line">The Platform Orchestration Layer (POL) is aimed to provide guidelines
-on writing platform code that leverage a Scalable Intel Firmware
-Support Package (sFSP) interface and payload to coordinate the overall
-platform initialization flow. It needs to expose configuration, as do
-the layers below.</div>
-<div class="line">To that end, YAML, which is a variant of JSON that allows for
-embedding comments, is employed in order to have a consisten</div>
-</div>
+<p>The Platform Orchestration Layer (POL) is aimed to provide guidelines on writing platform code that leverage a Scalable Intel Firmware Support Package (sFSP) interface and payload to coordinate the overall platform initialization flow. It needs to expose configuration, as do the layers below.</p>
+<p>To that end, YAML, which is a variant of JSON that allows for  embedding comments, is employed in order to have a consistent language across various codebase configuration efforts.</p>
 <div class="section" id="platform-configuration">
 <h3>3.3.1. Platform configuration<a class="headerlink" href="#platform-configuration" title="Permalink to this headline">¶</a></h3>
+<p><strong>Goals of the Configuration Efforts</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Normalize how configuration is done across various codebases and firmware domains (e.g. FSP, Boot Firmware, other on-board devices).<ul>
+<li>Deliver a unified API-based FW programming model across bootloaders for all Intel platforms, XPUs/SOCs, and IPs.</li>
+</ul>
+</li>
+<li>Make adoption by stakeholders/partners as pain-free as possible.<ul>
+<li>Prepare internal stakeholders, ecosystem partners, and customers to take advantage of the transition to a common configuration paradigm.</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p><strong>Why do this?</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Intel has stakeholders and customers with investments in a variety of codebases, each of which have different underlying methods for firmware configuration.</li>
+<li>This makes it difficult to have a consistent user/developer experience when configuring platforms based on various underlying firmware technologies. This is a problem for both internal stakeholders and Intel customers.</li>
+</ul>
+</div></blockquote>
+<img alt="new common config tool diagram" src="_images/POL_common_config_tool_diagram.png" />
+<p><em>New common config tool diagram</em></p>
+<p><strong>Tasks associated with the effort</strong></p>
+<p>Create a unified approach to configuring a platform regardless of the underlying codebase without requiring the product group to change what they’re doing in any significant way. Low touch/Enable via tools.</p>
+<blockquote>
+<div><ul class="simple">
+<li>Assume no significant changes needed in the native codebase to support this solution.</li>
+<li>Use YAML to express configuration data</li>
+<li>Gap analysis between the various config methodologies<ul>
+<li>XML–&gt;YAML, BSF–&gt;YAML, VPD/HII/etc –&gt; YAML</li>
+</ul>
+</li>
+<li>Create build-time tools to import codebase config data, modify it, and export it back into its native form.<ul>
+<li>This is especially important and useful when some codebases have config data scattered in many places, thus increasing the usability for developers in configuring the defaults of the codebase.</li>
+</ul>
+</li>
+<li>Runtime config<ul>
+<li>Scripting in runtime may be needed for manufacturing line usage etc – something to consider.</li>
+</ul>
+</li>
+<li>Telemetry?<ul>
+<li>Address how we expose necessary data from the machine.</li>
+</ul>
+</li>
+<li>Port ESRT content into an ACPI context.<ul>
+<li>More easily enable firmware updates without an underlying UEFI infrastructure/assumption.</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p>Although the POL strives to be SOC independent, the system board’s SOC, with its respective sFSP, and the usage of payloads, may require different configuration. To that end, a consistent set of YAML based configuration will be exposed to the system board builder and platform user to configure the various elements.</p>
 <div class="section" id="yaml-based-settings">
 <h4>3.3.1.1. YAML based settings<a class="headerlink" href="#yaml-based-settings" title="Permalink to this headline">¶</a></h4>
 <p>Although the POL strives to be SOC independent, the system board’s SOC,
@@ -1065,7 +1109,7 @@ are owned by the platform vendor.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license
-      Last updated on Mar 11, 2022.
+      Last updated on Mar 12, 2022.
 
     </p>
   </div>
