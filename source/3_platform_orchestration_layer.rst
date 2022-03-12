@@ -258,7 +258,7 @@ Platform configuration
 
   * Intel has stakeholders and customers with investments in a variety of codebases, each of which have different underlying methods for firmware configuration.
 
-  * This makes it difficult to have a consistent user experience when configuring platforms based on various underlying firmware technologies. This is a problem for both internal stakeholders and Intel customers.
+  * This makes it difficult to have a consistent user/developer experience when configuring platforms based on various underlying firmware technologies. This is a problem for both internal stakeholders and Intel customers.
 
 .. image:: images/POL_common_config_tool_diagram.png
    :alt: new common config tool diagram
