@@ -1980,6 +1980,572 @@ https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h::
     //
   } EFI_HOB_MEMORY_ALLOCATION;
 
+Future Interface
+----------------------
+
+Currently, we are using HobList as Universal Payload Interface. However, Hoblist has some limitations as below:
+
+1)	Hob is an implementation of Edk2, and defined in PI spec. This may be not friendly to non-Edk2 developers.
+
+2)	Some hob structures contain fields which are only meaningful for Edk2 DXE phase. These fields are confusing.
+
+3)	Hob can contain not only the data transferred to the next phase but also the data used in the current phase. There is no clear boundary of them.
+
+4)	Not a self-describing data format.
+
+In the future, we plan to use another data format CBOR to replace Hob.
+
+CBOR encoded data
+~~~~~~~~~~~~~~~~~~~
+
+The bootloader should build a CBOR encoded data and pass the CBOR encoded data header
+to payload when passing control to payload.
+Concise Binary Object Representation (CBOR) is a binary data serialization Json-like
+format defined in the https://www.rfc-editor.org/rfc/rfc8949.html
+
+To be self-describing, the CBOR encoded data itself is a CBOR map type containing
+<Key, Value> pairs. The map is called CBOR root map in this document.
+Some of the values called basic type is directly stored into the root map, and the
+key and value type are stored in key and type column of the below table.
+Some of the values called special type need to be stores in a submap of an array,
+because there may be multiple instances of the values. For these kinds of value,
+The key for array is stores in the key column, and the key and type for the value
+are stored in in Submap key and type column. For example, the value in root map
+with key “UplExtraData” is a CBOR format array, and the array contains one or more elements.
+Each element is a CBOR format map, and contains some <Key, value> pairs, and the Key can
+be "Identifier", "Base" and "Size" according to the below table.
+
+The below table shows what information can be contained in CBOR encoded data. 
+
+**Fields inside CBOR encoded data**
+
+Because CBOR has different types compared with C language, the below table lists the C type and CBOR type for each field.
+For example, we have UINT8, UINT32, UINT64 in C language for unsigned integer, but in CBOR type, Unsigned Integer can cover all
+unsigned integer from 0 to 2^64 - 1.
+
++------------------------------------+------------------------+-------------------+-------------------+
+| Key                                | Submap Key             | C Type            |CBOR Type          |
++====================================+========================+===================+===================+
+| SerialPortUseMmio                  |                        | BOOLEAN           | BOOLEAN           |
++------------------------------------+------------------------+-------------------+-------------------+
+| SerialPortRegisterStride           |                        | UINT8             | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| SerialPortBaudRate                 |                        | UINT32            | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| SerialPortRegisterBase             |                        | UINT64            | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| RootBridgeResourceAssigned         |                        | BOOLEAN           | BOOLEAN           |
++------------------------------------+------------------------+-------------------+-------------------+
+| SmBiosTableEntryPoint              |                        | UINT64            | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| AcpiTableRsdp                      |                        | UINT64            | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| GraphicsFrameBufferBase            |                        | UINT64            | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| GraphicsFrameBufferSize            |                        | UINT32            | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| GraphicsHorizontalResolution       |                        | UINT32            | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| GraphicsVerticalResolution         |                        | UINT32            | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| GraphicsPixelFormat                |                        | UINT8             | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| GraphicsPixelInformationRedMask    |                        | UINT32            | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| GraphicsPixelInformationGreenMask  |                        | UINT32            | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| GraphicsPixelInformationBlueMask   |                        | UINT32            | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| GraphicsVendorId                   |                        | UINT16            | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| GraphicsDeviceId                   |                        | UINT16            | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| GraphicsSubsystemVendorId          |                        | UINT16            | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| GraphicsSubsystemId                |                        | UINT16            | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| GraphicsRevisionId                 |                        | UINT8             | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| GraphicsBarIndex                   |                        | UINT8             | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| MemorySpace                        |                        | UINT8             | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| IoSpace                            |                        | UINT8             | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| UplExtraData                       | Identifier             | CHAR*             | STRING            |
++                                    +------------------------+-------------------+-------------------+
+|                                    | Base                   | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | Size                   | UINT64            | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| RootBridgeInfo                     | Segment                | UINT32            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | Supports               | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | Attribute              | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | DmaAbove4G             | BOOLEAN           | BOOLEAN           |
++                                    +------------------------+-------------------+-------------------+
+|                                    | NoExtendedConfigSpace  | BOOLEAN           | BOOLEAN           |
++                                    +------------------------+-------------------+-------------------+
+|                                    | AllocationAttributes   | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | BusBase                | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | BusLimit               | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | BusTranslation         | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | IoBase                 | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | IoLimit                | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | IoTranslation          | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | MemBase                | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | MemLimit               | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | MemTranslation         | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | MemAbove4GBase         | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | MemAbove4GLimit        | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | MemAbove4GTranslation  | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | PMemBase               | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | PMemLimit              | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | PMemTranslation        | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | PMemAbove4GBase        | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | PMemAbove4GLimit       | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | PMemAbove4GTranslation | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | HID                    | UINT32            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | UID                    | UINT32            | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| Resource                           | Owner                  | CHAR*             | STRING            |
++                                    +------------------------+-------------------+-------------------+
+|                                    | Type                   | UINT32            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | Attribute              | UINT32            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | Base                   | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | Length                 | UINT64            | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| ResourceAllocation                 | Name                   | STRING            | STRING            |
++                                    +------------------------+-------------------+-------------------+
+|                                    | Base                   | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | Length                 | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | Type                   | UINT32            | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+| MemoryMap                          | Base                   | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | NumberOfPages          | UINT64            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | Type                   | UINT32            | Unsigned Integer  |
++                                    +------------------------+-------------------+-------------------+
+|                                    | Attribute              | UINT32            | Unsigned Integer  |
++------------------------------------+------------------------+-------------------+-------------------+
+
+
+Here is the description of the fields.
+
+``SerialPortUseMmio``
+
+Indicates the 16550 serial port registers are in MMIO space, or in I/O space.
+
+``SerialPortRegisterStride``
+
+Indicates the number of bytes between registers.
+
+``SerialPortBaudRate``
+
+Baud rate for the 16550 compatible serial port.
+
+It could be 921600, 460800, 230400, 115200, 57600, 38400, 19200,
+9600, 7200, 4800, 3600, 2400, 2000, 1800, 1200, 600, 300, 150, 134,
+110, 75, 50
+
+Set to 0 to use the default baud rate 115200.
+
+``SerialPortRegisterBase``
+
+Base address of 16550 serial port registers in MMIO or I/O space.
+
+``RootBridgeResourceAssigned``
+
+Bus/IO/MMIO resources for all root bridges have been assigned when it's TRUE.
+
+``SmBiosTableEntryPoint``
+
+Points to the SMBIOS table
+
+``AcpiTableRsdp``
+
+Point to the ACPI RSDP table. The ACPI table need follow ACPI specification version 2.0 or above.
+
+``GraphicsFrameBufferBase`` and ``GraphicsFrameBufferSize``
+
+Provide graphic frame buffer's base and size
+
+``GraphicsHorizontalResolution`` and ``GraphicsVerticalResolution``
+
+The size of video screen in pixels in the X dimension and Y dimension.
+
+``GraphicsPixelFormat``
+
+Enumeration that defines the physical format of the pixel. A value of PixelBltOnly
+implies that a linear frame buffer is not available for this mode. More information
+can be seen from below sample code
+
+  | typedef enum {
+  |   ///
+  |   /// A pixel is 32-bits and byte zero represents red, byte one represents green,
+  |   /// byte two represents blue, and byte three is reserved. This is the definition
+  |   /// for the physical frame buffer. The byte values for the red, green, and blue
+  |   /// components represent the color intensity. This color intensity value range
+  |   /// from a minimum intensity of 0 to maximum intensity of 255.
+  |   ///
+  |   PixelRedGreenBlueReserved8BitPerColor,
+  |   ///
+  |   /// A pixel is 32-bits and byte zero represents blue, byte one represents green,
+  |   /// byte two represents red, and byte three is reserved. This is the definition
+  |   /// for the physical frame buffer. The byte values for the red, green, and blue
+  |   /// components represent the color intensity. This color intensity value range
+  |   /// from a minimum intensity of 0 to maximum intensity of 255.
+  |   ///
+  |   PixelBlueGreenRedReserved8BitPerColor,
+  |   ///
+  |   /// The Pixel definition of the physical frame buffer.
+  |   ///
+  |   PixelBitMask,
+  |   ///
+  |   /// This mode does not support a physical frame buffer.
+  |   ///
+  |   PixelBltOnly,
+  |   ///
+  |   /// Valid EFI_GRAPHICS_PIXEL_FORMAT enum values are less than this value.
+  |   ///
+  |   PixelFormatMax
+  | } EFI_GRAPHICS_PIXEL_FORMAT;
+
+``GraphicsPixelInformationRedMask``, ``GraphicsPixelInformationGreenMask`` and ``GraphicsPixelInformationBlueMask``
+
+A bit being set defines what bits are used for what purpose such as Red, Green, Blue, or Reserved.
+
+
+``GraphicsVendorId``, ``GraphicsDeviceId``, ``GraphicsSubsystemVendorId``, ``GraphicsSubsystemId``, ``GraphicsRevisionId`` and ``GraphicsBarIndex``
+
+Define the Graphics device hardware information.
+
+``MemorySpace`` and ``IoSpace``
+
+Provide information about the address space and I/O space
+
+``UplExtraData``
+
+Contains one or more extra binaries. Each binary has its ``Identifier``, ``Base`` and ``Size``
+
+``RootBridgeInfo``
+
+Contains one or more root bridge information. For each root bridge, it contains below fields.
+
+  | ``Segment``
+  | 
+  | Segment number of the root bridge.
+  | 
+  | ``Supports``
+  | 
+  | Supported attributes. Refer to EFI_PCI_ATTRIBUTE_xxx used by GetAttributes() and SetAttributes() in EFI_PCI_ROOT_BRIDGE_IO_PROTOCOL
+  | defined in PI Specification.
+  | 
+  | ``Attributes``
+  | 
+  | Initial attributes. Refer to EFI_PCI_ATTRIBUTE_xxx used by GetAttributes() and SetAttributes() in EFI_PCI_ROOT_BRIDGE_IO_PROTOCOL
+  | defined in PI Specification.
+  | 
+  | ``DmaAbove4G``
+  | 
+  | Root bridge supports DMA above 4GB memory when it's TRUE.
+  | 
+  | ``NoExtendedConfigSpace``
+  | 
+  | Root bridge supports 256-byte configuration space only when it's TRUE.
+  | Root bridge supports 4K-byte configuration space when it's FALSE.
+  | 
+  | ``AllocationAttributes``
+  | 
+  | Allocation attributes. Refer to EFI_PCI_HOST_BRIDGE_COMBINE_MEM_PMEM and EFI_PCI_HOST_BRIDGE_MEM64_DECODE used by GetAllocAttributes()
+  | in EFI_PCI_HOST_BRIDGE_RESOURCE_ALLOCATION_PROTOCOL defined in PI Specification.
+  | 
+  | ``BusBase``, ``BusLimit`` and ``BusTranslation``
+  | 
+  | Bus aperture for the root bridge.
+  | 
+  | ``IoBase``, ``IoLimit`` and ``IoTranslation``
+  | 
+  | IO aperture for the root bridge.
+  | 
+  | ``MemBase``, ``IoLimit`` and ``IoTranslation``
+  | 
+  | MMIO aperture below 4GB for the root bridge.
+  | 
+  | ``MemAbove4GBase``, ``MemAbove4GBaseLimit`` and ``MemAbove4GBaseTranslation``
+  | 
+  | MMIO aperture above 4GB for the root bridge.
+  | 
+  | ``PMemBase``, ``PMemLimit`` and ``PMemTranslation``
+  | 
+  | Prefetchable MMIO aperture below 4GB for the root bridge.
+  | 
+  | ``PMemAbove4GBase``, ``PMemAbove4GLimit`` and ``PMemAbove4GTranslation``
+  | 
+  | Prefetchable MMIO aperture above 4GB for the root bridge.
+  | 
+  | ``HID``
+  | 
+  | PnP hardware ID of the root bridge. This value must match the corresponding _HID in the ACPI name space.
+  | 
+  | ``UID``
+  | 
+  | Unique ID that is required by ACPI if two devices have the same _HID. This value must also match the corresponding _UID/_HID pair in the ACPI name space.
+
+``Resource``
+
+Contains one or more Resource Descriptor. The base and size of the resource can be
+known from ``Base`` and ``Length``. ``Owner`` can be used optionally to indicate the resource purpose.
+The meaning of ``Type`` can be seen from below sample code
+
+  | #define EFI_RESOURCE_SYSTEM_MEMORY          0x00000000
+  | #define EFI_RESOURCE_MEMORY_MAPPED_IO       0x00000001
+  | #define EFI_RESOURCE_IO                     0x00000002
+  | #define EFI_RESOURCE_FIRMWARE_DEVICE        0x00000003
+  | #define EFI_RESOURCE_MEMORY_MAPPED_IO_PORT  0x00000004
+  | #define EFI_RESOURCE_MEMORY_RESERVED        0x00000005
+  | #define EFI_RESOURCE_IO_RESERVED            0x00000006
+  | #define EFI_RESOURCE_MAX_MEMORY_TYPE        0x00000007
+
+The meaning of ``Attribute`` can be seen from below sample code
+
+  | #define EFI_RESOURCE_ATTRIBUTE_PRESENT         0x00000001
+  | #define EFI_RESOURCE_ATTRIBUTE_INITIALIZED     0x00000002
+  | #define EFI_RESOURCE_ATTRIBUTE_TESTED          0x00000004
+  | #define EFI_RESOURCE_ATTRIBUTE_READ_PROTECTED  0x00000080
+  | //
+  | // This is typically used as memory cacheability attribute today.
+  | // NOTE: Since PI spec 1.4, please use EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTED
+  | // as Physical write protected attribute, and EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTED
+  | // means Memory cacheability attribute: The memory supports being programmed with
+  | // a writeprotected cacheable attribute.
+  | //
+  | #define EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTED      0x00000100
+  | #define EFI_RESOURCE_ATTRIBUTE_EXECUTION_PROTECTED  0x00000200
+  | #define EFI_RESOURCE_ATTRIBUTE_PERSISTENT           0x00800000
+  | //
+  | // The rest of the attributes are used to describe capabilities
+  | //
+  | #define EFI_RESOURCE_ATTRIBUTE_SINGLE_BIT_ECC           0x00000008
+  | #define EFI_RESOURCE_ATTRIBUTE_MULTIPLE_BIT_ECC         0x00000010
+  | #define EFI_RESOURCE_ATTRIBUTE_ECC_RESERVED_1           0x00000020
+  | #define EFI_RESOURCE_ATTRIBUTE_ECC_RESERVED_2           0x00000040
+  | #define EFI_RESOURCE_ATTRIBUTE_UNCACHEABLE              0x00000400
+  | #define EFI_RESOURCE_ATTRIBUTE_WRITE_COMBINEABLE        0x00000800
+  | #define EFI_RESOURCE_ATTRIBUTE_WRITE_THROUGH_CACHEABLE  0x00001000
+  | #define EFI_RESOURCE_ATTRIBUTE_WRITE_BACK_CACHEABLE     0x00002000
+  | #define EFI_RESOURCE_ATTRIBUTE_16_BIT_IO                0x00004000
+  | #define EFI_RESOURCE_ATTRIBUTE_32_BIT_IO                0x00008000
+  | #define EFI_RESOURCE_ATTRIBUTE_64_BIT_IO                0x00010000
+  | #define EFI_RESOURCE_ATTRIBUTE_UNCACHED_EXPORTED        0x00020000
+  | #define EFI_RESOURCE_ATTRIBUTE_READ_PROTECTABLE         0x00100000
+  | //
+  | // This is typically used as memory cacheability attribute today.
+  | // NOTE: Since PI spec 1.4, please use EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTABLE
+  | // as Memory capability attribute: The memory supports being protected from processor
+  | // writes, and EFI_RESOURCE_ATTRIBUTE_WRITE_PROTEC TABLE means Memory cacheability attribute:
+  | // The memory supports being programmed with a writeprotected cacheable attribute.
+  | //
+  | #define EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTABLE      0x00200000
+  | #define EFI_RESOURCE_ATTRIBUTE_EXECUTION_PROTECTABLE  0x00400000
+  | #define EFI_RESOURCE_ATTRIBUTE_PERSISTABLE            0x01000000
+  | #define EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTED    0x00040000
+  | #define EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTABLE  0x00080000
+  | //
+  | // Physical memory relative reliability attribute. This
+  | // memory provides higher reliability relative to other
+  | // memory in the system. If all memory has the same
+  | // reliability, then this bit is not used.
+  | //
+  | #define EFI_RESOURCE_ATTRIBUTE_MORE_RELIABLE  0x02000000
+
+``ResourceAllocation``
+
+Contains one or more Resource Allocation ranges. It records which ranges
+in the above ``Resource`` are used. The base and size of the used resource can be
+known from ``Base`` and ``Length``.
+``Type`` definition can be seen from below
+
+  | typedef enum {
+  |   ///
+  |   /// Not used.
+  |   ///
+  |   EfiReservedMemoryType,
+  |   ///
+  |   /// The code portions of a loaded application.
+  |   /// (Note that UEFI OS loaders are UEFI applications.)
+  |   ///
+  |   EfiLoaderCode,
+  |   ///
+  |   /// The data portions of a loaded application and the default data allocation
+  |   /// type used by an application to allocate pool memory.
+  |   ///
+  |   EfiLoaderData,
+  |   ///
+  |   /// The code portions of a loaded Boot Services Driver.
+  |   ///
+  |   EfiBootServicesCode,
+  |   ///
+  |   /// The data portions of a loaded Boot Serves Driver, and the default data
+  |   /// allocation type used by a Boot Services Driver to allocate pool memory.
+  |   ///
+  |   EfiBootServicesData,
+  |   ///
+  |   /// The code portions of a loaded Runtime Services Driver.
+  |   ///
+  |   EfiRuntimeServicesCode,
+  |   ///
+  |   /// The data portions of a loaded Runtime Services Driver and the default
+  |   /// data allocation type used by a Runtime Services Driver to allocate pool memory.
+  |   ///
+  |   EfiRuntimeServicesData,
+  |   ///
+  |   /// Free (unallocated) memory.
+  |   ///
+  |   EfiConventionalMemory,
+  |   ///
+  |   /// Memory in which errors have been detected.
+  |   ///
+  |   EfiUnusableMemory,
+  |   ///
+  |   /// Memory that holds the ACPI tables.
+  |   ///
+  |   EfiACPIReclaimMemory,
+  |   ///
+  |   /// Address space reserved for use by the firmware.
+  |   ///
+  |   EfiACPIMemoryNVS,
+  |   ///
+  |   /// Used by system firmware to request that a memory-mapped IO region
+  |   /// be mapped by the OS to a virtual address so it can be accessed by EFI runtime services.
+  |   ///
+  |   EfiMemoryMappedIO,
+  |   ///
+  |   /// System memory-mapped IO region that is used to translate memory
+  |   /// cycles to IO cycles by the processor.
+  |   ///
+  |   EfiMemoryMappedIOPortSpace,
+  |   ///
+  |   /// Address space reserved by the firmware for code that is part of the processor.
+  |   ///
+  |   EfiPalCode,
+  |   ///
+  |   /// A memory region that operates as EfiConventionalMemory,
+  |   /// however it happens to also support byte-addressable non-volatility.
+  |   ///
+  |   EfiPersistentMemory,
+  |   EfiMaxMemoryType
+  | } EFI_MEMORY_TYPE;
+
+
+The above two fields are only used to record the MMIO and IO resource and usage.
+For physical memory resource and usage, use the below field.
+
+``MemoryMap``
+
+Contains one or more physical memory ranges. The base and size of the memory range can be
+known from ``Base`` and ``NumberOfPages``.
+The meaning of ``Type`` is same with the ``ResourceAllocation``
+The meaning of ``Attribute`` can be seen from below sample code
+
+  | //
+  | // Memory cacheability attributes
+  | //
+  | #define EFI_MEMORY_UC   0x0000000000000001ULL
+  | #define EFI_MEMORY_WC   0x0000000000000002ULL
+  | #define EFI_MEMORY_WT   0x0000000000000004ULL
+  | #define EFI_MEMORY_WB   0x0000000000000008ULL
+  | #define EFI_MEMORY_UCE  0x0000000000000010ULL
+  | //
+  | // Physical memory protection attributes
+  | //
+  | // Note: UEFI spec 2.5 and following: use EFI_MEMORY_RO as write-protected physical memory
+  | // protection attribute. Also, EFI_MEMORY_WP means cacheability attribute.
+  | //
+  | #define EFI_MEMORY_WP  0x0000000000001000ULL
+  | #define EFI_MEMORY_RP  0x0000000000002000ULL
+  | #define EFI_MEMORY_XP  0x0000000000004000ULL
+  | #define EFI_MEMORY_RO  0x0000000000020000ULL
+  | //
+  | // Physical memory persistence attribute.
+  | // The memory region supports byte-addressable non-volatility.
+  | //
+  | #define EFI_MEMORY_NV  0x0000000000008000ULL
+  | //
+  | // The memory region provides higher reliability relative to other memory in the system.
+  | // If all memory has the same reliability, then this bit is not used.
+  | //
+  | #define EFI_MEMORY_MORE_RELIABLE  0x0000000000010000ULL
+  | //
+  | // Note: UEFI spec 2.8 and following:
+  | //
+  | // Specific-purpose memory (SPM). The memory is earmarked for
+  | // specific purposes such as for specific device drivers or applications.
+  | // The SPM attribute serves as a hint to the OS to avoid allocating this
+  | // memory for core OS data or code that can not be relocated.
+  | //
+  | #define EFI_MEMORY_SP  0x0000000000040000ULL
+  | //
+  | // If this flag is set, the memory region is capable of being
+  | // protected with the CPU's memory cryptographic
+  | // capabilities. If this flag is clear, the memory region is not
+  | // capable of being protected with the CPU's memory
+  | // cryptographic capabilities or the CPU does not support CPU
+  | // memory cryptographic capabilities.
+  | //
+  | #define EFI_MEMORY_CPU_CRYPTO  0x0000000000080000ULL
+  | //
+  | // Runtime memory attribute
+  | //
+  | #define EFI_MEMORY_RUNTIME  0x8000000000000000ULL
+
+Hand-off state
+~~~~~~~~~~~~~~~~~~~
+
+The bootloader builds the CBOR encoded data containing platform specific information
+and passes the address of the the CBOR encoded data to the payload.
+
+The prototype of payload entry point is defined as::
+
+  typedef
+  VOID
+  (*PAYLOAD_ENTRY) (
+    VOID * CobrEncodedData
+  );
+
+The compiler need use a proper attributes for this function to meet the calling convention below.
+For example, Microsoft Visual studio uses __cdecl for X64, while Linux GCC uses __attribute__((ms_abi)) for X64.
+
+CobrEncodedData is a pointer pointing to a CBOR encoded data which is a CBOR map containing information from above section.
+
 References and Links
 ----------------------
 
