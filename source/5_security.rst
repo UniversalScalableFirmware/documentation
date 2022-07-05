@@ -101,7 +101,7 @@ Measurment and Attestation
 OEM Component Measurement
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The platform shall follow `TCG PC Client Platform Firmware Profile <https://trustedcomputinggroup.org/resource/pc-client-specific-platform-firmware-profile-specification/>'_
+The platform shall follow `TCG PC Client Platform Firmware Profile <https://trustedcomputinggroup.org/resource/pc-client-specific-platform-firmware-profile-specification/>`_
 if TPM-based measured boot is enabled. The early boot component shall
 measure the next component before transfer control to it, to create a
 trust chain.
