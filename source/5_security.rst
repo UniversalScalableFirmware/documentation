@@ -151,65 +151,8 @@ The platform shall enable IOMMU based DMA protection.
 
 For example, `Using IOMMU for DMA Protection in UEFI Firmware <https://software.intel.com/sites/default/files/managed/8d/88/intel-whitepaper-using-iommu-for-dma-protection-in-uefi.pdf>`_.
 
-
-Vulnerability Mitigation Strategy
----------------------------------
-
-The platform should make the attacker difficult to find, exploit and leverage the vulnerabilities.
-
-     .. list-table::
-        :widths: auto
-        :header-rows: 1
-        
-        * - Tactics
-          - Method
-          - Example
-        * - Eliminate Vulnerability 
-          - Reduce Attack Surface. Dont Use Weak Cryptography Algorithm. Use Type Safe Programming Language.
-          - Remove Unnecessary Interface, such as SMI handler, UEFI variable. Adopt Firmware Security Best Practice. Consider Side Channel Attack. Cryptography Agility. Use Rust.
-        * - Break Exploitation
-          - Data Execution Prevention. Control Flow Guard. Address Space Layout Randomization. Secure Boot.
-          - Non-executable Data Page. Read-only code page. Stack Cookie. Intel CET. ASLR in DXE/SMM.
-        * - Contain Damage
-          - Deprevilege
-          - Ring-3 Option ROM. Ring-3 OEM SMM.
-        * - Limit Attack Window
-          - Firmware Resiliency. Measurement and Attestation.
-          - Live Patching Runtime Component. Firmware Component Manifest.
-
-Eliminate Vulnerability
-~~~~~~~~~~~~~~~~~~~~~~~
-
-First, a platform should try to remove any attack surfaces and eliminate the potential vulnerablity.
-
-Minimize SMI handler
-^^^^^^^^^^^^^^^^^^^^
-
-In a system firmware, the SMI Handler is the most critical attack surface, because the SMM code has highest privilege. A platform should use `SMI Handler Profile <https://github.com/tianocore/tianocore.github.io/wiki/SMI-handler-profile-feature>`_ to evaluate if the exposed SMI handlers are necessary.
-
-Minimize UEFI variable
-^^^^^^^^^^^^^^^^^^^^^^
-
-Every UEFI variable is an attack surface, because the attacker can use UEFI API to modify it. A platform should review all UEFI variable and evaluate if it is really needed.
-
-
-Adopt Firmware Security Best Practice
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The platform should follow the existing firmware security best practice, such as `EDKII Secure Design Guide <https://github.com/tianocore-docs/Docs/raw/master/White_Papers/A_Tour_Beyond_BIOS_Security_Design_Guide_in_EDK_II.pdf>`_, `EDKII Secure Coding Guide <https://tianocore-docs.github.io/EDK_II_Secure_Coding_Guide/draft/>`_, `EDKII Secure Code Review Guide <https://tianocore-docs.github.io/EDK_II_Secure_Code_Review_Guide/draft/>`_.
-
-Other EDKII security related document can be found at `EDKII Security White Papers <https://github.com/tianocore/tianocore.github.io/wiki/EDK-II-Security-White-Papers>`_.
-
-Consider Side Channel Mitigation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-A platform shall follow `Host Firmware Speculative Execution Side Channel Mitigation <https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/technical-documentation/host-firmware-speculative-side-channel-mitigation.html>`_.
-
-1. LFENCE after validation of untrusted data but before use
-2. RSB stuffing before RSM
-
-Support Cryptography Agility
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Cryptography Agility
+~~~~~~~~~~~~~~~~~~~~
 
 A firmware infrastructure shall allow the implementation to choose different cryptographic algorithms, to compliant with different standards. This is called Cryptography agility.
 TPM2.0 standard is a good example. A TPM2.0 device may support SHA256, SHA384, SM3_256, or future algorithms such as SHA3_256 or SHA3_384.
@@ -272,6 +215,63 @@ A firmware infrastructure shall consider crypto-agile support for two purposes:
 
 1. To support more industry standard cryptographic algorithms, which may be used in some firmware implementation, such as SHA3, SM3, SM2, etc.
 2. To support quantum safe cryptographic algorithm and hybrid mode, such as XMSS or LMS digital signature algorithm, etc.
+
+
+Vulnerability Mitigation Strategy
+---------------------------------
+
+The platform should make the attacker difficult to find, exploit and leverage the vulnerabilities.
+
+     .. list-table::
+        :widths: auto
+        :header-rows: 1
+        
+        * - Tactics
+          - Method
+          - Example
+        * - Eliminate Vulnerability 
+          - Reduce Attack Surface. Dont Use Weak Cryptography Algorithm. Use Type Safe Programming Language.
+          - Remove Unnecessary Interface, such as SMI handler, UEFI variable. Adopt Firmware Security Best Practice. Consider Side Channel Attack. Cryptography Agility. Use Rust.
+        * - Break Exploitation
+          - Data Execution Prevention. Control Flow Guard. Address Space Layout Randomization. Secure Boot.
+          - Non-executable Data Page. Read-only code page. Stack Cookie. Intel CET. ASLR in DXE/SMM.
+        * - Contain Damage
+          - Deprevilege
+          - Ring-3 Option ROM. Ring-3 OEM SMM.
+        * - Limit Attack Window
+          - Firmware Resiliency. Measurement and Attestation.
+          - Live Patching Runtime Component. Firmware Component Manifest.
+
+Eliminate Vulnerability
+~~~~~~~~~~~~~~~~~~~~~~~
+
+First, a platform should try to remove any attack surfaces and eliminate the potential vulnerablity.
+
+Minimize SMI handler
+^^^^^^^^^^^^^^^^^^^^
+
+In a system firmware, the SMI Handler is the most critical attack surface, because the SMM code has highest privilege. A platform should use `SMI Handler Profile <https://github.com/tianocore/tianocore.github.io/wiki/SMI-handler-profile-feature>`_ to evaluate if the exposed SMI handlers are necessary.
+
+Minimize UEFI variable
+^^^^^^^^^^^^^^^^^^^^^^
+
+Every UEFI variable is an attack surface, because the attacker can use UEFI API to modify it. A platform should review all UEFI variable and evaluate if it is really needed.
+
+
+Adopt Firmware Security Best Practice
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The platform should follow the existing firmware security best practice, such as `EDKII Secure Design Guide <https://github.com/tianocore-docs/Docs/raw/master/White_Papers/A_Tour_Beyond_BIOS_Security_Design_Guide_in_EDK_II.pdf>`_, `EDKII Secure Coding Guide <https://tianocore-docs.github.io/EDK_II_Secure_Coding_Guide/draft/>`_, `EDKII Secure Code Review Guide <https://tianocore-docs.github.io/EDK_II_Secure_Code_Review_Guide/draft/>`_.
+
+Other EDKII security related document can be found at `EDKII Security White Papers <https://github.com/tianocore/tianocore.github.io/wiki/EDK-II-Security-White-Papers>`_.
+
+Consider Side Channel Mitigation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A platform shall follow `Host Firmware Speculative Execution Side Channel Mitigation <https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/technical-documentation/host-firmware-speculative-side-channel-mitigation.html>`_.
+
+1. LFENCE after validation of untrusted data but before use
+2. RSB stuffing before RSM
 
 Type Safe Programming Language
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
