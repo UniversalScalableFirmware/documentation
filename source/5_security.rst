@@ -98,21 +98,51 @@ attack – recovery to an old known bad image.
 Measurment and Attestation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Trusted Boot (measured boot)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OEM Component Measurement
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The platform shall enable trusted boot. The early boot component shall
+The platform shall follow `TCG PC Client Platform Firmware Profile <https://trustedcomputinggroup.org/resource/pc-client-specific-platform-firmware-profile-specification/>'_
+if TPM-based measured boot is enabled. The early boot component shall
 measure the next component before transfer control to it, to create a
 trust chain.
 
 Please refer to `Understanding the Trusted Boot Chain Implementation <https://tianocore-docs.github.io/edk2-TrustedBootChain/release-1.00/edk2-TrustedBootChain-release-1.00.pdf>`_
 
-Completeness
-^^^^^^^^^^^^
-
 The platform shall follow TCG specification to measure all required
 component. For example, the platform shall measure every boot component.
 The platform shall measure any security-related boot configuration.
+
+FSP Measurement
+^^^^^^^^^^^^^^^
+
+The platform shall follow `FSP measurement and attestation <https://cdrdv2.intel.com/v1/dl/getContent/644001>`_
+to record the measurement for FSP binary.
+
+Device Measurement
+^^^^^^^^^^^^^^^^^^
+
+The platform shall follow `DMTF Security Protocol and Data Model (SPDM) Specification <https://www.dmtf.org/dsp/DSP0274>`_
+to record the measurement for the devices.
+
+Universal Payload Measurement
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The platform shall create a standalone event log for the universal payload.
+
+     .. list-table::
+        :widths: auto
+        :header-rows: 1
+        
+        * - Component
+          - PCR
+          - Event Type
+          - Event Data
+          - Event Log
+        * - UniversalPayload binary
+          - 0 (if it is part of OEM binary) or 2 (if it is treated as second phase loader)
+          - EV_EFI_PLATFORM_FIRMWARE_BLOB2
+          - UniversalPayload binary
+          - EFI_PLATFORM_FIRMWARE_BLOB2 structure (descriptor: "UniversalPayload")
 
 DMA Protection
 ~~~~~~~~~~~~~~
@@ -381,3 +411,8 @@ At runtime, the system firmware may use a standard way - `SPDM <https://www.dmtf
 
 A platform should have a way to report a list of manifest and collect the runtime firmware measurement. As such, we can know the detailed firmware component information on a given platform.
 
+To support the supply chain, the platform vendor should follow
+`TCG Platform Certificate Profile <https://trustedcomputinggroup.org/resource/tcg-platform-certificate-profile/>`_,
+`TCG PC Client Reference Integrity Manifest <https://trustedcomputinggroup.org/resource/tcg-pc-client-reference-integrity-manifest-specification/>`_,
+and `TCG PC Client Firmware Integrity Manifest <https://trustedcomputinggroup.org/resource/tcg-pc-client-platform-firmware-integrity-measurement/>`_
+to provide platform certificate and reference integrity manifest.
