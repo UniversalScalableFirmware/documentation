@@ -389,7 +389,172 @@ We define 2 types of firmwares:
     * Type-II-A indicates the one loaded from non-host firmware location, such as BMC, EC, Intel CSME.
     * Type-II-B indicates the one loaded from peripheral device, such as NIC, NVMe, Graphic Card.
 
-For Type-I firmware, the component provider may provide a reference integrity manifest (RIM) for this specific component. For example, Intel `FSP 2.x measurement and attesation <https://cdrdv2.intel.com/v1/dl/getContent/644001>`_ defines a mechanism to report FSP manifest according to TCG `PC Client Reference Integrity Manifest Specification <https://trustedcomputinggroup.org/resource/tcg-pc-client-reference-integrity-manifest-specification/>`_. The RIM format could be `SWID <https://csrc.nist.gov/projects/software-identification-swid/guidelines>`_ or `CoSWID <https://datatracker.ietf.org/doc/draft-ietf-sacm-coswid/>`_.
+For Type-I firmware, the component provider may provide a reference integrity manifest (RIM) for this specific component.
+
+Intel `FSP 2.x measurement and attesation <https://cdrdv2.intel.com/v1/dl/getContent/644001>`_ defines a mechanism to report FSP manifest according to TCG `PC Client Reference Integrity Manifest Specification <https://trustedcomputinggroup.org/resource/tcg-pc-client-reference-integrity-manifest-specification/>`_. The RIM format could be `SWID <https://csrc.nist.gov/projects/software-identification-swid/guidelines>`_ or `CoSWID <https://datatracker.ietf.org/doc/draft-ietf-sacm-coswid/>`_.
+
+The universal payload should use SWID or CoSWID with below information:
+
+     .. list-table::
+        :widths: auto
+        :header-rows: 1
+        
+        * - Element
+          - Attribute
+          - Required
+          - Description
+        * - Software Identity
+          - Name
+          - Required
+          - Name of the Universal payload
+        * - 
+          - Version
+          - Required
+          - Version of the Universal payload
+        * - 
+          - TagId
+          - Required
+          - GUID to identify the Universal payload
+        * - 
+          - TagVersion
+          - Required
+          - Version to the tag, "0"
+        * - 
+          - Corpus
+          - Optional
+          - "FALSE"
+        * - 
+          - Patch
+          - Optional
+          - "FALSE" : Initial RIM. "TRUE" : Subsequential RIM
+        * - 
+          - Supplemental
+          - Optional
+          - "FALSE" : First RIM (e.g. primary RIM). "TRUE" : not firmst RIM (e.g. issued by System Integrator or Value Add Reseller)
+        * - Entity
+          - Name
+          - Required
+          - The entity that creates the Universal Payload, could be "USF".
+        * - 
+          - RegId
+          - Optional
+          - URI for the entity to create the Universal Payload, could be "https://github.com/UniversalScalableFirmware".
+        * - 
+          - Role
+          - Required
+          - "softwareCreator, tagCreator"
+        * - 
+          - Thumbprint
+          - Required
+          - digest of the signing certificate
+        * - Link
+          - Href rel= "installation media"
+          - Optional
+          - Download URL
+        * - 
+          - Href rel= "supersedes", "patches", "requires"
+          - Optional
+          - Link to previous RIM
+        * - Meta
+          - colloquialVersion
+          - Required
+          - Marketing version of the Universal Payload
+        * - 
+          - Edition
+          - Required
+          - Specification version of the Universal Payload
+        * - 
+          - Production
+          - Required
+          - Name of the Universal Payload
+        * - 
+          - Revision
+          - Required
+          - Revision of the Universal Payload
+        * - 
+          - PayloadType
+          - Optional
+          - "Direct"
+        * - 
+          - PlatformManufacturerStr
+          - Required
+          - Name of the Manufacturer
+        * - 
+          - PlatformManufacturerId
+          - Required
+          - IANA identifier of the Manufacturer
+        * - 
+          - PlatformModel
+          - Required
+          - Name of the Platform Model
+        * - 
+          - PlatformVersion
+          - Required
+          - Version of the Platform
+        * - 
+          - FirmwareManufacturerStr
+          - Required
+          - Name of the Firmware Manufacturer
+        * - 
+          - FirmwareManufacturerId
+          - Required
+          - IANA identifier of the Firmware Manufacturer
+        * - 
+          - FirmwareModel
+          - Required
+          - Name of the Firmware Model
+        * - 
+          - FirmwareVersion
+          - Required
+          - Version of the Firmware
+        * - 
+          - BindingSpec
+          - Required
+          - "RIMIM"
+        * - 
+          - BindingSpecVersion
+          - Required
+          - "0.1"
+        * - 
+          - pcURILocal
+          - Optional
+          - URI for this RIM in local device
+        * - 
+          - pcURIGlobal
+          - Optional
+          - URI for this RIM on web
+        * - 
+          - RIMLinkHash
+          - Optional
+          - Not needed for Base RIM
+        * - Payload
+          - File, Directory
+          - Required
+          - Location and File Name of the Universal Payload component
+        * - 
+          - Name
+          - Required
+          - Name of the Universal Payload component
+        * - 
+          - Size
+          - Required
+          - Size of the Universal Payload component
+        * - 
+          - Hash
+          - Required
+          - Hash of the Universal Payload component
+        * - 
+          - supportRIMType
+          - Optional
+          - N/A
+        * - 
+          - supportRIMFormat
+          - Optional
+          - N/A
+        * - 
+          - supportRIMURIGlobal
+          - Optional
+          - N/A
 
 At runtime, the system firmware records a specific component measurement entry, then the verifier can compare the measurement in the event log with the reference value in the RIM. Figure 15 shows the Type-I firmware component RIM concept.
 
