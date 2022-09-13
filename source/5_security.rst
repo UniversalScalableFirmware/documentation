@@ -210,6 +210,51 @@ Below table shows the algorithm usage.
         * - `MSFT Secure Boot Key <https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/windows-secure-boot-key-creation-and-management-guidance#12-public-key-cryptography>`_
           - RSA 2048 + SHA256
 
+A firmware should start considering Post Quantum Cryptography Algorithm.
+In 2019, NIST Stateful Hash-Based Signatures (`HBS <https://csrc.nist.gov/projects/stateful-hash-based-signatures>`_) projects published `NIST SP 800-208 <https://csrc.nist.gov/publications/detail/sp/800-208/final>`_ for the image signing in secure boot and secure update use case.
+In 2022, NIST Post Quantum Cryptography (`PQC <https://csrc.nist.gov/Projects/post-quantum-cryptography>`_) projects announced the `Selected Algorithms 2022 <https://csrc.nist.gov/Projects/post-quantum-cryptography/selected-algorithms-2022>`_ for general purpose digital signature and Public-key Encryption / Key-establishment.
+In 2022, NSA released the `Commercial National Security Algorithm Suite 2.0 (CNSA 2.0) Cybersecurity Advisory (CSA) <https://www.nsa.gov/Press-Room/News-Highlights/Article/Article/3148990/nsa-releases-future-quantum-resistant-qr-algorithm-requirements-for-national-se/>`_, which includes the quantum resistant algorithms.
+
+Below table shows the post quantum algorithms.
+
+     .. list-table::
+        :widths: auto
+        :header-rows: 1
+        
+        * - Usage
+          - Algorithm
+          - Specification
+          - Approved by
+        * - Image Signing (secure boot, secure update)
+          - Leighton-Micali Signature (LMS) - `RFC8554 <https://www.rfc-editor.org/rfc/rfc8554>`_
+          - `NIST SP 800-208 <https://csrc.nist.gov/publications/detail/sp/800-208/final>`_
+          - NIST, NSA
+        * - Image Signing (secure boot, secure update)
+          - Xtended Merkle Signature Scheme (XMSS) - `RFC8391 <https://www.rfc-editor.org/rfc/rfc8391>`_
+          - `NIST SP 800-208 <https://csrc.nist.gov/publications/detail/sp/800-208/final>`_
+          - NIST, NSA
+        * - Public-key Encryption and Key-establishment
+          - `CRYSTALS-KYBER <https://pq-crystals.org/>`_
+          - TBD
+          - NIST, NSA
+        * - General Purpose Digital Signature
+          - `CRYSTALS-DILITHIUM <https://pq-crystals.org/>`_
+          - TBD
+          - NIST, NSA
+        * - General Purpose Digital Signature
+          - `FALCON <https://falcon-sign.info/>`_
+          - TBD
+          - NIST
+        * - General Purpose Digital Signature
+          - `SPHINCS+ <https://sphincs.org/>`_
+          - TBD
+          - NIST
+
+
+The firmware related timeline would be:
+
+1. Software and Firmware Signing: prefer CNSA 2.0 by 2025, exclusively use by 2030.
+2. Web browsers/servers and cloud services: prefer CNSA 2.0 by 2025, exclusively use by 2033.
 
 A firmware infrastructure shall consider crypto-agile support for two purposes:
 
