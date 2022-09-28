@@ -1341,6 +1341,199 @@ PnP hardware ID of the root bridge. This value must match the corresponding _HID
 
 Unique ID that is required by ACPI if two devices have the same _HID. This value must also match the corresponding _UID/_HID pair in the ACPI name space.
 
+Secureboot Information
+%%%%%%%%%%%%%%%%%%%%%%
+
+This provides the information related to secure boot and measured boot enablement.
+
+**GUID**
+
+::
+
+  gSecureBootInfoGuid   = {0xd970f847, 0x07dd, 0x4b24, { 0x9e, 0x1e, 0xae, 0x6c, 0x80, 0x9b, 0x1d, 0x38 } }
+
+**Structure**
+
+::
+
+  #pragma pack(1)
+
+  typedef struct {
+    UNIVERSAL_PAYLOAD_GENERIC_HEADER    Header;
+    UINT8  VerifiedBootEnabled;
+    UINT8  MeasuredBootEnabled;
+    UINT8  FirmwareDebuggerInitialized;
+    UINT8  TpmType;
+    UINT32 TpmPcrActivePcrBanks;
+  } SECUREBOOT_INFO;
+
+  #pragma pack()
+
+**Member Description**
+
+``Header``
+
+Header.Revision is 1.
+
+Header.Length is 12.
+
+``VerifiedBootEnabled``
+
+Indicates verified boot is enabled in bootloader. This information can be used in payload to extend chain of trust to OS.
+Supported values 0/1 to indicate the verified boot status.
+
+``MeasuredBootEnabled``
+
+Indicates measured boot is enabled in bootloader. This information can be used in payload to extend measurements for OS boot as per TCG specifications.
+Supported values 0/1 to indicate the measured boot status.
+
+``FirmwareDebuggerInitialized``
+
+Indicates platform is Sample part or manufacturing mode or debug mode. Extend the PCR[7] if its true.
+Supported values 0/1 to indicate the debug state of platform.
+
+``TpmType``
+
+Indicates TPM Type enumerated . It can TPM 1.2, TPM 2.0 or no tpm
+
+NO_TPM               0x0
+
+TPM_TYPE_12          0x1
+
+TPM_TYPE_20          0x2
+
+``TpmPcrActivePcrBanks``
+
+Indicates the TPM PCR active banks.
+
+BIT0  -  SHA1
+
+BIT1  -  SHA256
+
+BIT2  -  SHA384
+
+BIT3  -  SHA512
+
+BIT4  -  SM3_256
+
+TPM 2.0 Event Information
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+This provides the information about the TPM 2.0 events extended by bootloader. Bootloader has to create seperate hobs for each TPM event.
+Its a EDK2 defined HOB to pass the events from  a TPM PEIM to a TPM DXE Driver.
+
+**GUID**
+
+::
+
+  gTcgEvent2EntryHobGuid                        = { 0xd26c221e, 0x2430, 0x4c8a, { 0x91, 0x70, 0x3f, 0xcb, 0x45, 0x0, 0x41, 0x3f  } }
+
+  HOB GUID defined at https://github.com/tianocore/edk2/blob/master/SecurityPkg/Include/Guid/TcgEventHob.h
+
+
+**Structure**
+
+::
+
+  #pragma pack(1)
+
+  typedef struct {
+    TCG_PCRINDEX        PCRIndex;
+    TCG_EVENTTYPE       EventType;
+    TPML_DIGEST_VALUES  Digest;
+    UINT32              EventSize;
+    UINT8               Event[1];
+  } TCG_PCR_EVENT2;
+
+  #pragma pack()
+
+ TCG_PCR_EVENT2 structure are defined at https://github.com/tianocore/edk2/blob/master/MdePkg/Include/IndustryStandard/UefiTcgPlatform.h
+
+**Member Description**
+
+``PcrIndex``
+
+Indicates the PCR bank for event.
+
+``EventType``
+
+Type of TPM event extended.
+
+``Digest``
+
+Indicates the digest/hash for the event.
+Defined at https://github.com/tianocore/edk2/blob/master/MdePkg/Include/IndustryStandard/Tpm20.h
+
+``EventSize``
+
+Size of the event buffer
+
+``Event``
+
+Event buffer
+
+TPM 1.2 Event Information
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+This provides the information about the TPM 1.2 events extended by bootloader. Bootloader has to create seperate hobs for each TPM event.
+Its a EDK2 defined HOB to pass the events from  a TPM PEIM to a TPM DXE Driver.
+
+**GUID**
+
+::
+
+  gTcgEventEntryHobGuid                        = { 0x2b9ffb52, 0x1b13, 0x416f, { 0xa8, 0x7b, 0xbc, 0x93, 0xd, 0xef, 0x92, 0xa8 }}
+
+  HOB GUID defined at https://github.com/tianocore/edk2/blob/master/SecurityPkg/Include/Guid/TcgEventHob.h
+
+**Structure**
+
+::
+
+  #pragma pack(1)
+
+  typedef struct {
+    UINT8                             digest[20];
+  } TPM_DIGEST;
+
+  typedef struct {
+    UINT32              PCRIndex;
+    UINT32              EventType;
+    TPM_DIGEST          Digest;
+    UINT32              EventSize;
+    UINT8               Event[1];
+  } TCG_PCR_EVENT;
+
+   TCG_PCR_EVENT structure are defined at https://github.com/tianocore/edk2/blob/master/MdePkg/Include/IndustryStandard/UefiTcgPlatform.h
+
+
+  #pragma pack()
+
+**Member Description**
+
+``PcrIndex``
+
+Indicates the PCR bank for event.
+
+``EventType``
+
+Type of TPM event extended.
+
+``Digest``
+
+Indicates the digest/hash for the event.
+Defined at https://github.com/tianocore/edk2/blob/master/MdePkg/Include/IndustryStandard/Tpm12.h
+
+
+``EventSize``
+
+Size of the event buffer
+
+``Event``
+
+Event buffer
+
+
 Optional Interfaces
 ^^^^^^^^^^^^^^^^^^^^
 
