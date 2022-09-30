@@ -595,8 +595,8 @@ This Universal Payload Information section must:
 |                 |                 |                 | Version         |
 |                 |                 |                 |                 |
 |                 |                 |                 | For revision    |
-|                 |                 |                 | v0.75 the value |
-|                 |                 |                 | will be 0x0075. |
+|                 |                 |                 | v0.90 the value |
+|                 |                 |                 | will be 0x0090. |
 +-----------------+-----------------+-----------------+-----------------+
 | 10              | 2               | Reserved        | Reserved for    |
 |                 |                 |                 | future use.     |
@@ -1350,7 +1350,7 @@ This provides the information related to secure boot and measured boot enablemen
 
 ::
 
-  gSecureBootInfoGuid   = {0xd970f847, 0x07dd, 0x4b24, { 0x9e, 0x1e, 0xae, 0x6c, 0x80, 0x9b, 0x1d, 0x38 } }
+  gUniversalSecureBootInfoGuid   = {0xd970f847, 0x07dd, 0x4b24, { 0x9e, 0x1e, 0xae, 0x6c, 0x80, 0x9b, 0x1d, 0x38 } }
 
 **Structure**
 
@@ -1365,7 +1365,7 @@ This provides the information related to secure boot and measured boot enablemen
     UINT8  FirmwareDebuggerInitialized;
     UINT8  TpmType;
     UINT32 TpmPcrActivePcrBanks;
-  } SECUREBOOT_INFO;
+  } UNIVERSAL_SECURE_BOOT_INFO;
 
   #pragma pack()
 
@@ -1420,7 +1420,10 @@ TPM 2.0 Event Information
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
 This provides the information about the TPM 2.0 events extended by bootloader. Bootloader has to create seperate hobs for each TPM event.
-Its a EDK2 defined HOB to pass the events from  a TPM PEIM to a TPM DXE Driver.
+Its a TCG spec defined EFI_TCG2_PROTOCOL HOB for the event log.
+
+Bootloader should follow the same order to create event HOBs in the order events are extended to TPM. Mismatch in order will lead a failure
+in TPM PCR replay.
 
 **GUID**
 
@@ -1442,7 +1445,7 @@ Its a EDK2 defined HOB to pass the events from  a TPM PEIM to a TPM DXE Driver.
     TCG_EVENTTYPE       EventType;
     TPML_DIGEST_VALUES  Digest;
     UINT32              EventSize;
-    UINT8               Event[1];
+    UINT8               Event[EventSize];
   } TCG_PCR_EVENT2;
 
   #pragma pack()
@@ -1476,7 +1479,10 @@ TPM 1.2 Event Information
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
 This provides the information about the TPM 1.2 events extended by bootloader. Bootloader has to create seperate hobs for each TPM event.
-Its a EDK2 defined HOB to pass the events from  a TPM PEIM to a TPM DXE Driver.
+Its a TCG spec defined EFI_TCG2_PROTOCOL HOB for the event log.
+
+Bootloader should follow the same order to create event HOBs in the order events are extended to TPM. Mismatch in order will lead a failure
+in TPM PCR replay.
 
 **GUID**
 
@@ -1501,7 +1507,7 @@ Its a EDK2 defined HOB to pass the events from  a TPM PEIM to a TPM DXE Driver.
     UINT32              EventType;
     TPM_DIGEST          Digest;
     UINT32              EventSize;
-    UINT8               Event[1];
+    UINT8               Event[EventSize];
   } TCG_PCR_EVENT;
 
    TCG_PCR_EVENT structure are defined at https://github.com/tianocore/edk2/blob/master/MdePkg/Include/IndustryStandard/UefiTcgPlatform.h
