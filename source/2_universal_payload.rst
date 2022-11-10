@@ -9,17 +9,17 @@ Universal Payload
 Introduction
 -----------------
 
-THIS SPECIFICATION IS PROVIDED "AS IS" WITH NO WARRANTIES WHATSOEVER, 
-INCLUDING ANY WARRANTY OF MERCHANTABILITY, NONINFRINGEMENT, FITNESS 
-FOR ANY PARTICULAR PURPOSE, OR ANY WARRANTY OTHERWISE ARISING OUT OF 
-ANY PROPOSAL, SPECIFICATION OR SAMPLE. 
+THIS SPECIFICATION IS PROVIDED "AS IS" WITH NO WARRANTIES WHATSOEVER,
+INCLUDING ANY WARRANTY OF MERCHANTABILITY, NONINFRINGEMENT, FITNESS
+FOR ANY PARTICULAR PURPOSE, OR ANY WARRANTY OTHERWISE ARISING OUT OF
+ANY PROPOSAL, SPECIFICATION OR SAMPLE.
 
 This specification is an intermediate draft for comment only and is
 subject to change without notice. Readers should not design products
 based on this document.
 
-The **Universal Payload Project Team** provides the content on this site under a 
-**Creative Commons Attribution 4.0 International license** (https://spdx.org/licenses/CC-BY-4.0.html), 
+The **Universal Payload Project Team** provides the content on this site under a
+**Creative Commons Attribution 4.0 International license** (https://spdx.org/licenses/CC-BY-4.0.html),
 except where otherwise noted.
 
 Other names and brands may be claimed as the property of others.
@@ -86,7 +86,7 @@ Overview
    memory subsystem, boot media initialization and setting up hardware
    abstractions for use by the operating systems.
 
-   While newer architectural enhancements such as PCI, PCIe, and USB 
+   While newer architectural enhancements such as PCI, PCIe, and USB
    are developed at an industrial scale, there are vendor specific
    micro-architectural enhancements that happens at a much faster pace.
    Silicon vendors differentiate through these microarchitectural
@@ -188,12 +188,12 @@ Payloads
    this document) to be platform independent.
 
    While OS boot protocol is one of the main functionalities provided by
-   payloads, there could be other functionalities such as diagnostics 
+   payloads, there could be other functionalities such as diagnostics
    that can be enabled by payloads.
 
    From a design point of view, a payload is different from a boot image
    based on its relationship with the system firmware. Payloads are
-   considered part of system firmware and are typically in flash memory, 
+   considered part of system firmware and are typically in flash memory,
    while boot images are not considered part of system firmware (not
    within the trusted firmware boundary) and are often in separate boot media.
 
@@ -201,14 +201,14 @@ Payloads
    implementations include both the initialization and OS boot logic
    in a single code base, the distinction lies in the functionality
    provided. This leads to use cases where some system firmware
-   implementations can act as a payload providing OS boot capability, 
+   implementations can act as a payload providing OS boot capability,
    while relying on an underlying bootloader layer for system hardware
    initialization. Examples of such payloads include TianoCore EDKII and U-boot.
    Both EDKII and uboot implementations include both phases of system
    firmware functionality, and can also be launched as payloads by other
    bootloaders.
 
-   There are many payloads currently available, including the EDK II payload, 
+   There are many payloads currently available, including the EDK II payload,
    that provide UEFI services, Linux as a payload, u-boot payload and other
    custom implementations.
 
@@ -233,9 +233,9 @@ Payloads
    https://www.linuxboot.org/
 
    **VaultBoot Payload**
-   VaultBoot is a firmware security payload highly focus on trusted computing 
-   and advanced defense, e.g: Verified boot (also known as Secure Boot) and 
-   measured boot, TPMv2 based FDE (Full-disk encryption), local/remote 
+   VaultBoot is a firmware security payload highly focus on trusted computing
+   and advanced defense, e.g: Verified boot (also known as Secure Boot) and
+   measured boot, TPMv2 based FDE (Full-disk encryption), local/remote
    attestation, built-in DH key exchange against physical attack such as TPM Genie.
 
    https://github.com/hardenedvault/vaultboot
@@ -271,13 +271,13 @@ Coreboot Payload Interface
 
    Coreboot tables contain a series of data records packed back to back, with
    each encoding both type and size. This is something similar to a UEFI
-   HOB list. Coreboot tables provide information about: 
+   HOB list. Coreboot tables provide information about:
 
    -  **memory map**
 
    -  **Graphics Info**
 
-   -  Pointers to certain CBMEM structures, such as **ACPI, SMBIOS**, etc. 
+   -  Pointers to certain CBMEM structures, such as **ACPI, SMBIOS**, etc.
 
 
 Slim Bootloader (SBL) Payload Interface
@@ -991,7 +991,7 @@ All new interfaces are GUID type HOBs starting with ``EFI_HOB_GUID_TYPE`` define
 The HOB data starts with a common header defined as below::
 
   #pragma pack(1)
-  
+
   typedef struct {
     UINT8                Revision;
     UINT8                Reserved;
@@ -1539,6 +1539,52 @@ Size of the event buffer
 
 Event buffer
 
+Trace Hub Information
+%%%%%%%%%%%%%%%%%%%%
+
+This stores necessary information, debug print level and MMIO address, which consumed by Intel Trace Hub to dump Trace Hub log
+It allows multiple Trace Hub HOB instance to support different debug channel requirement.
+
+**GUID**
+
+::
+
+  gUniversalPayloadTraceHubDebugInfoGuid   = {0xf88c9c23, 0x646c, 0x4f6c, {0x8e, 0x3d, 0x36, 0xa9, 0x43, 0xc1, 0x08, 0x35}}
+
+**Structure**
+
+::
+
+  #pragma pack(1)
+
+  typedef struct {
+    UNIVERSAL_PAYLOAD_GENERIC_HEADER  Header;
+    RACEHUB_DEBUG_CONTEXT             DebugContext;
+  } UNIVERSAL_PAYLOAD_TRACEHUB_DEBUG_INFO;
+
+  typedef struct {
+    UINT8                             TraceVerbosity;
+    UINTN                             TraceAddress;
+  } TRACEHUB_DEBUG_CONTEXT;
+
+  #pragma pack()
+
+**Member Description**
+
+``Header``
+
+Header.Revision is 1.
+
+Header.Length is 9 (32 bit addressing).
+Header.Length is 13(64 bit addressing).
+
+``DebugContext.TraceVerbosity``
+
+Indicates the debug print level of coressponding Trace Hub channel.
+
+``DebugContext.TraceAddress``
+
+Indicates the MMIO address of coressponding Trace Hub channel.
 
 Optional Interfaces
 ^^^^^^^^^^^^^^^^^^^^
@@ -2214,7 +2260,7 @@ with key “UplExtraData” is a CBOR format array, and the array contains one o
 Each element is a CBOR format map, and contains some <Key, value> pairs, and the Key can
 be "Identifier", "Base" and "Size" according to the below table.
 
-The below table shows what information can be contained in CBOR encoded data. 
+The below table shows what information can be contained in CBOR encoded data.
 
 **Fields inside CBOR encoded data**
 
@@ -2460,63 +2506,63 @@ Contains one or more extra binaries. Each binary has its ``Identifier``, ``Base`
 Contains one or more root bridge information. For each root bridge, it contains below fields.
 
   | ``Segment``
-  | 
+  |
   | Segment number of the root bridge.
-  | 
+  |
   | ``Supports``
-  | 
+  |
   | Supported attributes. Refer to EFI_PCI_ATTRIBUTE_xxx used by GetAttributes() and SetAttributes() in EFI_PCI_ROOT_BRIDGE_IO_PROTOCOL
   | defined in PI Specification.
-  | 
+  |
   | ``Attributes``
-  | 
+  |
   | Initial attributes. Refer to EFI_PCI_ATTRIBUTE_xxx used by GetAttributes() and SetAttributes() in EFI_PCI_ROOT_BRIDGE_IO_PROTOCOL
   | defined in PI Specification.
-  | 
+  |
   | ``DmaAbove4G``
-  | 
+  |
   | Root bridge supports DMA above 4GB memory when it's TRUE.
-  | 
+  |
   | ``NoExtendedConfigSpace``
-  | 
+  |
   | Root bridge supports 256-byte configuration space only when it's TRUE.
   | Root bridge supports 4K-byte configuration space when it's FALSE.
-  | 
+  |
   | ``AllocationAttributes``
-  | 
+  |
   | Allocation attributes. Refer to EFI_PCI_HOST_BRIDGE_COMBINE_MEM_PMEM and EFI_PCI_HOST_BRIDGE_MEM64_DECODE used by GetAllocAttributes()
   | in EFI_PCI_HOST_BRIDGE_RESOURCE_ALLOCATION_PROTOCOL defined in PI Specification.
-  | 
+  |
   | ``BusBase``, ``BusLimit`` and ``BusTranslation``
-  | 
+  |
   | Bus aperture for the root bridge.
-  | 
+  |
   | ``IoBase``, ``IoLimit`` and ``IoTranslation``
-  | 
+  |
   | IO aperture for the root bridge.
-  | 
+  |
   | ``MemBase``, ``IoLimit`` and ``IoTranslation``
-  | 
+  |
   | MMIO aperture below 4GB for the root bridge.
-  | 
+  |
   | ``MemAbove4GBase``, ``MemAbove4GBaseLimit`` and ``MemAbove4GBaseTranslation``
-  | 
+  |
   | MMIO aperture above 4GB for the root bridge.
-  | 
+  |
   | ``PMemBase``, ``PMemLimit`` and ``PMemTranslation``
-  | 
+  |
   | Prefetchable MMIO aperture below 4GB for the root bridge.
-  | 
+  |
   | ``PMemAbove4GBase``, ``PMemAbove4GLimit`` and ``PMemAbove4GTranslation``
-  | 
+  |
   | Prefetchable MMIO aperture above 4GB for the root bridge.
-  | 
+  |
   | ``HID``
-  | 
+  |
   | PnP hardware ID of the root bridge. This value must match the corresponding _HID in the ACPI name space.
-  | 
+  |
   | ``UID``
-  | 
+  |
   | Unique ID that is required by ACPI if two devices have the same _HID. This value must also match the corresponding _UID/_HID pair in the ACPI name space.
 
 ``Resource``
@@ -2767,11 +2813,11 @@ References and Links
 .. |EDK II Specifications| raw:: html
 
    <a href="https://github.com/tianocore/tianocore.github.io/wiki/EDK-II-Specifications" target="_blank">EDK II Specifications</a>
-   
+
 .. |ACPI| raw:: html
 
    <a href="http://www.uefi.org/specifications" target="_blank">ACPI</a>
-   
+
 .. |Multiboot Specification| raw:: html
 
    <a href="https://www.gnu.org/software/grub/manual/multiboot/multiboot.html" target="_blank">Multiboot Specification</a>
