@@ -461,7 +461,7 @@ Payload principle
      vie to be portable to different platform implementations (PI), such
      as coreboot, Slim bootloader, or an EDKII style firmware.
    | The payload should elide strong dependencies on the payload
-     launching code (e.g., coreboot versus EDKII versus slimboot) and
+     launching code (e.g., coreboot versus EDKII versus slim bootloader) and
      also avoid board-specific dependencies. The payload behavior should
      be parameterized by the data input block.
 
@@ -536,11 +536,11 @@ Payload Image Sections
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 To use ELF image as universal payload image format, it is required to define
-a simple way for bootloader to differenciate a universal payload image from
-a regular ELF image. On the other side, a universal payload might aslo need
-addtional image information to proceed with the boot flow. This specifciation
-requires the universal payload image to provide these addtional requried
-inforamtion through new defined ELF sections, *Universal Payload Information
+a simple way for bootloader to differentiate a universal payload image from
+a regular ELF image. On the other side, a universal payload might also need
+additional image information to proceed with the boot flow. This specification
+requires the universal payload image to provide these addtional required
+information through new defined ELF sections, *Universal Payload Information
 Section* and *Universal Payload Loaded Image Section*.
 
 
@@ -1419,8 +1419,8 @@ BIT4  -  SM3_256
 TPM 2.0 Event Information
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
-This provides the information about the TPM 2.0 events extended by bootloader. Bootloader has to create seperate hobs for each TPM event.
-Its a TCG spec defined EFI_TCG2_PROTOCOL HOB for the event log.
+This provides the information about the TPM 2.0 events extended by bootloader. Bootloader has to create separate hobs for each TPM event.
+It is a TCG spec defined EFI_TCG2_PROTOCOL HOB for the event log.
 
 Bootloader should follow the same order to create event HOBs in the order events are extended to TPM. Mismatch in order will lead a failure
 in TPM PCR replay.
@@ -1450,7 +1450,7 @@ in TPM PCR replay.
 
   #pragma pack()
 
- TCG_PCR_EVENT2 structure are defined at https://github.com/tianocore/edk2/blob/master/MdePkg/Include/IndustryStandard/UefiTcgPlatform.h
+ TCG_PCR_EVENT2 structure is defined at https://github.com/tianocore/edk2/blob/master/MdePkg/Include/IndustryStandard/UefiTcgPlatform.h
 
 **Member Description**
 
@@ -1478,8 +1478,8 @@ Event buffer
 TPM 1.2 Event Information
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
-This provides the information about the TPM 1.2 events extended by bootloader. Bootloader has to create seperate hobs for each TPM event.
-Its a TCG spec defined EFI_TCG2_PROTOCOL HOB for the event log.
+This provides the information about the TPM 1.2 events extended by bootloader. Bootloader has to create separate hobs for each TPM event.
+It is a TCG spec defined EFI_TCG2_PROTOCOL HOB for the event log.
 
 Bootloader should follow the same order to create event HOBs in the order events are extended to TPM. Mismatch in order will lead a failure
 in TPM PCR replay.
@@ -1510,7 +1510,7 @@ in TPM PCR replay.
     UINT8               Event[EventSize];
   } TCG_PCR_EVENT;
 
-   TCG_PCR_EVENT structure are defined at https://github.com/tianocore/edk2/blob/master/MdePkg/Include/IndustryStandard/UefiTcgPlatform.h
+   TCG_PCR_EVENT structure is defined at https://github.com/tianocore/edk2/blob/master/MdePkg/Include/IndustryStandard/UefiTcgPlatform.h
 
 
   #pragma pack()
