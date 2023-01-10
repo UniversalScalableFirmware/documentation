@@ -9,17 +9,17 @@ Universal Payload
 Introduction
 -----------------
 
-THIS SPECIFICATION IS PROVIDED "AS IS" WITH NO WARRANTIES WHATSOEVER, 
-INCLUDING ANY WARRANTY OF MERCHANTABILITY, NONINFRINGEMENT, FITNESS 
-FOR ANY PARTICULAR PURPOSE, OR ANY WARRANTY OTHERWISE ARISING OUT OF 
-ANY PROPOSAL, SPECIFICATION OR SAMPLE. 
+THIS SPECIFICATION IS PROVIDED "AS IS" WITH NO WARRANTIES WHATSOEVER,
+INCLUDING ANY WARRANTY OF MERCHANTABILITY, NONINFRINGEMENT, FITNESS
+FOR ANY PARTICULAR PURPOSE, OR ANY WARRANTY OTHERWISE ARISING OUT OF
+ANY PROPOSAL, SPECIFICATION OR SAMPLE.
 
 This specification is an intermediate draft for comment only and is
 subject to change without notice. Readers should not design products
 based on this document.
 
-The **Universal Payload Project Team** provides the content on this site under a 
-**Creative Commons Attribution 4.0 International license** (https://spdx.org/licenses/CC-BY-4.0.html), 
+The **Universal Payload Project Team** provides the content on this site under a
+**Creative Commons Attribution 4.0 International license** (https://spdx.org/licenses/CC-BY-4.0.html),
 except where otherwise noted.
 
 Other names and brands may be claimed as the property of others.
@@ -86,7 +86,7 @@ Overview
    memory subsystem, boot media initialization and setting up hardware
    abstractions for use by the operating systems.
 
-   While newer architectural enhancements such as PCI, PCIe, and USB 
+   While newer architectural enhancements such as PCI, PCIe, and USB
    are developed at an industrial scale, there are vendor specific
    micro-architectural enhancements that happens at a much faster pace.
    Silicon vendors differentiate through these microarchitectural
@@ -188,12 +188,12 @@ Payloads
    this document) to be platform independent.
 
    While OS boot protocol is one of the main functionalities provided by
-   payloads, there could be other functionalities such as diagnostics 
+   payloads, there could be other functionalities such as diagnostics
    that can be enabled by payloads.
 
    From a design point of view, a payload is different from a boot image
    based on its relationship with the system firmware. Payloads are
-   considered part of system firmware and are typically in flash memory, 
+   considered part of system firmware and are typically in flash memory,
    while boot images are not considered part of system firmware (not
    within the trusted firmware boundary) and are often in separate boot media.
 
@@ -201,14 +201,14 @@ Payloads
    implementations include both the initialization and OS boot logic
    in a single code base, the distinction lies in the functionality
    provided. This leads to use cases where some system firmware
-   implementations can act as a payload providing OS boot capability, 
+   implementations can act as a payload providing OS boot capability,
    while relying on an underlying bootloader layer for system hardware
    initialization. Examples of such payloads include TianoCore EDKII and U-boot.
    Both EDKII and uboot implementations include both phases of system
    firmware functionality, and can also be launched as payloads by other
    bootloaders.
 
-   There are many payloads currently available, including the EDK II payload, 
+   There are many payloads currently available, including the EDK II payload,
    that provide UEFI services, Linux as a payload, u-boot payload and other
    custom implementations.
 
@@ -233,9 +233,9 @@ Payloads
    https://www.linuxboot.org/
 
    **VaultBoot Payload**
-   VaultBoot is a firmware security payload highly focus on trusted computing 
-   and advanced defense, e.g: Verified boot (also known as Secure Boot) and 
-   measured boot, TPMv2 based FDE (Full-disk encryption), local/remote 
+   VaultBoot is a firmware security payload highly focus on trusted computing
+   and advanced defense, e.g: Verified boot (also known as Secure Boot) and
+   measured boot, TPMv2 based FDE (Full-disk encryption), local/remote
    attestation, built-in DH key exchange against physical attack such as TPM Genie.
 
    https://github.com/hardenedvault/vaultboot
@@ -271,13 +271,13 @@ Coreboot Payload Interface
 
    Coreboot tables contain a series of data records packed back to back, with
    each encoding both type and size. This is something similar to a UEFI
-   HOB list. Coreboot tables provide information about: 
+   HOB list. Coreboot tables provide information about:
 
    -  **memory map**
 
    -  **Graphics Info**
 
-   -  Pointers to certain CBMEM structures, such as **ACPI, SMBIOS**, etc. 
+   -  Pointers to certain CBMEM structures, such as **ACPI, SMBIOS**, etc.
 
 
 Slim Bootloader (SBL) Payload Interface
@@ -461,7 +461,7 @@ Payload principle
      vie to be portable to different platform implementations (PI), such
      as coreboot, Slim bootloader, or an EDKII style firmware.
    | The payload should elide strong dependencies on the payload
-     launching code (e.g., coreboot versus EDKII versus slimboot) and
+     launching code (e.g., coreboot versus EDKII versus slim bootloader) and
      also avoid board-specific dependencies. The payload behavior should
      be parameterized by the data input block.
 
@@ -536,11 +536,11 @@ Payload Image Sections
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 To use ELF image as universal payload image format, it is required to define
-a simple way for bootloader to differenciate a universal payload image from
-a regular ELF image. On the other side, a universal payload might aslo need
-addtional image information to proceed with the boot flow. This specifciation
-requires the universal payload image to provide these addtional requried
-inforamtion through new defined ELF sections, *Universal Payload Information
+a simple way for bootloader to differentiate a universal payload image from
+a regular ELF image. On the other side, a universal payload might also need
+additional image information to proceed with the boot flow. This specification
+requires the universal payload image to provide these addtional required
+information through new defined ELF sections, *Universal Payload Information
 Section* and *Universal Payload Loaded Image Section*.
 
 
@@ -991,7 +991,7 @@ All new interfaces are GUID type HOBs starting with ``EFI_HOB_GUID_TYPE`` define
 The HOB data starts with a common header defined as below::
 
   #pragma pack(1)
-  
+
   typedef struct {
     UINT8                Revision;
     UINT8                Reserved;
@@ -1419,8 +1419,8 @@ BIT4  -  SM3_256
 TPM 2.0 Event Information
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
-This provides the information about the TPM 2.0 events extended by bootloader. Bootloader has to create seperate hobs for each TPM event.
-Its a TCG spec defined EFI_TCG2_PROTOCOL HOB for the event log.
+This provides the information about the TPM 2.0 events extended by bootloader. Bootloader has to create separate hobs for each TPM event.
+It is a TCG spec defined EFI_TCG2_PROTOCOL HOB for the event log.
 
 Bootloader should follow the same order to create event HOBs in the order events are extended to TPM. Mismatch in order will lead a failure
 in TPM PCR replay.
@@ -1450,7 +1450,7 @@ in TPM PCR replay.
 
   #pragma pack()
 
- TCG_PCR_EVENT2 structure are defined at https://github.com/tianocore/edk2/blob/master/MdePkg/Include/IndustryStandard/UefiTcgPlatform.h
+ TCG_PCR_EVENT2 structure is defined at https://github.com/tianocore/edk2/blob/master/MdePkg/Include/IndustryStandard/UefiTcgPlatform.h
 
 **Member Description**
 
@@ -1478,8 +1478,8 @@ Event buffer
 TPM 1.2 Event Information
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
-This provides the information about the TPM 1.2 events extended by bootloader. Bootloader has to create seperate hobs for each TPM event.
-Its a TCG spec defined EFI_TCG2_PROTOCOL HOB for the event log.
+This provides the information about the TPM 1.2 events extended by bootloader. Bootloader has to create separate hobs for each TPM event.
+It is a TCG spec defined EFI_TCG2_PROTOCOL HOB for the event log.
 
 Bootloader should follow the same order to create event HOBs in the order events are extended to TPM. Mismatch in order will lead a failure
 in TPM PCR replay.
@@ -1510,7 +1510,7 @@ in TPM PCR replay.
     UINT8               Event[EventSize];
   } TCG_PCR_EVENT;
 
-   TCG_PCR_EVENT structure are defined at https://github.com/tianocore/edk2/blob/master/MdePkg/Include/IndustryStandard/UefiTcgPlatform.h
+   TCG_PCR_EVENT structure is defined at https://github.com/tianocore/edk2/blob/master/MdePkg/Include/IndustryStandard/UefiTcgPlatform.h
 
 
   #pragma pack()
@@ -1539,6 +1539,52 @@ Size of the event buffer
 
 Event buffer
 
+Trace Hub Information
+%%%%%%%%%%%%%%%%%%%%
+
+This stores necessary information, debug print level and MMIO address, which consumed by Intel Trace Hub to dump Trace Hub log
+It allows multiple Trace Hub HOB instance to support different debug channel requirement.
+
+**GUID**
+
+::
+
+  gUniversalPayloadTraceHubDebugInfoGuid   = {0xf88c9c23, 0x646c, 0x4f6c, {0x8e, 0x3d, 0x36, 0xa9, 0x43, 0xc1, 0x08, 0x35}}
+
+**Structure**
+
+::
+
+  #pragma pack(1)
+
+  typedef struct {
+    UNIVERSAL_PAYLOAD_GENERIC_HEADER  Header;
+    RACEHUB_DEBUG_CONTEXT             DebugContext;
+  } UNIVERSAL_PAYLOAD_TRACEHUB_DEBUG_INFO;
+
+  typedef struct {
+    UINT8                             TraceVerbosity;
+    UINTN                             TraceAddress;
+  } TRACEHUB_DEBUG_CONTEXT;
+
+  #pragma pack()
+
+**Member Description**
+
+``Header``
+
+Header.Revision is 1.
+
+Header.Length is 9 (32 bit addressing).
+Header.Length is 13(64 bit addressing).
+
+``DebugContext.TraceVerbosity``
+
+Indicates the debug print level of coressponding Trace Hub channel.
+
+``DebugContext.TraceAddress``
+
+Indicates the MMIO address of coressponding Trace Hub channel.
 
 Optional Interfaces
 ^^^^^^^^^^^^^^^^^^^^
@@ -2192,7 +2238,7 @@ Currently, we are using HobList as Universal Payload Interface. However, Hoblist
 
 4)	Not a self-describing data format.
 
-In the future, we plan to use another data format CBOR to replace Hob.
+In the future, we plan to use another data format CBOR or FDT to replace Hob.
 
 CBOR encoded data
 ~~~~~~~~~~~~~~~~~~~
@@ -2214,7 +2260,7 @@ with key “UplExtraData” is a CBOR format array, and the array contains one o
 Each element is a CBOR format map, and contains some <Key, value> pairs, and the Key can
 be "Identifier", "Base" and "Size" according to the below table.
 
-The below table shows what information can be contained in CBOR encoded data. 
+The below table shows what information can be contained in CBOR encoded data.
 
 **Fields inside CBOR encoded data**
 
@@ -2460,63 +2506,63 @@ Contains one or more extra binaries. Each binary has its ``Identifier``, ``Base`
 Contains one or more root bridge information. For each root bridge, it contains below fields.
 
   | ``Segment``
-  | 
+  |
   | Segment number of the root bridge.
-  | 
+  |
   | ``Supports``
-  | 
+  |
   | Supported attributes. Refer to EFI_PCI_ATTRIBUTE_xxx used by GetAttributes() and SetAttributes() in EFI_PCI_ROOT_BRIDGE_IO_PROTOCOL
   | defined in PI Specification.
-  | 
+  |
   | ``Attributes``
-  | 
+  |
   | Initial attributes. Refer to EFI_PCI_ATTRIBUTE_xxx used by GetAttributes() and SetAttributes() in EFI_PCI_ROOT_BRIDGE_IO_PROTOCOL
   | defined in PI Specification.
-  | 
+  |
   | ``DmaAbove4G``
-  | 
+  |
   | Root bridge supports DMA above 4GB memory when it's TRUE.
-  | 
+  |
   | ``NoExtendedConfigSpace``
-  | 
+  |
   | Root bridge supports 256-byte configuration space only when it's TRUE.
   | Root bridge supports 4K-byte configuration space when it's FALSE.
-  | 
+  |
   | ``AllocationAttributes``
-  | 
+  |
   | Allocation attributes. Refer to EFI_PCI_HOST_BRIDGE_COMBINE_MEM_PMEM and EFI_PCI_HOST_BRIDGE_MEM64_DECODE used by GetAllocAttributes()
   | in EFI_PCI_HOST_BRIDGE_RESOURCE_ALLOCATION_PROTOCOL defined in PI Specification.
-  | 
+  |
   | ``BusBase``, ``BusLimit`` and ``BusTranslation``
-  | 
+  |
   | Bus aperture for the root bridge.
-  | 
+  |
   | ``IoBase``, ``IoLimit`` and ``IoTranslation``
-  | 
+  |
   | IO aperture for the root bridge.
-  | 
+  |
   | ``MemBase``, ``IoLimit`` and ``IoTranslation``
-  | 
+  |
   | MMIO aperture below 4GB for the root bridge.
-  | 
+  |
   | ``MemAbove4GBase``, ``MemAbove4GBaseLimit`` and ``MemAbove4GBaseTranslation``
-  | 
+  |
   | MMIO aperture above 4GB for the root bridge.
-  | 
+  |
   | ``PMemBase``, ``PMemLimit`` and ``PMemTranslation``
-  | 
+  |
   | Prefetchable MMIO aperture below 4GB for the root bridge.
-  | 
+  |
   | ``PMemAbove4GBase``, ``PMemAbove4GLimit`` and ``PMemAbove4GTranslation``
-  | 
+  |
   | Prefetchable MMIO aperture above 4GB for the root bridge.
-  | 
+  |
   | ``HID``
-  | 
+  |
   | PnP hardware ID of the root bridge. This value must match the corresponding _HID in the ACPI name space.
-  | 
+  |
   | ``UID``
-  | 
+  |
   | Unique ID that is required by ACPI if two devices have the same _HID. This value must also match the corresponding _UID/_HID pair in the ACPI name space.
 
 ``Resource``
@@ -2726,6 +2772,260 @@ The meaning of ``Attribute`` can be seen from below sample code
   | //
   | #define EFI_MEMORY_RUNTIME  0x8000000000000000ULL
 
+FDT data structure
+~~~~~~~~~~~~~~~~~~~
+
+A devicetree is a tree data structure with nodes that describe the devices in a system.
+Each node has exactly one parent except for the root node, which has no parent.
+Each node has property/value pairs that describe the characteristics of the device being presented.
+Properties consists of a name and a value. Property names are strings of 1 to 31 characters, property value is an array of zero or more bytes that contain information associated with the property.
+
+The below tables show what nodes should be passed from bootloader and its corresponding property/value.
+
++----------------------+----------------------+-------------------------+------------------------------------------------------------------------------+
+| Node                 | Property             | Value                   | Definition                                                                   |
++======================+======================+=========================+==============================================================================+
+| memory@#base         | device_type          | memory                  |                                                                              |
++----------------------+----------------------+-------------------------+------------------------------------------------------------------------------+
+|                      | reg                  | <base address, size>    | Speficy system memory region range                                           |
+|                      +----------------------+-------------------------+------------------------------------------------------------------------------+
+|                      | attr                 | <uefi memory attribute> | Refer to **2.15.8.2. EFI_RESOURCE_ATTRIBUTE_TYPE**                           |
++----------------------+----------------------+-------------------------+------------------------------------------------------------------------------+
+
++----------------------+----------------------+-------------------------+--------------------+-----------------------+-------------------------+---------------------------------------------------+
+| Node                 | Property             | Value                   | SubNode            | Property              | Value                   | Definition                                        |
++======================+======================+=========================+====================+=======================+=========================+===================================================+
+| reserved-memory      | #address-cells       | 2                       | mmio@#base         | reg                   | <base address, size>    | Specify mmio region of reserved memory            |
++----------------------+----------------------+-------------------------+--------------------+-----------------------+-------------------------+---------------------------------------------------+
+|                      | #size-cells          | 2                       |                    | attr                  | <uefi memory attribute> | Refer to **2.15.8.2. EFI_RESOURCE_ATTRIBUTE_TYPE**|
+|                      +----------------------+-------------------------+--------------------+-----------------------+-------------------------+---------------------------------------------------+
+|                      |                      |                         | reserved@#base     | reg                   | <base address, size>    | Specify reserved memory range                     |
+|                      |                      |                         +--------------------+-----------------------+-------------------------+---------------------------------------------------+
+|                      |                      |                         |                    | attr                  | <uefi memory attribute> | Refer to **2.15.8.2. EFI_RESOURCE_ATTRIBUTE_TYPE**|
+|                      |                      |                         +--------------------+-----------------------+-------------------------+---------------------------------------------------+
+|                      |                      |                         | uefi               | reg                   | <base address, size>    | Allocated >64MB memory range for Payload.         |
++----------------------+----------------------+-------------------------+--------------------+-----------------------+-------------------------+---------------------------------------------------+
+
+
++----------------------+----------------------+-------------------------+--------------------+----------------------+--------------------------+---------------------------------------------------+
+| Node                 | Property             | Value                   | SubNode            | Property             | Value                    | Definition                                        |
++======================+======================+=========================+====================+======================+==========================+===================================================+
+| memory-allocation    | #address-cells       | 2                       | <AllocType>@#base  | reg                  | <base address, size>     | Refer to **2.15.9. EFI_HOB_MEMORY_ALLOCATION**    |
++----------------------+----------------------+-------------------------+--------------------+----------------------+--------------------------+---------------------------------------------------+
+|                      | #size-cells          | 2                       |                    | attr                 | <uefi memory attribute>  | Refer to **2.15.8.2. EFI_RESOURCE_ATTRIBUTE_TYPE**|
++----------------------+----------------------+-------------------------+--------------------+----------------------+--------------------------+---------------------------------------------------+
+
++----------------------+----------------------+-------------------------+------------------------------------------------------------------------------+
+| Node                 | Property             | Value                   | Definition                                                                   |
++======================+======================+=========================+==============================================================================+
+| serial@#base         | mmio                 | <boolean>               | Indicates the 16550 serial port registers are in MMIO space, or in I/O space |
++----------------------+----------------------+-------------------------+------------------------------------------------------------------------------+
+|                      | stride               | #number                 | Indicates the number of bytes between registers                              |
+|                      +----------------------+-------------------------+------------------------------------------------------------------------------+
+|                      | current-speed        | <baud rate>             | Baud rate for the 16550 compatible serial port                               |
+|                      +----------------------+-------------------------+------------------------------------------------------------------------------+
+|                      | reg                  | <base address, size>    | Base address of 16550 serial port registers in MMIO or I/O space             |
++----------------------+----------------------+-------------------------+------------------------------------------------------------------------------+
+
++----------------------+----------------------+-------------------------+------------------------------------------------------------------------------+
+| Node                 | Property             | Value                   | Definition                                                                   |
++======================+======================+=========================+==============================================================================+
+| graphic-info         | reg                  | <base address, size>    | Provide graphic frame buffer's base and size                                 |
++----------------------+----------------------+-------------------------+------------------------------------------------------------------------------+
+|                      | resolution           | <#h-res, #v-res>        | The size of video screen in pixels in the X dimension and Y dimension        |
+|                      +----------------------+-------------------------+------------------------------------------------------------------------------+
+|                      | pixel-format         | #number                 | Refer to **2.15.6. EFI_PEI_GRAPHICS_INFO_HOB**                               |
+|                      +----------------------+-------------------------+------------------------------------------------------------------------------+
+|                      | pixel-mask           | <#red, #green, #blue>   | Refer to **2.15.6. EFI_PEI_GRAPHICS_INFO_HOB**                               |
+|                      +----------------------+-------------------------+------------------------------------------------------------------------------+
+|                      | pixe-scanline        | #number                 | Refer to **2.15.6. EFI_PEI_GRAPHICS_INFO_HOB**                               |
++----------------------+----------------------+-------------------------+------------------------------------------------------------------------------+
+
++----------------------+----------------------+-------------------------+------------------------------------------------------------------------------+
+| Node                 | Property             | Value                   | Definition                                                                   |
++======================+======================+=========================+==============================================================================+
+| graphic-device       | vendor-id            | #number                 | Define the Graphics device hardware information.                             |
++----------------------+----------------------+-------------------------+                                                                              |
+|                      | device-id            | #number                 |                                                                              |
+|                      +----------------------+-------------------------+                                                                              |
+|                      | subsystem-vendor-id  | #number                 |                                                                              |
+|                      +----------------------+-------------------------+                                                                              |
+|                      | subsystem-id         | #number                 |                                                                              |
+|                      +----------------------+-------------------------+                                                                              |
+|                      | revision-id          | #number                 |                                                                              |
+|                      +----------------------+-------------------------+                                                                              |
+|                      | bar-index            | #number                 |                                                                              |
++----------------------+----------------------+-------------------------+------------------------------------------------------------------------------+
+
++----------------------+----------------------+-------------------------+--------------------+----------------------+--------------------------+------------------------------------------------------------------------------------+
+| Node                 | Property             | Value                   | SubNode            | Property             | Value                    | Definition                                                                         |
++======================+======================+=========================+====================+======================+==========================+====================================================================================+
+| extra-data           | count                | #number                 | entry@#number      | #address-cells       | 2                        | Contains one or more extra binaries. Each binary has its Identifier, Base and Size |
++----------------------+----------------------+-------------------------+--------------------+----------------------+--------------------------+                                                                                    |
+|                      |                      |                         |                    | #size-cells          | 2                        |                                                                                    |
+|                      |                      |                         +--------------------+----------------------+--------------------------+                                                                                    |
+|                      |                      |                         |                    | id                   | <string>                 |                                                                                    |
+|                      |                      |                         +--------------------+----------------------+--------------------------+                                                                                    |
+|                      |                      |                         |                    | reg                  | <base address, size>     |                                                                                    |
++----------------------+----------------------+-------------------------+--------------------+----------------------+--------------------------+------------------------------------------------------------------------------------+
+
++----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
+| Node                 | Property             | Value                   | Definition                                                                                      |
++======================+======================+=========================+=================================================================================================+
+| cpu-info             | memoryspace          | #number                 | Identifies the maximum physical memory addressability of the processor                          |
++----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
+|                      | iospace              | #number                 | Identifies the maximum physical I/O addressability of the processor                             |
++----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
+
++----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
+| Node                 | Property             | Value                   | Definition                                                                                      |
++======================+======================+=========================+=================================================================================================+
+| acpi                 | rsdp                 | <base address>          | Point to the ACPI RSDP table. The ACPI table need follow ACPI specification version 2.0 or above|
++----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
+
++----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
+| Node                 | Property             | Value                   | Definition                                                                                      |
++======================+======================+=========================+=================================================================================================+
+| smbios               | entry                | <base address>          | Point to smbios structure UNIVERSAL_PAYLOAD_SMBIOS_TABLE                                        |
++----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
+
+
+The below tables show what nodes may be passed from bootloader and its corresponding property/value.
+
++----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
+| Node                 | Property             | Value                   | Definition                                                                                      |
++======================+======================+=========================+=================================================================================================+
+| BootManagerMenuFile  | filename             | <string>                | Points to the file name GUID of the BootManagerMenuApp                                          |
++----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
+
++----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
+| Node                 | Property             | Value                   | Definition                                                                                      |
++======================+======================+=========================+=================================================================================================+
+| DebugPrintErrorLevel | errorlevel           | #number                 | Refer to below detailed bits definition                                                         |
++----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
+
+https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Library/DebugLib.h::
+
+  //
+  // Declare bits for errorlevel
+  //
+  #define DEBUG_INIT      0x00000001  // Initialization
+  #define DEBUG_WARN      0x00000002  // Warnings
+  #define DEBUG_LOAD      0x00000004  // Load events
+  #define DEBUG_FS        0x00000008  // EFI File system
+  #define DEBUG_POOL      0x00000010  // Alloc & Free (pool)
+  #define DEBUG_PAGE      0x00000020  // Alloc & Free (page)
+  #define DEBUG_INFO      0x00000040  // Informational debug messages
+  #define DEBUG_DISPATCH  0x00000080  // PEI/DXE/SMM Dispatchers
+  #define DEBUG_VARIABLE  0x00000100  // Variable
+  #define DEBUG_BM        0x00000400  // Boot Manager
+  #define DEBUG_BLKIO     0x00001000  // BlkIo Driver
+  #define DEBUG_NET       0x00004000  // Network Io Driver
+  #define DEBUG_UNDI      0x00010000  // UNDI Driver
+  #define DEBUG_LOADFILE  0x00020000  // LoadFile
+  #define DEBUG_EVENT     0x00080000  // Event messages
+  #define DEBUG_GCD       0x00100000  // Global Coherency Database changes
+  #define DEBUG_CACHE     0x00200000  // Memory range cachability changes
+  #define DEBUG_VERBOSE   0x00400000  // Detailed debug messages that may significantly impact boot performance
+  #define DEBUG_ERROR     0x80000000  // Error
+
++----------------------+----------------------+-------------------------+--------------------+----------------------+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Node                 | Property             | Value                   | SubNode            | Property             | Value                    | Definition                                                                                                                                              |
++======================+======================+=========================+====================+======================+==========================+=========================================================================================================================================================+
+| pcirbinfo            | count                | #number                 | rb@#bdf            | segment              | #number                  | Segment number of the root bridge                                                                                                                       |
++----------------------+----------------------+-------------------------+--------------------+----------------------+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                      | ResourceAssigned     | <boolean>               |                    | supports             | #number                  | Supported attributes. Refer to attributes bits definition below                                                                                         |
+|                      +----------------------+-------------------------+                    +----------------------+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                      |                      |                         |                    | attribute            | #number                  | Initial attributes. Refer to attributes bits definition below                                                                                           |
+|                      |                      |                         |                    +----------------------+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                      |                      |                         |                    | dma_above4g          | <boolean>                | Root bridge supports DMA above 4GB memory when it's TRUE                                                                                                |
+|                      |                      |                         |                    +----------------------+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                      |                      |                         |                    | no_ext_config        | <boolean>                | Root bridge supports 256-byte configuration space only when it's TRUE. Root bridge supports 4K-byte configuration space when it's FALSE                 |
+|                      |                      |                         |                    +----------------------+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                      |                      |                         |                    | alloc_attr           | #number                  | Allocation attributes. Refer to attributes bits definition below                                                                                        |
+|                      |                      |                         |                    +----------------------+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                      |                      |                         |                    | bus_base             | #number                  | Bus aperture for the root bridge                                                                                                                        |
+|                      |                      |                         |                    +----------------------+--------------------------+                                                                                                                                                         |
+|                      |                      |                         |                    | bus_limit            | #number                  |                                                                                                                                                         |
+|                      |                      |                         |                    +----------------------+--------------------------+                                                                                                                                                         |
+|                      |                      |                         |                    | bus_translation      | #number                  |                                                                                                                                                         |
+|                      |                      |                         |                    +----------------------+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                      |                      |                         |                    | io_base              | #number                  | IO aperture for the root bridge                                                                                                                         |
+|                      |                      |                         |                    +----------------------+--------------------------+                                                                                                                                                         |
+|                      |                      |                         |                    | io_limit             | #number                  |                                                                                                                                                         |
+|                      |                      |                         |                    +----------------------+--------------------------+                                                                                                                                                         |
+|                      |                      |                         |                    | io_translation       | #number                  |                                                                                                                                                         |
+|                      |                      |                         |                    +----------------------+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                      |                      |                         |                    | mem_base             | #number                  | MMIO aperture below 4GB for the root bridge                                                                                                             |
+|                      |                      |                         |                    +----------------------+--------------------------+                                                                                                                                                         |
+|                      |                      |                         |                    | mem_limit            | #number                  |                                                                                                                                                         |
+|                      |                      |                         |                    +----------------------+--------------------------+                                                                                                                                                         |
+|                      |                      |                         |                    | mem_translation      | #number                  |                                                                                                                                                         |
+|                      |                      |                         |                    +----------------------+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                      |                      |                         |                    | mem_4g_base          | #number                  | MMIO aperture above 4GB for the root bridge                                                                                                             |
+|                      |                      |                         |                    +----------------------+--------------------------+                                                                                                                                                         |
+|                      |                      |                         |                    | mem_4g_limit         | #number                  |                                                                                                                                                         |
+|                      |                      |                         |                    +----------------------+--------------------------+                                                                                                                                                         |
+|                      |                      |                         |                    | mem_4g_translation   | #number                  |                                                                                                                                                         |
+|                      |                      |                         |                    +----------------------+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                      |                      |                         |                    | pm_base              | #number                  | Prefetchable MMIO aperture below 4GB for the root bridge                                                                                                |
+|                      |                      |                         |                    +----------------------+--------------------------+                                                                                                                                                         |
+|                      |                      |                         |                    | pm_limit             | #number                  |                                                                                                                                                         |
+|                      |                      |                         |                    +----------------------+--------------------------+                                                                                                                                                         |
+|                      |                      |                         |                    | pm_translation       | #number                  |                                                                                                                                                         |
+|                      |                      |                         |                    +----------------------+--------------------------+                                                                                                                                                         |
+|                      |                      |                         |                    | pm_4g_base           | #number                  |                                                                                                                                                         |
+|                      |                      |                         |                    +----------------------+--------------------------+                                                                                                                                                         |
+|                      |                      |                         |                    | pm_4g_limit          | #number                  |                                                                                                                                                         |
+|                      |                      |                         |                    +----------------------+--------------------------+                                                                                                                                                         |
+|                      |                      |                         |                    | pm_4g_translation    | #number                  |                                                                                                                                                         |
+|                      |                      |                         |                    +----------------------+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                      |                      |                         |                    | hid                  | #number                  | PnP hardware ID of the root bridge. This value must match the corresponding _HID in the ACPI name space                                                 |
+|                      |                      |                         |                    +----------------------+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                      |                      |                         |                    | uid                  | #number                  | Unique ID that is required by ACPI if two devices have the same _HID. This value must also match the corresponding _UID/_HID pair in the ACPI name space|
++----------------------+----------------------+-------------------------+--------------------+----------------------+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+https://github.com/tianocore/edk2/blob/master/MdeModulePkg/Include/Library/PciHostBridgeLib.h::
+
+  //
+  // PCI Attributes
+  //
+  #define EFI_PCI_ATTRIBUTE_ISA_MOTHERBOARD_IO    0x0001
+  #define EFI_PCI_ATTRIBUTE_ISA_IO                0x0002
+  #define EFI_PCI_ATTRIBUTE_VGA_PALETTE_IO        0x0004
+  #define EFI_PCI_ATTRIBUTE_VGA_MEMORY            0x0008
+  #define EFI_PCI_ATTRIBUTE_VGA_IO                0x0010
+  #define EFI_PCI_ATTRIBUTE_IDE_PRIMARY_IO        0x0020
+  #define EFI_PCI_ATTRIBUTE_IDE_SECONDARY_IO      0x0040
+  #define EFI_PCI_ATTRIBUTE_MEMORY_WRITE_COMBINE  0x0080
+  #define EFI_PCI_ATTRIBUTE_MEMORY_CACHED         0x0800
+  #define EFI_PCI_ATTRIBUTE_MEMORY_DISABLE        0x1000
+  #define EFI_PCI_ATTRIBUTE_DUAL_ADDRESS_CYCLE    0x8000
+  #define EFI_PCI_ATTRIBUTE_ISA_IO_16             0x10000
+  #define EFI_PCI_ATTRIBUTE_VGA_PALETTE_IO_16     0x20000
+  #define EFI_PCI_ATTRIBUTE_VGA_IO_16             0x40000
+
+  #define EFI_PCI_ATTRIBUTE_VALID_FOR_ALLOCATE_BUFFER  (EFI_PCI_ATTRIBUTE_MEMORY_WRITE_COMBINE | EFI_PCI_ATTRIBUTE_MEMORY_CACHED | EFI_PCI_ATTRIBUTE_DUAL_ADDRESS_CYCLE)
+  #define EFI_PCI_ATTRIBUTE_INVALID_FOR_ALLOCATE_BUFFER  (~EFI_PCI_ATTRIBUTE_VALID_FOR_ALLOCATE_BUFFER)
+
+  //
+  // Allocation Attributes
+  //
+  /// If this bit is set, then the PCI Root Bridge does not
+  /// support separate windows for Non-prefetchable and Prefetchable
+  /// memory. A PCI bus driver needs to include requests for Prefetchable
+  /// memory in the Non-prefetchable memory pool.
+  ///
+  #define EFI_PCI_HOST_BRIDGE_COMBINE_MEM_PMEM  1
+
+  ///
+  /// If this bit is set, then the PCI Root Bridge supports
+  /// 64 bit memory windows.  If this bit is not set,
+  /// the PCI bus driver needs to include requests for 64 bit
+  /// memory address in the corresponding 32 bit memory pool.
+  ///
+  #define EFI_PCI_HOST_BRIDGE_MEM64_DECODE  2
+
 Hand-off state
 ~~~~~~~~~~~~~~~~~~~
 
@@ -2767,11 +3067,11 @@ References and Links
 .. |EDK II Specifications| raw:: html
 
    <a href="https://github.com/tianocore/tianocore.github.io/wiki/EDK-II-Specifications" target="_blank">EDK II Specifications</a>
-   
+
 .. |ACPI| raw:: html
 
    <a href="http://www.uefi.org/specifications" target="_blank">ACPI</a>
-   
+
 .. |Multiboot Specification| raw:: html
 
    <a href="https://www.gnu.org/software/grub/manual/multiboot/multiboot.html" target="_blank">Multiboot Specification</a>
