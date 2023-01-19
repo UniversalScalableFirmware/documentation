@@ -2787,9 +2787,9 @@ The below tables show what nodes should be passed from bootloader and its corres
 +======================+======================+=========================+==============================================================================+
 | memory@#base         | device_type          | memory                  |                                                                              |
 +----------------------+----------------------+-------------------------+------------------------------------------------------------------------------+
-|                      | reg                  | <base address, size>    | Speficy system memory region range                                           |
+|                      | reg                  | <base address, size>    | Specify system memory region range                                           |
 |                      +----------------------+-------------------------+------------------------------------------------------------------------------+
-|                      | attr                 | <uefi memory attribute> | Refer to **2.15.8.2. EFI_RESOURCE_ATTRIBUTE_TYPE**                           |
+|                      | attr                 | <memory attribute>      | Refer to memory attributes definition below                                  |
 +----------------------+----------------------+-------------------------+------------------------------------------------------------------------------+
 
 +----------------------+----------------------+-------------------------+--------------------+-----------------------+-------------------------+---------------------------------------------------+
@@ -2797,11 +2797,11 @@ The below tables show what nodes should be passed from bootloader and its corres
 +======================+======================+=========================+====================+=======================+=========================+===================================================+
 | reserved-memory      | #address-cells       | 2                       | mmio@#base         | reg                   | <base address, size>    | Specify mmio region of reserved memory            |
 +----------------------+----------------------+-------------------------+--------------------+-----------------------+-------------------------+---------------------------------------------------+
-|                      | #size-cells          | 2                       |                    | attr                  | <uefi memory attribute> | Refer to **2.15.8.2. EFI_RESOURCE_ATTRIBUTE_TYPE**|
+|                      | #size-cells          | 2                       |                    | attr                  | <memory attribute>      | Refer to memory attributes definition below       |
 |                      +----------------------+-------------------------+--------------------+-----------------------+-------------------------+---------------------------------------------------+
 |                      |                      |                         | reserved@#base     | reg                   | <base address, size>    | Specify reserved memory range                     |
 |                      |                      |                         +--------------------+-----------------------+-------------------------+---------------------------------------------------+
-|                      |                      |                         |                    | attr                  | <uefi memory attribute> | Refer to **2.15.8.2. EFI_RESOURCE_ATTRIBUTE_TYPE**|
+|                      |                      |                         |                    | attr                  | <memory attribute>      | Refer to memory attributes definition below       |
 |                      |                      |                         +--------------------+-----------------------+-------------------------+---------------------------------------------------+
 |                      |                      |                         | uefi               | reg                   | <base address, size>    | Allocated >64MB memory range for Payload.         |
 +----------------------+----------------------+-------------------------+--------------------+-----------------------+-------------------------+---------------------------------------------------+
@@ -2810,10 +2810,104 @@ The below tables show what nodes should be passed from bootloader and its corres
 +----------------------+----------------------+-------------------------+--------------------+----------------------+--------------------------+---------------------------------------------------+
 | Node                 | Property             | Value                   | SubNode            | Property             | Value                    | Definition                                        |
 +======================+======================+=========================+====================+======================+==========================+===================================================+
-| memory-allocation    | #address-cells       | 2                       | <AllocType>@#base  | reg                  | <base address, size>     | Refer to **2.15.9. EFI_HOB_MEMORY_ALLOCATION**    |
+| memory-allocation    | #address-cells       | 2                       | <AllocType>@#base  | reg                  | <base address, size>     | Refer to resource type definition below           |
 +----------------------+----------------------+-------------------------+--------------------+----------------------+--------------------------+---------------------------------------------------+
-|                      | #size-cells          | 2                       |                    | attr                 | <uefi memory attribute>  | Refer to **2.15.8.2. EFI_RESOURCE_ATTRIBUTE_TYPE**|
+|                      | #size-cells          | 2                       |                    | attr                 | <memory attribute>       | Refer to memory attributes definition below       |
 +----------------------+----------------------+-------------------------+--------------------+----------------------+--------------------------+---------------------------------------------------+
+
+``memory attribute``
+
+  | #define RESOURCE_ATTRIBUTE_PRESENT                  0x00000001
+  | #define RESOURCE_ATTRIBUTE_INITIALIZED              0x00000002
+  | #define RESOURCE_ATTRIBUTE_TESTED                   0x00000004
+  | #define RESOURCE_ATTRIBUTE_READ_PROTECTED           0x00000080
+  | #define RESOURCE_ATTRIBUTE_UNCACHEABLE              0x00000400
+  | #define RESOURCE_ATTRIBUTE_WRITE_COMBINEABLE        0x00000800
+  | #define RESOURCE_ATTRIBUTE_WRITE_THROUGH_CACHEABLE  0x00001000
+  | #define RESOURCE_ATTRIBUTE_WRITE_BACK_CACHEABLE     0x00002000
+  | #define RESOURCE_ATTRIBUTE_UNCACHED_EXPORTED        0x00020000
+  | #define RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTABLE    0x00080000
+  | #define RESOURCE_ATTRIBUTE_READ_PROTECTABLE         0x00100000
+  | #define RESOURCE_ATTRIBUTE_WRITE_PROTECTABLE        0x00200000
+  | #define RESOURCE_ATTRIBUTE_EXECUTION_PROTECTABLE    0x00400000
+  | #define RESOURCE_ATTRIBUTE_PERSISTABLE              0x01000000
+  | #define RESOURCE_ATTRIBUTE_MORE_RELIABLE            0x02000000
+
+``memory-allocation``
+
+Contains one or more Resource Descriptor. The base and size of the resource can be
+known from ``base address`` and ``size``.The meaning of ``AllocType`` can be seen from below sample code
+
+  | typedef enum {
+  |   ///
+  |   /// Not used.
+  |   ///
+  |   ReservedMemoryType,
+  |   ///
+  |   /// The code portions of a loaded application.
+  |   /// (Note that UEFI OS loaders are UEFI applications.)
+  |   ///
+  |   LoaderCode,
+  |   ///
+  |   /// The data portions of a loaded application and the default data allocation
+  |   /// type used by an application to allocate pool memory.
+  |   ///
+  |   LoaderData,
+  |   ///
+  |   /// The code portions of a loaded Boot Services Driver.
+  |   ///
+  |   BootServicesCode,
+  |   ///
+  |   /// The data portions of a loaded Boot Serves Driver, and the default data
+  |   /// allocation type used by a Boot Services Driver to allocate pool memory.
+  |   ///
+  |   BootServicesData,
+  |   ///
+  |   /// The code portions of a loaded Runtime Services Driver.
+  |   ///
+  |   RuntimeServicesCode,
+  |   ///
+  |   /// The data portions of a loaded Runtime Services Driver and the default
+  |   /// data allocation type used by a Runtime Services Driver to allocate pool memory.
+  |   ///
+  |   RuntimeServicesData,
+  |   ///
+  |   /// Free (unallocated) memory.
+  |   ///
+  |   ConventionalMemory,
+  |   ///
+  |   /// Memory in which errors have been detected.
+  |   ///
+  |   UnusableMemory,
+  |   ///
+  |   /// Memory that holds the ACPI tables.
+  |   ///
+  |   ACPIReclaimMemory,
+  |   ///
+  |   /// Address space reserved for use by the firmware.
+  |   ///
+  |   ACPIMemoryNVS,
+  |   ///
+  |   /// Used by system firmware to request that a memory-mapped IO region
+  |   /// be mapped by the OS to a virtual address so it can be accessed by EFI runtime services.
+  |   ///
+  |   MemoryMappedIO,
+  |   ///
+  |   /// System memory-mapped IO region that is used to translate memory
+  |   /// cycles to IO cycles by the processor.
+  |   ///
+  |   MemoryMappedIOPortSpace,
+  |   ///
+  |   /// Address space reserved by the firmware for code that is part of the processor.
+  |   ///
+  |   PalCode,
+  |   ///
+  |   /// A memory region that operates as EfiConventionalMemory,
+  |   /// however it happens to also support byte-addressable non-volatility.
+  |   ///
+  |   PersistentMemory,
+  |   MaxMemoryType
+  | } MEMORY_TYPE;
 
 +----------------------+----------------------+-------------------------+------------------------------------------------------------------------------+
 | Node                 | Property             | Value                   | Definition                                                                   |
@@ -2834,12 +2928,94 @@ The below tables show what nodes should be passed from bootloader and its corres
 +----------------------+----------------------+-------------------------+------------------------------------------------------------------------------+
 |                      | resolution           | <#h-res, #v-res>        | The size of video screen in pixels in the X dimension and Y dimension        |
 |                      +----------------------+-------------------------+------------------------------------------------------------------------------+
-|                      | pixel-format         | #number                 | Refer to **2.15.6. EFI_PEI_GRAPHICS_INFO_HOB**                               |
+|                      | pixel-format         | #number                 | Refer to pixel-format definition below                                       |
 |                      +----------------------+-------------------------+------------------------------------------------------------------------------+
-|                      | pixel-mask           | <#red, #green, #blue>   | Refer to **2.15.6. EFI_PEI_GRAPHICS_INFO_HOB**                               |
+|                      | pixel-mask           | <#red, #green, #blue>   | Refer to pixel-mask definition below                                         |
 |                      +----------------------+-------------------------+------------------------------------------------------------------------------+
-|                      | pixe-scanline        | #number                 | Refer to **2.15.6. EFI_PEI_GRAPHICS_INFO_HOB**                               |
+|                      | pixe-scanline        | #number                 | Refer to pixel-scanline definition below                                     |
 +----------------------+----------------------+-------------------------+------------------------------------------------------------------------------+
+
+
+``pixel-format``
+
+Enumeration that defines the physical format of the pixel. A value of PixelBltOnly
+implies that a linear frame buffer is not available for this mode. More information
+can be seen from below sample code
+
+  | typedef enum {
+  |   ///
+  |   /// A pixel is 32-bits and byte zero represents red, byte one represents green,
+  |   /// byte two represents blue, and byte three is reserved. This is the definition
+  |   /// for the physical frame buffer. The byte values for the red, green, and blue
+  |   /// components represent the color intensity. This color intensity value range
+  |   /// from a minimum intensity of 0 to maximum intensity of 255.
+  |   ///
+  |   PixelRedGreenBlueReserved8BitPerColor,
+  |   ///
+  |   /// A pixel is 32-bits and byte zero represents blue, byte one represents green,
+  |   /// byte two represents red, and byte three is reserved. This is the definition
+  |   /// for the physical frame buffer. The byte values for the red, green, and blue
+  |   /// components represent the color intensity. This color intensity value range
+  |   /// from a minimum intensity of 0 to maximum intensity of 255.
+  |   ///
+  |   PixelBlueGreenRedReserved8BitPerColor,
+  |   ///
+  |   /// The Pixel definition of the physical frame buffer.
+  |   ///
+  |   PixelBitMask,
+  |   ///
+  |   /// This mode does not support a physical frame buffer.
+  |   ///
+  |   PixelBltOnly,
+  |   ///
+  |   /// Valid EFI_GRAPHICS_PIXEL_FORMAT enum values are less than this value.
+  |   ///
+  |   PixelFormatMax
+  | } EFI_GRAPHICS_PIXEL_FORMAT;
+
+
+``pixel-mask``
+
+If a bit is set in *#red*, *#green*, or *#blue* then those bits of the pixel represent the
+corresponding color. Bits in *RedMask*, *GreenMask*, *BlueMask* must not overlap bit positions.
+The values for the red, green, and blue components in the bit mask represent the color
+intensity. The color intensities must increase as the color values for each color mask increase with a
+minimum intensity of all bits in a color mask clear to a maximum intensity of all bits in a color mask set.
+
+``pixel-scanline``
+
+Defines the number of pixel elements per video memory line.
+
++----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
+| Node                 | Property             | Value                   | Definition                                                                                      |
++======================+======================+=========================+=================================================================================================+
+| cpu-info             | memoryspace          | #number                 | Identifies the maximum physical memory addressability of the processor                          |
++----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
+
++----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
+| Node                 | Property             | Value                   | Definition                                                                                      |
++======================+======================+=========================+=================================================================================================+
+| acpi                 | rsdp                 | <base address>          | Point to the ACPI RSDP table. The ACPI table need follow ACPI specification version 2.0 or above|
++----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
+
++----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
+| Node                 | Property             | Value                   | Definition                                                                                      |
++======================+======================+=========================+=================================================================================================+
+| smbios               | entry                | <base address>          | Point to smbios structure UNIVERSAL_PAYLOAD_SMBIOS_TABLE                                        |
++----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
+
++----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
+| Node                 | Property             | Value                   | Definition                                                                                      |
++======================+======================+=========================+=================================================================================================+
+| PayloadBase          | entry                | <base address>          | Point to the base of uncompressed ELF image                                                     |
++----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
+
+``entry``
+
+If UPL ELF is compressed and BL will decompress it to memory, then it will be memory base address, otherwise it could be Flash MMIO base address.
+
+
+The below tables show what nodes may be passed from bootloader and its corresponding property/value.
 
 +----------------------+----------------------+-------------------------+------------------------------------------------------------------------------+
 | Node                 | Property             | Value                   | Definition                                                                   |
@@ -2868,29 +3044,6 @@ The below tables show what nodes should be passed from bootloader and its corres
 |                      |                      |                         +--------------------+----------------------+--------------------------+                                                                                    |
 |                      |                      |                         |                    | reg                  | <base address, size>     |                                                                                    |
 +----------------------+----------------------+-------------------------+--------------------+----------------------+--------------------------+------------------------------------------------------------------------------------+
-
-+----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
-| Node                 | Property             | Value                   | Definition                                                                                      |
-+======================+======================+=========================+=================================================================================================+
-| cpu-info             | memoryspace          | #number                 | Identifies the maximum physical memory addressability of the processor                          |
-+----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
-|                      | iospace              | #number                 | Identifies the maximum physical I/O addressability of the processor                             |
-+----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
-
-+----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
-| Node                 | Property             | Value                   | Definition                                                                                      |
-+======================+======================+=========================+=================================================================================================+
-| acpi                 | rsdp                 | <base address>          | Point to the ACPI RSDP table. The ACPI table need follow ACPI specification version 2.0 or above|
-+----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
-
-+----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
-| Node                 | Property             | Value                   | Definition                                                                                      |
-+======================+======================+=========================+=================================================================================================+
-| smbios               | entry                | <base address>          | Point to smbios structure UNIVERSAL_PAYLOAD_SMBIOS_TABLE                                        |
-+----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
-
-
-The below tables show what nodes may be passed from bootloader and its corresponding property/value.
 
 +----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
 | Node                 | Property             | Value                   | Definition                                                                                      |
@@ -2936,8 +3089,6 @@ https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Library/DebugLib.h:
 +----------------------+----------------------+-------------------------+--------------------+----------------------+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      | ResourceAssigned     | <boolean>               |                    | supports             | #number                  | Supported attributes. Refer to attributes bits definition below                                                                                         |
 |                      +----------------------+-------------------------+                    +----------------------+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                      |                      |                         |                    | attribute            | #number                  | Initial attributes. Refer to attributes bits definition below                                                                                           |
-|                      |                      |                         |                    +----------------------+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      |                      |                         |                    | dma_above4g          | <boolean>                | Root bridge supports DMA above 4GB memory when it's TRUE                                                                                                |
 |                      |                      |                         |                    +----------------------+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      |                      |                         |                    | no_ext_config        | <boolean>                | Root bridge supports 256-byte configuration space only when it's TRUE. Root bridge supports 4K-byte configuration space when it's FALSE                 |
@@ -2979,10 +3130,6 @@ https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Library/DebugLib.h:
 |                      |                      |                         |                    | pm_4g_limit          | #number                  |                                                                                                                                                         |
 |                      |                      |                         |                    +----------------------+--------------------------+                                                                                                                                                         |
 |                      |                      |                         |                    | pm_4g_translation    | #number                  |                                                                                                                                                         |
-|                      |                      |                         |                    +----------------------+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                      |                      |                         |                    | hid                  | #number                  | PnP hardware ID of the root bridge. This value must match the corresponding _HID in the ACPI name space                                                 |
-|                      |                      |                         |                    +----------------------+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                      |                      |                         |                    | uid                  | #number                  | Unique ID that is required by ACPI if two devices have the same _HID. This value must also match the corresponding _UID/_HID pair in the ACPI name space|
 +----------------------+----------------------+-------------------------+--------------------+----------------------+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 https://github.com/tianocore/edk2/blob/master/MdeModulePkg/Include/Library/PciHostBridgeLib.h::
