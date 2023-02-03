@@ -71,7 +71,7 @@ Related Documents
 
 -  Device tree specification
 
-   https://buildmedia.readthedocs.org/pdf/devicetree-specification/latest/devicetree-specification.pdf
+   https://www.devicetree.org/specifications/
 
 
 .. _overview:
@@ -3225,7 +3225,7 @@ References and Links
 
 .. |Device Tree| raw:: html
 
-   <a href="https://buildmedia.readthedocs.org/pdf/devicetree-specification/latest/devicetree-specification.pdf" target="_blank">Device Tree</a>
+   <a href="https://www.devicetree.org/specifications/" target="_blank">Device Tree</a>
 
 .. |ACPI DBG2 document| raw:: html
 
