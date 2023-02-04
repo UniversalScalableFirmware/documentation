@@ -3,27 +3,7 @@
 Universal Payload
 ===================
 
-
-.. _introduction:
-
-Introduction
------------------
-
-THIS SPECIFICATION IS PROVIDED "AS IS" WITH NO WARRANTIES WHATSOEVER,
-INCLUDING ANY WARRANTY OF MERCHANTABILITY, NONINFRINGEMENT, FITNESS
-FOR ANY PARTICULAR PURPOSE, OR ANY WARRANTY OTHERWISE ARISING OUT OF
-ANY PROPOSAL, SPECIFICATION OR SAMPLE.
-
-This specification is an intermediate draft for comment only and is
-subject to change without notice. Readers should not design products
-based on this document.
-
-The **Universal Payload Project Team** provides the content on this site under a
-**Creative Commons Attribution 4.0 International license** (https://spdx.org/licenses/CC-BY-4.0.html),
-except where otherwise noted.
-
-Other names and brands may be claimed as the property of others.
-
+February 1, 2023
 
 .. _purpose:
 
