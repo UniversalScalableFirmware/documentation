@@ -1539,52 +1539,51 @@ Size of the event buffer
 
 Event buffer
 
-Trace Hub Information
+Trace Hub HOB Information
 %%%%%%%%%%%%%%%%%%%%
 
-This stores necessary information, debug print level and MMIO address, which consumed by Intel Trace Hub to dump Trace Hub log
-It allows multiple Trace Hub HOB instance to support different debug channel requirement.
+This structure stores necessary information which consumed by Trace Hub debug library to dump Trace Hub message.
+Multiple Trace Hub HOBs are allowed to do multiple debug output.
 
 **GUID**
 
 ::
 
-  gUniversalPayloadTraceHubDebugInfoGuid   = {0xf88c9c23, 0x646c, 0x4f6c, {0x8e, 0x3d, 0x36, 0xa9, 0x43, 0xc1, 0x08, 0x35}}
+  gTraceHubDebugInfoHobGuid = {0xf88c9c23, 0x646c, 0x4f6c, {0x8e, 0x3d, 0x36, 0xa9, 0x43, 0xc1, 0x08, 0x35}}
 
 **Structure**
 
 ::
 
-  #pragma pack(1)
-
   typedef struct {
-    UNIVERSAL_PAYLOAD_GENERIC_HEADER  Header;
-    RACEHUB_DEBUG_CONTEXT             DebugContext;
-  } UNIVERSAL_PAYLOAD_TRACEHUB_DEBUG_INFO;
-
-  typedef struct {
-    UINT8                             TraceVerbosity;
-    UINTN                             TraceAddress;
-  } TRACEHUB_DEBUG_CONTEXT;
-
-  #pragma pack()
+    UINT16     Revision;
+    BOOLEAN    Flag;
+    UINT8      DebugLevel;
+    UINT8      Rvsd[4];
+    UINT64     TraceHubMmioAddress;
+  } TRACEHUB_DEBUG_INFO_HOB;
 
 **Member Description**
 
-``Header``
+``Revision``
 
-Header.Revision is 1.
+Revision is 1.
 
-Header.Length is 9 (32 bit addressing).
-Header.Length is 13(64 bit addressing).
+``Flag``
 
-``DebugContext.TraceVerbosity``
+Flag to enable or disable Trace Hub debug message.
 
-Indicates the debug print level of coressponding Trace Hub channel.
+``DebugLevel``
 
-``DebugContext.TraceAddress``
+Debug level for Trace Hub.
 
-Indicates the MMIO address of coressponding Trace Hub channel.
+``Rvsd[4]``
+
+Reserved bytes for natural alignment.
+
+``TraceHubMmioAddress``
+
+MMIO address where Trace Hub debug message output to.
 
 Optional Interfaces
 ^^^^^^^^^^^^^^^^^^^^
