@@ -1520,7 +1520,7 @@ Size of the event buffer
 Event buffer
 
 Trace Hub HOB Information
-%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
 
 This structure stores necessary information which consumed by Trace Hub debug library to dump Trace Hub message.
 Multiple Trace Hub HOBs are allowed to do multiple debug output.
