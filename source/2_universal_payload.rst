@@ -3,27 +3,7 @@
 Universal Payload
 ===================
 
-
-.. _introduction:
-
-Introduction
------------------
-
-THIS SPECIFICATION IS PROVIDED "AS IS" WITH NO WARRANTIES WHATSOEVER,
-INCLUDING ANY WARRANTY OF MERCHANTABILITY, NONINFRINGEMENT, FITNESS
-FOR ANY PARTICULAR PURPOSE, OR ANY WARRANTY OTHERWISE ARISING OUT OF
-ANY PROPOSAL, SPECIFICATION OR SAMPLE.
-
-This specification is an intermediate draft for comment only and is
-subject to change without notice. Readers should not design products
-based on this document.
-
-The **Universal Payload Project Team** provides the content on this site under a
-**Creative Commons Attribution 4.0 International license** (https://spdx.org/licenses/CC-BY-4.0.html),
-except where otherwise noted.
-
-Other names and brands may be claimed as the property of others.
-
+February 1, 2023
 
 .. _purpose:
 
@@ -50,8 +30,9 @@ Related Documents
 
    http://www.uefi.org/specifications
 
--  Platform Initialization (PI) Specification v1.7
-   https://uefi.org/sites/default/files/resources/PI_Spec_1_7_final_Jan_2019.pdf
+-  Platform Initialization (PI) Specification
+
+   https://uefi.org/specifications
 
 -  Portable Executable (PE) and Common Object File Format (COFF)
 
@@ -65,19 +46,19 @@ Related Documents
 
    http://download.microsoft.com/download/9/4/5/945703CA-EF1F-496F-ADCF-3332CE5594FD/microsoft-debug-port-table-2-CP.docx
 
--  ACPI specification 6.3
+-  ACPI specification
 
-   https://uefi.org/sites/default/files/resources/ACPI_6_3_final_Jan30.pdf
+   https://uefi.org/specifications
 
--  Device tree specification
+-  Devicetree specification
 
    https://www.devicetree.org/specifications/
 
 
 .. _overview:
 
-Overview
-----------
+Universal Payload Overview
+--------------------------
 
    Most modern platforms rely on system firmware to initialize the
    hardware and launch an Operating System (OS). The system firmware is
@@ -169,7 +150,7 @@ Bootloaders
 
    **U-Boot**
 
-   U-Boot is an open-source, primary boot loader used in embedded
+   U-Boot is an open-source, primary bootloader used in embedded
    devices. U-Boot performs both first stage (hardware initialization)
    and second stage booting. U-boot is released under GNU's General
    Public License (GPL)
@@ -179,8 +160,8 @@ Bootloaders
 
 .. _payloads:
 
-Payloads
---------
+Payload Modules
+---------------
 
    After initializing the system hardware, bootloaders launch the
    payload modules. Payloads ideally are modular and platform
@@ -208,9 +189,8 @@ Payloads
    firmware functionality, and can also be launched as payloads by other
    bootloaders.
 
-   There are many payloads currently available, including the EDK II payload,
-   that provide UEFI services, Linux as a payload, u-boot payload and other
-   custom implementations.
+   There are many payloads currently available, including the EDKII UEFI payload,
+   Linux payload, u-boot payload and other custom payload implementations.
 
    **EDK II Payload**
 
@@ -292,7 +272,7 @@ Slim Bootloader (SBL) Payload Interface
    **Reference**:
    https://github.com/tianocore/edk2/blob/master/UefiPayloadPkg/Library/SblParseLib/SblParseLib.c
 
-   SBL supports 'loosely coupled payload' which basically refers to
+   SBL supports 'loosely coupled payload', which basically refers to
    payloads built independently (no source sharing). SBL builds a series
    of data structures called the Hand Off Blocks (HOBs) and provides a
    pointer to this HOB List to the payloads. These data structures
@@ -308,9 +288,9 @@ PEI to DXE Interface
 
    PEI must also provide a mechanism for components of DXE and the DXE
    Foundation to discover the state of the system when the DXE
-   Foundation is invoked. Certain aspects of the system state at handoff
-   are architectural, while other system state information may vary and
-   hence must be described to DXE components.
+   Foundation is invoked. Some aspects of the system state at handoff
+   are architectural; others may vary and those must be described to
+   DXE components.
 
    The DXE IPL PPI passes the Hand-Off Block (HOB) list from PEI to the
    DXE Foundation when it invokes the DXE Foundation. The handoff state
@@ -387,10 +367,10 @@ OS Boot protocols
 
    The Multiboot specification is an open standard describing how a boot
    loader can load an x86 operating system kernel. The specification
-   allows any compliant boot-loader implementation to boot any compliant
+   allows any compliant bootloader implementation to boot any compliant
    operating-system kernel. Thus, it allows different operating systems
-   and boot loaders to work together and interoperate, without the need
-   for operating system specific boot loaders.
+   and bootloaders to work together and interoperate, without the need
+   for operating system specific bootloaders.
 
    https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html
 
@@ -400,7 +380,7 @@ Data interface
 
    Modern computer buses and devices such as PCI, PCIe, USB, and SATA support
    software detection, enumeration and configuration, providing true
-   plug and play capabilities. However, there still exists some devices that are
+   plug and play capabilities. However, there still exist some devices that are
    not enumerable through software.
 
    Examples:
@@ -421,18 +401,17 @@ Data interface
    operating system.
 
    There are two data protocols that are used extensively for this
-   purpose: ACPI and Device Tree.
+   purpose: ACPI and devicetree.
 
    **ACPI**
 
    Advanced Configuration and Power Interface (**ACPI**) provides an
    open standard that operating systems can use to discover and
-   configure computer hardware components, to perform power management
-   by (for example) putting unused components to sleep, and to perform
-   status monitoring. In October 2013, ACPI Special Interest Group (ACPI
-   SIG), the original developers of the ACPI standard, agreed to
-   transfer all assets to the UEFI Forum, in which all future
-   development will take place.
+   configure computer hardware components and to perform power management
+   and status monitoring. In October 2013, ACPI Special Interest Group
+   (ACPI SIG), the original developers of the ACPI standard, agreed to
+   transfer all assets to the UEFI Forum, in which all future development
+   will take place.
 
    **SMBIOS**
 
@@ -443,7 +422,7 @@ Data interface
 
    https://www.dmtf.org/standards/smbios
 
-   **DEVICE TREE**
+   **Devicetree**
 
    The devicetree is a data structure for describing hardware. A
    devicetree is a tree data structure with nodes that describe the
@@ -461,7 +440,7 @@ Payload principle
      vie to be portable to different platform implementations (PI), such
      as coreboot, Slim bootloader, or an EDKII style firmware.
    | The payload should elide strong dependencies on the payload
-     launching code (e.g., coreboot versus EDKII versus slim bootloader) and
+     launching code (e.g., coreboot versus EDKII versus Slim Bootloader) and
      also avoid board-specific dependencies. The payload behavior should
      be parameterized by the data input block.
 
@@ -485,8 +464,8 @@ Payload principle
    | If there is an existing standard it will be used (e.g., ACPI table
      that is simple to parse).
 
-Security
---------
+Payload Security
+----------------
 
 Payload is part of system firmware TCB
 
@@ -524,7 +503,7 @@ facilitate the payload loading process. Instead of defining a new
 image format for payloads, it is preferred to reuse an already-existing
 format, such as ELF (Executable and Linkable Format) and PE (Portable
 Executable). This specification selects the ELF image format as the
-common universal payload image format since it is is flexible, extensible,
+common universal payload image format, since it is flexible, extensible,
 and cross-platform. It is also adopted by many different operating systems
 on many different hardware platforms.
 
@@ -539,9 +518,9 @@ To use ELF image as universal payload image format, it is required to define
 a simple way for bootloader to differentiate a universal payload image from
 a regular ELF image. On the other side, a universal payload might also need
 additional image information to proceed with the boot flow. This specification
-requires the universal payload image to provide these addtional required
+requires the universal payload image to provide these additional required
 information through new defined ELF sections, *Universal Payload Information
-Section* and *Universal Payload Loaded Image Section*.
+Section*, and *Universal Payload Loaded Image Section*.
 
 
 Universal Payload Information Section
@@ -567,9 +546,9 @@ This Universal Payload Information section must:
 **UNIVERSAL_PAYLOAD_INFO Structure**
 
 +-----------------+-----------------+-----------------+-----------------+
-| **              | Size in Bytes   | Field           | Description     |
-| **              |                 |                 |                 |
-| Byte Offset     |                 |                 |                 |
+|  Byte Offset    | Size in Bytes   | Field           | Description     |
+|                 |                 |                 |                 |
+|                 |                 |                 |                 |
 +=================+=================+=================+=================+
 | 0               | 4               | Identifier      | 'PLDH'          |
 |                 |                 |                 | Identifier for  |
@@ -595,7 +574,7 @@ This Universal Payload Information section must:
 |                 |                 |                 | Version         |
 |                 |                 |                 |                 |
 |                 |                 |                 | For revision    |
-|                 |                 |                 | v0.90 the value |
+|                 |                 |                 | v0.90, the value|
 |                 |                 |                 | will be 0x0090. |
 +-----------------+-----------------+-----------------+-----------------+
 | 10              | 2               | Reserved        | Reserved for    |
@@ -670,17 +649,16 @@ Universal Payload Loaded Image Section
 There are many cases that a payload might need extra images to proceed the
 boot flow. For example, UEFI payload might need additional FV images, Linux
 payload might need additional InitRd image, u-boot might need additional
-device tree blob, etc. In these cases, it is desired to pass this additional
+devicetree blob, etc. In these cases, it is desired to pass this additional
 image information from bootloader to payload so that payload can consume these
 images later.
 
 This specification defines optional universal payload extra image sections. 
-If exist, they holds extra image information to be passed into the universal
+If they exist, they hold extra image information to be passed into the universal
 payload. Please note, multiple extra image sections might exist in single
 universal payload ELF image.
 
-If an universal payload extra image section needs to be provided, it
-must:
+If a universal payload extra image section needs to be provided, it must:
 
 -  Have unique section name defined as ".upld.*". The full section name string
    length needs to be less than 16. Here, ‘*’ can be any ASCII string.
@@ -747,10 +725,10 @@ State of silicon
 Instruction execution environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-   Regardless of the environment where the bootloader runs, the
-   processor is in 32bit protected mode when a 32bit payload starts, or
-   in 64bit long-mode when a 64bit payload starts. The payload header
-   contains the machine type information that the payload supports.
+   Regardless of the environment where the bootloader runs, the processor
+   is in 32-bit protected mode when a 32-bit payload starts, or in 64-bit
+   long-mode when a 64-bit payload starts. The payload header contains
+   the machine type information that the payload supports.
 
    The following sections provide a detailed description of the
    execution environment when the payload starts.
@@ -758,9 +736,9 @@ Instruction execution environment
 Registers
 %%%%%%%%%%%
 
--  ESP + 4 points to the address of the HOB list for the 32bit payload.
+-  ESP + 4 points to the address of the HOB list for the 32-bit payload.
 
--  RCX holds the address of the HOB list for the 64bit payload.
+-  RCX holds the address of the HOB list for the 64-bit payload.
 
 -  Direction flag in EFLAGs is clear so the string instructions process
    from low addresses to high addresses.
@@ -781,7 +759,7 @@ Registers
 Interrupt
 %%%%%%%%%%%
 
-   Interrupt is disabled. The hardware is initialized by the boot loader
+   Interrupt is disabled. The hardware is initialized by the bootloader
    such that no interrupt triggers even when the payload sets the
    Interrupt Enable flag in EFLAGs.
 
@@ -790,10 +768,10 @@ Page table
 
    Selectors are set to be flat.
 
-   Paging mode may be enabled for the 32bit payload. (have general term
+   Paging mode may be enabled for the 32-bit payload. (have general term
    on how it could be enabled if enabling page mode).
 
-   Paging mode is enabled for the 64bit payload.
+   Paging mode is enabled for the 64-bit payload.
 
    When paging is enabled, all memory space is identity mapped (virtual
    address equals physical address). The four-level page table is set
@@ -838,10 +816,10 @@ Payload Interfaces
 --------------------
 
 The bootloader provides platform information to payload through
-standard ACPI table, SMBIOS table, Device tree and a series of data
+standard ACPI table, SMBIOS table, Devicetree and a series of data
 structures called the Hand Off Blocks (HOBs). If the information is
-already defined in ACPI specification, SMBIOS specification or device
-tree, the payload could parse them to get the required information.
+already defined in the ACPI specification, SMBIOS specification or
+devicetree, the payload could parse them to get the required information.
 For the platform information that is not defined in the standard
 tables, the bootloader should build a HOB list to pass it to the
 payload.
@@ -861,11 +839,13 @@ Open: will payload be run in S3 path?
 .. _acpi_tables:
 
 ACPI tables
-~~~~~~~~~~~~~
+~~~~~~~~~~~
 
-ACPI table is required to boot modern operation system, especially to boot windows operating system.
-The bootloader should provide a ACPI RSDP HOB. In the ACPI table least RSDT, FADT and MCFG should be available to the payload.
-Payload could remove/add/modify the ACPI table passed from the bootloader if required.
+ACPI table is required to boot modern operation system, especially
+to boot windows operating system. The bootloader should provide an
+ACPI RSDP HOB. In the ACPI table least RSDT, FADT and MCFG should
+be available to the payload.Payload could remove/add/modify the
+ACPI table passed from the bootloader if required.
 
 The payload could parse the ACPI table to get some basic platform
 information. For example, the Fixed ACPI Description Table (FADT)
@@ -876,7 +856,7 @@ PM1b_EVT_BLK, PM1b_CNT_BLK, PM2_CNT_BLK, and GPE1_BLK. The payload
 could use them and other values (e.g. RESET_REG, RESET_VALUE) to make
 the payload platform independent.
 
-The other example is to get PCIE base address from ACPI memory mapped
+The other example is to get the PCIE base address from ACPI memory mapped
 configuration space access table definition, defined in the PCI
 Firmware Specification.
 `http://www.pcisig.com <http://www.pcisig.com/>`.
@@ -978,7 +958,7 @@ through EFI_PEI_GRAPHICS_DEVICE_INFO_HOB.
 EFI_PEI_GRAPHICS_INFO_HOB and EFI_PEI_GRAPHICS_DEVICE_INFO_HOB provide the basic information
 for the graphics display. These HOBs are described in the *PI Specification.*
 
-Please refer Appendix 6.6 EFI_PEI_GRAPHICS_INFO_HOB and 6.7 EFI_PEI_GRAPHICS_DEVICE_INFO_HOB for the details.
+Please refer to Appendix 6.6 EFI_PEI_GRAPHICS_INFO_HOB and 6.7 EFI_PEI_GRAPHICS_DEVICE_INFO_HOB for the details.
 
 New Interfaces
 ^^^^^^^^^^^^^^^
@@ -1056,7 +1036,7 @@ Header.Length is 12.
 
 ``Rsdp``
 
-Point to the ACPI RSDP table. The ACPI table need follow ACPI specification version 2.0 or above.
+Points to the ACPI RSDP table. The ACPI table need to follow ACPI specification version 2.0 or above.
 
 SMBIOS Table
 %%%%%%%%%%%%%%
@@ -1098,10 +1078,10 @@ Points to the SMBIOS table in SMBIOS 3.0+ format if GUID is ``gUniversalPayloadS
 
 Points to the SMBIOS table in SMBIOS 2.x format if GUID is ``gUniversalPayloadSmbiosTableGuid``.
 
-DEVICE TREE
+Devicetree
 %%%%%%%%%%%%%
 
-The bootloader might pass Device Tree to the payload. So that the payload could get the platform information from the table.
+The bootloader might pass devicetree to the payload. So that the payload could get the platform information from the table.
 
 **GUID**
 
@@ -1132,7 +1112,7 @@ Header.Length is 12.
 
 ``DeviceTreeAddress``
 
-Point to the Device Tree entry point.
+Points to the devicetree entry point.
 
 Serial Information
 %%%%%%%%%%%%%%%%%%%%
@@ -1389,12 +1369,12 @@ Supported values 0/1 to indicate the measured boot status.
 
 ``FirmwareDebuggerInitialized``
 
-Indicates platform is Sample part or manufacturing mode or debug mode. Extend the PCR[7] if its true.
+Indicates platform is Sample part or manufacturing mode or debug mode. Extend the PCR[7] if value is true.
 Supported values 0/1 to indicate the debug state of platform.
 
 ``TpmType``
 
-Indicates TPM Type enumerated . It can TPM 1.2, TPM 2.0 or no tpm
+Indicates that the TPM Type is enumerated. This can be TPM 1.2, TPM 2.0, or no TPM.
 
 NO_TPM               0x0
 
@@ -1406,21 +1386,21 @@ TPM_TYPE_20          0x2
 
 Indicates the TPM PCR active banks.
 
-BIT0  -  SHA1
+BIT0  -  SHA-1
 
-BIT1  -  SHA256
+BIT1  -  SHA-256
 
-BIT2  -  SHA384
+BIT2  -  SHA-384
 
-BIT3  -  SHA512
+BIT3  -  SHA-512
 
-BIT4  -  SM3_256
+BIT4  -  SM3-256
 
 TPM 2.0 Event Information
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
 This provides the information about the TPM 2.0 events extended by bootloader. Bootloader has to create separate hobs for each TPM event.
-It is a TCG spec defined EFI_TCG2_PROTOCOL HOB for the event log.
+This is a TCG spec defined EFI_TCG2_PROTOCOL HOB for the event log.
 
 Bootloader should follow the same order to create event HOBs in the order events are extended to TPM. Mismatch in order will lead a failure
 in TPM PCR replay.
@@ -1479,7 +1459,7 @@ TPM 1.2 Event Information
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
 This provides the information about the TPM 1.2 events extended by bootloader. Bootloader has to create separate hobs for each TPM event.
-It is a TCG spec defined EFI_TCG2_PROTOCOL HOB for the event log.
+This is a TCG spec defined EFI_TCG2_PROTOCOL HOB for the event log.
 
 Bootloader should follow the same order to create event HOBs in the order events are extended to TPM. Mismatch in order will lead a failure
 in TPM PCR replay.
@@ -1540,7 +1520,7 @@ Size of the event buffer
 Event buffer
 
 Trace Hub HOB Information
-%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
 
 This structure stores necessary information which consumed by Trace Hub debug library to dump Trace Hub message.
 Multiple Trace Hub HOBs are allowed to do multiple debug output.
@@ -2227,7 +2207,7 @@ https://github.com/tianocore/edk2/blob/master/MdePkg/Include/Pi/PiHob.h::
 Future Interface
 ----------------------
 
-Currently, we are using HobList as Universal Payload Interface. However, Hoblist has some limitations as below:
+Currently, we are using HOB list as the Universal Payload Interface. However, HOB list has some limitations as below:
 
 1)	Hob is an implementation of Edk2, and defined in PI spec. This may be not friendly to non-Edk2 developers.
 
@@ -2242,18 +2222,18 @@ In the future, we plan to use another data format CBOR or FDT to replace Hob.
 CBOR encoded data
 ~~~~~~~~~~~~~~~~~~~
 
-The bootloader should build a CBOR encoded data and pass the CBOR encoded data header
-to payload when passing control to payload.
-Concise Binary Object Representation (CBOR) is a binary data serialization Json-like
+The bootloader should build Concise Binary Object Representation (CBOR) encoded data
+and pass the CBOR encoded data header to payload when passing control to payload.
+CBOR is a binary data serialization Json-like
 format defined in the https://www.rfc-editor.org/rfc/rfc8949.html
 
 To be self-describing, the CBOR encoded data itself is a CBOR map type containing
 <Key, Value> pairs. The map is called CBOR root map in this document.
-Some of the values called basic type is directly stored into the root map, and the
+Some of the values called basic type are directly stored into the root map, and the
 key and value type are stored in key and type column of the below table.
-Some of the values called special type need to be stores in a submap of an array,
+Some of the values called special type need to be stored in a submap of an array,
 because there may be multiple instances of the values. For these kinds of value,
-The key for array is stores in the key column, and the key and type for the value
+The key for array is stored in the key column, and the key and type for the value
 are stored in in Submap key and type column. For example, the value in root map
 with key “UplExtraData” is a CBOR format array, and the array contains one or more elements.
 Each element is a CBOR format map, and contains some <Key, value> pairs, and the Key can
@@ -2436,7 +2416,7 @@ Points to the SMBIOS table
 
 ``AcpiTableRsdp``
 
-Point to the ACPI RSDP table. The ACPI table need follow ACPI specification version 2.0 or above.
+Points to the ACPI RSDP table. The ACPI table need to follow ACPI specification version 2.0 or above.
 
 ``GraphicsFrameBufferBase`` and ``GraphicsFrameBufferSize``
 
@@ -2488,7 +2468,7 @@ can be seen from below sample code
 A bit being set defines what bits are used for what purpose such as Red, Green, Blue, or Reserved.
 
 
-``GraphicsVendorId``, ``GraphicsDeviceId``, ``GraphicsSubsystemVendorId``, ``GraphicsSubsystemId``, ``GraphicsRevisionId`` and ``GraphicsBarIndex``
+``GraphicsVendorId``, ``GraphicsDeviceId``, ``GraphicsSubsystemVendorId``, ``GraphicsSubsystemId``, ``GraphicsRevisionId``, and ``GraphicsBarIndex``
 
 Define the Graphics device hardware information.
 
@@ -2532,15 +2512,15 @@ Contains one or more root bridge information. For each root bridge, it contains 
   | Allocation attributes. Refer to EFI_PCI_HOST_BRIDGE_COMBINE_MEM_PMEM and EFI_PCI_HOST_BRIDGE_MEM64_DECODE used by GetAllocAttributes()
   | in EFI_PCI_HOST_BRIDGE_RESOURCE_ALLOCATION_PROTOCOL defined in PI Specification.
   |
-  | ``BusBase``, ``BusLimit`` and ``BusTranslation``
+  | ``BusBase``, ``BusLimit``, and ``BusTranslation``
   |
   | Bus aperture for the root bridge.
   |
-  | ``IoBase``, ``IoLimit`` and ``IoTranslation``
+  | ``IoBase``, ``IoLimit``, and ``IoTranslation``
   |
   | IO aperture for the root bridge.
   |
-  | ``MemBase``, ``IoLimit`` and ``IoTranslation``
+  | ``MemBase``, ``IoLimit``, and ``IoTranslation``
   |
   | MMIO aperture below 4GB for the root bridge.
   |
@@ -2985,29 +2965,29 @@ minimum intensity of all bits in a color mask clear to a maximum intensity of al
 
 Defines the number of pixel elements per video memory line.
 
-+----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
-| Node                 | Property             | Value                   | Definition                                                                                      |
-+======================+======================+=========================+=================================================================================================+
-| cpu-info             | memoryspace          | #number                 | Identifies the maximum physical memory addressability of the processor                          |
-+----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
++----------------------+----------------------+-------------------------+--------------------------------------------------------------------------------------------------+
+| Node                 | Property             | Value                   | Definition                                                                                       |
++======================+======================+=========================+==================================================================================================+
+| cpu-info             | memoryspace          | #number                 | Identifies the maximum physical memory addressability of the processor                           |
++----------------------+----------------------+-------------------------+--------------------------------------------------------------------------------------------------+
 
-+----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
-| Node                 | Property             | Value                   | Definition                                                                                      |
-+======================+======================+=========================+=================================================================================================+
-| acpi                 | rsdp                 | <base address>          | Point to the ACPI RSDP table. The ACPI table need follow ACPI specification version 2.0 or above|
-+----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
++----------------------+----------------------+-------------------------+--------------------------------------------------------------------------------------------------+
+| Node                 | Property             | Value                   | Definition                                                                                       |
++======================+======================+=========================+==================================================================================================+
+| acpi                 | rsdp                 | <base address>          | Points to ACPI RSDP table. The ACPI table need to follow ACPI specification version 2.0 or above |
++----------------------+----------------------+-------------------------+--------------------------------------------------------------------------------------------------+
 
-+----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
-| Node                 | Property             | Value                   | Definition                                                                                      |
-+======================+======================+=========================+=================================================================================================+
-| smbios               | entry                | <base address>          | Point to smbios structure UNIVERSAL_PAYLOAD_SMBIOS_TABLE                                        |
-+----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
++----------------------+----------------------+-------------------------+--------------------------------------------------------------------------------------------------+
+| Node                 | Property             | Value                   | Definition                                                                                       |
++======================+======================+=========================+==================================================================================================+
+| smbios               | entry                | <base address>          | Points to smbios structure UNIVERSAL_PAYLOAD_SMBIOS_TABLE                                        |
++----------------------+----------------------+-------------------------+--------------------------------------------------------------------------------------------------+
 
-+----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
-| Node                 | Property             | Value                   | Definition                                                                                      |
-+======================+======================+=========================+=================================================================================================+
-| PayloadBase          | entry                | <base address>          | Point to the base of uncompressed ELF image                                                     |
-+----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
++----------------------+----------------------+-------------------------+--------------------------------------------------------------------------------------------------+
+| Node                 | Property             | Value                   | Definition                                                                                       |
++======================+======================+=========================+==================================================================================================+
+| PayloadBase          | entry                | <base address>          | Points to the base of uncompressed ELF image                                                     |
++----------------------+----------------------+-------------------------+--------------------------------------------------------------------------------------------------+
 
 ``entry``
 
@@ -3032,17 +3012,17 @@ The below tables show what nodes may be passed from bootloader and its correspon
 |                      | bar-index            | #number                 |                                                                              |
 +----------------------+----------------------+-------------------------+------------------------------------------------------------------------------+
 
-+----------------------+----------------------+-------------------------+--------------------+----------------------+--------------------------+------------------------------------------------------------------------------------+
-| Node                 | Property             | Value                   | SubNode            | Property             | Value                    | Definition                                                                         |
-+======================+======================+=========================+====================+======================+==========================+====================================================================================+
-| extra-data           | count                | #number                 | entry@#number      | #address-cells       | 2                        | Contains one or more extra binaries. Each binary has its Identifier, Base and Size |
-+----------------------+----------------------+-------------------------+--------------------+----------------------+--------------------------+                                                                                    |
-|                      |                      |                         |                    | #size-cells          | 2                        |                                                                                    |
-|                      |                      |                         +--------------------+----------------------+--------------------------+                                                                                    |
-|                      |                      |                         |                    | id                   | <string>                 |                                                                                    |
-|                      |                      |                         +--------------------+----------------------+--------------------------+                                                                                    |
-|                      |                      |                         |                    | reg                  | <base address, size>     |                                                                                    |
-+----------------------+----------------------+-------------------------+--------------------+----------------------+--------------------------+------------------------------------------------------------------------------------+
++----------------------+----------------------+-------------------------+--------------------+----------------------+--------------------------+------------------------------------------------+
+| Node                 | Property             | Value                   | SubNode            | Property             | Value                    | Definition                                     |
++======================+======================+=========================+====================+======================+==========================+================================================+
+| extra-data           | count                | #number                 | entry@#number      | #address-cells       | 2                        | Contains one or more extra binaries.           |
++----------------------+----------------------+-------------------------+--------------------+----------------------+--------------------------+ Each binary has its Identifier, Base, and Size |
+|                      |                      |                         |                    | #size-cells          | 2                        |                                                |
+|                      |                      |                         +--------------------+----------------------+--------------------------+                                                |
+|                      |                      |                         |                    | id                   | <string>                 |                                                |
+|                      |                      |                         +--------------------+----------------------+--------------------------+                                                |
+|                      |                      |                         |                    | reg                  | <base address, size>     |                                                |
++----------------------+----------------------+-------------------------+--------------------+----------------------+--------------------------+------------------------------------------------+
 
 +----------------------+----------------------+-------------------------+-------------------------------------------------------------------------------------------------+
 | Node                 | Property             | Value                   | Definition                                                                                      |
@@ -3175,7 +3155,7 @@ https://github.com/tianocore/edk2/blob/master/MdeModulePkg/Include/Library/PciHo
 Hand-off state
 ~~~~~~~~~~~~~~~~~~~
 
-The bootloader builds the CBOR encoded data containing platform specific information
+The bootloader builds the CBOR encoded data containing platform specific information,
 and passes the address of the the CBOR encoded data to the payload.
 
 The prototype of payload entry point is defined as::
@@ -3189,7 +3169,7 @@ The prototype of payload entry point is defined as::
 The compiler need use a proper attributes for this function to meet the calling convention below.
 For example, Microsoft Visual studio uses __cdecl for X64, while Linux GCC uses __attribute__((ms_abi)) for X64.
 
-CobrEncodedData is a pointer pointing to a CBOR encoded data which is a CBOR map containing information from above section.
+CobrEncodedData is a pointer to CBOR encoded data (see previous section).
 
 References and Links
 ----------------------
@@ -3202,7 +3182,7 @@ References and Links
 
 * |Multiboot Specification|
 
-* |Device Tree|
+* |Devicetree|
 
 * |ACPI DBG2 document|
 
@@ -3222,9 +3202,9 @@ References and Links
 
    <a href="https://www.gnu.org/software/grub/manual/multiboot/multiboot.html" target="_blank">Multiboot Specification</a>
 
-.. |Device Tree| raw:: html
+.. |Devicetree| raw:: html
 
-   <a href="https://www.devicetree.org/specifications/" target="_blank">Device Tree</a>
+   <a href="https://buildmedia.readthedocs.org/pdf/devicetree-specification/latest/devicetree-specification.pdf" target="_blank">Devicetree</a>
 
 .. |ACPI DBG2 document| raw:: html
 
