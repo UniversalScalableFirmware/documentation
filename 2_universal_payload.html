@@ -1,37 +1,253 @@
+
+
 <!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>2. Universal Payload &mdash; Universal Scalable Firmware (USF)  documentation</title>
+  
 
-    <title>2. Universal Payload &#8212; Universal Scalable Firmware (USF)  documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
-    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="3. Platform Orchestration Layer (POL)" href="3_platform_orchestration_layer.html" />
-    <link rel="prev" title="1. Universal Scalable Firmware (USF) Specification" href="1_terminology.html" />
+    <link rel="prev" title="1. Universal Scalable Firmware (USF) Specification" href="1_terminology.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
    
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
           
 
-          <div class="body" role="main">
+          
+            <a href="index.html" class="icon icon-home"> Universal Scalable Firmware (USF)
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="revision_history.html">Revision History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="disclaimers.html">Notices and Disclaimers</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1_terminology.html">1. Universal Scalable Firmware (USF) Specification</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. Universal Payload</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#purpose">2.1. Purpose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#intended-audience">2.2. Intended Audience</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#related-documents">2.3. Related Documents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#universal-payload-overview">2.4. Universal Payload Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bootloaders">2.5. Bootloaders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#payload-modules">2.6. Payload Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bootloader-interfaces">2.7. Bootloader Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#coreboot-payload-interface">2.7.1. Coreboot Payload Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slim-bootloader-sbl-payload-interface">2.7.2. Slim Bootloader (SBL) Payload Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pei-to-dxe-interface">2.7.3. PEI to DXE Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#os-interfaces">2.8. OS interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#os-boot-protocols">2.8.1. OS Boot protocols</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-interface">2.8.2. Data interface</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#payload-principle">2.9. Payload principle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#payload-security">2.10. Payload Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#payload-image-format">2.11. Payload Image Format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#payload-image-sections">2.11.1. Payload Image Sections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#universal-payload-information-section">2.11.2. Universal Payload Information Section</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#universal-payload-loaded-image-section">2.11.3. Universal Payload Loaded Image Section</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#hand-off-state">2.12. Hand-off state</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ia-32-and-x64-platforms">2.12.1. IA-32 and x64 Platforms</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#state-of-silicon">2.12.1.1. State of silicon</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#instruction-execution-environment">2.12.1.2. Instruction execution environment</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#arm-platforms">2.12.2. ARM Platforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#risc-v-platforms">2.12.3. RISC-V Platforms</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#payload-interfaces">2.13. Payload Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#acpi-tables">2.13.1. ACPI tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hob-list">2.13.2. HOB List</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#reusing-interfaces-in-platform-initialization-specification">2.13.2.1. Reusing Interfaces in Platform Initialization Specification</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#new-interfaces">2.13.2.2. New Interfaces</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#optional-interfaces">2.13.2.3. Optional Interfaces</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#hob-data-structures">2.14. HOB Data Structures</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#base-data-type">2.14.1. Base Data Type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hob-type">2.14.2. EFI HOB TYPE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hob-generic-header">2.14.3. EFI_HOB_GENERIC_HEADER</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hob-list-header">2.14.4. HOB List Header</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#efi-hob-handoff-info-table">2.14.4.1. EFI_HOB_HANDOFF_INFO_TABLE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-hob-handoff-table-version">2.14.4.2. EFI_HOB_HANDOFF_TABLE_VERSION</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-boot-mode">2.14.4.3. EFI_BOOT_MODE</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hob-guid-type">2.14.5. EFI_HOB_GUID_TYPE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-pei-graphics-info-hob">2.14.6. EFI_PEI_GRAPHICS_INFO_HOB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-pei-graphics-device-info-hob">2.14.7. EFI_PEI_GRAPHICS_DEVICE_INFO_HOB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hob-resource-descriptor">2.14.8. EFI_HOB_RESOURCE_DESCRIPTOR</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#efi-resource-type">2.14.8.1. EFI_RESOURCE_TYPE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-resource-attribute-type">2.14.8.2. EFI_RESOURCE_ATTRIBUTE_TYPE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-hob-resource-descriptor-1">2.14.8.3. EFI_HOB_RESOURCE_DESCRIPTOR</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hob-memory-allocation">2.14.9. EFI_HOB_MEMORY_ALLOCATION</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#efi-memory-type">2.14.9.1. EFI_MEMORY_TYPE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-hob-memory-allocation-header">2.14.9.2. EFI_HOB_MEMORY_ALLOCATION_HEADER</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">2.14.9.3. EFI_HOB_MEMORY_ALLOCATION</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#future-interface">2.15. Future Interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cbor-encoded-data">2.15.1. CBOR encoded data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fdt-data-structure">2.15.2. FDT data structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">2.15.3. Hand-off state</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#references-and-links">2.16. References and Links</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="3_platform_orchestration_layer.html">3. Platform Orchestration Layer (POL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_runtime.html">4. Runtime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_security.html">5. Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_debug.html">6. Debug</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7_yaml_boot_configuration.html">7. YAML Format Boot Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8_scalable_fsp.html">8. Scalable FSP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9_bootloader_payloads.html">9. Bootloader Payloads</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Universal Scalable Firmware (USF)</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li><span class="section-number">2. </span>Universal Payload</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <section id="universal-payload">
 <span id="id1"></span><h1><span class="section-number">2. </span>Universal Payload<a class="headerlink" href="#universal-payload" title="Permalink to this heading">¶</a></h1>
@@ -3302,137 +3518,54 @@ For example, Microsoft Visual studio uses __cdecl for X64, while Linux GCC uses 
 </section>
 
 
+           </div>
+           
           </div>
-          
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="3_platform_orchestration_layer.html" class="btn btn-neutral float-right" title="3. Platform Orchestration Layer (POL)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="1_terminology.html" class="btn btn-neutral float-left" title="1. Universal Scalable Firmware (USF) Specification" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license.
+      <span class="lastupdated">
+        Last updated on Jun 01, 2023.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">Universal Scalable Firmware (USF)</a></h1>
 
+    </section>
 
+  </div>
+  
 
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
 
-
-
-
-
-<h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="revision_history.html">Revision History</a></li>
-<li class="toctree-l1"><a class="reference internal" href="disclaimers.html">Notices and Disclaimers</a></li>
-</ul>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="1_terminology.html">1. Universal Scalable Firmware (USF) Specification</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">2. Universal Payload</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#purpose">2.1. Purpose</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#intended-audience">2.2. Intended Audience</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#related-documents">2.3. Related Documents</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#universal-payload-overview">2.4. Universal Payload Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#bootloaders">2.5. Bootloaders</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#payload-modules">2.6. Payload Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#bootloader-interfaces">2.7. Bootloader Interfaces</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#coreboot-payload-interface">2.7.1. Coreboot Payload Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#slim-bootloader-sbl-payload-interface">2.7.2. Slim Bootloader (SBL) Payload Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#pei-to-dxe-interface">2.7.3. PEI to DXE Interface</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#os-interfaces">2.8. OS interfaces</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#os-boot-protocols">2.8.1. OS Boot protocols</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#data-interface">2.8.2. Data interface</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#payload-principle">2.9. Payload principle</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#payload-security">2.10. Payload Security</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#payload-image-format">2.11. Payload Image Format</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#payload-image-sections">2.11.1. Payload Image Sections</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#universal-payload-information-section">2.11.2. Universal Payload Information Section</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#universal-payload-loaded-image-section">2.11.3. Universal Payload Loaded Image Section</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#hand-off-state">2.12. Hand-off state</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#ia-32-and-x64-platforms">2.12.1. IA-32 and x64 Platforms</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#arm-platforms">2.12.2. ARM Platforms</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#risc-v-platforms">2.12.3. RISC-V Platforms</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#payload-interfaces">2.13. Payload Interfaces</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#acpi-tables">2.13.1. ACPI tables</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#hob-list">2.13.2. HOB List</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#hob-data-structures">2.14. HOB Data Structures</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#base-data-type">2.14.1. Base Data Type</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#efi-hob-type">2.14.2. EFI HOB TYPE</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#efi-hob-generic-header">2.14.3. EFI_HOB_GENERIC_HEADER</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#hob-list-header">2.14.4. HOB List Header</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#efi-hob-guid-type">2.14.5. EFI_HOB_GUID_TYPE</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#efi-pei-graphics-info-hob">2.14.6. EFI_PEI_GRAPHICS_INFO_HOB</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#efi-pei-graphics-device-info-hob">2.14.7. EFI_PEI_GRAPHICS_DEVICE_INFO_HOB</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#efi-hob-resource-descriptor">2.14.8. EFI_HOB_RESOURCE_DESCRIPTOR</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#efi-hob-memory-allocation">2.14.9. EFI_HOB_MEMORY_ALLOCATION</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#future-interface">2.15. Future Interface</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#cbor-encoded-data">2.15.1. CBOR encoded data</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#fdt-data-structure">2.15.2. FDT data structure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id11">2.15.3. Hand-off state</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#references-and-links">2.16. References and Links</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="3_platform_orchestration_layer.html">3. Platform Orchestration Layer (POL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4_runtime.html">4. Runtime</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5_security.html">5. Security</a></li>
-<li class="toctree-l1"><a class="reference internal" href="6_debug.html">6. Debug</a></li>
-<li class="toctree-l1"><a class="reference internal" href="7_yaml_boot_configuration.html">7. YAML Format Boot Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="8_scalable_fsp.html">8. Scalable FSP</a></li>
-<li class="toctree-l1"><a class="reference internal" href="9_bootloader_payloads.html">9. Bootloader Payloads</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="1_terminology.html" title="previous chapter"><span class="section-number">1. </span>Universal Scalable Firmware (USF) Specification</a></li>
-      <li>Next: <a href="3_platform_orchestration_layer.html" title="next chapter"><span class="section-number">3. </span>Platform Orchestration Layer (POL)</a></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>document.getElementById('searchbox').style.display = "block"</script>
-
-
-
-
-
-
-
-
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;Content on this site is licensed under a Creative Commons Attribution 4.0 International license.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
-      
-    </div>
-
+  
+  
     
+   
 
-    
-  </body>
+</body>
 </html>
