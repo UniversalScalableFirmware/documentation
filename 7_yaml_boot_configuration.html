@@ -1,139 +1,58 @@
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>7. YAML Format Boot Configuration &mdash; Universal Scalable Firmware (USF)  documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-    <script src="_static/js/theme.js"></script>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>7. YAML Format Boot Configuration &#8212; Universal Scalable Firmware (USF)  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="8. Scalable FSP" href="8_scalable_fsp.html" />
-    <link rel="prev" title="6. Debug" href="6_debug.html" /> 
-</head>
+    <link rel="prev" title="6. Debug" href="6_debug.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> Universal Scalable Firmware (USF)
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="revision_history.html">Revision History</a></li>
-<li class="toctree-l1"><a class="reference internal" href="disclaimers.html">Notices and Disclaimers</a></li>
-</ul>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="1_terminology.html">1. Universal Scalable Firmware (USF) Specification</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html">2. Universal Payload</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3_platform_orchestration_layer.html">3. Platform Orchestration Layer (POL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4_runtime.html">4. Runtime</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5_security.html">5. Security</a></li>
-<li class="toctree-l1"><a class="reference internal" href="6_debug.html">6. Debug</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">7. YAML Format Boot Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#introduction">7.1. Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#target-audience">7.2. Target Audience</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#configuration-description-yaml-explained">7.3. Configuration Description (YAML) Explained</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#file-layout">7.4. File Layout</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#meta-data-markers">7.4.1. Meta-Data Markers</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#action">7.4.1.1. $ACTION</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#page">7.4.1.2. PAGE</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#struct">7.4.1.3. $STRUCT</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#yaml-tags">7.4.2. YAML Tags</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#include">7.4.2.1. !INCLUDE</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#expand">7.4.2.2. !EXPAND</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#variable">7.5. Variable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#template">7.6. Template</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#configs">7.7. Configs</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#configuration-option-nodes">7.7.1. Configuration Option Nodes</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#name">7.7.1.1. NAME</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#type">7.7.1.2. TYPE</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#option">7.7.1.3. OPTION</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#help">7.7.1.4. HELP</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#condition">7.7.1.5. CONDITION</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#order">7.7.1.6. ORDER</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#length">7.7.1.7. LENGTH</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#value">7.7.1.8. VALUE</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#delta-dlt-file-explained">7.8. Delta (DLT) File Explained</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dlt-file-rules">7.9. DLT file rules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#configuration-process">7.10. Configuration Process</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="8_scalable_fsp.html">8. Scalable FSP</a></li>
-<li class="toctree-l1"><a class="reference internal" href="9_bootloader_payloads.html">9. Bootloader Payloads</a></li>
-</ul>
+  </head><body>
+  
 
-        </div>
-      </div>
-    </nav>
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Universal Scalable Firmware (USF)</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a></li>
-      <li class="breadcrumb-item active">7. YAML Format Boot Configuration</li>
-      <li class="wy-breadcrumbs-aside">
-      </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <div class="section" id="yaml-format-boot-configuration">
-<span id="id1"></span><h1>7. YAML Format Boot Configuration<a class="headerlink" href="#yaml-format-boot-configuration" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="introduction">
-<span id="introduction-2"></span><h2>7.1. Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+          <div class="body" role="main">
+            
+  <section id="yaml-format-boot-configuration">
+<span id="id1"></span><h1><span class="section-number">7. </span>YAML Format Boot Configuration<a class="headerlink" href="#yaml-format-boot-configuration" title="Permalink to this heading">¶</a></h1>
+<section id="introduction">
+<span id="introduction-2"></span><h2><span class="section-number">7.1. </span>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>This document describes the format of the YAML based boot setting file
 used to specify features, settings, and tool display information to the
 Intel Firmware Support Package (FSP) and tools like Config Editor. It
 further describes the structure and content of YAML format files, which
 can simplify the configuration of a static binary and during dynamic
 boot process.</p>
-</div>
-<div class="section" id="target-audience">
-<h2>7.2. Target Audience<a class="headerlink" href="#target-audience" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="target-audience">
+<h2><span class="section-number">7.2. </span>Target Audience<a class="headerlink" href="#target-audience" title="Permalink to this heading">¶</a></h2>
 <p>This document is intended for person creating and using firmware images.
 It is most likely of interest if a developer needs to create customized
 feature and expose binary settings for delivery to customers, or that a
 new SOC device is being enabled.</p>
-</div>
-<div class="section" id="configuration-description-yaml-explained">
-<h2>7.3. Configuration Description (YAML) Explained<a class="headerlink" href="#configuration-description-yaml-explained" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="configuration-description-yaml-explained">
+<h2><span class="section-number">7.3. </span>Configuration Description (YAML) Explained<a class="headerlink" href="#configuration-description-yaml-explained" title="Permalink to this heading">¶</a></h2>
 <p>The declarations required to build the configuration data blobs and the
 header files are provided in a configuration description file. This file
 uses the <strong>YAML</strong> syntax.</p>
@@ -153,29 +72,29 @@ provide component specific configuration.</p>
 below.</p>
 <a class="reference internal image-reference" href="_images/image17.png"><img alt="_images/image17.png" src="_images/image17.png" style="width: 6.26042in; height: 4.6291in;" /></a>
 <p>Figure 14</p>
-</div>
-<div class="section" id="file-layout">
-<h2>7.4. File Layout<a class="headerlink" href="#file-layout" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="file-layout">
+<h2><span class="section-number">7.4. </span>File Layout<a class="headerlink" href="#file-layout" title="Permalink to this heading">¶</a></h2>
 <p>The configuration YAML file has a basic organization as below</p>
 <ul class="simple">
-<li><strong>Variable</strong> declarations</li>
-<li><strong>Template</strong> declarations</li>
-<li><strong>Configuration</strong> declarations</li>
+<li><p><strong>Variable</strong> declarations</p></li>
+<li><p><strong>Template</strong> declarations</p></li>
+<li><p><strong>Configuration</strong> declarations</p></li>
 </ul>
-<div class="section" id="meta-data-markers">
-<h3>7.4.1. Meta-Data Markers<a class="headerlink" href="#meta-data-markers" title="Permalink to this headline">¶</a></h3>
+<section id="meta-data-markers">
+<h3><span class="section-number">7.4.1. </span>Meta-Data Markers<a class="headerlink" href="#meta-data-markers" title="Permalink to this heading">¶</a></h3>
 <p>The configuration YAML files uses the $ sign as meta-data indicator.
 This is used by the SBL configuration parsing tools.</p>
 <p>The current specification version supports the following meta-data
 markers.</p>
-<div class="section" id="action">
-<h4>7.4.1.1. $ACTION<a class="headerlink" href="#action" title="Permalink to this headline">¶</a></h4>
+<section id="action">
+<h4><span class="section-number">7.4.1.1. </span>$ACTION<a class="headerlink" href="#action" title="Permalink to this heading">¶</a></h4>
 <p><strong>$ACTION</strong> is a meta-data marker and is followed by a YAML mapping node
 that contains some meta-data. The following attributes are supported
 currently.</p>
-</div>
-<div class="section" id="page">
-<h4>7.4.1.2. PAGE<a class="headerlink" href="#page" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="page">
+<h4><span class="section-number">7.4.1.2. </span>PAGE<a class="headerlink" href="#page" title="Permalink to this heading">¶</a></h4>
 <p>PAGE is used to declare a list of pages used in the GUI.</p>
 <p>PAGE is also used to define the display scope for a configuration
 parameter and can be applied for individual configuration parameters.</p>
@@ -186,17 +105,19 @@ configuration option itself), it has be preceded by the <strong>$ACTION</strong>
 node.</p>
 <p><strong>Format:</strong></p>
 <blockquote>
-<div>page: PageId1:ParentPageId1:PageTxetDescription1, PageId2:
-ParentPageId2:PageTxetDescription2</div></blockquote>
+<div><p>page: PageId1:ParentPageId1:PageTxetDescription1, PageId2:
+ParentPageId2:PageTxetDescription2</p>
+</div></blockquote>
 <p>If a root page needs to be defined, the ParentPageId could be empty as
 below:</p>
 <blockquote>
-<div>page: RootPageId::RootPageTxetDescription</div></blockquote>
+<div><p>page: RootPageId::RootPageTxetDescription</p>
+</div></blockquote>
 <a class="reference internal image-reference" href="_images/image18.png"><img alt="_images/image18.png" src="_images/image18.png" style="width: 6.6928in; height: 3.375in;" /></a>
 <p>Figure 15</p>
-</div>
-<div class="section" id="struct">
-<h4>7.4.1.3. $STRUCT<a class="headerlink" href="#struct" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="struct">
+<h4><span class="section-number">7.4.1.3. </span>$STRUCT<a class="headerlink" href="#struct" title="Permalink to this heading">¶</a></h4>
 <p>The STRUCT directive is used to indicate a nested structure within a
 configuration structure.</p>
 <p>For example, consider the nested structure below:</p>
@@ -218,24 +139,24 @@ below</p>
 <a class="reference internal image-reference" href="_images/image19.png"><img alt="_images/image19.png" src="_images/image19.png" style="width: 6.21875in; height: 6.18154in;" /></a>
 <p>Figure 16</p>
 <ul class="simple">
-<li>$ACTION :</li>
+<li><p>$ACTION :</p></li>
 </ul>
 <p>page : FEATURES:PLT:”Features”</p>
 <ul class="simple">
-<li>FEATURES_CFG_DATA :</li>
-<li>!expand { CFGHDR_TMPL : [ FEATURES_CFG_DATA, 0x310, 0, 0 ] }</li>
-<li>!expand { FEATURES_TMPL : [ 0x0000001F ] }</li>
+<li><p>FEATURES_CFG_DATA :</p></li>
+<li><p>!expand { CFGHDR_TMPL : [ FEATURES_CFG_DATA, 0x310, 0, 0 ] }</p></li>
+<li><p>!expand { FEATURES_TMPL : [ 0x0000001F ] }</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="yaml-tags">
-<h3>7.4.2. YAML Tags<a class="headerlink" href="#yaml-tags" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="yaml-tags">
+<h3><span class="section-number">7.4.2. </span>YAML Tags<a class="headerlink" href="#yaml-tags" title="Permalink to this heading">¶</a></h3>
 <p>YAML represents type information of native data structures with a simple
 identifier, called a tag. Explicit typing is denoted with a tag using
 the exclamation point (“!”) symbol. The following application-specific
 local tags are used.</p>
-<div class="section" id="include">
-<h4>7.4.2.1. !INCLUDE<a class="headerlink" href="#include" title="Permalink to this headline">¶</a></h4>
+<section id="include">
+<h4><span class="section-number">7.4.2.1. </span>!INCLUDE<a class="headerlink" href="#include" title="Permalink to this heading">¶</a></h4>
 <p>Configuration declarations may be logically organized in multiple files.
 Additional YAML files are included in the CfgDataDef.yaml using
 “!include” tag.</p>
@@ -254,16 +175,16 @@ indentation in the included file has the same level as the <em>!include</em>
 statement line. line.</p>
 <p><strong>Format:</strong></p>
 <ul class="simple">
-<li>!include RelativeFilePath</li>
+<li><p>!include RelativeFilePath</p></li>
 </ul>
 <p><strong>Example:</strong></p>
 <ul class="simple">
-<li>!include Platform/CommonBrdPkg/CfgData/CfgData.yaml</li>
-<li>!include Platform/Rvp7Pkg/CfgData/CfgData_GPIO.yaml</li>
+<li><p>!include Platform/CommonBrdPkg/CfgData/CfgData.yaml</p></li>
+<li><p>!include Platform/Rvp7Pkg/CfgData/CfgData_GPIO.yaml</p></li>
 </ul>
-</div>
-<div class="section" id="expand">
-<h4>7.4.2.2. !EXPAND<a class="headerlink" href="#expand" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="expand">
+<h4><span class="section-number">7.4.2.2. </span>!EXPAND<a class="headerlink" href="#expand" title="Permalink to this heading">¶</a></h4>
 <p>“!expand” tag is used for declaring a configuration option defined by a
 template
 (<a class="reference external" href="https://slimbootloader.github.io/specs/config.html?highlight=yaml#sbl-template">Template</a>).
@@ -271,38 +192,38 @@ template
 <p><strong>Format:</strong></p>
 <blockquote>
 <div><ul class="simple">
-<li>!expand { CfgTmplName: [Param1, Param2, ….] }</li>
+<li><p>!expand { CfgTmplName: [Param1, Param2, ….] }</p></li>
 </ul>
 </div></blockquote>
 <p>Using the CFGHDR_TMPL template example:</p>
 <p>CFGHDR_TMPL: &gt;</p>
 <ul class="simple">
-<li>CfgHeader :</li>
+<li><p>CfgHeader :</p></li>
 </ul>
 <p>length : 0x04</p>
 <p>value : {0x01:2b, ((_LENGTH_$(1)_)/4):10b, $(3):4b, $(4):4b, $(2):12b}</p>
 <ul class="simple">
-<li>CondValue :</li>
+<li><p>CondValue :</p></li>
 </ul>
 <p>length : 0x04</p>
 <p>value : 0x00000000</p>
 <ul class="simple">
-<li>!expand { CFGHDR_TMPL : [ PLATFORMID_CFG_DATA, 0x0F0, 0, 0 ] }</li>
+<li><p>!expand { CFGHDR_TMPL : [ PLATFORMID_CFG_DATA, 0x0F0, 0, 0 ] }</p></li>
 </ul>
 <p>Here, the template CFGHDR_TMPL will be expanded with its full template
 body. $(1), $(2), $(3) in template body will be replaced with the
 appropriate parameters where:</p>
 <ul class="simple">
-<li>$(1) is replaced with PLATFORMID_CFG_DATA,</li>
-<li>$(2) is replaced with 0x0F0,</li>
-<li>$(3) is replaced with 0,</li>
-<li>and $(4) is replaced with 0.</li>
+<li><p>$(1) is replaced with PLATFORMID_CFG_DATA,</p></li>
+<li><p>$(2) is replaced with 0x0F0,</p></li>
+<li><p>$(3) is replaced with 0,</p></li>
+<li><p>and $(4) is replaced with 0.</p></li>
 </ul>
-</div>
-</div>
-</div>
-<div class="section" id="variable">
-<h2>7.5. Variable<a class="headerlink" href="#variable" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+</section>
+<section id="variable">
+<h2><span class="section-number">7.5. </span>Variable<a class="headerlink" href="#variable" title="Permalink to this heading">¶</a></h2>
 <p>Variables may be considered as something equivalent to a C language
 macro. Variables are primarily used as symbolic names given to Python
 expressions. Whenever the variable name is used, it is replaced by the
@@ -313,9 +234,9 @@ section.</p>
 <div><p>variable:</p>
 <p>COND_GPIO_SKIP : ($GPIO_CFG_DATA.$(1)_Half0.GpioSkip == 0)</p>
 </div></blockquote>
-</div>
-<div class="section" id="template">
-<h2>7.6. Template<a class="headerlink" href="#template" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="template">
+<h2><span class="section-number">7.6. </span>Template<a class="headerlink" href="#template" title="Permalink to this heading">¶</a></h2>
 <p>Templates are used to declare the format of configuration options and
 are useful when many configuration options of the similar type are
 needed. GPIO configuration option is a good example where templates are
@@ -334,15 +255,15 @@ the actual Nth parameter.</p>
 <blockquote>
 <div><p>PCIERP_TMPL: &gt;</p>
 <ul class="simple">
-<li>PcieRpFeatures$(1) :</li>
-<li>$STRUCT :</li>
+<li><p>PcieRpFeatures$(1) :</p></li>
+<li><p>$STRUCT :</p></li>
 </ul>
 <p>name : PCIE RP $(1) Config Data</p>
 <p>struct : PCIE_RP_FEAT[]</p>
 <p>length : 0x01</p>
 <p>value : $(2)</p>
 <ul class="simple">
-<li>En :</li>
+<li><p>En :</p></li>
 </ul>
 <p>name : PCIE RP Enable</p>
 <p>type : Combo</p>
@@ -352,7 +273,7 @@ the actual Nth parameter.</p>
 <p>order : 0000.0000</p>
 <p>length : 1bB</p>
 <ul class="simple">
-<li>ClkReqSup :</li>
+<li><p>ClkReqSup :</p></li>
 </ul>
 <p>name : PCIE RP Clk Req Support</p>
 <p>type : Combo</p>
@@ -362,7 +283,7 @@ the actual Nth parameter.</p>
 <p>condition : $(COND_PCIE_RP_EN)</p>
 <p>length : 1bB</p>
 <ul class="simple">
-<li>ClkReqNum :</li>
+<li><p>ClkReqNum :</p></li>
 </ul>
 <p>name : PCIE RP Clk Req Number</p>
 <p>type : EditNum, HEX, (0x00, 0xFF)</p>
@@ -371,7 +292,7 @@ the actual Nth parameter.</p>
 <p>condition : $(COND_PCIE_RP_CLK_REQ_SUP)</p>
 <p>length : 3bB</p>
 <ul class="simple">
-<li>Aspm :</li>
+<li><p>Aspm :</p></li>
 </ul>
 <p>name : PCIE RP Aspm</p>
 <p>type : EditNum, HEX, (0x00, 0xFF)</p>
@@ -384,19 +305,19 @@ the actual Nth parameter.</p>
 (<a class="reference external" href="https://slimbootloader.github.io/specs/config.html?highlight=yaml#sbl-expand">!EXPAND</a>)
 as below:</p>
 <ul class="simple">
-<li>PCIE_RP_CFG_DATA :</li>
-<li>!expand { CFGHDR_TMPL : [ PCIE_RP_CFG_DATA, 0x302, 0, 0 ] }</li>
-<li>!expand { PCIERP_TMPL : [ 0 , 0x8B ] }</li>
-<li>!expand { PCIERP_TMPL : [ 1 , 0x8F ] }</li>
-<li>!expand { PCIERP_TMPL : [ 2 , 0x87 ] }</li>
-<li>!expand { PCIERP_TMPL : [ 3 , 0x86 ] }</li>
-<li>!expand { PCIERP_TMPL : [ 4 , 0x83 ] }</li>
-<li>!expand { PCIERP_TMPL : [ 5 , 0x8E ] }</li>
+<li><p>PCIE_RP_CFG_DATA :</p></li>
+<li><p>!expand { CFGHDR_TMPL : [ PCIE_RP_CFG_DATA, 0x302, 0, 0 ] }</p></li>
+<li><p>!expand { PCIERP_TMPL : [ 0 , 0x8B ] }</p></li>
+<li><p>!expand { PCIERP_TMPL : [ 1 , 0x8F ] }</p></li>
+<li><p>!expand { PCIERP_TMPL : [ 2 , 0x87 ] }</p></li>
+<li><p>!expand { PCIERP_TMPL : [ 3 , 0x86 ] }</p></li>
+<li><p>!expand { PCIERP_TMPL : [ 4 , 0x83 ] }</p></li>
+<li><p>!expand { PCIERP_TMPL : [ 5 , 0x8E ] }</p></li>
 </ul>
 </div></blockquote>
-</div>
-<div class="section" id="configs">
-<h2>7.7. Configs<a class="headerlink" href="#configs" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="configs">
+<h2><span class="section-number">7.7. </span>Configs<a class="headerlink" href="#configs" title="Permalink to this heading">¶</a></h2>
 <p>This section contains the configuration option declarations.</p>
 <p>A YAML <strong>node</strong> represents a single native data structure. A <strong>mapping
 node</strong> is an unordered set of <em>key: value</em> node pairs. Mappings use a
@@ -414,32 +335,32 @@ followed by a series of configuration data identied by unique tags:</p>
 <blockquote>
 <div><p>configs:</p>
 <ul class="simple">
-<li>$ACTION :</li>
+<li><p>$ACTION :</p></li>
 </ul>
 <p>page : PageId1::”Page Display Text”, PageId2::”Page Display Text”,
 PageId3::”Page Display Text”, …</p>
 <ul class="simple">
-<li>Signature :</li>
+<li><p>Signature :</p></li>
 </ul>
 <p>length : 0x04</p>
 <p>value : {‘CFGD’}</p>
 <ul class="simple">
-<li>HeaderLength :</li>
+<li><p>HeaderLength :</p></li>
 </ul>
 <p>length : 0x01</p>
 <p>value : 0x10</p>
 <ul class="simple">
-<li>Reserved :</li>
+<li><p>Reserved :</p></li>
 </ul>
 <p>length : 0x03</p>
 <p>value : {0,0,0}</p>
 <ul class="simple">
-<li>UsedLength :</li>
+<li><p>UsedLength :</p></li>
 </ul>
 <p>length : 0x04</p>
 <p>value : _LENGTH_</p>
 <ul class="simple">
-<li>TotalLength :</li>
+<li><p>TotalLength :</p></li>
 </ul>
 <p>length : 0x04</p>
 <p>value : 0x2000</p>
@@ -448,20 +369,20 @@ PageId3::”Page Display Text”, …</p>
 Tags</a>,
 SBL configuration options are organized as groups.</p>
 <ul class="simple">
-<li>Each group <strong>is</strong> represented <strong>as</strong> a <strong>YAML</strong> block sequence
+<li><p>Each group <strong>is</strong> represented <strong>as</strong> a <strong>YAML</strong> block sequence
 <strong>and</strong> starts <strong>with</strong> a leading “-” indicator followed by a white
-space.</li>
-<li>Each group has a configuration header. The Configuration header
+space.</p></li>
+<li><p>Each group has a configuration header. The Configuration header
 <strong>is</strong> declared using “!expand” tag to expand a template declaration.
-The configuration header itself <strong>is</strong> a <strong>YAML</strong> block sequence</li>
-<li>Each configuration option within the group <strong>is</strong> also a block
-sequence made of mapping nodes, each <strong>with</strong> key:value pair.</li>
+The configuration header itself <strong>is</strong> a <strong>YAML</strong> block sequence</p></li>
+<li><p>Each configuration option within the group <strong>is</strong> also a block
+sequence made of mapping nodes, each <strong>with</strong> key:value pair.</p></li>
 </ul>
 <p>The following example will illustrate how a MrcFastBoot config option is
 declared</p>
 <blockquote>
 <div><ul class="simple">
-<li>MrcFastBoot :</li>
+<li><p>MrcFastBoot :</p></li>
 </ul>
 <p>name : MrcFastBoot</p>
 <p>type : Combo</p>
@@ -475,9 +396,9 @@ declared</p>
 MEMORY_CFG_DATA.</p>
 <blockquote>
 <div><ul class="simple">
-<li>MEMORY_CFG_DATA :</li>
-<li>!expand { CFGHDR_TMPL : [ MEMORY_CFG_DATA, 0x200, 0, 0 ] }</li>
-<li>MrcFastBoot :</li>
+<li><p>MEMORY_CFG_DATA :</p></li>
+<li><p>!expand { CFGHDR_TMPL : [ MEMORY_CFG_DATA, 0x200, 0, 0 ] }</p></li>
+<li><p>MrcFastBoot :</p></li>
 </ul>
 <p>name : MrcFastBoot</p>
 <p>type : Combo</p>
@@ -491,13 +412,13 @@ MEMORY_CFG_DATA.</p>
 MEMORY_CFG_DATA which is displayed in a “MEM” page.</p>
 <blockquote>
 <div><ul class="simple">
-<li>$ACTION :</li>
+<li><p>$ACTION :</p></li>
 </ul>
 <p>page : MEM</p>
 <ul class="simple">
-<li>MEMORY_CFG_DATA :</li>
-<li>!expand { CFGHDR_TMPL : [ MEMORY_CFG_DATA, 0x200, 0, 0 ] }</li>
-<li>MrcFastBoot :</li>
+<li><p>MEMORY_CFG_DATA :</p></li>
+<li><p>!expand { CFGHDR_TMPL : [ MEMORY_CFG_DATA, 0x200, 0, 0 ] }</p></li>
+<li><p>MrcFastBoot :</p></li>
 </ul>
 <p>name : MrcFastBoot</p>
 <p>type : Combo</p>
@@ -507,29 +428,31 @@ MEMORY_CFG_DATA which is displayed in a “MEM” page.</p>
 <p>length : 0x01</p>
 <p>value : 0x1</p>
 </div></blockquote>
-<div class="section" id="configuration-option-nodes">
-<h3>7.7.1. Configuration Option Nodes<a class="headerlink" href="#configuration-option-nodes" title="Permalink to this headline">¶</a></h3>
+<section id="configuration-option-nodes">
+<h3><span class="section-number">7.7.1. </span>Configuration Option Nodes<a class="headerlink" href="#configuration-option-nodes" title="Permalink to this heading">¶</a></h3>
 <p>The below sections explain each of the “keys” used in a configuration
 option.</p>
-<div class="section" id="name">
-<h4>7.7.1.1. NAME<a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h4>
+<section id="name">
+<h4><span class="section-number">7.7.1.1. </span>NAME<a class="headerlink" href="#name" title="Permalink to this heading">¶</a></h4>
 <p>NAME gives a plain-text label for a configuration parameter. This is the
 text label that is displayed in the Config Editor tool.</p>
 <p>Format:</p>
 <blockquote>
-<div>name: CfgItemName</div></blockquote>
+<div><p>name: CfgItemName</p>
+</div></blockquote>
 <p>Example:</p>
 <blockquote>
-<div>name : MrcFastBoot</div></blockquote>
-</div>
-<div class="section" id="type">
-<h4>7.7.1.2. TYPE<a class="headerlink" href="#type" title="Permalink to this headline">¶</a></h4>
+<div><p>name : MrcFastBoot</p>
+</div></blockquote>
+</section>
+<section id="type">
+<h4><span class="section-number">7.7.1.2. </span>TYPE<a class="headerlink" href="#type" title="Permalink to this heading">¶</a></h4>
 <p>TYPE defines the format of a configuration parameter that will be
 represented in the Config Editor tool. There are 5 different types
 available for configuration parameters: <strong>EditNum</strong>, <strong>EditText</strong>,
 <strong>Combo</strong>, <strong>Table</strong>, <strong>Reserved</strong></p>
-<div class="section" id="editnum">
-<h5>7.7.1.2.1. EditNum<a class="headerlink" href="#editnum" title="Permalink to this headline">¶</a></h5>
+<section id="editnum">
+<h5><span class="section-number">7.7.1.2.1. </span>EditNum<a class="headerlink" href="#editnum" title="Permalink to this heading">¶</a></h5>
 <p>EditNum is used when user needs to input any value within the range
 defined. If the configuration option is an array, the VALUE field is
 used to specify the number of elements in the array.</p>
@@ -541,17 +464,17 @@ used to specify the number of elements in the array.</p>
 <p>The MinValue <strong>and</strong> MaxValue <strong>is</strong> the minimum <strong>and</strong> maximum
 value allowed.</p>
 </div></blockquote>
-</div>
-<div class="section" id="edittext">
-<h5>7.7.1.2.2. EditText<a class="headerlink" href="#edittext" title="Permalink to this headline">¶</a></h5>
+</section>
+<section id="edittext">
+<h5><span class="section-number">7.7.1.2.2. </span>EditText<a class="headerlink" href="#edittext" title="Permalink to this heading">¶</a></h5>
 <p>EditText is used when user needs to input any text string.</p>
 <blockquote>
 <div><p>Format:</p>
 <p>type : EditText</p>
 </div></blockquote>
-</div>
-<div class="section" id="combo">
-<h5>7.7.1.2.3. Combo<a class="headerlink" href="#combo" title="Permalink to this headline">¶</a></h5>
+</section>
+<section id="combo">
+<h5><span class="section-number">7.7.1.2.3. </span>Combo<a class="headerlink" href="#combo" title="Permalink to this heading">¶</a></h5>
 <p>Combo is used to select from a drop-down list along. This list will be
 provided by OPTION field.</p>
 <p>Format:</p>
@@ -564,9 +487,9 @@ provided by OPTION field.</p>
 <div><p>type : Combo</p>
 <p>option : 0:9600, 1:19200, 2:38400, 3:57600, 4:115200</p>
 </div></blockquote>
-</div>
-<div class="section" id="table">
-<h5>7.7.1.2.4. Table<a class="headerlink" href="#table" title="Permalink to this headline">¶</a></h5>
+</section>
+<section id="table">
+<h5><span class="section-number">7.7.1.2.4. </span>Table<a class="headerlink" href="#table" title="Permalink to this heading">¶</a></h5>
 <p>Table is used to define a tabular format. It needs to be used along with
 OPTION field to provide additional information for the table including
 column header string, cell width and cell format. Further, the VALUE
@@ -590,47 +513,51 @@ E:1:HEX, F:1:HEX</p>
 </div></blockquote>
 <p>Byte width in each cell of the table can be displayed as 1 byte, 2 bytes
 or 4 bytes.</p>
-</div>
-<div class="section" id="reserved">
-<h5>7.7.1.2.5. Reserved<a class="headerlink" href="#reserved" title="Permalink to this headline">¶</a></h5>
+</section>
+<section id="reserved">
+<h5><span class="section-number">7.7.1.2.5. </span>Reserved<a class="headerlink" href="#reserved" title="Permalink to this heading">¶</a></h5>
 <p>Reserved type can be used to prevent configuration parameters from being
 displayed in the Config Editor. But the configuration parameters will
 still be generated in the auto-generated C header structure.</p>
 <p>Format:</p>
 <blockquote>
-<div>type : Reserved</div></blockquote>
-</div>
-</div>
-<div class="section" id="option">
-<h4>7.7.1.3. OPTION<a class="headerlink" href="#option" title="Permalink to this headline">¶</a></h4>
+<div><p>type : Reserved</p>
+</div></blockquote>
+</section>
+</section>
+<section id="option">
+<h4><span class="section-number">7.7.1.3. </span>OPTION<a class="headerlink" href="#option" title="Permalink to this heading">¶</a></h4>
 <p>This allows to provide type-specific additional information. For type
 Combo, it defines the drop-down list. For type Table, it defines the
 column display information.</p>
 <p>Format:</p>
 <blockquote>
-<div>OPTION: &gt; Value1:TextStr1, Value2:TextStr2, ….</div></blockquote>
+<div><p>OPTION: &gt; Value1:TextStr1, Value2:TextStr2, ….</p>
+</div></blockquote>
 <p>Note: Config tools allow the value/contents for OPTION to be split into
 multiple lines. The lines except for the very first line need to start
 with ‘<strong>+’ (plus sign)</strong> to tell the parsing tool to append this
 string to previous one.</p>
-</div>
-<div class="section" id="help">
-<h4>7.7.1.4. HELP<a class="headerlink" href="#help" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="help">
+<h4><span class="section-number">7.7.1.4. </span>HELP<a class="headerlink" href="#help" title="Permalink to this heading">¶</a></h4>
 <p>This defines what will appear in the ‘help’ text when hovering over the
 field in the UI tool.</p>
 <p>Format:</p>
 <blockquote>
-<div>help: &gt; Any detail about particular CfgItem</div></blockquote>
+<div><p>help: &gt; Any detail about particular CfgItem</p>
+</div></blockquote>
 <p>Example:</p>
 <blockquote>
-<div>help: &gt; Enable/disable LAN controller</div></blockquote>
+<div><p>help: &gt; Enable/disable LAN controller</p>
+</div></blockquote>
 <p>Note: Config tools allow the value/contents for HELP to be split into
 multiple lines. The lines except for the very first line need to start
 with ‘<strong>+’ (plus sign)</strong> to tell the parsing tool to append this
 string to previous one.</p>
-</div>
-<div class="section" id="condition">
-<h4>7.7.1.5. CONDITION<a class="headerlink" href="#condition" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="condition">
+<h4><span class="section-number">7.7.1.5. </span>CONDITION<a class="headerlink" href="#condition" title="Permalink to this heading">¶</a></h4>
 <p>CONDITION is used to associate conditional statement for a configuration
 parameter when required. It is useful to dynamically hide/display a
 configuration parameter that has a dependency on another configuration
@@ -638,7 +565,8 @@ parameter value. When the condition is TRUE, the configuration parameter
 is visible. Otherwise, it is hidden.</p>
 <p>Format:</p>
 <blockquote>
-<div>condition: Expression</div></blockquote>
+<div><p>condition: Expression</p>
+</div></blockquote>
 <p>Expression is an expression following Python* syntax. It can have
 reference to another configuration parameter using $<em>CfgItemName</em> or
 <em>$CfgItemName.BitField</em> format. It can use variables as described in 3.3</p>
@@ -648,19 +576,21 @@ reference to another configuration parameter using $<em>CfgItemName</em> or
 <p>condition : $SECURITY_CFG_DATA.EnableSgx != 0 and
 $SECURITY_CFG_DATA.EpochUpdate == 2</p>
 </div></blockquote>
-</div>
-<div class="section" id="order">
-<h4>7.7.1.6. ORDER<a class="headerlink" href="#order" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="order">
+<h4><span class="section-number">7.7.1.6. </span>ORDER<a class="headerlink" href="#order" title="Permalink to this heading">¶</a></h4>
 <p>ORDER can be used to adjust the display order for the configuration
 parameters in a page. By default, if this command is not specified, the
 order value is assigned to be the CfgitemOffset as the logic described
 below. But if a different order is required, it can be overridden by
 declaring <strong>ORDER</strong> command explicitly using format:</p>
 <blockquote>
-<div>order : {HexMajor.HexMinor}</div></blockquote>
+<div><p>order : {HexMajor.HexMinor}</p>
+</div></blockquote>
 <p>The final order key is calculated as:</p>
 <blockquote>
-<div>Order = (HexMajor &lt;&lt; 16) + (((HexMajor &amp; 0xFF) &lt;&lt; 8) + BitFieldOffset</div></blockquote>
+<div><p>Order = (HexMajor &lt;&lt; 16) + (((HexMajor &amp; 0xFF) &lt;&lt; 8) + BitFieldOffset</p>
+</div></blockquote>
 <p>If ORDER {HexMajor.HexMinor} is not specified for an item, it is
 calculated as: Order = (CfgItemOffset &lt;&lt; 16)</p>
 <p>The item order value is used as the <em>sort key</em> during YAML items
@@ -670,9 +600,9 @@ display.</p>
 <div><p>order :{0000.0000}</p>
 <p>order :{0x0040.01}</p>
 </div></blockquote>
-</div>
-<div class="section" id="length">
-<h4>7.7.1.7. LENGTH<a class="headerlink" href="#length" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="length">
+<h4><span class="section-number">7.7.1.7. </span>LENGTH<a class="headerlink" href="#length" title="Permalink to this heading">¶</a></h4>
 <p>Length is used to specify the size of the configuration option in bytes.
 Length can also be specified in bits by appending ‘b’ at the end.</p>
 <p>Example:</p>
@@ -680,20 +610,20 @@ Length can also be specified in bits by appending ‘b’ at the end.</p>
 <div><p>length : 1b</p>
 <p>length : 0x04</p>
 </div></blockquote>
-</div>
-<div class="section" id="value">
-<h4>7.7.1.8. VALUE<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="value">
+<h4><span class="section-number">7.7.1.8. </span>VALUE<a class="headerlink" href="#value" title="Permalink to this heading">¶</a></h4>
 <p>Value is used to specify the default value of the configuration option.
 It could be a number, string, or data array.</p>
 <ul class="simple">
-<li>For number, it can be DEC or HEX. HEX needs to have prefix ‘0x’.</li>
-<li>For array, <strong>{</strong> <strong>}</strong> braces are required around the element list.
+<li><p>For number, it can be DEC or HEX. HEX needs to have prefix ‘0x’.</p></li>
+<li><p>For array, <strong>{</strong> <strong>}</strong> braces are required around the element list.
 List elements should be numbers and are separated by comma. Each
 element should have the same unit size (1, 2, 4, 8 bytes). By
 default, it is BYTE for each element. The unit size can be changed
 through an extended dummy element at the beginning of the array,
-noted as “0:0[B|W|D|Q]”.</li>
-<li>For string, single or double quotes are required.</li>
+noted as “0:0[B|W|D|Q]”.</p></li>
+<li><p>For string, single or double quotes are required.</p></li>
 </ul>
 <p>Example:</p>
 <blockquote>
@@ -705,11 +635,11 @@ noted as “0:0[B|W|D|Q]”.</li>
 <p>{0:0Q, 0x0807060504030201}</p>
 <p>value : ‘FwuImage.bin’</p>
 </div></blockquote>
-</div>
-</div>
-</div>
-<div class="section" id="delta-dlt-file-explained">
-<h2>7.8. Delta (DLT) File Explained<a class="headerlink" href="#delta-dlt-file-explained" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+</section>
+<section id="delta-dlt-file-explained">
+<h2><span class="section-number">7.8. </span>Delta (DLT) File Explained<a class="headerlink" href="#delta-dlt-file-explained" title="Permalink to this heading">¶</a></h2>
 <p>Configuration Delta (DLT) file is an extension of the base configuration
 YAML file that contains configuration parameters that need to be
 overridden from base configuration.</p>
@@ -728,23 +658,23 @@ on PlatformID in the form of binaries (.bin) for each of the boards.</p>
 configuration itself. If it has changed for a particular tag mentioned
 in .DLT, new data from DLT will be overwritten and gets generated in the
 configuration binary for that specific board.</p>
-</div>
-<div class="section" id="dlt-file-rules">
-<h2>7.9. DLT file rules<a class="headerlink" href="#dlt-file-rules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="dlt-file-rules">
+<h2><span class="section-number">7.9. </span>DLT file rules<a class="headerlink" href="#dlt-file-rules" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
-<li>Users cannot add/create a new configuration parameter in DLT file,
+<li><p>Users cannot add/create a new configuration parameter in DLT file,
 nor can they create a new tag. Users can only modify/overwrite the
 values for configuration parameters that are already existing in the
-base configuration YAML file.</li>
-<li>Delta file can be used to generate both default and custom/standalone
+base configuration YAML file.</p></li>
+<li><p>Delta file can be used to generate both default and custom/standalone
 config data. Delta file is like changing configuration items using
-<em>ConfigEditor</em> (explained later).</li>
-<li>Delta file cannot be opened in UI interface all by itself. But it’s
+<em>ConfigEditor</em> (explained later).</p></li>
+<li><p>Delta file cannot be opened in UI interface all by itself. But it’s
 possible to open in <em>ConfigEditor</em> by first loading the base
 configuration YAML, and then load DLT file on top of it. We can then
-see overrides in <em>ConfigEditor</em> that is mentioned in DLT.</li>
-<li>Delta files should be included as part of the Board Configuration
-script, BoardConfig.py in order to take effect.</li>
+see overrides in <em>ConfigEditor</em> that is mentioned in DLT.</p></li>
+<li><p>Delta files should be included as part of the Board Configuration
+script, BoardConfig.py in order to take effect.</p></li>
 </ul>
 <p>Example:</p>
 <blockquote>
@@ -753,30 +683,34 @@ script, BoardConfig.py in order to take effect.</li>
 [‘CfgData_Ext_Brd1_Rvp.dlt’,’CfgData_Ext_Brd2_Crb.dlt’,’CfgData_Ext_Brd3_Bmp.dlt’]</p>
 </div></blockquote>
 <ul class="simple">
-<li>‘_CFGDATA_INT_FILE’ is used for all the default board flavors. Delta
+<li><p>‘_CFGDATA_INT_FILE’ is used for all the default board flavors. Delta
 files included here is generated as part of the default configuration
-data consumed within the source.</li>
-<li>‘_CFGDATA_EXT_FILE’ is used for external/customer boards. Delta files
+data consumed within the source.</p></li>
+<li><p>‘_CFGDATA_EXT_FILE’ is used for external/customer boards. Delta files
 included here is generated as a standalone binary and stitched into
-the BIOS region of the SPI Flash.</li>
-<li>Below are the current formats that can be used in DLT:<ul>
-<li>Hash “#” symbol indicates comments in the DLT file.</li>
-<li>Users can overwrite the values of existing Tag items in DLT as
-follows</li>
+the BIOS region of the SPI Flash.</p></li>
+<li><p>Below are the current formats that can be used in DLT:</p>
+<ul>
+<li><p>Hash “#” symbol indicates comments in the DLT file.</p></li>
+<li><p>Users can overwrite the values of existing Tag items in DLT as
+follows</p></li>
 </ul>
 </li>
 </ul>
 <p>Format:</p>
 <blockquote>
-<div>Tagname.itemname(s) | &lt;data value&gt;</div></blockquote>
+<div><p>Tagname.itemname(s) | &lt;data value&gt;</p>
+</div></blockquote>
 <p>Example:</p>
 <blockquote>
-<div>PLATFORMID_CFG_DATA.PlatformId | 1</div></blockquote>
+<div><p>PLATFORMID_CFG_DATA.PlatformId | 1</p>
+</div></blockquote>
 <p>Example:</p>
 <blockquote>
-<div>GPIO_CFG_DATA.GpioPinConfig1_GPP_A0.GPIOSkip_GPP_A0 | 1</div></blockquote>
+<div><p>GPIO_CFG_DATA.GpioPinConfig1_GPP_A0.GPIOSkip_GPP_A0 | 1</p>
+</div></blockquote>
 <ul class="simple">
-<li>Granularity of the data is based upon the size of the configuration
+<li><p>Granularity of the data is based upon the size of the configuration
 parameters specified in the base configuration YAML file. In the
 above example, PlatformID in base configuration YAML is defined as 2
 bytes. So, the value should be mentioned according to its size.
@@ -784,7 +718,7 @@ Similarly, GPIOSkip field in base configuration YAML is defined as 1
 byte. So, the value to be mentioned in DLT can either be 0 or 1. If
 we want to overwrite the full DWORD instead of individual bits, for
 example, GPIO PIN Config DWord0 or DWord1, it can be specified as
-follows, example: GPIO_CFG_DATA.GpioPinConfig0_GPP_A0 | 0x12345678</li>
+follows, example: GPIO_CFG_DATA.GpioPinConfig0_GPP_A0 | 0x12345678</p></li>
 </ul>
 <p>Note: Customers who have access to source code can change DLT files
 without having to use <em>ConfigEditor</em> GUI interface and any other
@@ -794,9 +728,9 @@ the <em>CfgDataTool</em>, which is already part of the build process. They will
 be auto generated, merged, and signed as we run the build/stitch
 commands with no manual steps needed to create the final Configuration
 binary blob.</p>
-</div>
-<div class="section" id="configuration-process">
-<h2>7.10. Configuration Process<a class="headerlink" href="#configuration-process" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="configuration-process">
+<h2><span class="section-number">7.10. </span>Configuration Process<a class="headerlink" href="#configuration-process" title="Permalink to this heading">¶</a></h2>
 <p>Configuration data flow begins with the base configuration YAML file
 along with delta (DLT) files that contain the overrides of configuration
 settings that are different from base configuration data. <em>CfgDataTool</em>
@@ -812,40 +746,103 @@ a Private Key.</p>
 configuration binary (Example: CFG_EXT_SIGNED.bin) that is placed in PDR
 or BIOS region and stitched into the final image that is to be flashed
 in SPI.</p>
-</div>
-</div>
+</section>
+</section>
 
 
-           </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="6_debug.html" class="btn btn-neutral float-left" title="6. Debug" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="8_scalable_fsp.html" class="btn btn-neutral float-right" title="8. Scalable FSP" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
-      </span></p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
+          
         </div>
       </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Universal Scalable Firmware (USF)</a></h1>
 
-</body>
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="revision_history.html">Revision History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="disclaimers.html">Notices and Disclaimers</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1_terminology.html">1. Universal Scalable Firmware (USF) Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_universal_payload.html">2. Universal Payload</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_platform_orchestration_layer.html">3. Platform Orchestration Layer (POL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_runtime.html">4. Runtime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_security.html">5. Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_debug.html">6. Debug</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">7. YAML Format Boot Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">7.1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#target-audience">7.2. Target Audience</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-description-yaml-explained">7.3. Configuration Description (YAML) Explained</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#file-layout">7.4. File Layout</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#meta-data-markers">7.4.1. Meta-Data Markers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#yaml-tags">7.4.2. YAML Tags</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#variable">7.5. Variable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#template">7.6. Template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configs">7.7. Configs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-option-nodes">7.7.1. Configuration Option Nodes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#delta-dlt-file-explained">7.8. Delta (DLT) File Explained</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dlt-file-rules">7.9. DLT file rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-process">7.10. Configuration Process</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="8_scalable_fsp.html">8. Scalable FSP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9_bootloader_payloads.html">9. Bootloader Payloads</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="6_debug.html" title="previous chapter"><span class="section-number">6. </span>Debug</a></li>
+      <li>Next: <a href="8_scalable_fsp.html" title="next chapter"><span class="section-number">8. </span>Scalable FSP</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;Content on this site is licensed under a Creative Commons Attribution 4.0 International license.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+    </div>
+
+    
+
+    
+  </body>
 </html>

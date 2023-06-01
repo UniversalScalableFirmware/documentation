@@ -1,42 +1,109 @@
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>9. Bootloader Payloads &mdash; Universal Scalable Firmware (USF)  documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-    <script src="_static/js/theme.js"></script>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>9. Bootloader Payloads &#8212; Universal Scalable Firmware (USF)  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="8. Scalable FSP" href="8_scalable_fsp.html" /> 
-</head>
+    <link rel="prev" title="8. Scalable FSP" href="8_scalable_fsp.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> Universal Scalable Firmware (USF)
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="bootloader-payloads">
+<span id="id1"></span><h1><span class="section-number">9. </span>Bootloader Payloads<a class="headerlink" href="#bootloader-payloads" title="Permalink to this heading">¶</a></h1>
+<p>There are a plurality of payload implementations. Below provides a
+summary.</p>
+<section id="references">
+<h2><span class="section-number">9.1. </span>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
+<section id="bootloader-payloads-1">
+<span id="id2"></span><h3><span class="section-number">9.1.1. </span>Bootloader Payloads –<a class="headerlink" href="#bootloader-payloads-1" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Slimboot payload doc
+<a class="reference external" href="https://slimbootloader.github.io/developer-guides/payload.html">https://slimbootloader.github.io/developer-guides/payload.html</a></p></li>
+<li><p>coreboot payloads <a class="reference external" href="https://www.coreboot.org/Payloads">https://www.coreboot.org/Payloads</a></p></li>
+<li><p>UEFI payload
+<a class="reference external" href="https://github.com/tianocore/edk2/tree/master/UefiPayloadPkg">https://github.com/tianocore/edk2/tree/master/UefiPayloadPkg</a></p></li>
+<li><p>LinuxBoot <a class="reference external" href="https://www.linuxboot.org/">https://www.linuxboot.org/</a></p></li>
+<li><p>PI 1.7 <a class="reference external" href="https://uefi.org/specifications">https://uefi.org/specifications</a></p></li>
+<li><p>VaultBoot <a class="reference external" href="https://github.com/hardenedvault/vaultboot">https://github.com/hardenedvault/vaultboot</a></p></li>
+</ul>
+</section>
+<section id="os-hv-interfaces">
+<h3><span class="section-number">9.1.2. </span>OS/Hv interfaces<a class="headerlink" href="#os-hv-interfaces" title="Permalink to this heading">¶</a></h3>
+<p>Kernel load protocol doc
+<a class="reference external" href="https://www.kernel.org/doc/Documentation/x86/boot.txt">https://www.kernel.org/doc/Documentation/x86/boot.txt</a></p>
+<ul class="simple">
+<li><p>UEFI 2.9 <a class="reference external" href="https://uefi.org/specifications">https://uefi.org/specifications</a></p></li>
+<li><p>ACPI 6.3 <a class="reference external" href="https://uefi.org/specifications">https://uefi.org/specifications</a></p></li>
+<li><p>PRM <a class="reference external" href="https://github.com/tianocore/edk2-staging/tree/PRMCaseStudy">https://github.com/tianocore/edk2-staging/tree/PRMCaseStudy</a></p></li>
+</ul>
+</section>
+<section id="platform-implementations">
+<h3><span class="section-number">9.1.3. </span>Platform implementations<a class="headerlink" href="#platform-implementations" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>EDKII <a class="reference external" href="http://www.tianocore.org/">www.tianocore.org</a> (also
+possible payload)</p></li>
+<li><p>EDKII min platform
+<a class="reference external" href="https://edk2-docs.gitbook.io/edk-ii-minimum-platform-specification/">https://edk2-docs.gitbook.io/edk-ii-minimum-platform-specification/</a></p></li>
+<li><p>coreboot <a class="reference external" href="https://www.coreboot.org/">https://www.coreboot.org</a></p></li>
+<li><p>slimboot <a class="reference external" href="https://slimbootloader.github.io/">https://slimbootloader.github.io/</a></p></li>
+<li><p>u-boot <a class="reference external" href="https://www.denx.de/wiki/U-Boot">https://www.denx.de/wiki/U-Boot</a> (also possible payload)</p></li>
+<li><p>oreboot <a class="reference external" href="https://github.com/oreboot/oreboot">https://github.com/oreboot/oreboot</a></p></li>
+</ul>
+</section>
+<section id="security">
+<span id="security-1"></span><h3><span class="section-number">9.1.4. </span>Security<a class="headerlink" href="#security" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>SPDM
+<a class="reference external" href="https://www.dmtf.org/sites/default/files/standards/documents/DSP0274_0.99a.pdf">https://www.dmtf.org/sites/default/files/standards/documents/DSP0274_0.99a.pdf</a></p></li>
+<li><p>Building Secure Firmware
+<a class="reference external" href="https://link.springer.com/book/10.1007/978-1-4842-6106-4">https://link.springer.com/book/10.1007/978-1-4842-6106-4</a></p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Universal Scalable Firmware (USF)</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="revision_history.html">Revision History</a></li>
 <li class="toctree-l1"><a class="reference internal" href="disclaimers.html">Notices and Disclaimers</a></li>
 </ul>
@@ -61,113 +128,47 @@
 </li>
 </ul>
 
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="8_scalable_fsp.html" title="previous chapter"><span class="section-number">8. </span>Scalable FSP</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Universal Scalable Firmware (USF)</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a></li>
-      <li class="breadcrumb-item active">9. Bootloader Payloads</li>
-      <li class="wy-breadcrumbs-aside">
-      </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <div class="section" id="bootloader-payloads">
-<span id="id1"></span><h1>9. Bootloader Payloads<a class="headerlink" href="#bootloader-payloads" title="Permalink to this headline">¶</a></h1>
-<p>There are a plurality of payload implementations. Below provides a
-summary.</p>
-<div class="section" id="references">
-<h2>9.1. References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="bootloader-payloads-1">
-<span id="id2"></span><h3>9.1.1. Bootloader Payloads –<a class="headerlink" href="#bootloader-payloads-1" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>Slimboot payload doc
-<a class="reference external" href="https://slimbootloader.github.io/developer-guides/payload.html">https://slimbootloader.github.io/developer-guides/payload.html</a></li>
-<li>coreboot payloads <a class="reference external" href="https://www.coreboot.org/Payloads">https://www.coreboot.org/Payloads</a></li>
-<li>UEFI payload
-<a class="reference external" href="https://github.com/tianocore/edk2/tree/master/UefiPayloadPkg">https://github.com/tianocore/edk2/tree/master/UefiPayloadPkg</a></li>
-<li>LinuxBoot <a class="reference external" href="https://www.linuxboot.org/">https://www.linuxboot.org/</a></li>
-<li>PI 1.7 <a class="reference external" href="https://uefi.org/specifications">https://uefi.org/specifications</a></li>
-<li>VaultBoot <a class="reference external" href="https://github.com/hardenedvault/vaultboot">https://github.com/hardenedvault/vaultboot</a></li>
-</ul>
-</div>
-<div class="section" id="os-hv-interfaces">
-<h3>9.1.2. OS/Hv interfaces<a class="headerlink" href="#os-hv-interfaces" title="Permalink to this headline">¶</a></h3>
-<p>Kernel load protocol doc
-<a class="reference external" href="https://www.kernel.org/doc/Documentation/x86/boot.txt">https://www.kernel.org/doc/Documentation/x86/boot.txt</a></p>
-<ul class="simple">
-<li>UEFI 2.9 <a class="reference external" href="https://uefi.org/specifications">https://uefi.org/specifications</a></li>
-<li>ACPI 6.3 <a class="reference external" href="https://uefi.org/specifications">https://uefi.org/specifications</a></li>
-<li>PRM <a class="reference external" href="https://github.com/tianocore/edk2-staging/tree/PRMCaseStudy">https://github.com/tianocore/edk2-staging/tree/PRMCaseStudy</a></li>
-</ul>
-</div>
-<div class="section" id="platform-implementations">
-<h3>9.1.3. Platform implementations<a class="headerlink" href="#platform-implementations" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>EDKII <a class="reference external" href="http://www.tianocore.org/">www.tianocore.org</a> (also
-possible payload)</li>
-<li>EDKII min platform
-<a class="reference external" href="https://edk2-docs.gitbook.io/edk-ii-minimum-platform-specification/">https://edk2-docs.gitbook.io/edk-ii-minimum-platform-specification/</a></li>
-<li>coreboot <a class="reference external" href="https://www.coreboot.org/">https://www.coreboot.org</a></li>
-<li>slimboot <a class="reference external" href="https://slimbootloader.github.io/">https://slimbootloader.github.io/</a></li>
-<li>u-boot <a class="reference external" href="https://www.denx.de/wiki/U-Boot">https://www.denx.de/wiki/U-Boot</a> (also possible payload)</li>
-<li>oreboot <a class="reference external" href="https://github.com/oreboot/oreboot">https://github.com/oreboot/oreboot</a></li>
-</ul>
-</div>
-<div class="section" id="security">
-<span id="security-1"></span><h3>9.1.4. Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>SPDM
-<a class="reference external" href="https://www.dmtf.org/sites/default/files/standards/documents/DSP0274_0.99a.pdf">https://www.dmtf.org/sites/default/files/standards/documents/DSP0274_0.99a.pdf</a></li>
-<li>Building Secure Firmware
-<a class="reference external" href="https://link.springer.com/book/10.1007/978-1-4842-6106-4">https://link.springer.com/book/10.1007/978-1-4842-6106-4</a></li>
-</ul>
-</div>
-</div>
-</div>
-
-
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="8_scalable_fsp.html" class="btn btn-neutral float-left" title="8. Scalable FSP" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;Content on this site is licensed under a Creative Commons Attribution 4.0 International license.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
     </div>
 
-  <hr/>
+    
 
-  <div role="contentinfo">
-    <p>&#169; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
-      </span></p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
-        </div>
-      </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+    
+  </body>
 </html>
