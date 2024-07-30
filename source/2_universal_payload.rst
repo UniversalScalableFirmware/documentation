@@ -3,6 +3,10 @@
 Universal Payload
 ===================
 
+July 30, 2024
+
+A new Universal Payload specification is published at https://universalpayload.github.io/spec/. USF Universal Payload is going to adopt this new Universal Payload specification.
+
 February 1, 2023
 
 .. _purpose:
