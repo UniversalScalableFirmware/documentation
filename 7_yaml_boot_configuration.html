@@ -1,94 +1,49 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>7. YAML Format Boot Configuration &mdash; Universal Scalable Firmware (USF)  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="8. Scalable FSP" href="8_scalable_fsp.html" />
     <link rel="prev" title="6. Debug" href="6_debug.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="index.html" class="icon icon-home"> Universal Scalable Firmware (USF)
           
-
-          
+          <a href="index.html" class="icon icon-home">
+            Universal Scalable Firmware (USF)
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="revision_history.html">Revision History</a></li>
 <li class="toctree-l1"><a class="reference internal" href="disclaimers.html">Notices and Disclaimers</a></li>
@@ -143,73 +98,33 @@
 <li class="toctree-l1"><a class="reference internal" href="9_bootloader_payloads.html">9. Bootloader Payloads</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Universal Scalable Firmware (USF)</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
-      <li><span class="section-number">7. </span>YAML Format Boot Configuration</li>
-    
-    
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">7. </span>YAML Format Boot Configuration</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <section id="yaml-format-boot-configuration">
-<span id="id1"></span><h1><span class="section-number">7. </span>YAML Format Boot Configuration<a class="headerlink" href="#yaml-format-boot-configuration" title="Permalink to this heading">¶</a></h1>
+<span id="id1"></span><h1><span class="section-number">7. </span>YAML Format Boot Configuration<a class="headerlink" href="#yaml-format-boot-configuration" title="Permalink to this heading"></a></h1>
 <section id="introduction">
-<span id="introduction-2"></span><h2><span class="section-number">7.1. </span>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
+<span id="introduction-2"></span><h2><span class="section-number">7.1. </span>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
 <p>This document describes the format of the YAML based boot setting file
 used to specify features, settings, and tool display information to the
 Intel Firmware Support Package (FSP) and tools like Config Editor. It
@@ -218,14 +133,14 @@ can simplify the configuration of a static binary and during dynamic
 boot process.</p>
 </section>
 <section id="target-audience">
-<h2><span class="section-number">7.2. </span>Target Audience<a class="headerlink" href="#target-audience" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">7.2. </span>Target Audience<a class="headerlink" href="#target-audience" title="Permalink to this heading"></a></h2>
 <p>This document is intended for person creating and using firmware images.
 It is most likely of interest if a developer needs to create customized
 feature and expose binary settings for delivery to customers, or that a
 new SOC device is being enabled.</p>
 </section>
 <section id="configuration-description-yaml-explained">
-<h2><span class="section-number">7.3. </span>Configuration Description (YAML) Explained<a class="headerlink" href="#configuration-description-yaml-explained" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">7.3. </span>Configuration Description (YAML) Explained<a class="headerlink" href="#configuration-description-yaml-explained" title="Permalink to this heading"></a></h2>
 <p>The declarations required to build the configuration data blobs and the
 header files are provided in a configuration description file. This file
 uses the <strong>YAML</strong> syntax.</p>
@@ -247,7 +162,7 @@ below.</p>
 <p>Figure 14</p>
 </section>
 <section id="file-layout">
-<h2><span class="section-number">7.4. </span>File Layout<a class="headerlink" href="#file-layout" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">7.4. </span>File Layout<a class="headerlink" href="#file-layout" title="Permalink to this heading"></a></h2>
 <p>The configuration YAML file has a basic organization as below</p>
 <ul class="simple">
 <li><p><strong>Variable</strong> declarations</p></li>
@@ -255,19 +170,19 @@ below.</p>
 <li><p><strong>Configuration</strong> declarations</p></li>
 </ul>
 <section id="meta-data-markers">
-<h3><span class="section-number">7.4.1. </span>Meta-Data Markers<a class="headerlink" href="#meta-data-markers" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">7.4.1. </span>Meta-Data Markers<a class="headerlink" href="#meta-data-markers" title="Permalink to this heading"></a></h3>
 <p>The configuration YAML files uses the $ sign as meta-data indicator.
 This is used by the SBL configuration parsing tools.</p>
 <p>The current specification version supports the following meta-data
 markers.</p>
 <section id="action">
-<h4><span class="section-number">7.4.1.1. </span>$ACTION<a class="headerlink" href="#action" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">7.4.1.1. </span>$ACTION<a class="headerlink" href="#action" title="Permalink to this heading"></a></h4>
 <p><strong>$ACTION</strong> is a meta-data marker and is followed by a YAML mapping node
 that contains some meta-data. The following attributes are supported
 currently.</p>
 </section>
 <section id="page">
-<h4><span class="section-number">7.4.1.2. </span>PAGE<a class="headerlink" href="#page" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">7.4.1.2. </span>PAGE<a class="headerlink" href="#page" title="Permalink to this heading"></a></h4>
 <p>PAGE is used to declare a list of pages used in the GUI.</p>
 <p>PAGE is also used to define the display scope for a configuration
 parameter and can be applied for individual configuration parameters.</p>
@@ -290,7 +205,7 @@ below:</p>
 <p>Figure 15</p>
 </section>
 <section id="struct">
-<h4><span class="section-number">7.4.1.3. </span>$STRUCT<a class="headerlink" href="#struct" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">7.4.1.3. </span>$STRUCT<a class="headerlink" href="#struct" title="Permalink to this heading"></a></h4>
 <p>The STRUCT directive is used to indicate a nested structure within a
 configuration structure.</p>
 <p>For example, consider the nested structure below:</p>
@@ -323,13 +238,13 @@ below</p>
 </section>
 </section>
 <section id="yaml-tags">
-<h3><span class="section-number">7.4.2. </span>YAML Tags<a class="headerlink" href="#yaml-tags" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">7.4.2. </span>YAML Tags<a class="headerlink" href="#yaml-tags" title="Permalink to this heading"></a></h3>
 <p>YAML represents type information of native data structures with a simple
 identifier, called a tag. Explicit typing is denoted with a tag using
 the exclamation point (“!”) symbol. The following application-specific
 local tags are used.</p>
 <section id="include">
-<h4><span class="section-number">7.4.2.1. </span>!INCLUDE<a class="headerlink" href="#include" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">7.4.2.1. </span>!INCLUDE<a class="headerlink" href="#include" title="Permalink to this heading"></a></h4>
 <p>Configuration declarations may be logically organized in multiple files.
 Additional YAML files are included in the CfgDataDef.yaml using
 “!include” tag.</p>
@@ -357,7 +272,7 @@ statement line. line.</p>
 </ul>
 </section>
 <section id="expand">
-<h4><span class="section-number">7.4.2.2. </span>!EXPAND<a class="headerlink" href="#expand" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">7.4.2.2. </span>!EXPAND<a class="headerlink" href="#expand" title="Permalink to this heading"></a></h4>
 <p>“!expand” tag is used for declaring a configuration option defined by a
 template
 (<a class="reference external" href="https://slimbootloader.github.io/specs/config.html?highlight=yaml#sbl-template">Template</a>).
@@ -396,7 +311,7 @@ appropriate parameters where:</p>
 </section>
 </section>
 <section id="variable">
-<h2><span class="section-number">7.5. </span>Variable<a class="headerlink" href="#variable" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">7.5. </span>Variable<a class="headerlink" href="#variable" title="Permalink to this heading"></a></h2>
 <p>Variables may be considered as something equivalent to a C language
 macro. Variables are primarily used as symbolic names given to Python
 expressions. Whenever the variable name is used, it is replaced by the
@@ -409,7 +324,7 @@ section.</p>
 </div></blockquote>
 </section>
 <section id="template">
-<h2><span class="section-number">7.6. </span>Template<a class="headerlink" href="#template" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">7.6. </span>Template<a class="headerlink" href="#template" title="Permalink to this heading"></a></h2>
 <p>Templates are used to declare the format of configuration options and
 are useful when many configuration options of the similar type are
 needed. GPIO configuration option is a good example where templates are
@@ -490,7 +405,7 @@ as below:</p>
 </div></blockquote>
 </section>
 <section id="configs">
-<h2><span class="section-number">7.7. </span>Configs<a class="headerlink" href="#configs" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">7.7. </span>Configs<a class="headerlink" href="#configs" title="Permalink to this heading"></a></h2>
 <p>This section contains the configuration option declarations.</p>
 <p>A YAML <strong>node</strong> represents a single native data structure. A <strong>mapping
 node</strong> is an unordered set of <em>key: value</em> node pairs. Mappings use a
@@ -602,11 +517,11 @@ MEMORY_CFG_DATA which is displayed in a “MEM” page.</p>
 <p>value : 0x1</p>
 </div></blockquote>
 <section id="configuration-option-nodes">
-<h3><span class="section-number">7.7.1. </span>Configuration Option Nodes<a class="headerlink" href="#configuration-option-nodes" title="Permalink to this heading">¶</a></h3>
+<h3><span class="section-number">7.7.1. </span>Configuration Option Nodes<a class="headerlink" href="#configuration-option-nodes" title="Permalink to this heading"></a></h3>
 <p>The below sections explain each of the “keys” used in a configuration
 option.</p>
 <section id="name">
-<h4><span class="section-number">7.7.1.1. </span>NAME<a class="headerlink" href="#name" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">7.7.1.1. </span>NAME<a class="headerlink" href="#name" title="Permalink to this heading"></a></h4>
 <p>NAME gives a plain-text label for a configuration parameter. This is the
 text label that is displayed in the Config Editor tool.</p>
 <p>Format:</p>
@@ -619,13 +534,13 @@ text label that is displayed in the Config Editor tool.</p>
 </div></blockquote>
 </section>
 <section id="type">
-<h4><span class="section-number">7.7.1.2. </span>TYPE<a class="headerlink" href="#type" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">7.7.1.2. </span>TYPE<a class="headerlink" href="#type" title="Permalink to this heading"></a></h4>
 <p>TYPE defines the format of a configuration parameter that will be
 represented in the Config Editor tool. There are 5 different types
 available for configuration parameters: <strong>EditNum</strong>, <strong>EditText</strong>,
 <strong>Combo</strong>, <strong>Table</strong>, <strong>Reserved</strong></p>
 <section id="editnum">
-<h5><span class="section-number">7.7.1.2.1. </span>EditNum<a class="headerlink" href="#editnum" title="Permalink to this heading">¶</a></h5>
+<h5><span class="section-number">7.7.1.2.1. </span>EditNum<a class="headerlink" href="#editnum" title="Permalink to this heading"></a></h5>
 <p>EditNum is used when user needs to input any value within the range
 defined. If the configuration option is an array, the VALUE field is
 used to specify the number of elements in the array.</p>
@@ -639,7 +554,7 @@ value allowed.</p>
 </div></blockquote>
 </section>
 <section id="edittext">
-<h5><span class="section-number">7.7.1.2.2. </span>EditText<a class="headerlink" href="#edittext" title="Permalink to this heading">¶</a></h5>
+<h5><span class="section-number">7.7.1.2.2. </span>EditText<a class="headerlink" href="#edittext" title="Permalink to this heading"></a></h5>
 <p>EditText is used when user needs to input any text string.</p>
 <blockquote>
 <div><p>Format:</p>
@@ -647,7 +562,7 @@ value allowed.</p>
 </div></blockquote>
 </section>
 <section id="combo">
-<h5><span class="section-number">7.7.1.2.3. </span>Combo<a class="headerlink" href="#combo" title="Permalink to this heading">¶</a></h5>
+<h5><span class="section-number">7.7.1.2.3. </span>Combo<a class="headerlink" href="#combo" title="Permalink to this heading"></a></h5>
 <p>Combo is used to select from a drop-down list along. This list will be
 provided by OPTION field.</p>
 <p>Format:</p>
@@ -662,7 +577,7 @@ provided by OPTION field.</p>
 </div></blockquote>
 </section>
 <section id="table">
-<h5><span class="section-number">7.7.1.2.4. </span>Table<a class="headerlink" href="#table" title="Permalink to this heading">¶</a></h5>
+<h5><span class="section-number">7.7.1.2.4. </span>Table<a class="headerlink" href="#table" title="Permalink to this heading"></a></h5>
 <p>Table is used to define a tabular format. It needs to be used along with
 OPTION field to provide additional information for the table including
 column header string, cell width and cell format. Further, the VALUE
@@ -688,7 +603,7 @@ E:1:HEX, F:1:HEX</p>
 or 4 bytes.</p>
 </section>
 <section id="reserved">
-<h5><span class="section-number">7.7.1.2.5. </span>Reserved<a class="headerlink" href="#reserved" title="Permalink to this heading">¶</a></h5>
+<h5><span class="section-number">7.7.1.2.5. </span>Reserved<a class="headerlink" href="#reserved" title="Permalink to this heading"></a></h5>
 <p>Reserved type can be used to prevent configuration parameters from being
 displayed in the Config Editor. But the configuration parameters will
 still be generated in the auto-generated C header structure.</p>
@@ -699,7 +614,7 @@ still be generated in the auto-generated C header structure.</p>
 </section>
 </section>
 <section id="option">
-<h4><span class="section-number">7.7.1.3. </span>OPTION<a class="headerlink" href="#option" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">7.7.1.3. </span>OPTION<a class="headerlink" href="#option" title="Permalink to this heading"></a></h4>
 <p>This allows to provide type-specific additional information. For type
 Combo, it defines the drop-down list. For type Table, it defines the
 column display information.</p>
@@ -713,7 +628,7 @@ with ‘<strong>+’ (plus sign)</strong> to tell the parsing tool to append thi
 string to previous one.</p>
 </section>
 <section id="help">
-<h4><span class="section-number">7.7.1.4. </span>HELP<a class="headerlink" href="#help" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">7.7.1.4. </span>HELP<a class="headerlink" href="#help" title="Permalink to this heading"></a></h4>
 <p>This defines what will appear in the ‘help’ text when hovering over the
 field in the UI tool.</p>
 <p>Format:</p>
@@ -730,7 +645,7 @@ with ‘<strong>+’ (plus sign)</strong> to tell the parsing tool to append thi
 string to previous one.</p>
 </section>
 <section id="condition">
-<h4><span class="section-number">7.7.1.5. </span>CONDITION<a class="headerlink" href="#condition" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">7.7.1.5. </span>CONDITION<a class="headerlink" href="#condition" title="Permalink to this heading"></a></h4>
 <p>CONDITION is used to associate conditional statement for a configuration
 parameter when required. It is useful to dynamically hide/display a
 configuration parameter that has a dependency on another configuration
@@ -751,7 +666,7 @@ $SECURITY_CFG_DATA.EpochUpdate == 2</p>
 </div></blockquote>
 </section>
 <section id="order">
-<h4><span class="section-number">7.7.1.6. </span>ORDER<a class="headerlink" href="#order" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">7.7.1.6. </span>ORDER<a class="headerlink" href="#order" title="Permalink to this heading"></a></h4>
 <p>ORDER can be used to adjust the display order for the configuration
 parameters in a page. By default, if this command is not specified, the
 order value is assigned to be the CfgitemOffset as the logic described
@@ -775,7 +690,7 @@ display.</p>
 </div></blockquote>
 </section>
 <section id="length">
-<h4><span class="section-number">7.7.1.7. </span>LENGTH<a class="headerlink" href="#length" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">7.7.1.7. </span>LENGTH<a class="headerlink" href="#length" title="Permalink to this heading"></a></h4>
 <p>Length is used to specify the size of the configuration option in bytes.
 Length can also be specified in bits by appending ‘b’ at the end.</p>
 <p>Example:</p>
@@ -785,7 +700,7 @@ Length can also be specified in bits by appending ‘b’ at the end.</p>
 </div></blockquote>
 </section>
 <section id="value">
-<h4><span class="section-number">7.7.1.8. </span>VALUE<a class="headerlink" href="#value" title="Permalink to this heading">¶</a></h4>
+<h4><span class="section-number">7.7.1.8. </span>VALUE<a class="headerlink" href="#value" title="Permalink to this heading"></a></h4>
 <p>Value is used to specify the default value of the configuration option.
 It could be a number, string, or data array.</p>
 <ul class="simple">
@@ -812,7 +727,7 @@ noted as “0:0[B|W|D|Q]”.</p></li>
 </section>
 </section>
 <section id="delta-dlt-file-explained">
-<h2><span class="section-number">7.8. </span>Delta (DLT) File Explained<a class="headerlink" href="#delta-dlt-file-explained" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">7.8. </span>Delta (DLT) File Explained<a class="headerlink" href="#delta-dlt-file-explained" title="Permalink to this heading"></a></h2>
 <p>Configuration Delta (DLT) file is an extension of the base configuration
 YAML file that contains configuration parameters that need to be
 overridden from base configuration.</p>
@@ -833,7 +748,7 @@ in .DLT, new data from DLT will be overwritten and gets generated in the
 configuration binary for that specific board.</p>
 </section>
 <section id="dlt-file-rules">
-<h2><span class="section-number">7.9. </span>DLT file rules<a class="headerlink" href="#dlt-file-rules" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">7.9. </span>DLT file rules<a class="headerlink" href="#dlt-file-rules" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Users cannot add/create a new configuration parameter in DLT file,
 nor can they create a new tag. Users can only modify/overwrite the
@@ -903,7 +818,7 @@ commands with no manual steps needed to create the final Configuration
 binary blob.</p>
 </section>
 <section id="configuration-process">
-<h2><span class="section-number">7.10. </span>Configuration Process<a class="headerlink" href="#configuration-process" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">7.10. </span>Configuration Process<a class="headerlink" href="#configuration-process" title="Permalink to this heading"></a></h2>
 <p>Configuration data flow begins with the base configuration YAML file
 along with delta (DLT) files that contain the overrides of configuration
 settings that are different from base configuration data. <em>CfgDataTool</em>
@@ -924,53 +839,35 @@ in SPI.</p>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="8_scalable_fsp.html" class="btn btn-neutral float-right" title="8. Scalable FSP" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="6_debug.html" class="btn btn-neutral float-left" title="6. Debug" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="8_scalable_fsp.html" class="btn btn-neutral float-right" title="8. Scalable FSP" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license.
-      <span class="lastupdated">
-        Last updated on Jun 01, 2023.
-      </span>
-
-    </p>
+    <p>&#169; Copyright Content on this site is licensed under a Creative Commons Attribution 4.0 International license.
+      <span class="lastupdated">Last updated on Aug 27, 2024.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
