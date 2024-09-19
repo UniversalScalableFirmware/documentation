@@ -1145,6 +1145,7 @@ to payload.
     UINT8                            RegisterStride;
     UINT32                           BaudRate;
     EFI_PHYSICAL_ADDRESS             RegisterBase;
+    UINT32                           ClockRate;
   } UNIVERSAL_PAYLOAD_SERIAL_PORT_INFO;
 
   #pragma pack()
@@ -1153,9 +1154,9 @@ to payload.
 
 ``Header``
 
-Header.Revision is 1.
+Header.Revision is 2.
 
-Header.Length is 18.
+Header.Length is 22.
 
 ``UseMmio``
 
@@ -1178,6 +1179,10 @@ Set to 0 to use the default baud rate 115200.
 ``RegisterBase``
 
 Base address of 16550 serial port registers in MMIO or I/O space.
+
+``ClockRate``
+
+The crystal or input frequency to the chip containing the UART.
 
 PCI Root Bridges
 %%%%%%%%%%%%%%%%%%%%
